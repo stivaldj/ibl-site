@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:site",
+    "build:site": "vite build",
     "preview": "vite preview",
     "lead:webhook:mock": "node scripts/mock-lead-webhook.mjs"
   },
