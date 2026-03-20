@@ -23,6 +23,15 @@ All gate evidence is written under:
 
 The final Phase 5 launch-readiness report will summarize this evidence, but the raw gate artifacts should live in that directory.
 
+## Lead Gate Runtime Prerequisite
+
+On a clean machine, install the repo dependencies and Chromium once before running the lead gate:
+
+```bash
+npm install
+npm run playwright:install
+```
+
 ## Gate Steps
 
 ### 1. Rebuild Baseline
@@ -84,8 +93,9 @@ npm run launch:gate:lead -- --base-url http://127.0.0.1:4174 --expected-status s
 Pass criteria:
 
 - homepage lead flow reaches `data-submit-state="success"`
+- mobile lead flow reaches `data-submit-state="success"`
 - representative product lead flow reaches `data-submit-state="success"`
-- both flows still hand off to WhatsApp
+- homepage, mobile, and product flows all open a WhatsApp handoff URL
 - webhook capture exists and contains payload evidence
 
 ### 4. Lead Gate: Failure Mode
@@ -111,8 +121,9 @@ npm run launch:gate:lead -- --base-url http://127.0.0.1:4175 --expected-status f
 Pass criteria:
 
 - homepage lead flow reaches `data-submit-state="failure"`
+- mobile lead flow reaches `data-submit-state="failure"`
 - representative product lead flow reaches `data-submit-state="failure"`
-- the UI still opens the WhatsApp fallback instead of claiming false success
+- homepage, mobile, and product flows all open the WhatsApp fallback instead of claiming false success
 
 ## Readiness Decision
 
