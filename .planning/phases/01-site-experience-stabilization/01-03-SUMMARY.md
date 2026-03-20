@@ -60,9 +60,9 @@ completed: 2026-03-20
 Each task was committed atomically:
 
 1. **Task 1: Eliminate shared-runtime browse drift across all three entry scripts** - `cc437de` (fix)
-2. **Task 2: Re-run the desktop and mobile browse journey end to end** - `PENDING_HASH` (docs)
+2. **Task 2: Re-run the desktop and mobile browse journey end to end** - `c626a0c` (docs)
 
-**Plan metadata:** `PENDING_HASH` (docs)
+**Plan metadata:** `c626a0c` (docs)
 
 ## Files Created/Modified
 
@@ -89,7 +89,7 @@ Each task was committed atomically:
 - **Fix:** Kept `npm run build` as the compile gate, used a raw Python server only to confirm generated-route HTML resolution, and ran the final route journey against `vite` on `http://127.0.0.1:4318/` so the source runtime executed as shipped during local development.
 - **Files modified:** `.planning/phases/01-site-experience-stabilization/01-03-SUMMARY.md`, `.planning/STATE.md`, `.planning/ROADMAP.md`
 - **Verification:** `npm run build`; desktop and mobile route smoke on Vite dev server with clean console/network capture
-- **Committed in:** `PENDING_HASH`
+- **Committed in:** `c626a0c`
 
 ---
 
@@ -111,11 +111,11 @@ None - no external service configuration required.
 
 ## Self-Check
 
-- Summary exists at `.planning/phases/01-site-experience-stabilization/01-03-SUMMARY.md`: PENDING
-- Task commits for `01-03` exist in git log: PENDING
-- Verification completed: `npm run build`; desktop `/ -> /produtos/ -> /produtos/retroescavadeiras/ -> /produtos/retroescavadeiras/580n/`; mobile `/mobile/ -> /produtos/ -> /produtos/retroescavadeiras/ -> /produtos/retroescavadeiras/580n/`; console clean; network clean: PENDING
+- Summary exists at `.planning/phases/01-site-experience-stabilization/01-03-SUMMARY.md`: PASSED
+- Task commits for `01-03` exist in git log (`cc437de`, `c626a0c`): PASSED
+- Verification completed: `npm run build`; desktop `/ -> /produtos/ -> /produtos/retroescavadeiras/ -> /produtos/retroescavadeiras/580n/`; mobile `/mobile/ -> /produtos/ -> /produtos/retroescavadeiras/ -> /produtos/retroescavadeiras/580n/`; console clean; network clean: PASSED
 
-**PENDING**
+**PASSED**
 
 ---
 *Phase: 01-site-experience-stabilization*
