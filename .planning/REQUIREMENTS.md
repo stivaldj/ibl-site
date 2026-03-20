@@ -76,19 +76,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXP-01 | Phase 1 - Site Experience Stabilization | Planned |
-| EXP-02 | Phase 1 - Site Experience Stabilization | Planned |
-| EXP-03 | Phase 1 - Site Experience Stabilization | Planned |
-| EXP-04 | Phase 1 - Site Experience Stabilization | Planned |
-| LEAD-01 | Phase 2 - Lead Flow Hardening | Planned |
-| LEAD-02 | Phase 2 - Lead Flow Hardening | Planned |
-| LEAD-03 | Phase 2 - Lead Flow Hardening | Planned |
-| LEAD-04 | Phase 2 - Lead Flow Hardening | Planned |
-| SEO-01 | Phase 3 - SEO And Content Trust Hardening | Planned |
-| SEO-02 | Phase 3 - SEO And Content Trust Hardening | Planned |
-| SEO-03 | Phase 3 - SEO And Content Trust Hardening | Planned |
-| SEO-04 | Phase 3 - SEO And Content Trust Hardening | Planned |
-| FE-01 | Phase 1 - Site Experience Stabilization | Planned |
+| EXP-01 | Phase 1 - Site Experience Stabilization | Completed |
+| EXP-02 | Phase 1 - Site Experience Stabilization | Completed |
+| EXP-03 | Phase 1 - Site Experience Stabilization | Completed |
+| EXP-04 | Phase 1 - Site Experience Stabilization | Completed |
+| LEAD-01 | Phase 2 - Lead Flow Hardening | Completed |
+| LEAD-02 | Phase 2 - Lead Flow Hardening | Completed |
+| LEAD-03 | Phase 2 - Lead Flow Hardening | Completed |
+| LEAD-04 | Phase 2 - Lead Flow Hardening | Completed |
+| SEO-01 | Phase 3 - SEO And Content Trust Hardening | Completed |
+| SEO-02 | Phase 3 - SEO And Content Trust Hardening | Completed |
+| SEO-03 | Phase 3 - SEO And Content Trust Hardening | Completed |
+| SEO-04 | Phase 3 - SEO And Content Trust Hardening | Completed |
+| FE-01 | Phase 1 - Site Experience Stabilization | Completed |
 | FE-02 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
 | FE-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
 | GEN-01 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
