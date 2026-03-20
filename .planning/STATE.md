@@ -65,9 +65,12 @@ Start the first incomplete Phase 3 plan, using the completed Phase 2 lead baseli
 - Plan `02-04` completed on 2026-03-20.
 - `runSlaCheck()` in `main.js`, `webapp/main.js`, and `mobile/main.js` now filters stale leads by `contact_status !== 'contacted'`, matching the existing ops record/update shape and removing the prior false-positive SLA-risk path for contacted leads.
 - Focused `?ops=1` verification on `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` now proves the submitted stale lead drops out of summary counts, console warnings, and `lead_sla_risk` telemetry immediately after the ops button marks it contacted, while a seeded stale uncontacted lead still keeps the legitimate warning path active.
+- Plan `03-01` completed on 2026-03-20.
+- `generate_pages.py` now owns canonical, description, Open Graph, Twitter, and JSON-LD output for generated catalog, category, and product routes, using `https://iblmaquinas.com.br` as the source HTML canonical host.
+- Representative source inspection on `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` confirmed the shipped HTML now contains metadata and structured data before any runtime script executes.
 - Plan `03-02` completed on 2026-03-20.
 - `generate_pages.py` now strips zero-width spec-label artifacts, preserves markdown continuation lines in quick specs and technical spec values, and renders the final product CTA with the full model title instead of a brittle token split.
 - Representative source-vs-output audits passed for `/produtos/retroescavadeiras/580n/`, `/produtos/escavadeiras-hidraulicas/cx220c-s2/`, `/produtos/escavadeiras-hidraulicas/cx240c-me/`, and `/produtos/minicarregadeiras/sr175b/`, confirming title, category, description, quick specs, and CTA context stay aligned with `scrape_db.json` and the matching `content.md`.
 
 ---
-*Last updated: 2026-03-20 after completing plan 03-02*
+*Last updated: 2026-03-20 after completing plans 03-01 and 03-02*

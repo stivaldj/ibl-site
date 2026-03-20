@@ -103,6 +103,7 @@ Only launch-critical additions are allowed, and only when they are required to m
 4. Launch-critical generated pages remain SEO-complete and indexable even when client-side metadata enhancement does not run.
 
 **Execution progress:**
+- Plan `03-01` completed on 2026-03-20. `generate_pages.py` now emits generator-owned description, canonical, Open Graph, Twitter, and JSON-LD output for catalog, category, and product pages, and regenerated representative routes under `/produtos/**` now contain that SEO surface directly in shipped HTML before runtime execution.
 - Plan `03-02` completed on 2026-03-20. `generate_pages.py` now strips zero-width label artifacts, carries markdown continuation lines into quick specs and technical spec values, and renders the final product CTA with the full machine title instead of a brittle token split. Regenerated output under `produtos/**` and a representative audit across retroescavadeiras, escavadeiras hidráulicas, and minicarregadeiras confirmed source-vs-output alignment for title, category, description, quick specs, and CTA context.
 
 ### Phase 4: Generation And Frontend Reliability Stabilization
