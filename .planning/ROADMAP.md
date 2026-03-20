@@ -75,6 +75,9 @@ Only launch-critical additions are allowed, and only when they are required to m
 3. Failed submissions surface through clear frontend feedback, operational logging, or another defined detection path instead of failing silently.
 4. Desktop and mobile lead flows follow the same launch-approved behavior for field handling, CTA behavior, and submission outcomes.
 
+**Execution progress:**
+- Plan `02-01` completed on 2026-03-20. The repo now includes a local mock lead webhook harness with success/failure modes, curl-verified JSON capture, a package command at `npm run lead:webhook:mock`, and `.env.example` guidance that points Phase 2 verification at `http://127.0.0.1:8787/lead` instead of assuming a live external endpoint.
+
 ### Phase 3: SEO And Content Trust Hardening
 
 **Goal:** Ship generated category and product pages with trustworthy metadata and machine-correct content directly in production HTML.
@@ -167,4 +170,4 @@ Only launch-critical additions are allowed, and only when they are required to m
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 after plan 01-01 execution*
+*Last updated: 2026-03-20 after plan 02-01 execution*

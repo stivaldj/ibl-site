@@ -12,7 +12,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 ## Current Phase
 
 - **Current phase:** Phase 2 - Lead Flow Hardening
-- **Phase status:** Ready to begin after Phase 1 completion
+- **Phase status:** In progress after plan 02-01 established the local webhook verification harness
 - **Roadmap status:** Active execution
 
 ## Phase Queue Status
@@ -20,7 +20,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
-| Phase 2 - Lead Flow Hardening | Ready | Browse-path stabilization is complete, so conversion and webhook reliability can be audited without shared-runtime blockers |
+| Phase 2 - Lead Flow Hardening | In progress | Plan 02-01 completed a repo-local webhook harness and env wiring, so payload and failure-path checks no longer depend on an external endpoint |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
 | Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
@@ -35,7 +35,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-Execute the first incomplete Phase 2 plan while preserving the shared browse-runtime, route-verification baseline, and generated CTA anchor contract established by Phase 1.
+Execute the next incomplete Phase 2 plan using the repo-local webhook harness (`npm run lead:webhook:mock`) and the documented local `VITE_LEAD_WEBHOOK_URL` target for payload and failure-path verification.
 
 ## Execution Notes
 
@@ -51,6 +51,9 @@ Execute the first incomplete Phase 2 plan while preserving the shared browse-run
 - Generated catalog/category/product contact CTAs now resolve to `/#captacao-lead` from one generator source, and sampled clicks from `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` land on the homepage lead section correctly.
 - Final representative route verification passed on desktop and mobile for `/`, `/mobile/`, `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` with clean console and network results.
 - Generated-route runtime verification should use the local Vite dev server for source-module execution; `vite preview` still falls back to the app shell for `/produtos/**`, and a raw static server exposes the HTML but not the CSS-importing runtime modules.
+- Plan `02-01` completed on 2026-03-20.
+- Phase 2 now has a repo-local mock webhook harness at `scripts/mock-lead-webhook.mjs` with success mode on `127.0.0.1:8787/lead`, failure mode available via `--mode failure --port 8788`, and optional payload persistence through `--capture-file`.
+- Local lead verification should default `VITE_LEAD_WEBHOOK_URL` to `http://127.0.0.1:8787/lead` and start the harness with `npm run lead:webhook:mock` before browser checks so payload inspection and failure reproduction do not depend on `ibl-ai-os`.
 
 ---
-*Last updated: 2026-03-20 after completing plan 01-04*
+*Last updated: 2026-03-20 after completing plan 02-01*
