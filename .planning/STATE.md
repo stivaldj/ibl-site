@@ -11,9 +11,9 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Current Phase
 
-- **Current phase:** Phase 5 - Launch Verification And Operations Gate
-- **Phase status:** Phase 4 is verified and complete. Phase 5 is the next queued execution target.
-- **Roadmap status:** Phases 1 through 4 complete, Phase 5 queued
+- **Current phase:** Milestone complete - Production hardening roadmap closed
+- **Phase status:** Phase 5 is verified and complete.
+- **Roadmap status:** Phases 1 through 5 complete
 
 ## Phase Queue Status
 
@@ -23,7 +23,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-04 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final contacted-lead SLA-risk fix plus proof across desktop, mobile, and product routes |
 | Phase 3 - SEO And Content Trust Hardening | Completed | Plans 03-01 through 03-03 verified: generated routes now ship source-owned metadata, trustworthy machine content, and fallback-only runtime SEO behavior |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed | Plans 04-01 through 04-03 delivered deterministic asset sync, honest full-site packaging, and an authoritative rebuild workflow verified against dist |
-| Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
+| Phase 5 - Launch Verification And Operations Gate | Completed | Plans 05-01 through 05-02 defined and executed the formal launch gate, producing a readiness verdict and bounded remainder |
 
 ## Initialized Project Context
 
@@ -35,7 +35,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-Start Phase 5 planning so the new release gate exercises the now-verified rebuild workflow, packaged artifact checks, browsing smoke tests, and lead-flow verification as one explicit launch decision.
+The production-hardening roadmap is complete. The next sensible workflow is milestone closeout, release audit, or whatever production-facing step follows the verified readiness gate.
 
 ## Execution Notes
 
@@ -85,6 +85,11 @@ Start Phase 5 planning so the new release gate exercises the now-verified rebuil
 - Plan `04-03` completed on 2026-03-20.
 - `docs/OPERATIONS.md` is now the authoritative rebuild guide, backed by package scripts for dry-run asset checks, catalog regeneration, final packaging, and `dist/` verification.
 - The documented rebuild flow passed end-to-end: dry-run asset checks were clean, `npm run rebuild:site` regenerated the catalog, rebuilt `dist/`, and verified representative homepage, mobile, catalog, category, and product routes in the packaged artifact.
+- Plan `05-01` completed on 2026-03-20.
+- `docs/LAUNCH-GATE.md` now defines the formal launch gate for rebuild, packaged smoke, mobile coverage, and lead verification, while package scripts expose `launch:gate:smoke` and `launch:gate:lead`.
+- Plan `05-02` completed on 2026-03-20.
+- The formal launch gate passed end-to-end, including rebuild baseline, packaged-route smoke verification, and homepage/product lead checks in both success and failure modes.
+- `docs/LAUNCH-READINESS.md` now records the final verdict: ready for production continuation, with explicit bounded remainder.
 
 ---
-*Last updated: 2026-03-20 after verifying Phase 4 and advancing to Phase 5*
+*Last updated: 2026-03-20 after verifying Phase 5 and closing the roadmap*

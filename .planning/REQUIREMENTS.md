@@ -94,8 +94,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GEN-01 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed |
 | GEN-02 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed |
 | GEN-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed |
-| OPS-01 | Phase 5 - Launch Verification And Operations Gate | Planned |
-| OPS-02 | Phase 5 - Launch Verification And Operations Gate | Planned |
+| OPS-01 | Phase 5 - Launch Verification And Operations Gate | Completed |
+| OPS-02 | Phase 5 - Launch Verification And Operations Gate | Completed |
 | OPS-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed |
 
 **Coverage:**

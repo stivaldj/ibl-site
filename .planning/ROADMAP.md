@@ -155,6 +155,11 @@ Only launch-critical additions are allowed, and only when they are required to m
 3. Lead-flow verification is part of the release gate rather than a separate informal check.
 4. Readiness can be declared against explicit pass criteria and evidence instead of ad hoc judgment.
 
+**Execution progress:**
+- Plan `05-01` completed on 2026-03-20. `docs/LAUNCH-GATE.md` now defines the formal launch gate, `.tmp/launch-gate/latest/` is the standard evidence location, and package helpers support packaged smoke verification plus headless lead-flow checks.
+- Plan `05-02` completed on 2026-03-20. The full gate was executed end-to-end, covering rebuild baseline, packaged homepage/mobile/catalog/category/product smoke checks, and representative homepage/product lead flows in both success and failure modes.
+- Phase 5 is complete. Verification passed for `OPS-01` and `OPS-02`, and `docs/LAUNCH-READINESS.md` now records the final verdict: ready for production continuation.
+
 ## Requirement Coverage Matrix
 
 | Requirement | Assigned phase |
@@ -186,4 +191,4 @@ Only launch-critical additions are allowed, and only when they are required to m
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 after Phase 4 verification*
+*Last updated: 2026-03-20 after Phase 5 verification*
