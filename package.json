@@ -16,6 +16,8 @@
     "scrape:specs": "python3 scrape_specs.py --strict",
     "verify:dist": "node scripts/verify-dist.mjs",
     "rebuild:site": "npm run generate:pages && npm run build:site && npm run verify:dist",
+    "launch:gate:smoke": "node scripts/launch-gate-smoke.mjs",
+    "launch:gate:lead": "node scripts/launch-gate-lead.mjs",
     "lead:webhook:mock": "node scripts/mock-lead-webhook.mjs"
   },
   "devDependencies": {
