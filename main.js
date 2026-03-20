@@ -3,10 +3,17 @@ import './style.css'
 const ANALYTICS_MILESTONES = [25, 50, 75, 90]
 const ATTRIBUTION_STORAGE_KEY = 'ibl_attribution_v1'
 const LEAD_OPS_STORAGE_KEY = 'ibl_lead_ops_v1'
+const LEAD_OPS_UPDATED_EVENT = 'lead-ops-updated'
 const LEAD_SUBMIT_STATUS = {
   success: 'success',
   skipped: 'skipped',
   failure: 'failure'
+}
+const LEAD_OPS_SUBMISSION_STATUS = {
+  pending: 'pending',
+  submitted: 'submitted',
+  skipped: 'skipped',
+  failed: 'failed'
 }
 
 function initAnalytics() {
@@ -116,6 +123,87 @@ function shouldResetLeadForm(submitResult) {
   return submitResult.status === LEAD_SUBMIT_STATUS.success
 }
 
+function getLeadOpsSubmissionStatus(submitResult) {
+  if (submitResult.status === LEAD_SUBMIT_STATUS.success) {
+    return LEAD_OPS_SUBMISSION_STATUS.submitted
+  }
+
+  if (submitResult.status === LEAD_SUBMIT_STATUS.skipped) {
+    return LEAD_OPS_SUBMISSION_STATUS.skipped
+  }
+
+  return LEAD_OPS_SUBMISSION_STATUS.failed
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;')
+}
+
+function getLeadOpsSubmissionMeta(status) {
+  if (status === LEAD_OPS_SUBMISSION_STATUS.submitted) {
+    return {
+      label: 'enviado',
+      className: 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+    }
+  }
+
+  if (status === LEAD_OPS_SUBMISSION_STATUS.skipped) {
+    return {
+      label: 'webhook ignorado',
+      className: 'border border-amber-500/30 bg-amber-500/10 text-amber-200'
+    }
+  }
+
+  if (status === LEAD_OPS_SUBMISSION_STATUS.failed) {
+    return {
+      label: 'falhou',
+      className: 'border border-red-500/30 bg-red-500/10 text-red-300'
+    }
+  }
+
+  return {
+    label: 'pendente',
+    className: 'border border-sky-500/30 bg-sky-500/10 text-sky-300'
+  }
+}
+
+function getLeadOpsContextLabel(item) {
+  if (item.lead_type === 'product') {
+    const model = item.modelo || 'modelo não informado'
+    const usage = item.uso || 'uso não informado'
+    return `${model} · ${usage}`
+  }
+
+  return item.interesse || 'interesse não informado'
+}
+
+function getLeadOpsSlaState(item, slaMs, now = Date.now()) {
+  if (item.contact_status === 'contacted') {
+    return {
+      label: 'contatado',
+      className: 'text-emerald-300'
+    }
+  }
+
+  const createdAt = new Date(item.created_at).getTime()
+  if (Number.isFinite(createdAt) && (now - createdAt) > slaMs) {
+    return {
+      label: 'sla em risco',
+      className: 'text-red-300'
+    }
+  }
+
+  return {
+    label: 'dentro do sla',
+    className: 'text-gray-400'
+  }
+}
+
 async function submitLeadToWebhook(leadPayload) {
   const webhookUrl = import.meta.env.VITE_LEAD_WEBHOOK_URL
   const payload = buildLeadWebhookPayload(leadPayload)
@@ -185,6 +273,7 @@ function getLeadOpsItems() {
 
 function saveLeadOpsItems(items) {
   window.localStorage.setItem(LEAD_OPS_STORAGE_KEY, JSON.stringify(items))
+  window.dispatchEvent(new CustomEvent(LEAD_OPS_UPDATED_EVENT))
 }
 
 function recordLeadOpsItem(lead) {
@@ -192,12 +281,62 @@ function recordLeadOpsItem(lead) {
   const entry = {
     id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     created_at: new Date().toISOString(),
-    status: 'new',
+    updated_at: new Date().toISOString(),
+    contact_status: 'new',
+    submission_status: LEAD_OPS_SUBMISSION_STATUS.pending,
+    page_path: window.location.pathname,
+    fallback_channel: 'whatsapp',
     ...lead
   }
   items.unshift(entry)
   saveLeadOpsItems(items.slice(0, 100))
   return entry
+}
+
+function updateLeadOpsItem(leadId, updates) {
+  let nextEntry = null
+  const items = getLeadOpsItems()
+  const next = items.map((item) => {
+    if (item.id !== leadId) return item
+    nextEntry = {
+      ...item,
+      ...updates,
+      updated_at: new Date().toISOString()
+    }
+    return nextEntry
+  })
+  saveLeadOpsItems(next)
+  return nextEntry
+}
+
+function finalizeLeadOpsItem(leadId, submitResult) {
+  const nextEntry = updateLeadOpsItem(leadId, {
+    submission_status: getLeadOpsSubmissionStatus(submitResult),
+    submit_result: submitResult.status,
+    submit_ok: submitResult.ok,
+    submit_skipped: submitResult.skipped,
+    submit_reason: submitResult.reason || '',
+    error_message: submitResult.error_message || '',
+    http_status: submitResult.http_status || null
+  })
+
+  if (!nextEntry) return
+
+  const leadLabel = nextEntry.nome || 'Lead sem nome'
+  const routeLabel = nextEntry.page_path || window.location.pathname
+  if (nextEntry.submission_status === LEAD_OPS_SUBMISSION_STATUS.submitted) {
+    console.info(`[LEAD OPS] Lead enviado com sucesso: ${leadLabel} (${routeLabel})`)
+    return
+  }
+
+  if (nextEntry.submission_status === LEAD_OPS_SUBMISSION_STATUS.skipped) {
+    console.warn(`[LEAD OPS] Lead sem webhook: ${leadLabel} (${routeLabel})`)
+    return
+  }
+
+  console.error(
+    `[LEAD OPS] Lead com falha de envio: ${leadLabel} (${routeLabel})${nextEntry.http_status ? ` status ${nextEntry.http_status}` : ''}${nextEntry.error_message ? ` - ${nextEntry.error_message}` : ''}`
+  )
 }
 
 function setupLeadOpsMonitor() {
@@ -214,14 +353,40 @@ function setupLeadOpsMonitor() {
     <div class="p-4 border-b border-case-border">
       <h3 class="font-display font-black text-lg uppercase">Lead Ops Monitor</h3>
       <p class="text-[11px] font-mono uppercase tracking-widest text-gray-500">SLA ${slaHours}h</p>
+      <div id="lead-ops-summary" class="grid grid-cols-2 gap-2 mt-3 text-[10px] font-mono uppercase tracking-widest text-gray-400"></div>
     </div>
     <div id="lead-ops-list" class="max-h-[280px] overflow-y-auto p-3 space-y-2"></div>
   `
 
   function renderPanel() {
     const list = panel.querySelector('#lead-ops-list')
-    if (!(list instanceof HTMLElement)) return
+    const summary = panel.querySelector('#lead-ops-summary')
+    if (!(list instanceof HTMLElement) || !(summary instanceof HTMLElement)) return
     const items = getLeadOpsItems()
+    const now = Date.now()
+    const totals = items.reduce((acc, item) => {
+      acc[item.submission_status] = (acc[item.submission_status] || 0) + 1
+      const slaState = getLeadOpsSlaState(item, slaMs, now)
+      if (slaState.label === 'sla em risco') {
+        acc.risk += 1
+      }
+      return acc
+    }, {
+      [LEAD_OPS_SUBMISSION_STATUS.submitted]: 0,
+      [LEAD_OPS_SUBMISSION_STATUS.skipped]: 0,
+      [LEAD_OPS_SUBMISSION_STATUS.failed]: 0,
+      [LEAD_OPS_SUBMISSION_STATUS.pending]: 0,
+      risk: 0
+    })
+
+    summary.innerHTML = `
+      <span>enviados <strong class="text-emerald-300">${totals.submitted}</strong></span>
+      <span>pendentes <strong class="text-sky-300">${totals.pending}</strong></span>
+      <span>ignorados <strong class="text-amber-200">${totals.skipped}</strong></span>
+      <span>falhas <strong class="text-red-300">${totals.failed}</strong></span>
+      <span class="col-span-2">sla em risco <strong class="text-red-300">${totals.risk}</strong></span>
+    `
+
     if (items.length === 0) {
       list.innerHTML = '<p class="text-xs font-mono text-gray-500 uppercase tracking-widest">Sem leads registrados</p>'
       return
@@ -230,12 +395,24 @@ function setupLeadOpsMonitor() {
       <article class="compare-item">
         <div class="flex items-center justify-between gap-2 mb-2">
           <p class="text-[11px] font-mono uppercase tracking-widest text-case-yellow">${item.lead_type || 'lead'}</p>
+          <span class="rounded-full px-2 py-1 text-[10px] font-mono uppercase tracking-widest ${getLeadOpsSubmissionMeta(item.submission_status).className}">
+            ${getLeadOpsSubmissionMeta(item.submission_status).label}
+          </span>
+        </div>
+        <p class="text-xs text-white">${escapeHtml(item.nome || 'Lead sem nome')} · ${escapeHtml(item.telefone || '-')}</p>
+        <p class="mt-1 text-[11px] text-gray-300">${escapeHtml(getLeadOpsContextLabel(item))}</p>
+        <div class="mt-2 flex items-center justify-between gap-3 text-[10px] font-mono uppercase tracking-widest">
+          <span class="text-gray-500">${escapeHtml(item.page_path || '-')}</span>
+          <span class="${getLeadOpsSlaState(item, slaMs, now).className}">${getLeadOpsSlaState(item, slaMs, now).label}</span>
+        </div>
+        ${item.error_message ? `<p class="mt-2 text-[11px] text-red-300">${escapeHtml(item.error_message)}</p>` : ''}
+        ${item.submit_reason ? `<p class="mt-2 text-[11px] text-amber-200">${escapeHtml(item.submit_reason)}</p>` : ''}
+        <div class="mt-2 flex items-center justify-between gap-3">
+          <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500">${new Date(item.created_at).toLocaleString('pt-BR')}</p>
           <button data-lead-id="${item.id}" class="text-[10px] font-mono uppercase tracking-widest text-gray-400 hover:text-case-yellow">
-            ${item.status === 'contacted' ? 'contatado' : 'marcar contato'}
+            ${item.contact_status === 'contacted' ? 'contatado' : 'marcar contato'}
           </button>
         </div>
-        <p class="text-xs text-white">${item.nome || 'Lead sem nome'} · ${item.telefone || '-'}</p>
-        <p class="text-[10px] font-mono uppercase tracking-widest text-gray-500 mt-1">${new Date(item.created_at).toLocaleString('pt-BR')}</p>
       </article>
     `).join('')
   }
@@ -260,10 +437,17 @@ function setupLeadOpsMonitor() {
     if (!(target instanceof HTMLElement)) return
     const leadId = target.getAttribute('data-lead-id')
     if (!leadId) return
-    const items = getLeadOpsItems()
-    const next = items.map((item) => item.id === leadId ? { ...item, status: 'contacted' } : item)
-    saveLeadOpsItems(next)
+    updateLeadOpsItem(leadId, { contact_status: 'contacted' })
     renderPanel()
+  })
+
+  window.addEventListener(LEAD_OPS_UPDATED_EVENT, () => {
+    if (opsMode) renderPanel()
+  })
+  window.addEventListener('storage', (event) => {
+    if (event.key === LEAD_OPS_STORAGE_KEY && opsMode) {
+      renderPanel()
+    }
   })
 
   if (opsMode) {
@@ -356,7 +540,7 @@ function setupLeadForm() {
       lead_interest: payload.interesse
     })
 
-    recordLeadOpsItem({
+    const leadOpsEntry = recordLeadOpsItem({
       lead_type: 'home',
       lead_channel: 'form_whatsapp',
       nome: payload.nome,
@@ -371,6 +555,7 @@ function setupLeadForm() {
       telefone: payload.telefone,
       interesse: payload.interesse
     })
+    finalizeLeadOpsItem(leadOpsEntry.id, submitResult)
 
     const attribution = getAttribution()
     const sourceSuffix = attribution.utm_source ? ` Origem: ${attribution.utm_source}/${attribution.utm_medium || 'na'}.` : ''
@@ -951,7 +1136,7 @@ function setupProductPageEnhancements() {
       lead_category: payload.categoria
     })
 
-    recordLeadOpsItem({
+    const leadOpsEntry = recordLeadOpsItem({
       lead_type: 'product',
       lead_channel: 'product_form_whatsapp',
       nome: String(payload.nome || ''),
@@ -970,6 +1155,7 @@ function setupProductPageEnhancements() {
       modelo: String(payload.modelo || ''),
       categoria: String(payload.categoria || '')
     })
+    finalizeLeadOpsItem(leadOpsEntry.id, submitResult)
 
     const attribution = getAttribution()
     const sourceSuffix = attribution.utm_source ? ` Origem: ${attribution.utm_source}/${attribution.utm_medium || 'na'}.` : ''
