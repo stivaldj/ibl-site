@@ -91,14 +91,14 @@ function createLeadSubmitResult(status, extras = {}) {
 
 function getLeadSubmitFeedbackMessage(submitResult) {
   if (submitResult.status === LEAD_SUBMIT_STATUS.skipped) {
-    return 'Webhook indisponível. Abrindo WhatsApp para continuar o atendimento...'
+    return 'Webhook indisponível. Abrindo o WhatsApp para registrar seu atendimento sem perder o contato...'
   }
 
   if (submitResult.status === LEAD_SUBMIT_STATUS.failure) {
-    return 'Falha ao enviar ao sistema. Abrindo WhatsApp para continuar o atendimento...'
+    return 'Não conseguimos enviar ao sistema agora. Abrindo o WhatsApp para continuar o atendimento manualmente...'
   }
 
-  return 'Solicitação enviada. Abrindo WhatsApp...'
+  return 'Solicitação enviada para a equipe IBL. Abrindo o WhatsApp para agilizar o atendimento...'
 }
 
 function clearLeadSubmitFeedback(target) {
@@ -110,6 +110,10 @@ function applyLeadSubmitFeedback(target, submitResult) {
   if (!(target instanceof HTMLElement)) return
   target.dataset.submitState = submitResult.status
   target.textContent = getLeadSubmitFeedbackMessage(submitResult)
+}
+
+function shouldResetLeadForm(submitResult) {
+  return submitResult.status === LEAD_SUBMIT_STATUS.success
 }
 
 async function submitLeadToWebhook(leadPayload) {
@@ -377,7 +381,9 @@ function setupLeadForm() {
 
     applyLeadSubmitFeedback(feedback, submitResult)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
-    form.reset()
+    if (shouldResetLeadForm(submitResult)) {
+      form.reset()
+    }
   })
 }
 
@@ -972,7 +978,9 @@ function setupProductPageEnhancements() {
     )
     window.open(`https://wa.me/5567999999999?text=${message}`, '_blank', 'noopener,noreferrer')
     applyLeadSubmitFeedback(productFeedback, submitResult)
-    productForm.reset()
+    if (shouldResetLeadForm(submitResult)) {
+      productForm.reset()
+    }
   })
 
   if (!document.getElementById('product-sticky-cta')) {
