@@ -120,13 +120,13 @@ FOOTER_HTML = f"""\
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 border-b border-black/10 pb-12">
           <div>
-            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.8]">WORK<br />WITH US</h2>
+            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.8]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar.</p>
+            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Comercial, proposta e suporte no mesmo fluxo para operações que não podem parar.</p>
             <div class="generated-footer-actions flex gap-4">
-              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas sobre os modelos CASE.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
-              <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>
+              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas sobre os modelos CASE.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">WhatsApp</a>
+              <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Solicitar contato</a>
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@ FOOTER_HTML = f"""\
           <div>
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Social</div>
             <p class="font-medium text-sm leading-relaxed">Canais sociais em atualização para o lançamento.</p>
-            <p class="font-mono text-[11px] uppercase tracking-widest mt-3 opacity-70">Atendimento ativo via WhatsApp e formulário.</p>
+            <p class="font-mono text-[11px] uppercase tracking-widest mt-3 opacity-70">Atendimento ativo via WhatsApp e formulário comercial.</p>
           </div>
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
@@ -603,9 +603,26 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
               <h1 class="generated-product-title font-display font-black text-4xl md:text-5xl xl:text-6xl uppercase leading-tight">{title}</h1>
             </div>
             {description_html}
-            <!-- Quick specs pills -->
             <div class="grid grid-cols-2 gap-3">
               {summary_pills}
+            </div>
+            <div class="product-contact-wrap">
+              <span class="font-mono text-case-yellow text-[11px] tracking-widest uppercase block mb-3">/// Atendimento IBL</span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <span class="block text-[10px] font-mono uppercase tracking-widest text-gray-500">Resposta inicial</span>
+                  <strong class="block mt-2 text-white font-display text-2xl uppercase">1 dia útil</strong>
+                </div>
+                <div>
+                  <span class="block text-[10px] font-mono uppercase tracking-widest text-gray-500">Condução</span>
+                  <strong class="block mt-2 text-white font-display text-2xl uppercase">Comercial + técnico</strong>
+                </div>
+                <div>
+                  <span class="block text-[10px] font-mono uppercase tracking-widest text-gray-500">Fluxo</span>
+                  <strong class="block mt-2 text-white font-display text-2xl uppercase">Máquina + suporte</strong>
+                </div>
+              </div>
+              <p class="mt-4 text-sm text-gray-400">A proposta nasce do cenário da sua operação, não de uma resposta genérica de catálogo.</p>
             </div>
             <div class="generated-hero-actions flex gap-4 pt-4">
               <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-3 text-sm">
@@ -616,12 +633,17 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
               </a>
             </div>
           </div>
-          <div class="lg:col-span-7 relative h-[400px] lg:h-[600px] flex items-center justify-center">
+          <div class="lg:col-span-7 relative h-[440px] lg:h-[620px] flex items-center justify-center">
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-full h-full relative overflow-hidden industrial-border">
+              <div class="w-full h-full relative overflow-hidden industrial-border bg-[radial-gradient(circle_at_75%_22%,rgba(229,142,26,0.16),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]">
+                <div class="absolute inset-[18px] border border-white/10 pointer-events-none"></div>
                 <img src="{hero_img}" alt="{title}" class="w-full h-full object-contain p-8 filter drop-shadow-2xl hover:scale-105 transition-transform duration-700" />
                 <div class="absolute top-4 left-4 bg-black/80 border border-case-border px-3 py-1 font-mono text-xs text-case-yellow">
                   CASE CONSTRUCTION
+                </div>
+                <div class="absolute bottom-5 right-5 max-w-[260px] bg-black/80 backdrop-blur border border-white/10 px-4 py-3">
+                  <span class="font-mono text-[10px] uppercase tracking-widest text-case-yellow">Fechar com segurança</span>
+                  <p class="mt-2 text-sm text-gray-300">Equipe IBL conduz proposta, disponibilidade e plano de atendimento para sua região.</p>
                 </div>
               </div>
             </div>

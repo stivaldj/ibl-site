@@ -88,25 +88,44 @@
           <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
           <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl"></div>
         </div>
-        <div class="container mx-auto px-6 relative z-10 py-3 md:py-5 flex items-center">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full items-center">
-            <div class="lg:col-span-6 space-y-6">
+        <div class="container mx-auto px-6 relative z-10 py-6 md:py-8 flex items-center">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 w-full items-center">
+            <div class="lg:col-span-6 space-y-7">
               <div class="inline-flex items-center gap-3 border border-case-yellow/30 bg-case-yellow/5 px-4 py-2 group/logo cursor-default">
                 <img src="/casece-logo.svg" alt="Case Construction" class="h-8 w-auto logo-casece" />
               </div>
-              <h1 class="font-display font-black uppercase leading-[0.88] tracking-tight cursor-default">
-                <span class="text-5xl md:text-6xl xl:text-7xl block">Trabalho</span>
-                <span class="hero-super-title text-6xl md:text-7xl xl:text-8xl inline-block">Super</span>
-                <span class="text-5xl md:text-6xl xl:text-7xl block">Pesado</span>
-              </h1>
-              <p class="max-w-xl text-base md:text-lg text-gray-300 leading-relaxed">
-                Frota robusta e pós-venda regional para manter sua operação ativa,<br />
-                com previsibilidade de prazo e custo.
-              </p>
+              <div class="space-y-5">
+                <span class="hero-kicker">Concessionário oficial CASE Construction e suporte regional IBL</span>
+                <h1 class="entry-hero-heading font-display font-black uppercase leading-[0.9] tracking-tight cursor-default">
+                  <span class="block text-white">Máquina pesada</span>
+                  <span class="hero-super-title text-case-yellow inline-block">sem operação parada</span>
+                </h1>
+                <p class="max-w-2xl text-base md:text-lg text-gray-300 leading-relaxed">
+                  A IBL entrega linha CASE com resposta comercial rápida, cobertura regional e pós-venda que acompanha o ritmo real da obra.
+                </p>
+              </div>
+              <div class="entry-hero-proof-grid">
+                <article class="entry-proof-card">
+                  <span class="entry-proof-label">Compromisso comercial</span>
+                  <strong class="entry-proof-value">1 dia útil</strong>
+                  <p class="entry-proof-copy">Para retorno inicial com indicação de linha e próximos passos.</p>
+                </article>
+                <article class="entry-proof-card">
+                  <span class="entry-proof-label">Cobertura IBL</span>
+                  <strong class="entry-proof-value">6 estados</strong>
+                  <p class="entry-proof-copy">Operação regional com lojas, peças e serviço técnico próximos da obra.</p>
+                </article>
+                <article class="entry-proof-card">
+                  <span class="entry-proof-label">Pós-venda</span>
+                  <strong class="entry-proof-value">Peças + campo</strong>
+                  <p class="entry-proof-copy">Atendimento pensado para disponibilidade operacional, não só para a venda.</p>
+                </article>
+              </div>
               <!-- Category switcher -->
-              <div class="pt-6 border-t border-case-border max-w-xl">
-                <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest mb-3 block">/// Selecionar Linha</span>
-                <div id="cat-selector" class="entry-cat-selector grid grid-cols-4 gap-1.5">
+              <div class="entry-hero-selector pt-6 border-t border-case-border max-w-2xl">
+                <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest mb-2 block">/// Selecionar Linha</span>
+                <p class="text-sm text-gray-400 mb-4 max-w-xl">Comece pela família de máquinas e a IBL conduz você para o modelo, proposta e plano de atendimento mais adequados.</p>
+                <div id="cat-selector" class="entry-cat-selector grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                   <button data-idx="0" class="cat-btn is-active">Retro<br/>escavadeiras</button>
                   <button data-idx="1" class="cat-btn">Escavadeiras<br/>Hidráulicas</button>
                   <button data-idx="2" class="cat-btn">Pás<br/>Carregadeiras</button>
@@ -117,49 +136,27 @@
                   <button data-idx="7" class="cat-btn">Tratores<br/>de Esteiras</button>
                 </div>
               </div>
-              <div class="entry-hero-actions flex items-center gap-4 pt-2">
+              <div class="entry-hero-actions flex items-center gap-4 pt-1">
                 <a data-track="hero_ver_catalogo" href="/produtos/" class="btn btn-primary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
-                  Ver Catálogo <i class="ph-bold ph-arrow-right"></i>
+                  Ver linha completa <i class="ph-bold ph-arrow-right"></i>
                 </a>
                 <a data-track="hero_falar_especialista" href="#captacao-lead" class="btn btn-secondary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
-                  <i class="ph-fill ph-phone-call text-xl"></i> Falar com Especialista
+                  <i class="ph-fill ph-phone-call text-xl"></i> Receber recomendação
                 </a>
               </div>
             </div>
-            <div class="lg:col-span-6 relative h-[420px] lg:h-[560px] flex items-center justify-center group">
-              <div class="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-700">
-                <svg viewBox="0 0 100 100" width="500" height="500" class="animate-spin-slow" overflow="visible">
-                  <defs>
-                    <filter id="hero-letter-glow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
-                      <feFlood flood-color="#E58E1A" flood-opacity="1" result="color"/>
-                      <feComposite in="color" in2="blur" operator="in" result="glow"/>
-                      <feMerge>
-                        <feMergeNode in="glow"/>
-                        <feMergeNode in="glow"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  <path id="circlePathHero" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"></path>
-                  <!-- Glow layer: filter sempre ativo, opacity transiciona 0→1 no hover -->
-                  <text class="hero-circle-glow" fill="#E58E1A" filter="url(#hero-letter-glow)" font-family="JetBrains Mono" font-weight="bold" font-size="10" letter-spacing="4">
-                    <textPath href="#circlePathHero">
-                      /// CASE CONSTRUCTION /// IBL MÁQUINAS /// FORÇA &amp; PRECISÃO
-                    </textPath>
-                  </text>
-                  <!-- Base layer: sempre visível, cor transiciona no hover -->
-                  <text class="hero-circle-text" fill="#555" font-family="JetBrains Mono" font-weight="bold" font-size="10" letter-spacing="4">
-                    <textPath href="#circlePathHero">
-                      /// CASE CONSTRUCTION /// IBL MÁQUINAS /// FORÇA &amp; PRECISÃO
-                    </textPath>
-                  </text>
-                </svg>
+            <div class="lg:col-span-6 relative h-[460px] lg:h-[620px] flex items-center justify-center group">
+              <div class="entry-hero-machine-stage">
+                <div class="entry-stage-frame"></div>
+                <div class="entry-stage-copy">
+                  <span class="entry-stage-label">Linha em destaque</span>
+                  <strong class="entry-stage-value">Retroescavadeiras CASE</strong>
+                </div>
+                <img id="showcase-machine" src="/case-assets/fotos-processed/580n-series2.svg" alt="Case 580N" loading="eager" decoding="async" fetchpriority="high" style="--img-translate: translateX(-150px);" class="relative z-10 w-full h-full object-contain showcase-machine-img" />
               </div>
-              <img id="showcase-machine" src="/case-assets/fotos-processed/580n-series2.svg" alt="Case 580N" loading="eager" decoding="async" fetchpriority="high" style="--img-translate: translateX(-150px);" class="relative z-10 w-full h-full object-contain showcase-machine-img" />
-              <div id="hero-tech-card" class="absolute top-14 w-[240px] z-20 hidden md:flex" style="right: -112px;">
+              <div id="hero-tech-card" class="entry-hero-tech-card absolute z-20 hidden md:flex">
                 <div class="w-full bg-black/78 backdrop-blur border border-white/10 rounded-lg p-4 flex flex-col">
-                  <span class="text-[11px] font-mono uppercase tracking-widest text-case-yellow">Ficha Técnica</span>
+                  <span class="text-[11px] font-mono uppercase tracking-widest text-case-yellow">Leitura rápida</span>
                   <div class="mt-4 space-y-2">
                     <div class="border-b border-white/10 pb-2">
                       <span class="block text-[10px] font-mono uppercase tracking-widest text-white">Modelo</span>
@@ -196,11 +193,18 @@
                   </div>
                 </div>
               </div>
-              <!-- Model title overlay -->
-              <div class="absolute top-1/4 -translate-y-[150px] left-[35px] z-20 pointer-events-none">
+              <div class="entry-hero-commercial-card absolute left-0 bottom-0 z-20">
+                <span class="entry-stage-label">Por que fechar com a IBL</span>
+                <ul class="entry-hero-commercial-list">
+                  <li>Condução consultiva para indicar a linha certa antes da proposta.</li>
+                  <li>Concessionária com operação regional, peças e pós-venda no mesmo fluxo.</li>
+                  <li>Contato comercial rápido para não deixar a obra travada por falta de decisão.</li>
+                </ul>
+              </div>
+              <div class="absolute top-6 left-6 z-20 pointer-events-none">
                 <span id="showcase-title" class="text-outline-hero text-6xl md:text-7xl xl:text-8xl font-display font-black uppercase pointer-events-auto" style="display:inline-block; transform-origin:left center">580N</span>
               </div>
-              <div id="hero-model-meta" class="hero-machine-meta absolute z-20 text-right" style="right: 10px; bottom: 12px; left: auto; transform: none;">
+              <div id="hero-model-meta" class="hero-machine-meta absolute z-20 text-right" style="right: 22px; bottom: 20px; left: auto; transform: none;">
                 <a id="showcase-link" class="hero-machine-link" href="/produtos/retroescavadeiras/">
                   <span id="showcase-model" class="hero-machine-model block text-2xl md:text-3xl font-display font-black text-white">580N Series 2</span>
                 </a>
@@ -243,36 +247,67 @@
       </section>
 
       <!-- Lead Capture Section -->
-      <section id="captacao-lead" class="py-20 bg-[#090909] border-b border-case-border">
+      <section id="captacao-lead" class="entry-lead-shell py-24 bg-[#090909] border-b border-case-border">
         <div class="container mx-auto px-6">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start">
             <div class="lg:col-span-7">
-              <span class="badge-inline mb-5">/// Consultoria Técnica</span>
-              <h2 class="font-display font-black text-4xl md:text-6xl uppercase leading-[0.92]">
-                Receba uma recomendação de máquina em até 1 dia útil
+              <span class="badge-inline mb-5">/// Consultoria Comercial</span>
+              <h2 class="font-display font-black text-4xl md:text-6xl uppercase leading-[0.92] max-w-4xl">
+                Fale com quem vende a máquina e sustenta a operação depois da entrega
               </h2>
               <p class="text-gray-300 mt-5 max-w-2xl">
-                Informe seu cenário operacional e nossa equipe indica o modelo ideal, com disponibilidade e plano de pós-venda para sua região.
+                A IBL não empurra catálogo. Primeiro entende aplicação, prazo, criticidade da frota e região. Depois recomenda a linha CASE certa, com disponibilidade e plano de atendimento coerentes.
               </p>
+              <div class="entry-lead-journey mt-8">
+                <article class="entry-lead-step">
+                  <span class="entry-lead-step-index">01</span>
+                  <div>
+                    <h3 class="entry-lead-step-title">Diagnóstico da operação</h3>
+                    <p class="entry-lead-step-copy">Entendimento do cenário, aplicação principal, ritmo da obra e risco de parada.</p>
+                  </div>
+                </article>
+                <article class="entry-lead-step">
+                  <span class="entry-lead-step-index">02</span>
+                  <div>
+                    <h3 class="entry-lead-step-title">Recomendação objetiva</h3>
+                    <p class="entry-lead-step-copy">Indicação da família e do modelo com racional técnico e comercial claro.</p>
+                  </div>
+                </article>
+                <article class="entry-lead-step">
+                  <span class="entry-lead-step-index">03</span>
+                  <div>
+                    <h3 class="entry-lead-step-title">Proposta com continuidade</h3>
+                    <p class="entry-lead-step-copy">Condições comerciais alinhadas com suporte, disponibilidade e cobertura regional.</p>
+                  </div>
+                </article>
+              </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8">
                 <div class="card-surface p-4">
                   <div class="text-case-yellow font-display font-black text-2xl">+250</div>
-                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">Operações Atendidas/ano</div>
+                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">Operações atendidas/ano</div>
                 </div>
                 <div class="card-surface p-4">
                   <div class="text-case-yellow font-display font-black text-2xl">2h</div>
-                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">SLA Médio de 1º Contato</div>
+                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">SLA médio do 1º contato</div>
                 </div>
                 <div class="card-surface p-4">
                   <div class="text-case-yellow font-display font-black text-2xl">4 Estados</div>
-                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">Cobertura Regional</div>
+                  <div class="text-xs font-mono uppercase tracking-widest text-gray-400">Cobertura regional CASE</div>
                 </div>
               </div>
             </div>
             <div class="lg:col-span-5">
-              <form id="lead-form" class="card-surface p-6 md:p-7 space-y-4">
-                <h3 class="font-display font-black text-2xl uppercase">Solicitar proposta</h3>
-                <p class="text-sm text-gray-400">Resposta comercial com equipamento recomendado e condições.</p>
+              <form id="lead-form" class="entry-lead-form card-surface p-6 md:p-7 space-y-4">
+                <div class="entry-lead-form-head">
+                  <span class="entry-stage-label">Resposta comercial</span>
+                  <h3 class="font-display font-black text-2xl uppercase">Receber proposta orientada à sua operação</h3>
+                  <p class="text-sm text-gray-400">Sem triagem genérica. Você entra falando com um time preparado para recomendar a linha e conduzir a próxima etapa.</p>
+                </div>
+                <div class="entry-lead-pill-row">
+                  <span class="entry-lead-pill">Equipamento recomendado</span>
+                  <span class="entry-lead-pill">Prazo de retorno claro</span>
+                  <span class="entry-lead-pill">WhatsApp direto</span>
+                </div>
                 <div>
                   <label for="lead-nome" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Nome</label>
                   <input id="lead-nome" name="nome" required class="input-field" placeholder="Seu nome completo" />
@@ -683,10 +718,10 @@
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 border-b border-black/10 pb-12">
           <div>
-            <h2 class="font-display font-black text-6xl md:text-8xl tracking-tighter leading-[0.8]">WORK<br />WITH US</h2>
+            <h2 class="font-display font-black text-6xl md:text-8xl tracking-tighter leading-[0.8]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-xl mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar a construir o seu futuro.</p>
+            <p class="font-bold text-xl mb-6 max-w-sm lg:text-right">Comercial, catálogo, proposta e suporte no mesmo fluxo. Fale com uma equipe que entende operação pesada de verdade.</p>
             <div class="entry-footer-actions flex gap-4">
               <a data-track="footer_whatsapp" href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20equipe%20IBL%20sobre%20m%C3%A1quinas%20CASE." target="_blank" rel="noopener noreferrer" class="btn px-8 py-3 font-bold uppercase tracking-widest">WhatsApp</a>
               <a data-track="footer_solicitar_contato" href="#captacao-lead" class="btn px-8 py-3 font-bold uppercase tracking-widest">Solicitar Contato</a>
