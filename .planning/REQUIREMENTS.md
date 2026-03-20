@@ -76,33 +76,33 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXP-01 | Unmapped | Pending |
-| EXP-02 | Unmapped | Pending |
-| EXP-03 | Unmapped | Pending |
-| EXP-04 | Unmapped | Pending |
-| LEAD-01 | Unmapped | Pending |
-| LEAD-02 | Unmapped | Pending |
-| LEAD-03 | Unmapped | Pending |
-| LEAD-04 | Unmapped | Pending |
-| SEO-01 | Unmapped | Pending |
-| SEO-02 | Unmapped | Pending |
-| SEO-03 | Unmapped | Pending |
-| SEO-04 | Unmapped | Pending |
-| FE-01 | Unmapped | Pending |
-| FE-02 | Unmapped | Pending |
-| FE-03 | Unmapped | Pending |
-| GEN-01 | Unmapped | Pending |
-| GEN-02 | Unmapped | Pending |
-| GEN-03 | Unmapped | Pending |
-| OPS-01 | Unmapped | Pending |
-| OPS-02 | Unmapped | Pending |
-| OPS-03 | Unmapped | Pending |
+| EXP-01 | Phase 1 - Site Experience Stabilization | Planned |
+| EXP-02 | Phase 1 - Site Experience Stabilization | Planned |
+| EXP-03 | Phase 1 - Site Experience Stabilization | Planned |
+| EXP-04 | Phase 1 - Site Experience Stabilization | Planned |
+| LEAD-01 | Phase 2 - Lead Flow Hardening | Planned |
+| LEAD-02 | Phase 2 - Lead Flow Hardening | Planned |
+| LEAD-03 | Phase 2 - Lead Flow Hardening | Planned |
+| LEAD-04 | Phase 2 - Lead Flow Hardening | Planned |
+| SEO-01 | Phase 3 - SEO And Content Trust Hardening | Planned |
+| SEO-02 | Phase 3 - SEO And Content Trust Hardening | Planned |
+| SEO-03 | Phase 3 - SEO And Content Trust Hardening | Planned |
+| SEO-04 | Phase 3 - SEO And Content Trust Hardening | Planned |
+| FE-01 | Phase 1 - Site Experience Stabilization | Planned |
+| FE-02 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
+| FE-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
+| GEN-01 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
+| GEN-02 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
+| GEN-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
+| OPS-01 | Phase 5 - Launch Verification And Operations Gate | Planned |
+| OPS-02 | Phase 5 - Launch Verification And Operations Gate | Planned |
+| OPS-03 | Phase 4 - Generation And Frontend Reliability Stabilization | Planned |
 
 **Coverage:**
 - v1 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21 ⚠️
+- Mapped to phases: 21
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-20*
-*Last updated: 2026-03-20 after initial definition*
+*Last updated: 2026-03-20 after roadmap traceability update*
