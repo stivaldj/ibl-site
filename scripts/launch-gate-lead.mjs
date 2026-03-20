@@ -2,7 +2,7 @@
 
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
-import { createRequire } from 'node:module'
+import { chromium } from 'playwright'
 
 function parseArgs(argv) {
   const options = {
@@ -52,15 +52,8 @@ Options:
   return options
 }
 
-function loadPlaywright() {
-  const fallbackRoot = '/Users/joseoliveira/CODING/trading-tool/node_modules'
-  const require = createRequire(import.meta.url)
-
-  try {
-    return require('playwright')
-  } catch {
-    return require(resolve(fallbackRoot, 'playwright'))
-  }
+function hasWhatsAppHandoff(openedUrls) {
+  return Array.isArray(openedUrls) && openedUrls.some((url) => typeof url === 'string' && url.startsWith('https://wa.me/'))
 }
 
 async function waitForSubmitState(page, feedbackSelector, expectedStatus) {
@@ -79,53 +72,40 @@ async function waitForSubmitState(page, feedbackSelector, expectedStatus) {
   throw new Error(`Timed out waiting for ${feedbackSelector} to reach ${expectedStatus}`)
 }
 
-async function submitHomepageLead(page, baseUrl, expectedStatus) {
-  await page.goto(`${baseUrl}/?ops=1&utm_source=phase5&utm_medium=launch-gate`, { waitUntil: 'networkidle' })
+async function submitLead(page, options) {
+  const { baseUrl, route, expectedStatus, feedbackSelector, formLabel, viewport, fill } = options
+
+  if (viewport) {
+    await page.setViewportSize(viewport)
+  }
+
+  await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' })
   await page.evaluate(() => {
     window.__iblOpenedUrls = []
   })
-  await page.fill('#lead-nome', 'Phase Five Home')
-  await page.fill('#lead-telefone', '(67) 99999-0001')
-  await page.selectOption('#lead-interesse', { index: 1 })
 
-  await page.click('#lead-form button[type="submit"]')
+  await fill(page)
+  await waitForSubmitState(page, feedbackSelector, expectedStatus)
 
-  await waitForSubmitState(page, '#lead-feedback', expectedStatus)
-
-  return page.evaluate(() => {
-    const feedback = document.querySelector('#lead-feedback')
+  const result = await page.evaluate((selector) => {
+    const feedback = document.querySelector(selector)
     return {
       status: feedback?.dataset.submitState || null,
       message: feedback?.textContent?.trim() || '',
       opsCount: JSON.parse(window.localStorage.getItem('ibl_lead_ops_v1') || '[]').length,
       openedUrls: Array.isArray(window.__iblOpenedUrls) ? window.__iblOpenedUrls : [],
     }
-  })
-}
+  }, feedbackSelector)
 
-async function submitProductLead(page, baseUrl, expectedStatus) {
-  await page.goto(`${baseUrl}/produtos/retroescavadeiras/580n/?ops=1&utm_source=phase5&utm_medium=launch-gate`, { waitUntil: 'networkidle' })
-  await page.waitForSelector('#product-lead-form')
-  await page.evaluate(() => {
-    window.__iblOpenedUrls = []
-  })
-  await page.fill('#product-lead-nome', 'Phase Five Product')
-  await page.fill('#product-lead-whatsapp', '(67) 99999-0002')
-  await page.fill('#product-lead-uso', 'Obras urbanas e terraplenagem')
+  result.route = route
+  result.formLabel = formLabel
+  result.whatsappPassed = hasWhatsAppHandoff(result.openedUrls)
 
-  await page.click('#product-lead-form button[type="submit"]')
+  if (!result.whatsappPassed) {
+    throw new Error(`${formLabel} did not open a WhatsApp handoff URL`)
+  }
 
-  await waitForSubmitState(page, '#product-lead-feedback', expectedStatus)
-
-  return page.evaluate(() => {
-    const feedback = document.querySelector('#product-lead-feedback')
-    return {
-      status: feedback?.dataset.submitState || null,
-      message: feedback?.textContent?.trim() || '',
-      opsCount: JSON.parse(window.localStorage.getItem('ibl_lead_ops_v1') || '[]').length,
-      openedUrls: Array.isArray(window.__iblOpenedUrls) ? window.__iblOpenedUrls : [],
-    }
-  })
+  return result
 }
 
 async function main() {
@@ -133,7 +113,6 @@ async function main() {
   const evidenceFile = resolve(options.evidenceFile)
   await mkdir(dirname(evidenceFile), { recursive: true })
 
-  const { chromium } = loadPlaywright()
   const browser = await chromium.launch({ headless: true })
   const context = await browser.newContext()
   await context.addInitScript(() => {
@@ -144,11 +123,55 @@ async function main() {
     }
   })
   const homepagePage = await context.newPage()
-  const homepage = await submitHomepageLead(homepagePage, options.baseUrl, options.expectedStatus)
+  const homepage = await submitLead(homepagePage, {
+    baseUrl: options.baseUrl,
+    route: '/?ops=1&utm_source=phase6&utm_medium=launch-gate',
+    expectedStatus: options.expectedStatus,
+    feedbackSelector: '#lead-feedback',
+    formLabel: 'homepage',
+    viewport: { width: 1440, height: 900 },
+    fill: async (page) => {
+      await page.fill('#lead-nome', 'Phase Six Home')
+      await page.fill('#lead-telefone', '(67) 99999-0001')
+      await page.selectOption('#lead-interesse', { index: 1 })
+      await page.click('#lead-form button[type="submit"]')
+    },
+  })
   await homepagePage.close()
 
+  const mobilePage = await context.newPage()
+  const mobile = await submitLead(mobilePage, {
+    baseUrl: options.baseUrl,
+    route: '/mobile/?ops=1&utm_source=phase6&utm_medium=launch-gate',
+    expectedStatus: options.expectedStatus,
+    feedbackSelector: '#lead-feedback',
+    formLabel: 'mobile',
+    viewport: { width: 390, height: 844 },
+    fill: async (page) => {
+      await page.fill('#lead-nome', 'Phase Six Mobile')
+      await page.fill('#lead-telefone', '(67) 99999-0003')
+      await page.selectOption('#lead-interesse', { index: 1 })
+      await page.click('#lead-form button[type="submit"]')
+    },
+  })
+  await mobilePage.close()
+
   const productPage = await context.newPage()
-  const product = await submitProductLead(productPage, options.baseUrl, options.expectedStatus)
+  const product = await submitLead(productPage, {
+    baseUrl: options.baseUrl,
+    route: '/produtos/retroescavadeiras/580n/?ops=1&utm_source=phase6&utm_medium=launch-gate',
+    expectedStatus: options.expectedStatus,
+    feedbackSelector: '#product-lead-feedback',
+    formLabel: 'product',
+    viewport: { width: 1280, height: 900 },
+    fill: async (page) => {
+      await page.waitForSelector('#product-lead-form')
+      await page.fill('#product-lead-nome', 'Phase Six Product')
+      await page.fill('#product-lead-whatsapp', '(67) 99999-0002')
+      await page.fill('#product-lead-uso', 'Obras urbanas e terraplenagem')
+      await page.click('#product-lead-form button[type="submit"]')
+    },
+  })
   await productPage.close()
 
   const evidence = {
@@ -156,10 +179,15 @@ async function main() {
     baseUrl: options.baseUrl,
     expectedStatus: options.expectedStatus,
     homepage,
+    mobile,
     product,
     passed:
       homepage.status === options.expectedStatus &&
-      product.status === options.expectedStatus,
+      mobile.status === options.expectedStatus &&
+      product.status === options.expectedStatus &&
+      homepage.whatsappPassed &&
+      mobile.whatsappPassed &&
+      product.whatsappPassed,
   }
 
   await writeFile(evidenceFile, `${JSON.stringify(evidence, null, 2)}\n`, 'utf8')
@@ -170,7 +198,7 @@ async function main() {
     process.exit(1)
   }
 
-  console.log(`launch-gate-lead: homepage and product flows reached ${options.expectedStatus}`)
+  console.log(`launch-gate-lead: homepage, mobile, and product flows reached ${options.expectedStatus} with WhatsApp handoff`)
 }
 
 main().catch((error) => {
