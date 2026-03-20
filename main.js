@@ -3,6 +3,11 @@ import './style.css'
 const ANALYTICS_MILESTONES = [25, 50, 75, 90]
 const ATTRIBUTION_STORAGE_KEY = 'ibl_attribution_v1'
 const LEAD_OPS_STORAGE_KEY = 'ibl_lead_ops_v1'
+const LEAD_SUBMIT_STATUS = {
+  success: 'success',
+  skipped: 'skipped',
+  failure: 'failure'
+}
 
 function initAnalytics() {
   window.dataLayer = window.dataLayer || []
@@ -59,22 +64,70 @@ function getAttribution() {
   }
 }
 
-async function submitLeadToWebhook(leadPayload) {
-  const webhookUrl = import.meta.env.VITE_LEAD_WEBHOOK_URL
-  const payload = {
+function buildLeadWebhookPayload(leadPayload) {
+  return {
     ...leadPayload,
     page_path: window.location.pathname,
     captured_at: new Date().toISOString(),
     attribution: getAttribution()
   }
+}
 
-  trackEvent('lead_submit_attempt', {
+function getLeadSubmitTrackingContext(leadPayload) {
+  return {
     page_path: window.location.pathname,
     lead_channel: leadPayload.lead_channel || 'unknown'
-  })
+  }
+}
+
+function createLeadSubmitResult(status, extras = {}) {
+  return {
+    ok: status === LEAD_SUBMIT_STATUS.success,
+    skipped: status === LEAD_SUBMIT_STATUS.skipped,
+    status,
+    ...extras
+  }
+}
+
+function getLeadSubmitFeedbackMessage(submitResult) {
+  if (submitResult.status === LEAD_SUBMIT_STATUS.skipped) {
+    return 'Webhook indisponível. Abrindo WhatsApp para continuar o atendimento...'
+  }
+
+  if (submitResult.status === LEAD_SUBMIT_STATUS.failure) {
+    return 'Falha ao enviar ao sistema. Abrindo WhatsApp para continuar o atendimento...'
+  }
+
+  return 'Solicitação enviada. Abrindo WhatsApp...'
+}
+
+function clearLeadSubmitFeedback(target) {
+  if (!(target instanceof HTMLElement)) return
+  delete target.dataset.submitState
+}
+
+function applyLeadSubmitFeedback(target, submitResult) {
+  if (!(target instanceof HTMLElement)) return
+  target.dataset.submitState = submitResult.status
+  target.textContent = getLeadSubmitFeedbackMessage(submitResult)
+}
+
+async function submitLeadToWebhook(leadPayload) {
+  const webhookUrl = import.meta.env.VITE_LEAD_WEBHOOK_URL
+  const payload = buildLeadWebhookPayload(leadPayload)
+  const trackingContext = getLeadSubmitTrackingContext(leadPayload)
+
+  trackEvent('lead_submit_attempt', trackingContext)
 
   if (!webhookUrl) {
-    return { ok: false, skipped: true }
+    trackEvent('lead_submit_skipped', {
+      ...trackingContext,
+      skip_reason: 'missing_webhook_url'
+    })
+    return createLeadSubmitResult(LEAD_SUBMIT_STATUS.skipped, {
+      payload,
+      reason: 'missing_webhook_url'
+    })
   }
 
   try {
@@ -87,21 +140,33 @@ async function submitLeadToWebhook(leadPayload) {
     })
 
     if (!response.ok) {
-      throw new Error(`Lead webhook falhou com status ${response.status}`)
+      const errorMessage = `Lead webhook falhou com status ${response.status}`
+      trackEvent('lead_submit_error', {
+        ...trackingContext,
+        error_message: errorMessage,
+        http_status: response.status
+      })
+      return createLeadSubmitResult(LEAD_SUBMIT_STATUS.failure, {
+        payload,
+        error_message: errorMessage,
+        http_status: response.status
+      })
     }
 
-    trackEvent('lead_submit_success', {
-      page_path: window.location.pathname,
-      lead_channel: leadPayload.lead_channel || 'unknown'
+    trackEvent('lead_submit_success', trackingContext)
+    return createLeadSubmitResult(LEAD_SUBMIT_STATUS.success, {
+      payload
     })
-    return { ok: true, skipped: false }
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'unknown'
     trackEvent('lead_submit_error', {
-      page_path: window.location.pathname,
-      lead_channel: leadPayload.lead_channel || 'unknown',
-      error_message: error instanceof Error ? error.message : 'unknown'
+      ...trackingContext,
+      error_message: errorMessage
     })
-    return { ok: false, skipped: false }
+    return createLeadSubmitResult(LEAD_SUBMIT_STATUS.failure, {
+      payload,
+      error_message: errorMessage
+    })
   }
 }
 
@@ -268,6 +333,7 @@ function setupLeadForm() {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
+    clearLeadSubmitFeedback(feedback)
 
     const payload = {
       nome: nome?.value?.trim() || '',
@@ -294,7 +360,7 @@ function setupLeadForm() {
       interesse: payload.interesse
     })
 
-    await submitLeadToWebhook({
+    const submitResult = await submitLeadToWebhook({
       lead_channel: 'form_whatsapp',
       lead_type: 'home',
       nome: payload.nome,
@@ -309,7 +375,7 @@ function setupLeadForm() {
     )
     const whatsappUrl = `https://wa.me/5567999999999?text=${message}`
 
-    if (feedback) feedback.textContent = 'Solicitação enviada. Abrindo WhatsApp...'
+    applyLeadSubmitFeedback(feedback, submitResult)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
     form.reset()
   })
@@ -863,6 +929,7 @@ function setupProductPageEnhancements() {
   const productFeedback = document.getElementById('product-lead-feedback')
   productForm?.addEventListener('submit', async (event) => {
     event.preventDefault()
+    clearLeadSubmitFeedback(productFeedback)
     const formData = new FormData(productForm)
     const payload = Object.fromEntries(formData.entries())
 
@@ -888,7 +955,7 @@ function setupProductPageEnhancements() {
       categoria: String(payload.categoria || '')
     })
 
-    await submitLeadToWebhook({
+    const submitResult = await submitLeadToWebhook({
       lead_channel: 'product_form_whatsapp',
       lead_type: 'product',
       nome: String(payload.nome || ''),
@@ -904,7 +971,7 @@ function setupProductPageEnhancements() {
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse no modelo ${payload.modelo} para ${payload.uso}.${sourceSuffix}`
     )
     window.open(`https://wa.me/5567999999999?text=${message}`, '_blank', 'noopener,noreferrer')
-    if (productFeedback) productFeedback.textContent = 'Solicitação enviada. Abrindo WhatsApp...'
+    applyLeadSubmitFeedback(productFeedback, submitResult)
     productForm.reset()
   })
 
