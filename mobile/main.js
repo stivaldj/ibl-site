@@ -1229,6 +1229,13 @@ function upsertJsonLd(id, jsonObject) {
   script.textContent = JSON.stringify(jsonObject)
 }
 
+function hasJsonLdType(type) {
+  return [...document.head.querySelectorAll('script[type="application/ld+json"]')].some((script) => {
+    const text = script.textContent || ''
+    return text.includes(`"@type":"${type}"`) || text.includes(`"@type": "${type}"`)
+  })
+}
+
 function getBreadcrumbItems(url) {
   const breadcrumbNav = document.querySelector('[data-breadcrumb-nav]') || document.querySelector('nav[aria-label="Breadcrumb"]')
   if (!(breadcrumbNav instanceof HTMLElement)) return []
@@ -1260,29 +1267,20 @@ function getBreadcrumbItems(url) {
 }
 
 function setupSeoEnhancements() {
-  const origin = window.location.origin
-  const url = `${origin}${window.location.pathname}`
+  const { origin, pathname } = window.location
+  const url = `${origin}${pathname}`
+  const isGeneratedRoute = pathname === '/produtos/' || pathname.startsWith('/produtos/')
+  const isProductPage = pathname.split('/').filter(Boolean).length === 3 && pathname.startsWith('/produtos/')
   const pageTitle = document.querySelector('title')?.textContent || 'IBL Máquinas'
   const h1 = document.querySelector('h1')?.textContent?.trim() || ''
   const firstDescription = document.querySelector('main p')?.textContent?.trim() || ''
   const description = firstDescription || 'Distribuidor oficial CASE com catálogo completo, suporte técnico e pós-venda regional.'
-
-  upsertMeta('description', description)
-  upsertMeta('og:title', pageTitle, true)
-  upsertMeta('og:description', description, true)
-  upsertMeta('og:type', 'website', true)
-  upsertMeta('og:url', url, true)
-  upsertMeta('twitter:card', 'summary_large_image')
-  upsertMeta('twitter:title', pageTitle)
-  upsertMeta('twitter:description', description)
-  upsertCanonical(url)
-
-  const isProductPage = window.location.pathname.split('/').filter(Boolean).length === 3 && window.location.pathname.startsWith('/produtos/')
-  if (!isProductPage) return
-
-  const image = document.querySelector('main img')?.getAttribute('src') || `${origin}/ibl-logo.png`
-  const absoluteImage = image.startsWith('http') ? image : `${origin}${image}`
-  const breadcrumbLinks = getBreadcrumbItems(url)
+  const hasGeneratedSeoBaseline = isGeneratedRoute
+    && document.head.querySelector('meta[name="description"]')
+    && document.head.querySelector('meta[property="og:title"]')
+    && document.head.querySelector('meta[name="twitter:title"]')
+    && document.head.querySelector('link[rel="canonical"]')
+    && hasJsonLdType('BreadcrumbList')
 
   const faqEntries = [...document.querySelectorAll('#product-faq-list .faq-item')].map((item) => {
     const q = item.querySelector('.faq-question span')?.textContent?.trim()
@@ -1296,6 +1294,33 @@ function setupSeoEnhancements() {
       }
     } : null
   }).filter(Boolean)
+
+  if (hasGeneratedSeoBaseline) {
+    if (isProductPage && faqEntries.length > 0 && !hasJsonLdType('FAQPage')) {
+      upsertJsonLd('faq-schema', {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqEntries
+      })
+    }
+    return
+  }
+
+  upsertMeta('description', description)
+  upsertMeta('og:title', pageTitle, true)
+  upsertMeta('og:description', description, true)
+  upsertMeta('og:type', isProductPage ? 'product' : 'website', true)
+  upsertMeta('og:url', url, true)
+  upsertMeta('twitter:card', 'summary_large_image')
+  upsertMeta('twitter:title', pageTitle)
+  upsertMeta('twitter:description', description)
+  upsertCanonical(url)
+
+  if (!isProductPage) return
+
+  const image = document.querySelector('main img')?.getAttribute('src') || `${origin}/ibl-logo.png`
+  const absoluteImage = image.startsWith('http') ? image : `${origin}${image}`
+  const breadcrumbLinks = getBreadcrumbItems(url)
 
   upsertJsonLd('product-schema', {
     '@context': 'https://schema.org',
