@@ -1099,7 +1099,9 @@ function setupUnitsMap() {
 
   function setActive(unitId) {
     unitItems.forEach((item) => {
-      item.classList.toggle('is-active', item.getAttribute('data-unit-id') === unitId)
+      const isActive = item.getAttribute('data-unit-id') === unitId
+      item.classList.toggle('is-active', isActive)
+      item.setAttribute('aria-pressed', isActive ? 'true' : 'false')
     })
   }
 
@@ -1129,27 +1131,11 @@ function setupUnitsMap() {
     const meta = getUnitMeta(item)
     if (!meta.unitId) return
 
-    const textBlock = item.querySelector('h4')?.parentElement
-    if (textBlock && !textBlock.querySelector('.unit-maps-link')) {
-      const mapsLink = document.createElement('a')
-      mapsLink.href = meta.mapsUrl
-      mapsLink.target = '_blank'
-      mapsLink.rel = 'noopener noreferrer'
-      mapsLink.className = 'unit-maps-link text-[11px] text-case-yellow font-mono uppercase tracking-widest mt-1 inline-block hover:underline'
-      mapsLink.textContent = 'Abrir no Google Maps'
-      mapsLink.addEventListener('click', (event) => {
-        event.stopPropagation()
-        trackEvent('unit_open_maps', {
-          page_path: window.location.pathname,
-          unit_id: meta.unitId
-        })
-      })
-      textBlock.appendChild(mapsLink)
-    }
-
     item.tabIndex = 0
     item.setAttribute('role', 'button')
     item.setAttribute('aria-label', `Selecionar unidade ${meta.title}`)
+    item.setAttribute('aria-controls', 'unit-map')
+    item.setAttribute('aria-pressed', 'false')
     item.addEventListener('click', () => activateUnit(item))
     item.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' && event.key !== ' ') return
