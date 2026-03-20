@@ -85,7 +85,7 @@ FOOTER_HTML = f"""\
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
             <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar.</p>
-            <div class="flex gap-4">
+            <div class="generated-footer-actions flex gap-4">
               <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas sobre os modelos CASE.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
               <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>
             </div>
@@ -131,8 +131,8 @@ FOOTER_HTML = f"""\
       </div>
     </footer>
     <div class="fixed bottom-8 right-8 z-50">
-      <a href="{build_whatsapp_url('Olá, vim do catálogo CASE e quero falar com um consultor da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
-        <i class="ph-fill ph-chats-circle text-3xl text-black group-hover:scale-110 transition-transform"></i>
+      <a href="{build_whatsapp_url('Olá, vim do catálogo CASE e quero falar com um consultor da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
+        <i class="generated-floating-chat__icon ph-fill ph-chats-circle text-3xl text-black group-hover:scale-110 transition-transform"></i>
         <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-black rounded-full animate-pulse"></span>
       </a>
     </div>"""
@@ -392,14 +392,14 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
           <div class="lg:col-span-5 space-y-8">
             <div>
               <span class="inline-block px-3 py-1 bg-case-yellow/10 border border-case-yellow/30 font-mono text-xs text-case-yellow tracking-widest uppercase mb-4">{badge}</span>
-              <h1 class="font-display font-black text-4xl md:text-5xl xl:text-6xl uppercase leading-tight">{title}</h1>
+              <h1 class="generated-product-title font-display font-black text-4xl md:text-5xl xl:text-6xl uppercase leading-tight">{title}</h1>
             </div>
             {description_html}
             <!-- Quick specs pills -->
             <div class="grid grid-cols-2 gap-3">
               {summary_pills}
             </div>
-            <div class="flex gap-4 pt-4">
+            <div class="generated-hero-actions flex gap-4 pt-4">
               <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-3 text-sm">
                 Solicitar Orçamento <i class="ph-bold ph-arrow-right"></i>
               </a>
@@ -535,8 +535,8 @@ def generate_category_page(cat_entry: dict) -> str:
            style="background-image: radial-gradient(#E58E1A 1px, transparent 1px); background-size: 30px 30px;"></div>
       <div class="container mx-auto px-6 relative z-10">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-3">/// {badge}</span>
-        <div class="flex flex-col md:flex-row justify-between items-end gap-6">
-          <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+          <h1 class="generated-category-title font-display font-black text-4xl sm:text-5xl md:text-7xl uppercase leading-none">
             {category.split()[0]}<br /><span class="text-outline">{" ".join(category.split()[1:]) or "&nbsp;"}</span>
           </h1>
           <div class="flex items-center gap-4 text-sm font-mono text-gray-400">
