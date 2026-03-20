@@ -8,6 +8,14 @@
     "build": "npm run build:site",
     "build:site": "vite build",
     "preview": "vite preview",
+    "generate:pages": "python3 generate_pages.py",
+    "assets:photos:check": "python3 process_fotos.py --dry-run --sync",
+    "assets:photos:sync": "python3 process_fotos.py --sync",
+    "assets:nobg:check": "python3 remove_bg_batch.py --dry-run --sync",
+    "assets:nobg:sync": "python3 remove_bg_batch.py --sync",
+    "scrape:specs": "python3 scrape_specs.py --strict",
+    "verify:dist": "node scripts/verify-dist.mjs",
+    "rebuild:site": "npm run generate:pages && npm run build:site && npm run verify:dist",
     "lead:webhook:mock": "node scripts/mock-lead-webhook.mjs"
   },
   "devDependencies": {
