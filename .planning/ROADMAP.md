@@ -183,6 +183,9 @@ Only launch-critical additions are allowed, and only when they are required to m
 
 **Gap closure:** Created from `v1.0-v1.0-MILESTONE-AUDIT.md` to close the final release-gate integration and flow gaps before milestone archival.
 
+**Execution progress:**
+- Plan `06-01` completed on 2026-03-20. The lead-gate helper is now repo-native, Playwright is declared in `package.json`, mobile lead coverage is part of the scripted gate, and WhatsApp handoff is enforced as a pass condition instead of passive evidence.
+
 ## Requirement Coverage Matrix
 
 | Requirement | Assigned phase |
