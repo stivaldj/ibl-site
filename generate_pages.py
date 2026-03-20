@@ -17,7 +17,7 @@ DB_PATH = BASE_DIR / "Scrape Case" / "scrape_db.json"
 OUT_DIR = BASE_DIR / "produtos"
 WHATSAPP_NUMBER = "5567999999999"
 WHATSAPP_BASE_URL = f"https://wa.me/{WHATSAPP_NUMBER}"
-HOME_CONTACT_URL = "/#contato"
+HOME_CONTACT_URL = "/#captacao-lead"
 
 
 def build_whatsapp_url(message: str) -> str:
@@ -38,7 +38,7 @@ HEAD_TEMPLATE = """\
   </style>"""
 
 # Header de navegação (fixo)
-HEADER_HTML = """\
+HEADER_HTML = f"""\
     <header class="fixed top-0 w-full z-50 bg-case-dark/90 backdrop-blur-md border-b border-case-border">
       <div class="flex items-center justify-between h-20 px-6 max-w-[1920px] mx-auto">
         <div class="flex items-center gap-4">
@@ -68,7 +68,7 @@ HEADER_HTML = """\
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             TELEMETRIA ONLINE
           </div>
-          <a href="/#contato" class="bg-white text-black hover:bg-case-yellow hover:text-black transition-colors px-6 py-2.5 font-bold uppercase text-xs tracking-widest border border-white">
+          <a href="{HOME_CONTACT_URL}" class="bg-white text-black hover:bg-case-yellow hover:text-black transition-colors px-6 py-2.5 font-bold uppercase text-xs tracking-widest border border-white">
             Solicitar Orçamento
           </a>
         </div>
