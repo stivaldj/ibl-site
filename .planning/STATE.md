@@ -12,7 +12,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 ## Current Phase
 
 - **Current phase:** Phase 3 - SEO And Content Trust Hardening
-- **Phase status:** Ready to begin after Phase 2 closed honest lead feedback, actionable local ops visibility, and final cross-surface lead verification
+- **Phase status:** Ready to begin after Phase 2 gap-closure plan `02-04` corrected the last contacted-lead SLA-risk false positive and re-verified the desktop, mobile, and product ops monitor path
 - **Roadmap status:** Phase 2 complete, Phase 3 queued for execution
 
 ## Phase Queue Status
@@ -20,7 +20,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
-| Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-03 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final desktop/mobile/product lead verification sweep |
+| Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-04 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final contacted-lead SLA-risk fix plus proof across desktop, mobile, and product routes |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
 | Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
@@ -62,6 +62,9 @@ Start the first incomplete Phase 3 plan, using the completed Phase 2 lead baseli
 - Homepage and product forms in `main.js`, `webapp/main.js`, and `mobile/main.js` now only claim success on real webhook success, keep skipped/failed values visible for retry/manual continuation, and still use the launch-approved WhatsApp fallback intentionally.
 - The local `?ops=1` monitor now records `submission_status`, `contact_status`, `submit_reason`, `error_message`, and route/context details so submitted, skipped, failed, pending, and SLA-risk leads are visible during launch checks.
 - Phase 2 browser verification now covers success, missing-webhook, and failure runs across `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/`, plus a 430px-wide parity sweep and explicit ops-mode success/failure/SLA-risk checks.
+- Plan `02-04` completed on 2026-03-20.
+- `runSlaCheck()` in `main.js`, `webapp/main.js`, and `mobile/main.js` now filters stale leads by `contact_status !== 'contacted'`, matching the existing ops record/update shape and removing the prior false-positive SLA-risk path for contacted leads.
+- Focused `?ops=1` verification on `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` now proves the submitted stale lead drops out of summary counts, console warnings, and `lead_sla_risk` telemetry immediately after the ops button marks it contacted, while a seeded stale uncontacted lead still keeps the legitimate warning path active.
 
 ---
-*Last updated: 2026-03-20 after completing plan 02-03*
+*Last updated: 2026-03-20 after completing plan 02-04*
