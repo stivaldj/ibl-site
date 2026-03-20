@@ -241,12 +241,18 @@ function setupScrollDepthTracking() {
 }
 
 function setupClickTracking() {
-  document.querySelectorAll('[data-track]').forEach((el) => {
-    el.addEventListener('click', () => {
-      trackEvent('cta_click', {
-        page_path: window.location.pathname,
-        cta_id: el.getAttribute('data-track')
-      })
+  document.addEventListener('click', (event) => {
+    const target = event.target
+    if (!(target instanceof Element)) return
+    const tracked = target.closest('[data-track]')
+    if (!(tracked instanceof HTMLElement)) return
+
+    const ctaId = tracked.getAttribute('data-track')
+    if (!ctaId) return
+
+    trackEvent('cta_click', {
+      page_path: window.location.pathname,
+      cta_id: ctaId
     })
   })
 }
@@ -960,6 +966,36 @@ function upsertJsonLd(id, jsonObject) {
   script.textContent = JSON.stringify(jsonObject)
 }
 
+function getBreadcrumbItems(url) {
+  const breadcrumbNav = document.querySelector('[data-breadcrumb-nav]') || document.querySelector('nav[aria-label="Breadcrumb"]')
+  if (!(breadcrumbNav instanceof HTMLElement)) return []
+
+  const breadcrumbLinks = [...breadcrumbNav.querySelectorAll('a[href]')].map((anchor, idx) => {
+    const name = anchor.textContent?.trim() || ''
+    const item = anchor.href
+    if (!name || !item) return null
+
+    return {
+      '@type': 'ListItem',
+      position: idx + 1,
+      name,
+      item
+    }
+  }).filter(Boolean)
+
+  const breadcrumbCurrent = breadcrumbNav.querySelector('[aria-current="page"]')?.textContent?.trim()
+  if (breadcrumbCurrent) {
+    breadcrumbLinks.push({
+      '@type': 'ListItem',
+      position: breadcrumbLinks.length + 1,
+      name: breadcrumbCurrent,
+      item: url
+    })
+  }
+
+  return breadcrumbLinks
+}
+
 function setupSeoEnhancements() {
   const origin = window.location.origin
   const url = `${origin}${window.location.pathname}`
@@ -983,21 +1019,7 @@ function setupSeoEnhancements() {
 
   const image = document.querySelector('main img')?.getAttribute('src') || `${origin}/ibl-logo.png`
   const absoluteImage = image.startsWith('http') ? image : `${origin}${image}`
-  const breadcrumbLinks = [...document.querySelectorAll('nav a')].map((a, idx) => ({
-    '@type': 'ListItem',
-    position: idx + 1,
-    name: a.textContent?.trim() || '',
-    item: a.href
-  }))
-  const breadcrumbCurrent = document.querySelector('nav span')?.textContent?.trim()
-  if (breadcrumbCurrent) {
-    breadcrumbLinks.push({
-      '@type': 'ListItem',
-      position: breadcrumbLinks.length + 1,
-      name: breadcrumbCurrent,
-      item: url
-    })
-  }
+  const breadcrumbLinks = getBreadcrumbItems(url)
 
   const faqEntries = [...document.querySelectorAll('#product-faq-list .faq-item')].map((item) => {
     const q = item.querySelector('.faq-question span')?.textContent?.trim()
@@ -1029,11 +1051,13 @@ function setupSeoEnhancements() {
     url
   })
 
-  upsertJsonLd('breadcrumb-schema', {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbLinks
-  })
+  if (breadcrumbLinks.length > 0) {
+    upsertJsonLd('breadcrumb-schema', {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbLinks
+    })
+  }
 
   if (faqEntries.length > 0) {
     upsertJsonLd('faq-schema', {
