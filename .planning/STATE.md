@@ -76,6 +76,15 @@ Start the first incomplete Phase 4 plan, using the now-verified generator SEO ba
 - Final browser verification on `/produtos/`, `/produtos/retroescavadeiras/`, `/produtos/retroescavadeiras/580n/`, and `/produtos/escavadeiras-hidraulicas/cx240c-me/` confirmed the DOM keeps the same canonical/meta/schema state as the shipped HTML, with `FAQPage` added only as an intentional product-page supplement.
 - Phase 3 verification completed on 2026-03-20.
 - `03-VERIFICATION.md` passed with all four SEO requirements satisfied: generated pages now ship metadata and structured data directly in HTML, representative product content matches its source data, and generated-route runtime SEO behavior is fallback-only instead of primary.
+- Plan `04-01` completed on 2026-03-20.
+- `generate_pages.py` now sorts source assets, synchronizes copied public assets intentionally, preserves managed `*-nobg.png` derivatives, and keeps generated HTML stable across repeated reruns.
+- `process_fotos.py`, `remove_bg_batch.py`, and `scrape_specs.py` now expose explicit refresh behavior through `--sync`, `--force`, `--dry-run`, and `--strict` instead of silently relying on stale outputs or partial-success exits.
+- Plan `04-02` completed on 2026-03-20.
+- `npm run build` now packages the full launch surface, including `produtos/**`, into `dist/`, and representative packaged routes no longer reference raw source `main.js` or `style.css` assets.
+- The old Vite starter scaffold under `src/` is now explicitly quarantined through `src/README.md`, making the real production entrypoints unambiguous.
+- Plan `04-03` completed on 2026-03-20.
+- `docs/OPERATIONS.md` is now the authoritative rebuild guide, backed by package scripts for dry-run asset checks, catalog regeneration, final packaging, and `dist/` verification.
+- The documented rebuild flow passed end-to-end: dry-run asset checks were clean, `npm run rebuild:site` regenerated the catalog, rebuilt `dist/`, and verified representative homepage, mobile, catalog, category, and product routes in the packaged artifact.
 
 ---
-*Last updated: 2026-03-20 after completing and verifying Phase 3*
+*Last updated: 2026-03-20 after completing Phase 4 plans 04-01 through 04-03*

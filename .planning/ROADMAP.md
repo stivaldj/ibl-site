@@ -129,6 +129,11 @@ Only launch-critical additions are allowed, and only when they are required to m
 4. The regeneration workflow is documented clearly enough for an operator to rebuild launch content and assets safely.
 5. Technical debt that would block safe continuation is either reduced within this phase or captured as an explicit bounded remainder that no longer blocks launch.
 
+**Execution progress:**
+- Plan `04-01` completed on 2026-03-20. `generate_pages.py` now sorts and synchronizes model assets deterministically, audited stale leftovers are removed during sync, and the helper scripts now expose explicit refresh and failure semantics through `--sync`, `--force`, `--dry-run`, and `--strict`.
+- Plan `04-02` completed on 2026-03-20. `vite build` now packages the full launch surface, including `produtos/**`, into `dist/`, and the old Vite starter scaffold has been quarantined so maintainers stop treating `src/` as a live production path.
+- Plan `04-03` completed on 2026-03-20. `docs/OPERATIONS.md` now defines one authoritative rebuild workflow, package scripts expose the supported commands directly, and the documented `npm run rebuild:site` path passed end-to-end with representative packaged-route verification against `dist/`.
+
 ### Phase 5: Launch Verification And Operations Gate
 
 **Goal:** Define and use a repeatable release gate for the hardened site before future milestone work resumes.
@@ -180,4 +185,4 @@ Only launch-critical additions are allowed, and only when they are required to m
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 after plan 02-04 execution*
+*Last updated: 2026-03-20 after Phase 4 plan execution*
