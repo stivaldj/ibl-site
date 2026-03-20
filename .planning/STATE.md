@@ -5,102 +5,37 @@
 
 ## Current Focus
 
-The current focus is the v1 production-hardening initiative for the existing VARIANT site. This is a brownfield stabilization effort, so work should prioritize fixing and verifying the current customer-facing experience, lead flow, SEO/content trust, and generation reliability before any non-essential additions.
-
-Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell parity, generated-route browse safety, shared-runtime consistency, and generator-level contact-anchor alignment across the representative desktop and mobile browse journey.
+The current focus is no longer production hardening. `v1.0` has been shipped, audited, and archived. The next planning step is to define a new milestone from the verified baseline rather than continuing the archived roadmap.
 
 ## Current Phase
 
-- **Current phase:** Milestone ready for re-audit
-- **Phase status:** Phase 6 is verified and complete.
-- **Roadmap status:** Phases 1 through 6 complete
+- **Current phase:** Milestone archived
+- **Phase status:** `v1.0` shipped
+- **Roadmap status:** No active milestone
 
-## Phase Queue Status
+## Milestone Queue Status
 
-| Phase | Status | Notes |
-|-------|--------|-------|
-| Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
-| Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-04 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final contacted-lead SLA-risk fix plus proof across desktop, mobile, and product routes |
-| Phase 3 - SEO And Content Trust Hardening | Completed | Plans 03-01 through 03-03 verified: generated routes now ship source-owned metadata, trustworthy machine content, and fallback-only runtime SEO behavior |
-| Phase 4 - Generation And Frontend Reliability Stabilization | Completed | Plans 04-01 through 04-03 delivered deterministic asset sync, honest full-site packaging, and an authoritative rebuild workflow verified against dist |
-| Phase 5 - Launch Verification And Operations Gate | Completed | Plans 05-01 through 05-02 defined and executed the formal launch gate, producing a readiness verdict and bounded remainder |
-| Phase 6 - Launch Gate Completion | Completed | Plans 06-01 and 06-02 are complete and verified: the launch gate is repo-native, mobile-inclusive, and strict about WhatsApp handoff evidence |
+| Milestone | Status | Notes |
+|-----------|--------|-------|
+| `v1.0` - Production Hardening | Archived | Phases 1 through 6 shipped and archived under `.planning/milestones/` |
 
-## Initialized Project Context
+## Stable Baseline
 
 - **Core value:** Prospects can confidently evaluate equipment and convert into qualified opportunities through a trustworthy, fully functional website.
-- **Planning configuration:** `mode=yolo`, `depth=standard`, `parallelization=true`, `model_profile=quality`
-- **Roadmap inputs used:** `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md`, `.planning/config.json`, `.planning/codebase/ARCHITECTURE.md`, `.planning/codebase/CONCERNS.md`, `.planning/codebase/TESTING.md`
-- **Primary launch risks:** visible UX defects, unreliable or opaque lead handling, runtime-dependent SEO, generated-content drift, stale assets or generation leftovers, and lack of a repeatable launch check
-- **Scope rule:** only launch-critical additions are allowed, and only when required for production readiness
+- **Latest shipped milestone:** `v1.0` on 2026-03-20
+- **Requirements status:** 21 / 21 shipped requirements satisfied and archived
+- **Launch gate:** rebuild, packaged smoke, homepage/mobile/product lead verification, and WhatsApp handoff enforcement are documented and passing
+- **Operational docs:** `docs/OPERATIONS.md`, `docs/LAUNCH-GATE.md`, and `docs/LAUNCH-READINESS.md` define the current release discipline
 
 ## Next Planning Action
 
-The roadmap is complete again. The next sensible workflow is to rerun the milestone audit and confirm the closeout gaps are gone.
+Run `$gsd-new-milestone` to define the next milestone from the shipped baseline.
 
-## Execution Notes
+## Archive Pointers
 
-- Plan `01-01` completed on 2026-03-20.
-- Desktop `/` and mobile `/mobile/` now share the same launch-approved first-step CTA paths: `/produtos/` and `#captacao-lead`.
-- Entry-shell unit coverage no longer depends on Leaflet/OpenStreetMap; a local summary panel keeps console and asset-request smoke checks clean.
-- Plan `01-02` completed on 2026-03-20.
-- Generated header/footer/chat affordances under `produtos/` now use real destinations or explicit non-interactive copy, and generated breadcrumbs are isolated under dedicated breadcrumb nav markup.
-- Shared generated-page CSS now guards long titles, mobile CTA rows, wrapped footer actions, and floating chat sizing.
-- Plan `01-03` completed on 2026-03-20.
-- Shared browse-runtime behavior across `main.js`, `webapp/main.js`, and `mobile/main.js` now aligns for delegated CTA tracking, breadcrumb schema targeting, and the unit-summary behavior that remained stale in `main.js`.
-- Plan `01-04` completed on 2026-03-20.
-- Generated catalog/category/product contact CTAs now resolve to `/#captacao-lead` from one generator source, and sampled clicks from `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` land on the homepage lead section correctly.
-- Final representative route verification passed on desktop and mobile for `/`, `/mobile/`, `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` with clean console and network results.
-- Generated-route runtime verification should use the local Vite dev server for source-module execution; `vite preview` still falls back to the app shell for `/produtos/**`, and a raw static server exposes the HTML but not the CSS-importing runtime modules.
-- Plan `02-01` completed on 2026-03-20.
-- Phase 2 now has a repo-local mock webhook harness at `scripts/mock-lead-webhook.mjs` with success mode on `127.0.0.1:8787/lead`, failure mode available via `--mode failure --port 8788`, and optional payload persistence through `--capture-file`.
-- Local lead verification should default `VITE_LEAD_WEBHOOK_URL` to `http://127.0.0.1:8787/lead` and start the harness with `npm run lead:webhook:mock` before browser checks so payload inspection and failure reproduction do not depend on `ibl-ai-os`.
-- Plan `02-02` completed on 2026-03-20.
-- `main.js`, `webapp/main.js`, and `mobile/main.js` now build the same webhook payload contract and return explicit `success`, `skipped`, and `failure` submit states instead of the prior ambiguous boolean/skipped combination.
-- Homepage feedback on `/` and `/mobile/` now exposes submit outcomes through `data-submit-state`, and representative browser verification confirmed a product-context payload on `/produtos/retroescavadeiras/580n/` with `uso`, `modelo`, `categoria`, `page_path`, `captured_at`, and `attribution`.
-- Missing-webhook runs now emit `lead_submit_skipped`, while a 500-mode mock webhook still preserves the WhatsApp fallback but surfaces `data-submit-state=\"failure\"` and a `lead_submit_error` event with the HTTP status.
-- Plan `02-03` completed on 2026-03-20.
-- Homepage and product forms in `main.js`, `webapp/main.js`, and `mobile/main.js` now only claim success on real webhook success, keep skipped/failed values visible for retry/manual continuation, and still use the launch-approved WhatsApp fallback intentionally.
-- The local `?ops=1` monitor now records `submission_status`, `contact_status`, `submit_reason`, `error_message`, and route/context details so submitted, skipped, failed, pending, and SLA-risk leads are visible during launch checks.
-- Phase 2 browser verification now covers success, missing-webhook, and failure runs across `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/`, plus a 430px-wide parity sweep and explicit ops-mode success/failure/SLA-risk checks.
-- Plan `02-04` completed on 2026-03-20.
-- `runSlaCheck()` in `main.js`, `webapp/main.js`, and `mobile/main.js` now filters stale leads by `contact_status !== 'contacted'`, matching the existing ops record/update shape and removing the prior false-positive SLA-risk path for contacted leads.
-- Focused `?ops=1` verification on `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` now proves the submitted stale lead drops out of summary counts, console warnings, and `lead_sla_risk` telemetry immediately after the ops button marks it contacted, while a seeded stale uncontacted lead still keeps the legitimate warning path active.
-- Plan `03-01` completed on 2026-03-20.
-- `generate_pages.py` now owns canonical, description, Open Graph, Twitter, and JSON-LD output for generated catalog, category, and product routes, using `https://iblmaquinas.com.br` as the source HTML canonical host.
-- Representative source inspection on `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` confirmed the shipped HTML now contains metadata and structured data before any runtime script executes.
-- Plan `03-02` completed on 2026-03-20.
-- `generate_pages.py` now strips zero-width spec-label artifacts, preserves markdown continuation lines in quick specs and technical spec values, and renders the final product CTA with the full model title instead of a brittle token split.
-- Representative source-vs-output audits passed for `/produtos/retroescavadeiras/580n/`, `/produtos/escavadeiras-hidraulicas/cx220c-s2/`, `/produtos/escavadeiras-hidraulicas/cx240c-me/`, and `/produtos/minicarregadeiras/sr175b/`, confirming title, category, description, quick specs, and CTA context stay aligned with `scrape_db.json` and the matching `content.md`.
-- Plan `03-03` completed on 2026-03-20.
-- `main.js`, `webapp/main.js`, and `mobile/main.js` now treat generated-route SEO as source-owned when `/produtos/**` already ships description, canonical, social metadata, and breadcrumb schema in HTML, leaving runtime mutation only as fallback behavior.
-- Final browser verification on `/produtos/`, `/produtos/retroescavadeiras/`, `/produtos/retroescavadeiras/580n/`, and `/produtos/escavadeiras-hidraulicas/cx240c-me/` confirmed the DOM keeps the same canonical/meta/schema state as the shipped HTML, with `FAQPage` added only as an intentional product-page supplement.
-- Phase 3 verification completed on 2026-03-20.
-- `03-VERIFICATION.md` passed with all four SEO requirements satisfied: generated pages now ship metadata and structured data directly in HTML, representative product content matches its source data, and generated-route runtime SEO behavior is fallback-only instead of primary.
-- Plan `04-01` completed on 2026-03-20.
-- `generate_pages.py` now sorts source assets, synchronizes copied public assets intentionally, preserves managed `*-nobg.png` derivatives, and keeps generated HTML stable across repeated reruns.
-- `process_fotos.py`, `remove_bg_batch.py`, and `scrape_specs.py` now expose explicit refresh behavior through `--sync`, `--force`, `--dry-run`, and `--strict` instead of silently relying on stale outputs or partial-success exits.
-- Plan `04-02` completed on 2026-03-20.
-- `npm run build` now packages the full launch surface, including `produtos/**`, into `dist/`, and representative packaged routes no longer reference raw source `main.js` or `style.css` assets.
-- The old Vite starter scaffold under `src/` is now explicitly quarantined through `src/README.md`, making the real production entrypoints unambiguous.
-- Plan `04-03` completed on 2026-03-20.
-- `docs/OPERATIONS.md` is now the authoritative rebuild guide, backed by package scripts for dry-run asset checks, catalog regeneration, final packaging, and `dist/` verification.
-- The documented rebuild flow passed end-to-end: dry-run asset checks were clean, `npm run rebuild:site` regenerated the catalog, rebuilt `dist/`, and verified representative homepage, mobile, catalog, category, and product routes in the packaged artifact.
-- Plan `05-01` completed on 2026-03-20.
-- `docs/LAUNCH-GATE.md` now defines the formal launch gate for rebuild, packaged smoke, mobile coverage, and lead verification, while package scripts expose `launch:gate:smoke` and `launch:gate:lead`.
-- Plan `05-02` completed on 2026-03-20.
-- The formal launch gate passed end-to-end, including rebuild baseline, packaged-route smoke verification, and homepage/product lead checks in both success and failure modes.
-- `docs/LAUNCH-READINESS.md` now records the final verdict: ready for production continuation, with explicit bounded remainder.
-- Milestone audit on 2026-03-20 found the remaining closeout gaps are narrow: the lead gate still depends on an undeclared external Playwright fallback and does not enforce mobile lead coverage or WhatsApp handoff as pass criteria.
-- Phase 6 was added on 2026-03-20 to close those release-gate gaps before milestone archival.
-- Plan `06-01` completed on 2026-03-20.
-- `package.json` now declares Playwright directly, the repo exposes `npm run playwright:install`, and `scripts/launch-gate-lead.mjs` no longer loads dependencies from an external absolute path.
-- Phase 6 lead verification now covers `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` in both success and failure modes, and all three flows must open a `wa.me` handoff URL to pass.
-- Plan `06-02` completed on 2026-03-20.
-- The refreshed gate evidence in `.tmp/launch-gate/latest/` now includes homepage, mobile, and representative product lead coverage in both success and failure modes, plus explicit `whatsappPassed` proof for all three flows.
-- Live lead-gate runs now stage raw webhook capture under `/tmp` and copy it back into `.tmp/launch-gate/latest/` afterward to avoid Vite dev-server reloads during submission.
-- Phase 6 verification completed on 2026-03-20.
-- `06-VERIFICATION.md` passed with both launch-gate requirements satisfied and no remaining blocking gaps inside repo scope.
+- `.planning/milestones/v1.0-ROADMAP.md`
+- `.planning/milestones/v1.0-REQUIREMENTS.md`
+- `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
 
 ---
-*Last updated: 2026-03-20 after verifying Phase 6*
+*Last updated: 2026-03-20 after archiving v1.0*
