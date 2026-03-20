@@ -9,24 +9,46 @@ import json
 import os
 import re
 import shutil
+from html import escape
 from pathlib import Path
 from urllib.parse import quote
 
 BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "Scrape Case" / "scrape_db.json"
 OUT_DIR = BASE_DIR / "produtos"
+SITE_URL = "https://iblmaquinas.com.br"
+SITE_NAME = "IBL Máquinas"
+SITE_BRAND = "CASE Construction"
+DEFAULT_OG_IMAGE = f"{SITE_URL}/ibl-logo.png"
 WHATSAPP_NUMBER = "5567999999999"
 WHATSAPP_BASE_URL = f"https://wa.me/{WHATSAPP_NUMBER}"
 HOME_CONTACT_URL = "/#captacao-lead"
+ZERO_WIDTH_CHARS = {
+    "\u200b",  # zero-width space
+    "\u200c",  # zero-width non-joiner
+    "\u200d",  # zero-width joiner
+    "\ufeff",  # BOM / zero-width no-break space
+}
 
 
 def build_whatsapp_url(message: str) -> str:
     return f"{WHATSAPP_BASE_URL}?text={quote(message)}"
 
+
+def clean_text(value: str) -> str:
+    """Normalize whitespace and strip invisible formatting artifacts."""
+    if not value:
+        return ""
+
+    cleaned = "".join(ch for ch in value if ch not in ZERO_WIDTH_CHARS)
+    cleaned = re.sub(r"\s+", " ", cleaned, flags=re.UNICODE)
+    return cleaned.strip()
+
 # Cabeçalho HTML compartilhado (fontes, ícones, CSS)
-HEAD_TEMPLATE = """\
+HEAD_ASSETS_TEMPLATE = """\
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" />
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,6 +58,11 @@ HEAD_TEMPLATE = """\
     /* Prevent FOUC before JS/CSS loads */
     :root { background-color: #050505; color: #fff; }
   </style>"""
+
+DEFAULT_DESCRIPTION = (
+    "IBL Máquinas, distribuidor oficial CASE Construction com catálogo completo, "
+    "suporte técnico especializado e pós-venda regional."
+)
 
 # Header de navegação (fixo)
 HEADER_HTML = f"""\
@@ -155,49 +182,65 @@ def parse_content_md(content: str) -> dict:
     section = None
     current_group = None
     group_items = []
+    current_item = None
 
     for line in lines:
         stripped = line.strip()
+        cleaned = clean_text(stripped)
 
-        if stripped.startswith("# "):
-            data["title"] = stripped[2:].strip()
-        elif stripped.startswith("**Categoria**: "):
-            data["category"] = stripped.replace("**Categoria**: ", "").strip()
-        elif stripped.startswith("## Descrição"):
+        if cleaned.startswith("# "):
+            data["title"] = clean_text(cleaned[2:])
+        elif cleaned.startswith("**Categoria**: "):
+            data["category"] = clean_text(cleaned.replace("**Categoria**: ", "", 1))
+        elif cleaned.startswith("## Descrição"):
             section = "descricao"
-        elif stripped.startswith("## Especificações Rápidas"):
+            current_item = None
+        elif cleaned.startswith("## Especificações Rápidas"):
             section = "quick_specs"
-        elif stripped.startswith("## Especificações Técnicas"):
+            current_item = None
+        elif cleaned.startswith("## Especificações Técnicas"):
             section = "tech_specs"
-        elif stripped.startswith("## Assets Locais"):
+            current_item = None
+        elif cleaned.startswith("## Assets Locais"):
             section = "assets"
-        elif stripped.startswith("## "):
+        elif cleaned.startswith("## "):
             section = None
+            current_item = None
 
-        elif section == "descricao" and stripped and not stripped.startswith("#"):
+        elif section == "descricao" and cleaned and not cleaned.startswith("#"):
             if data["description"]:
-                data["description"] += " " + stripped
+                data["description"] += " " + cleaned
             else:
-                data["description"] = stripped
+                data["description"] = cleaned
 
-        elif section == "quick_specs" and stripped.startswith("- **"):
-            m = re.match(r"- \*\*(.+?)\*\*: (.+)", stripped)
+        elif section == "quick_specs" and cleaned.startswith("- **"):
+            m = re.match(r"- \*\*(.+?)\*\*: (.+)", cleaned)
             if m:
-                data["summary_specs"][m.group(1).strip()] = m.group(2).strip()
+                current_item = clean_text(m.group(1))
+                data["summary_specs"][current_item] = clean_text(m.group(2))
+        elif section == "quick_specs" and current_item and cleaned and not cleaned.startswith("#"):
+            data["summary_specs"][current_item] = clean_text(f"{data['summary_specs'][current_item]} {cleaned}")
 
         elif section == "tech_specs":
-            if stripped.startswith("### "):
+            if cleaned.startswith("### "):
                 if current_group and group_items:
                     data["tech_groups"].append({"group": current_group, "items": group_items})
-                current_group = stripped[4:].strip()
+                current_group = clean_text(cleaned[4:])
                 group_items = []
-            elif stripped.startswith("- **") and current_group is not None:
-                m = re.match(r"- \*\*(.+?)\*\*: (.+)", stripped)
+                current_item = None
+            elif cleaned.startswith("- **") and current_group is not None:
+                m = re.match(r"- \*\*(.+?)\*\*: (.+)", cleaned)
                 if m:
-                    group_items.append({"key": m.group(1).strip(), "value": m.group(2).strip()})
+                    current_item = {
+                        "key": clean_text(m.group(1)),
+                        "value": clean_text(m.group(2)),
+                    }
+                    group_items.append(current_item)
+            elif current_item is not None and cleaned and not cleaned.startswith("#"):
+                current_item["value"] = clean_text(f"{current_item['value']} {cleaned}")
 
-        elif section == "assets" and stripped.startswith("- "):
-            data["assets_local"].append(stripped[2:].strip())
+        elif section == "assets" and cleaned.startswith("- "):
+            data["assets_local"].append(clean_text(cleaned[2:]))
 
     # Flush último grupo
     if current_group and group_items:
@@ -314,6 +357,10 @@ def render_summary_pills(specs: dict) -> str:
     return "\n".join(pills)
 
 
+def build_product_cta_heading(title: str) -> str:
+    return f"Interessado em {title}?"
+
+
 # ─── Página de produto (ficha técnica) ─────────────────────────────────────────
 
 def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
@@ -428,7 +475,7 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
     <section class="py-20 bg-case-gray border-t border-case-border">
       <div class="container mx-auto px-6 text-center">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// IBL Máquinas</span>
-        <h2 class="font-display font-black text-4xl md:text-5xl uppercase mb-6">Interessado no {title.split()[0]} {title.split()[1] if len(title.split()) > 1 else ''}?</h2>
+        <h2 class="font-display font-black text-4xl md:text-5xl uppercase mb-6">{build_product_cta_heading(title)}</h2>
         <p class="text-gray-400 mb-10 max-w-xl mx-auto">Nossa equipe especializada está pronta para apresentar uma proposta personalizada para sua operação.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors">
