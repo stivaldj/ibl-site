@@ -62,9 +62,9 @@ Each task was committed atomically:
 
 1. **Task 1: Align repeated generated contact CTAs to the real homepage lead anchor** - `04fa678` (fix)
 2. **Task 2: Regenerate the affected browse surfaces and remove stale dead-end targets** - `e5607f6` (fix)
-3. **Task 3: Re-verify generated CTA navigation against homepage and mobile anchor behavior** - `TBD_ON_COMMIT` (docs)
+3. **Task 3: Re-verify generated CTA navigation against homepage and mobile anchor behavior** - `b06d231` (docs)
 
-**Plan metadata:** `TBD_ON_COMMIT` (docs)
+**Plan metadata:** `b06d231` (docs)
 
 ## Files Created/Modified
 
@@ -98,6 +98,14 @@ None - no external service configuration required.
 
 - Phase 1 is now fully closed, including the generated CTA anchor gap called out by verification.
 - Phase 2 can proceed without carrying a generated-route contact-anchor mismatch into lead-flow hardening.
+
+## Self-Check
+
+- Summary exists at `.planning/phases/01-site-experience-stabilization/01-04-SUMMARY.md`: PASSED
+- Task commits for `01-04` exist in git log (`04fa678`, `e5607f6`, `b06d231`): PASSED
+- Verification completed: `python3 generate_pages.py`; `rg -n '/#contato|#contato' generate_pages.py produtos` returned no matches; `npm run build`; browser smoke for `/`, `/mobile/`, `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/`; generated CTA clicks from sampled routes landed on `/#captacao-lead` with the homepage lead section present: PASSED
+
+**PASSED**
 
 ---
 *Phase: 01-site-experience-stabilization*
