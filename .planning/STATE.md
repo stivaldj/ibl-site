@@ -7,7 +7,7 @@
 
 The current focus is the v1 production-hardening initiative for the existing VARIANT site. This is a brownfield stabilization effort, so work should prioritize fixing and verifying the current customer-facing experience, lead flow, SEO/content trust, and generation reliability before any non-essential additions.
 
-Phase 1 is now complete. Plans `01-01` through `01-03` established entry-shell parity, generated-route browse safety, and shared-runtime consistency across the representative desktop and mobile browse journey.
+Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell parity, generated-route browse safety, shared-runtime consistency, and generator-level contact-anchor alignment across the representative desktop and mobile browse journey.
 
 ## Current Phase
 
@@ -19,7 +19,7 @@ Phase 1 is now complete. Plans `01-01` through `01-03` established entry-shell p
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 03 completed: homepage, generated browse surfaces, and mobile entry now share aligned launch-safe runtime behavior and representative route verification |
+| Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
 | Phase 2 - Lead Flow Hardening | Ready | Browse-path stabilization is complete, so conversion and webhook reliability can be audited without shared-runtime blockers |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
@@ -35,7 +35,7 @@ Phase 1 is now complete. Plans `01-01` through `01-03` established entry-shell p
 
 ## Next Planning Action
 
-Execute the first incomplete Phase 2 plan while preserving the shared browse-runtime and route-verification baseline established by Phase 1.
+Execute the first incomplete Phase 2 plan while preserving the shared browse-runtime, route-verification baseline, and generated CTA anchor contract established by Phase 1.
 
 ## Execution Notes
 
@@ -47,8 +47,10 @@ Execute the first incomplete Phase 2 plan while preserving the shared browse-run
 - Shared generated-page CSS now guards long titles, mobile CTA rows, wrapped footer actions, and floating chat sizing.
 - Plan `01-03` completed on 2026-03-20.
 - Shared browse-runtime behavior across `main.js`, `webapp/main.js`, and `mobile/main.js` now aligns for delegated CTA tracking, breadcrumb schema targeting, and the unit-summary behavior that remained stale in `main.js`.
+- Plan `01-04` completed on 2026-03-20.
+- Generated catalog/category/product contact CTAs now resolve to `/#captacao-lead` from one generator source, and sampled clicks from `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` land on the homepage lead section correctly.
 - Final representative route verification passed on desktop and mobile for `/`, `/mobile/`, `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` with clean console and network results.
 - Generated-route runtime verification should use the local Vite dev server for source-module execution; `vite preview` still falls back to the app shell for `/produtos/**`, and a raw static server exposes the HTML but not the CSS-importing runtime modules.
 
 ---
-*Last updated: 2026-03-20 after completing plan 01-03*
+*Last updated: 2026-03-20 after completing plan 01-04*
