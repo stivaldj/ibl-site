@@ -420,7 +420,9 @@ function setupLeadOpsMonitor() {
   function runSlaCheck() {
     const now = Date.now()
     const items = getLeadOpsItems()
-    const atRisk = items.filter((item) => item.status !== 'contacted' && (now - new Date(item.created_at).getTime()) > slaMs)
+    const atRisk = items.filter(
+      (item) => item.contact_status !== 'contacted' && (now - new Date(item.created_at).getTime()) > slaMs,
+    )
     if (atRisk.length > 0 && (now - lastAlertAt) > 15 * 60 * 1000) {
       lastAlertAt = now
       trackEvent('lead_sla_risk', {
