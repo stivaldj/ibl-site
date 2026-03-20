@@ -6,7 +6,6 @@ Output: produtos/{cat}/index.html + produtos/{cat}/{model}/index.html
 """
 
 import json
-import os
 import re
 import shutil
 from html import escape
@@ -30,6 +29,7 @@ ZERO_WIDTH_CHARS = {
     "\u200d",  # zero-width joiner
     "\ufeff",  # BOM / zero-width no-break space
 }
+GENERATED_DERIVATIVE_PATTERN = re.compile(r".+-nobg\.png$", re.IGNORECASE)
 
 
 def build_whatsapp_url(message: str) -> str:
@@ -44,6 +44,17 @@ def clean_text(value: str) -> str:
     cleaned = "".join(ch for ch in value if ch not in ZERO_WIDTH_CHARS)
     cleaned = re.sub(r"\s+", " ", cleaned, flags=re.UNICODE)
     return cleaned.strip()
+
+
+def iter_sorted_files(path: Path) -> list[Path]:
+    return sorted(
+        (candidate for candidate in path.iterdir() if candidate.is_file()),
+        key=lambda candidate: candidate.name.lower(),
+    )
+
+
+def is_managed_generated_derivative(path: Path) -> bool:
+    return GENERATED_DERIVATIVE_PATTERN.fullmatch(path.name) is not None
 
 # Cabeçalho HTML compartilhado (fontes, ícones, CSS)
 HEAD_ASSETS_TEMPLATE = """\
@@ -262,13 +273,27 @@ def copy_assets(model_path_str: str, cat_slug: str, model_slug: str) -> list:
     dst_dir = BASE_DIR / "public" / "case-assets" / cat_slug / model_slug
     dst_dir.mkdir(parents=True, exist_ok=True)
 
+    source_files = iter_sorted_files(src_assets)
+    managed_source_names = {asset_file.name for asset_file in source_files}
+    managed_derivative_names = {
+        asset_file.name
+        for asset_file in iter_sorted_files(dst_dir)
+        if is_managed_generated_derivative(asset_file)
+    }
+
+    for existing_file in iter_sorted_files(dst_dir):
+        if existing_file.name in managed_source_names:
+            continue
+        if existing_file.name in managed_derivative_names:
+            continue
+        existing_file.unlink()
+
     public_paths = []
-    for asset_file in src_assets.iterdir():
-        if asset_file.is_file():
-            dst = dst_dir / asset_file.name
-            if not dst.exists():
-                shutil.copy2(asset_file, dst)
-            public_paths.append(f"/case-assets/{cat_slug}/{model_slug}/{asset_file.name}")
+    for asset_file in source_files:
+        dst = dst_dir / asset_file.name
+        if not dst.exists() or asset_file.stat().st_mtime_ns > dst.stat().st_mtime_ns:
+            shutil.copy2(asset_file, dst)
+        public_paths.append(f"/case-assets/{cat_slug}/{model_slug}/{asset_file.name}")
 
     return public_paths
 
