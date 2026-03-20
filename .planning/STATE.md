@@ -11,16 +11,16 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Current Phase
 
-- **Current phase:** Phase 2 - Lead Flow Hardening
-- **Phase status:** In progress after plan 02-02 normalized the lead payload contract and explicit submit-result states across desktop, mobile, and generated product runtimes
-- **Roadmap status:** Active execution
+- **Current phase:** Phase 3 - SEO And Content Trust Hardening
+- **Phase status:** Ready to begin after Phase 2 closed honest lead feedback, actionable local ops visibility, and final cross-surface lead verification
+- **Roadmap status:** Phase 2 complete, Phase 3 queued for execution
 
 ## Phase Queue Status
 
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
-| Phase 2 - Lead Flow Hardening | In progress | Plans 02-01 and 02-02 established the local webhook harness plus a shared payload/result contract with browser-verified success, skipped, and failure states |
+| Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-03 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final desktop/mobile/product lead verification sweep |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
 | Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
@@ -35,7 +35,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-Execute the next incomplete Phase 2 plan on top of the new explicit lead contract, reusing `npm run lead:webhook:mock` and the browser-visible `data-submit-state` markers for payload and failure-path checks.
+Start the first incomplete Phase 3 plan, using the completed Phase 2 lead baseline as the launch-check foundation while shifting execution focus to generated SEO metadata and content trust issues.
 
 ## Execution Notes
 
@@ -58,6 +58,10 @@ Execute the next incomplete Phase 2 plan on top of the new explicit lead contrac
 - `main.js`, `webapp/main.js`, and `mobile/main.js` now build the same webhook payload contract and return explicit `success`, `skipped`, and `failure` submit states instead of the prior ambiguous boolean/skipped combination.
 - Homepage feedback on `/` and `/mobile/` now exposes submit outcomes through `data-submit-state`, and representative browser verification confirmed a product-context payload on `/produtos/retroescavadeiras/580n/` with `uso`, `modelo`, `categoria`, `page_path`, `captured_at`, and `attribution`.
 - Missing-webhook runs now emit `lead_submit_skipped`, while a 500-mode mock webhook still preserves the WhatsApp fallback but surfaces `data-submit-state=\"failure\"` and a `lead_submit_error` event with the HTTP status.
+- Plan `02-03` completed on 2026-03-20.
+- Homepage and product forms in `main.js`, `webapp/main.js`, and `mobile/main.js` now only claim success on real webhook success, keep skipped/failed values visible for retry/manual continuation, and still use the launch-approved WhatsApp fallback intentionally.
+- The local `?ops=1` monitor now records `submission_status`, `contact_status`, `submit_reason`, `error_message`, and route/context details so submitted, skipped, failed, pending, and SLA-risk leads are visible during launch checks.
+- Phase 2 browser verification now covers success, missing-webhook, and failure runs across `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/`, plus a 430px-wide parity sweep and explicit ops-mode success/failure/SLA-risk checks.
 
 ---
-*Last updated: 2026-03-20 after completing plan 02-02*
+*Last updated: 2026-03-20 after completing plan 02-03*
