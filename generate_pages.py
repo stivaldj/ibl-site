@@ -11,6 +11,7 @@ import re
 import shutil
 from html import escape
 from pathlib import Path
+from typing import Optional
 from urllib.parse import quote
 
 BASE_DIR = Path(__file__).parent
@@ -301,6 +302,100 @@ def category_badge(cat: str) -> str:
     return badges.get(cat, cat.upper())
 
 
+def truncate_text(text: str, max_length: int = 160) -> str:
+    normalized = clean_text(text)
+    if len(normalized) <= max_length:
+        return normalized
+
+    truncated = normalized[: max_length - 1].rsplit(" ", 1)[0].strip()
+    return f"{truncated}…"
+
+
+def make_absolute_url(path: str) -> str:
+    if not path:
+        return SITE_URL
+    if path.startswith("http://") or path.startswith("https://"):
+        return path
+    if not path.startswith("/"):
+        path = f"/{path}"
+    return f"{SITE_URL}{path}"
+
+
+def build_page_title(page_name: str) -> str:
+    return f"{page_name} | {SITE_NAME} - {SITE_BRAND}"
+
+
+def render_json_ld(schema_objects: list[dict]) -> str:
+    return "\n".join(
+        f'  <script type="application/ld+json">{json.dumps(schema, ensure_ascii=False, separators=(",", ":"))}</script>'
+        for schema in schema_objects
+    )
+
+
+def build_breadcrumb_schema(items: list[tuple[str, str]]) -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": idx + 1,
+                "name": name,
+                "item": make_absolute_url(path),
+            }
+            for idx, (name, path) in enumerate(items)
+        ],
+    }
+
+
+def build_item_list(items: list[tuple[str, str]]) -> dict:
+    return {
+        "@type": "ItemList",
+        "numberOfItems": len(items),
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": idx + 1,
+                "name": name,
+                "url": make_absolute_url(path),
+            }
+            for idx, (name, path) in enumerate(items)
+        ],
+    }
+
+
+def render_head(
+    *,
+    page_name: str,
+    description: str,
+    canonical_path: str,
+    og_image: Optional[str] = None,
+    schema_objects: Optional[list[dict]] = None,
+    og_type: str = "website",
+) -> str:
+    page_title = build_page_title(page_name)
+    meta_description = truncate_text(description or DEFAULT_DESCRIPTION)
+    canonical_url = make_absolute_url(canonical_path)
+    image_url = make_absolute_url(og_image or DEFAULT_OG_IMAGE)
+    schema_html = render_json_ld(schema_objects or [])
+
+    return f"""\
+{HEAD_ASSETS_TEMPLATE}
+  <meta name="description" content="{escape(meta_description, quote=True)}" />
+  <meta property="og:title" content="{escape(page_title, quote=True)}" />
+  <meta property="og:description" content="{escape(meta_description, quote=True)}" />
+  <meta property="og:type" content="{escape(og_type, quote=True)}" />
+  <meta property="og:url" content="{escape(canonical_url, quote=True)}" />
+  <meta property="og:image" content="{escape(image_url, quote=True)}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{escape(page_title, quote=True)}" />
+  <meta name="twitter:description" content="{escape(meta_description, quote=True)}" />
+  <meta name="twitter:image" content="{escape(image_url, quote=True)}" />
+  <link rel="canonical" href="{escape(canonical_url, quote=True)}" />
+  <title>{escape(page_title)}</title>
+{schema_html}"""
+
+
 def render_breadcrumb(cat_name: str, cat_slug: str, model_title: str = None) -> str:
     crumbs = [
         '<li><a href="/" class="hover:text-case-yellow transition-colors">Home</a></li>',
@@ -386,12 +481,54 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
 
     # Copiar assets para public/
     public_assets = copy_assets(model_path, cat_slug, model_slug)
-    hero_img = public_assets[0] if public_assets else "https://images.unsplash.com/photo-1626296765727-4a4115f5732c?q=80&w=2670&auto=format&fit=crop"
+    hero_img = public_assets[0] if public_assets else DEFAULT_OG_IMAGE
 
     breadcrumb = render_breadcrumb(category, cat_slug, title)
     summary_pills = render_summary_pills(data["summary_specs"])
     spec_groups = render_spec_groups_html(data["tech_groups"])
     badge = category_badge(cat_slug)
+    canonical_path = f"/produtos/{cat_slug}/{model_slug}/"
+    meta_description = data["description"] or (
+        f"{title} na linha {SITE_BRAND} da {SITE_NAME} com ficha técnica, "
+        "especificações e atendimento comercial especializado."
+    )
+    breadcrumb_schema = build_breadcrumb_schema(
+        [
+            ("Home", "/"),
+            ("Produtos", "/produtos/"),
+            (category, f"/produtos/{cat_slug}/"),
+            (title, canonical_path),
+        ]
+    )
+    product_schema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": title,
+        "description": clean_text(meta_description),
+        "image": [make_absolute_url(hero_img)],
+        "brand": {"@type": "Brand", "name": SITE_BRAND},
+        "seller": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL},
+        "category": category,
+        "model": title,
+        "url": make_absolute_url(canonical_path),
+    }
+    if data["summary_specs"]:
+        product_schema["additionalProperty"] = [
+            {
+                "@type": "PropertyValue",
+                "name": clean_text(key),
+                "value": clean_text(value),
+            }
+            for key, value in list(data["summary_specs"].items())[:6]
+        ]
+    head_html = render_head(
+        page_name=title,
+        description=meta_description,
+        canonical_path=canonical_path,
+        og_image=hero_img,
+        og_type="product",
+        schema_objects=[product_schema, breadcrumb_schema],
+    )
 
     description_html = f'<p class="text-gray-300 text-lg leading-relaxed max-w-2xl">{data["description"]}</p>' if data["description"] else ""
 
@@ -412,8 +549,7 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-{HEAD_TEMPLATE}
-  <title>{title} | IBL Máquinas - Case Construction</title>
+{head_html}
 </head>
 <body class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
 {HEADER_HTML}
@@ -557,12 +693,48 @@ def generate_category_page(cat_entry: dict) -> str:
     breadcrumb = render_breadcrumb(category, cat_slug)
     cards_html = "\n".join(render_model_card(m, cat_slug) for m in models)
     count = len(models)
+    canonical_path = f"/produtos/{cat_slug}/"
+    first_model = models[0] if models else None
+    first_slug = get_model_slug(first_model["path"]) if first_model else ""
+    category_image = DEFAULT_OG_IMAGE
+    if first_model:
+        public_assets = copy_assets(first_model["path"], cat_slug, first_slug)
+        if public_assets:
+            category_image = public_assets[0]
+    meta_description = (
+        f"Linha CASE de {category} na {SITE_NAME} com {count} modelos disponíveis, "
+        "fichas técnicas e atendimento comercial especializado."
+    )
+    breadcrumb_schema = build_breadcrumb_schema(
+        [
+            ("Home", "/"),
+            ("Produtos", "/produtos/"),
+            (category, canonical_path),
+        ]
+    )
+    category_schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": category,
+        "description": clean_text(meta_description),
+        "url": make_absolute_url(canonical_path),
+        "image": make_absolute_url(category_image),
+        "mainEntity": build_item_list(
+            [(model["title"], f"/produtos/{cat_slug}/{get_model_slug(model['path'])}/") for model in models]
+        ),
+    }
+    head_html = render_head(
+        page_name=category,
+        description=meta_description,
+        canonical_path=canonical_path,
+        og_image=category_image,
+        schema_objects=[category_schema, breadcrumb_schema],
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-{HEAD_TEMPLATE}
-  <title>{category} | IBL Máquinas - Case Construction</title>
+{head_html}
 </head>
 <body class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
 {HEADER_HTML}
@@ -684,12 +856,39 @@ def generate_products_index(db: list) -> str:
 
     cards_html = "\n".join(cat_cards)
     total_models = sum(len(c["models"]) for c in db)
+    canonical_path = "/produtos/"
+    meta_description = (
+        f"Catálogo CASE da {SITE_NAME} com {len(db)} categorias e {total_models} modelos "
+        "de equipamentos, fichas técnicas e suporte comercial especializado."
+    )
+    category_items = []
+    for cat in db:
+        models = cat["models"]
+        if not models:
+            continue
+        category_items.append((cat["category"], f"/produtos/{get_cat_slug(models[0]['path'])}/"))
+    catalog_schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Produtos",
+        "description": clean_text(meta_description),
+        "url": make_absolute_url(canonical_path),
+        "image": DEFAULT_OG_IMAGE,
+        "mainEntity": build_item_list(category_items),
+    }
+    breadcrumb_schema = build_breadcrumb_schema([("Home", "/"), ("Produtos", canonical_path)])
+    head_html = render_head(
+        page_name="Produtos",
+        description=meta_description,
+        canonical_path=canonical_path,
+        og_image=DEFAULT_OG_IMAGE,
+        schema_objects=[catalog_schema, breadcrumb_schema],
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-{HEAD_TEMPLATE}
-  <title>Produtos | IBL Máquinas - Case Construction</title>
+{head_html}
 </head>
 <body class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
 {HEADER_HTML}
