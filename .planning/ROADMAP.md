@@ -102,6 +102,9 @@ Only launch-critical additions are allowed, and only when they are required to m
 3. No representative launch page shows obvious machine mismatch, stale copy artifacts, or trust-breaking content drift.
 4. Launch-critical generated pages remain SEO-complete and indexable even when client-side metadata enhancement does not run.
 
+**Execution progress:**
+- Plan `03-02` completed on 2026-03-20. `generate_pages.py` now strips zero-width label artifacts, carries markdown continuation lines into quick specs and technical spec values, and renders the final product CTA with the full machine title instead of a brittle token split. Regenerated output under `produtos/**` and a representative audit across retroescavadeiras, escavadeiras hidráulicas, and minicarregadeiras confirmed source-vs-output alignment for title, category, description, quick specs, and CTA context.
+
 ### Phase 4: Generation And Frontend Reliability Stabilization
 
 **Goal:** Reduce the runtime, asset, and generation fragility that would otherwise keep reintroducing production defects.

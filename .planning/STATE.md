@@ -12,8 +12,8 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 ## Current Phase
 
 - **Current phase:** Phase 3 - SEO And Content Trust Hardening
-- **Phase status:** Ready to begin after Phase 2 gap-closure plan `02-04` corrected the last contacted-lead SLA-risk false positive and re-verified the desktop, mobile, and product ops monitor path
-- **Roadmap status:** Phase 2 complete, Phase 3 queued for execution
+- **Phase status:** In progress. Plan `03-02` is complete, and the remaining Phase 3 work is focused on generator-owned metadata/schema plus final runtime fallback verification.
+- **Roadmap status:** Phase 2 complete, Phase 3 execution underway
 
 ## Phase Queue Status
 
@@ -65,6 +65,9 @@ Start the first incomplete Phase 3 plan, using the completed Phase 2 lead baseli
 - Plan `02-04` completed on 2026-03-20.
 - `runSlaCheck()` in `main.js`, `webapp/main.js`, and `mobile/main.js` now filters stale leads by `contact_status !== 'contacted'`, matching the existing ops record/update shape and removing the prior false-positive SLA-risk path for contacted leads.
 - Focused `?ops=1` verification on `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` now proves the submitted stale lead drops out of summary counts, console warnings, and `lead_sla_risk` telemetry immediately after the ops button marks it contacted, while a seeded stale uncontacted lead still keeps the legitimate warning path active.
+- Plan `03-02` completed on 2026-03-20.
+- `generate_pages.py` now strips zero-width spec-label artifacts, preserves markdown continuation lines in quick specs and technical spec values, and renders the final product CTA with the full model title instead of a brittle token split.
+- Representative source-vs-output audits passed for `/produtos/retroescavadeiras/580n/`, `/produtos/escavadeiras-hidraulicas/cx220c-s2/`, `/produtos/escavadeiras-hidraulicas/cx240c-me/`, and `/produtos/minicarregadeiras/sr175b/`, confirming title, category, description, quick specs, and CTA context stay aligned with `scrape_db.json` and the matching `content.md`.
 
 ---
-*Last updated: 2026-03-20 after completing plan 02-04*
+*Last updated: 2026-03-20 after completing plan 03-02*
