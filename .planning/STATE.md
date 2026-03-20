@@ -11,9 +11,9 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Current Phase
 
-- **Current phase:** Milestone complete - Production hardening roadmap closed
-- **Phase status:** Phase 5 is verified and complete.
-- **Roadmap status:** Phases 1 through 5 complete
+- **Current phase:** Phase 6 - Launch Gate Completion
+- **Phase status:** Gap-closure phase defined and ready for planning.
+- **Roadmap status:** Phases 1 through 5 complete; Phase 6 pending
 
 ## Phase Queue Status
 
@@ -24,6 +24,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase 3 - SEO And Content Trust Hardening | Completed | Plans 03-01 through 03-03 verified: generated routes now ship source-owned metadata, trustworthy machine content, and fallback-only runtime SEO behavior |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed | Plans 04-01 through 04-03 delivered deterministic asset sync, honest full-site packaging, and an authoritative rebuild workflow verified against dist |
 | Phase 5 - Launch Verification And Operations Gate | Completed | Plans 05-01 through 05-02 defined and executed the formal launch gate, producing a readiness verdict and bounded remainder |
+| Phase 6 - Launch Gate Completion | Pending | Closes the milestone-audit gaps by making the lead gate repo-native, mobile-inclusive, and strict about WhatsApp handoff evidence |
 
 ## Initialized Project Context
 
@@ -35,7 +36,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-The production-hardening roadmap is complete. The next sensible workflow is milestone closeout, release audit, or whatever production-facing step follows the verified readiness gate.
+The roadmap now has one final gap-closure phase. The next sensible workflow is to plan and execute Phase 6, then re-run the milestone audit.
 
 ## Execution Notes
 
@@ -90,6 +91,8 @@ The production-hardening roadmap is complete. The next sensible workflow is mile
 - Plan `05-02` completed on 2026-03-20.
 - The formal launch gate passed end-to-end, including rebuild baseline, packaged-route smoke verification, and homepage/product lead checks in both success and failure modes.
 - `docs/LAUNCH-READINESS.md` now records the final verdict: ready for production continuation, with explicit bounded remainder.
+- Milestone audit on 2026-03-20 found the remaining closeout gaps are narrow: the lead gate still depends on an undeclared external Playwright fallback and does not enforce mobile lead coverage or WhatsApp handoff as pass criteria.
+- Phase 6 was added on 2026-03-20 to close those release-gate gaps before milestone archival.
 
 ---
-*Last updated: 2026-03-20 after verifying Phase 5 and closing the roadmap*
+*Last updated: 2026-03-20 after adding Phase 6 gap closure*

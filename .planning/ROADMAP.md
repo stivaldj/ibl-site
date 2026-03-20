@@ -27,6 +27,7 @@ Only launch-critical additions are allowed, and only when they are required to m
 | Phase 3 | SEO And Content Trust Hardening | Generated pages ship trustworthy, indexable, machine-correct content | SEO-01, SEO-02, SEO-03, SEO-04 |
 | Phase 4 | Generation And Frontend Reliability Stabilization | Frontend/runtime and generation pipeline become deterministic and safe to maintain | FE-02, FE-03, GEN-01, GEN-02, GEN-03, OPS-03 |
 | Phase 5 | Launch Verification And Operations Gate | Launch readiness is validated through a repeatable production check | OPS-01, OPS-02 |
+| Phase 6 | Launch Gate Completion | Final release proof becomes repo-native and fully representative of the hardened lead journey | OPS-01, OPS-02 |
 
 ## Phase Details
 
@@ -160,6 +161,28 @@ Only launch-critical additions are allowed, and only when they are required to m
 - Plan `05-02` completed on 2026-03-20. The full gate was executed end-to-end, covering rebuild baseline, packaged homepage/mobile/catalog/category/product smoke checks, and representative homepage/product lead flows in both success and failure modes.
 - Phase 5 is complete. Verification passed for `OPS-01` and `OPS-02`, and `docs/LAUNCH-READINESS.md` now records the final verdict: ready for production continuation.
 
+### Phase 6: Launch Gate Completion
+
+**Goal:** Close the milestone audit gaps by making the final release gate self-contained, reproducible, and representative of the full lead journey it claims to validate.
+
+**Why now:** The roadmap work is otherwise complete, but the milestone audit found that the final lead gate still depends on an undeclared external Playwright path and does not revalidate the mobile lead path or enforce WhatsApp handoff as a pass condition. This is narrow closeout work, not a new milestone.
+
+**Requirements covered:** OPS-01, OPS-02
+
+**Work focus:**
+- Make the lead-gate helper runnable from a clean checkout using only repo-declared dependencies.
+- Extend the formal gate so its lead proof covers the launch-approved mobile lead path.
+- Turn WhatsApp handoff from captured evidence into an explicit pass condition.
+- Refresh launch-gate documentation, evidence expectations, and verification so the milestone can pass audit cleanly.
+
+**Observable success criteria:**
+1. The lead-gate helper runs from this repo without undeclared absolute fallback paths or external workspace dependencies.
+2. The formal launch gate validates homepage, mobile, and representative product lead flows in both success and failure modes.
+3. The lead gate fails if WhatsApp handoff is missing when the flow claims it should occur.
+4. Re-running the milestone audit no longer finds partial coverage for `OPS-01` or `OPS-02`.
+
+**Gap closure:** Created from `v1.0-v1.0-MILESTONE-AUDIT.md` to close the final release-gate integration and flow gaps before milestone archival.
+
 ## Requirement Coverage Matrix
 
 | Requirement | Assigned phase |
@@ -183,12 +206,12 @@ Only launch-critical additions are allowed, and only when they are required to m
 | GEN-02 | Phase 4 - Generation And Frontend Reliability Stabilization |
 | GEN-03 | Phase 4 - Generation And Frontend Reliability Stabilization |
 | OPS-03 | Phase 4 - Generation And Frontend Reliability Stabilization |
-| OPS-01 | Phase 5 - Launch Verification And Operations Gate |
-| OPS-02 | Phase 5 - Launch Verification And Operations Gate |
+| OPS-01 | Phase 6 - Launch Gate Completion |
+| OPS-02 | Phase 6 - Launch Gate Completion |
 
 ## Exit Condition For This Roadmap
 
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 after Phase 5 verification*
+*Last updated: 2026-03-20 after adding Phase 6 gap closure*
