@@ -75,7 +75,7 @@ Pass criteria:
 Start the success webhook harness:
 
 ```bash
-npm run lead:webhook:mock -- --mode success --port 8787 --capture-file .tmp/launch-gate/latest/mock-success.json
+npm run lead:webhook:mock -- --mode success --port 8787 --capture-file /tmp/variant-launch-gate-mock-success.json
 ```
 
 Start a local runtime with the webhook URL wired:
@@ -88,7 +88,14 @@ Then run:
 
 ```bash
 npm run launch:gate:lead -- --base-url http://127.0.0.1:4174 --expected-status success --evidence-file .tmp/launch-gate/latest/lead-success.json
+cp /tmp/variant-launch-gate-mock-success.json .tmp/launch-gate/latest/mock-success.json
 ```
+
+Why the temporary capture path:
+
+- when Vite dev mode is used for lead verification, writing the mock capture file inside the workspace can trigger a live reload mid-submit
+- staging the raw webhook capture in `/tmp` avoids that reload
+- copying it into `.tmp/launch-gate/latest/` after the helper passes preserves the durable repo-local evidence contract
 
 Pass criteria:
 
@@ -103,7 +110,7 @@ Pass criteria:
 Start the failure webhook harness:
 
 ```bash
-npm run lead:webhook:mock -- --mode failure --port 8788 --capture-file .tmp/launch-gate/latest/mock-failure.json
+npm run lead:webhook:mock -- --mode failure --port 8788 --capture-file /tmp/variant-launch-gate-mock-failure.json
 ```
 
 Start a local runtime with the failure webhook URL wired:
@@ -116,6 +123,7 @@ Then run:
 
 ```bash
 npm run launch:gate:lead -- --base-url http://127.0.0.1:4175 --expected-status failure --evidence-file .tmp/launch-gate/latest/lead-failure.json
+cp /tmp/variant-launch-gate-mock-failure.json .tmp/launch-gate/latest/mock-failure.json
 ```
 
 Pass criteria:

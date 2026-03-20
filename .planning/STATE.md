@@ -12,7 +12,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 ## Current Phase
 
 - **Current phase:** Phase 6 - Launch Gate Completion
-- **Phase status:** Plan 06-01 complete; Phase 6 wave 2 pending.
+- **Phase status:** Plans 06-01 and 06-02 complete; verification pending.
 - **Roadmap status:** Phases 1 through 5 complete; Phase 6 pending
 
 ## Phase Queue Status
@@ -24,7 +24,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase 3 - SEO And Content Trust Hardening | Completed | Plans 03-01 through 03-03 verified: generated routes now ship source-owned metadata, trustworthy machine content, and fallback-only runtime SEO behavior |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Completed | Plans 04-01 through 04-03 delivered deterministic asset sync, honest full-site packaging, and an authoritative rebuild workflow verified against dist |
 | Phase 5 - Launch Verification And Operations Gate | Completed | Plans 05-01 through 05-02 defined and executed the formal launch gate, producing a readiness verdict and bounded remainder |
-| Phase 6 - Launch Gate Completion | In Progress | Plan 06-01 is complete: the lead gate is repo-native, mobile-inclusive, and strict about WhatsApp handoff; plan 06-02 will rerun the tightened gate and refresh closeout evidence |
+| Phase 6 - Launch Gate Completion | In Progress | Plans 06-01 and 06-02 are complete: the tightened gate has been rerun with homepage/mobile/product success and failure evidence; final phase verification is next |
 
 ## Initialized Project Context
 
@@ -36,7 +36,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-Phase 6 is in progress. The next sensible workflow is to execute plan 06-02, then re-run the milestone audit.
+Phase 6 implementation is complete. The next sensible workflow is to verify the phase, then re-run the milestone audit.
 
 ## Execution Notes
 
@@ -96,6 +96,9 @@ Phase 6 is in progress. The next sensible workflow is to execute plan 06-02, the
 - Plan `06-01` completed on 2026-03-20.
 - `package.json` now declares Playwright directly, the repo exposes `npm run playwright:install`, and `scripts/launch-gate-lead.mjs` no longer loads dependencies from an external absolute path.
 - Phase 6 lead verification now covers `/`, `/mobile/`, and `/produtos/retroescavadeiras/580n/` in both success and failure modes, and all three flows must open a `wa.me` handoff URL to pass.
+- Plan `06-02` completed on 2026-03-20.
+- The refreshed gate evidence in `.tmp/launch-gate/latest/` now includes homepage, mobile, and representative product lead coverage in both success and failure modes, plus explicit `whatsappPassed` proof for all three flows.
+- Live lead-gate runs now stage raw webhook capture under `/tmp` and copy it back into `.tmp/launch-gate/latest/` afterward to avoid Vite dev-server reloads during submission.
 
 ---
 *Last updated: 2026-03-20 after adding Phase 6 gap closure*

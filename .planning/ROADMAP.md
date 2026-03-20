@@ -185,6 +185,7 @@ Only launch-critical additions are allowed, and only when they are required to m
 
 **Execution progress:**
 - Plan `06-01` completed on 2026-03-20. The lead-gate helper is now repo-native, Playwright is declared in `package.json`, mobile lead coverage is part of the scripted gate, and WhatsApp handoff is enforced as a pass condition instead of passive evidence.
+- Plan `06-02` completed on 2026-03-20. The corrected gate was rerun end-to-end, fresh evidence under `.tmp/launch-gate/latest/` now proves homepage/mobile/product success and failure modes with explicit WhatsApp handoff, and the readiness report is aligned with that stricter contract.
 
 ## Requirement Coverage Matrix
 

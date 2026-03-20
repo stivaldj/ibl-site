@@ -68,27 +68,31 @@ The lead gate was executed against local runtimes wired to the repo-local webhoo
 Success mode command:
 
 ```bash
-npm run launch:gate:lead -- --base-url http://127.0.0.1:4274 --expected-status success --evidence-file .tmp/launch-gate/latest/lead-success.json
+npm run launch:gate:lead -- --base-url http://127.0.0.1:4394 --expected-status success --evidence-file .tmp/launch-gate/latest/lead-success.json
+cp /tmp/variant-phase6-mock-success.json .tmp/launch-gate/latest/mock-success.json
 ```
 
 Observed result:
 
 - homepage lead flow reached `data-submit-state="success"`
+- mobile lead flow reached `data-submit-state="success"`
 - representative product lead flow reached `data-submit-state="success"`
-- both flows still opened the WhatsApp handoff URL
+- homepage, mobile, and product flows all opened the WhatsApp handoff URL
 - webhook capture evidence exists in `.tmp/launch-gate/latest/mock-success.json`
 
 Failure mode command:
 
 ```bash
-npm run launch:gate:lead -- --base-url http://127.0.0.1:4275 --expected-status failure --evidence-file .tmp/launch-gate/latest/lead-failure.json
+npm run launch:gate:lead -- --base-url http://127.0.0.1:4395 --expected-status failure --evidence-file .tmp/launch-gate/latest/lead-failure.json
+cp /tmp/variant-phase6-mock-failure.json .tmp/launch-gate/latest/mock-failure.json
 ```
 
 Observed result:
 
 - homepage lead flow reached `data-submit-state="failure"`
+- mobile lead flow reached `data-submit-state="failure"`
 - representative product lead flow reached `data-submit-state="failure"`
-- both flows still opened the WhatsApp fallback URL instead of claiming false success
+- homepage, mobile, and product flows all opened the WhatsApp fallback URL instead of claiming false success
 - webhook failure capture evidence exists in `.tmp/launch-gate/latest/mock-failure.json`
 
 ## Final Verdict
