@@ -10,14 +10,14 @@ The current focus is the v1 production-hardening initiative for the existing VAR
 ## Current Phase
 
 - **Current phase:** Phase 1 - Site Experience Stabilization
-- **Phase status:** Ready for detailed planning
-- **Roadmap status:** Initialized
+- **Phase status:** In progress - Plan 01 completed
+- **Roadmap status:** Active execution
 
 ## Phase Queue Status
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1 - Site Experience Stabilization | Ready to plan | First execution target; addresses visible launch blockers across browsing and CTA flows |
+| Phase 1 - Site Experience Stabilization | In progress | Plan 01 completed: entry shells stabilized across `/` and `/mobile/`; next slice should target generated browse surfaces |
 | Phase 2 - Lead Flow Hardening | Queued | Starts after browsing experience is stable enough to validate conversions cleanly |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
@@ -33,7 +33,13 @@ The current focus is the v1 production-hardening initiative for the existing VAR
 
 ## Next Planning Action
 
-Create the detailed execution plan for Phase 1 - Site Experience Stabilization using the roadmap as the source of truth for scope, sequencing, and success criteria.
+Plan the next Phase 1 execution slice against generated catalog, category, and PDP browse surfaces now that the desktop and mobile entry shells are stable.
+
+## Execution Notes
+
+- Plan `01-01` completed on 2026-03-20.
+- Desktop `/` and mobile `/mobile/` now share the same launch-approved first-step CTA paths: `/produtos/` and `#captacao-lead`.
+- Entry-shell unit coverage no longer depends on Leaflet/OpenStreetMap; a local summary panel keeps console and asset-request smoke checks clean.
 
 ---
-*Last updated: 2026-03-20 during roadmap initialization*
+*Last updated: 2026-03-20 after completing plan 01-01*

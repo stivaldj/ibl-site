@@ -49,6 +49,9 @@ Only launch-critical additions are allowed, and only when they are required to m
 3. Launch-critical CTAs and navigation targets resolve to real destinations or explicit non-interactive states instead of placeholders.
 4. Shared browsing interactions behave consistently enough that the same core actions work across homepage, generated pages, and mobile entry points.
 
+**Execution progress:**
+- Plan `01-01` completed on 2026-03-20. Desktop `/` and mobile `/mobile/` entry shells now share aligned browse/contact CTAs, explicit disabled placeholder states, and a local coverage summary panel that keeps shell-level smoke checks clean.
+
 ### Phase 2: Lead Flow Hardening
 
 **Goal:** Make existing lead capture flows dependable enough for production use and safe enough to operate.
@@ -161,4 +164,4 @@ Only launch-critical additions are allowed, and only when they are required to m
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 during roadmap creation*
+*Last updated: 2026-03-20 after plan 01-01 execution*
