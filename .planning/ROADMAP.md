@@ -186,6 +186,7 @@ Only launch-critical additions are allowed, and only when they are required to m
 **Execution progress:**
 - Plan `06-01` completed on 2026-03-20. The lead-gate helper is now repo-native, Playwright is declared in `package.json`, mobile lead coverage is part of the scripted gate, and WhatsApp handoff is enforced as a pass condition instead of passive evidence.
 - Plan `06-02` completed on 2026-03-20. The corrected gate was rerun end-to-end, fresh evidence under `.tmp/launch-gate/latest/` now proves homepage/mobile/product success and failure modes with explicit WhatsApp handoff, and the readiness report is aligned with that stricter contract.
+- Phase 6 is complete. Verification passed for `OPS-01` and `OPS-02`, closing the milestone-audit gaps around launch-gate reproducibility and lead-flow proof scope.
 
 ## Requirement Coverage Matrix
 
@@ -218,4 +219,4 @@ Only launch-critical additions are allowed, and only when they are required to m
 This roadmap is complete when each phase has a detailed execution plan and all 21 v1 requirements remain mapped to exactly one phase without scope leakage into deferred v2 work.
 
 ---
-*Last updated: 2026-03-20 after adding Phase 6 gap closure*
+*Last updated: 2026-03-20 after verifying Phase 6*
