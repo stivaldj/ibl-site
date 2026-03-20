@@ -11,9 +11,9 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Current Phase
 
-- **Current phase:** Phase 4 - Generation And Frontend Reliability Stabilization
-- **Phase status:** Phase 3 is verified and complete. Phase 4 is the next queued execution target.
-- **Roadmap status:** Phases 1 through 3 complete, Phase 4 queued
+- **Current phase:** Phase 5 - Launch Verification And Operations Gate
+- **Phase status:** Phase 4 is verified and complete. Phase 5 is the next queued execution target.
+- **Roadmap status:** Phases 1 through 4 complete, Phase 5 queued
 
 ## Phase Queue Status
 
@@ -22,7 +22,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 | Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 04 completed: homepage, generated browse surfaces, mobile entry, and generated CTA anchor behavior now share the approved `#captacao-lead` contract |
 | Phase 2 - Lead Flow Hardening | Completed | Plans 02-01 through 02-04 delivered the local webhook harness, explicit submit-result states, truthful feedback, actionable `?ops=1` visibility, and the final contacted-lead SLA-risk fix plus proof across desktop, mobile, and product routes |
 | Phase 3 - SEO And Content Trust Hardening | Completed | Plans 03-01 through 03-03 verified: generated routes now ship source-owned metadata, trustworthy machine content, and fallback-only runtime SEO behavior |
-| Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
+| Phase 4 - Generation And Frontend Reliability Stabilization | Completed | Plans 04-01 through 04-03 delivered deterministic asset sync, honest full-site packaging, and an authoritative rebuild workflow verified against dist |
 | Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
 
 ## Initialized Project Context
@@ -35,7 +35,7 @@ Phase 1 is now complete. Plans `01-01` through `01-04` established entry-shell p
 
 ## Next Planning Action
 
-Start the first incomplete Phase 4 plan, using the now-verified generator SEO baseline and content trust path as the stable input to frontend/runtime and generation-pipeline reliability work.
+Start Phase 5 planning so the new release gate exercises the now-verified rebuild workflow, packaged artifact checks, browsing smoke tests, and lead-flow verification as one explicit launch decision.
 
 ## Execution Notes
 
@@ -87,4 +87,4 @@ Start the first incomplete Phase 4 plan, using the now-verified generator SEO ba
 - The documented rebuild flow passed end-to-end: dry-run asset checks were clean, `npm run rebuild:site` regenerated the catalog, rebuilt `dist/`, and verified representative homepage, mobile, catalog, category, and product routes in the packaged artifact.
 
 ---
-*Last updated: 2026-03-20 after completing Phase 4 plans 04-01 through 04-03*
+*Last updated: 2026-03-20 after verifying Phase 4 and advancing to Phase 5*
