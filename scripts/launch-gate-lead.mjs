@@ -63,23 +63,34 @@ function loadPlaywright() {
   }
 }
 
+async function waitForSubmitState(page, feedbackSelector, expectedStatus) {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const currentStatus = await page.evaluate((selector) => {
+      return document.querySelector(selector)?.dataset.submitState || null
+    }, feedbackSelector)
+
+    if (currentStatus === expectedStatus) {
+      return
+    }
+
+    await page.waitForTimeout(500)
+  }
+
+  throw new Error(`Timed out waiting for ${feedbackSelector} to reach ${expectedStatus}`)
+}
+
 async function submitHomepageLead(page, baseUrl, expectedStatus) {
   await page.goto(`${baseUrl}/?ops=1&utm_source=phase5&utm_medium=launch-gate`, { waitUntil: 'networkidle' })
+  await page.evaluate(() => {
+    window.__iblOpenedUrls = []
+  })
   await page.fill('#lead-nome', 'Phase Five Home')
   await page.fill('#lead-telefone', '(67) 99999-0001')
   await page.selectOption('#lead-interesse', { index: 1 })
 
-  const popupPromise = page.waitForEvent('popup').catch(() => null)
   await page.click('#lead-form button[type="submit"]')
-  const popup = await popupPromise
-  if (popup) {
-    await popup.close().catch(() => {})
-  }
 
-  await page.waitForFunction(
-    (status) => document.querySelector('#lead-feedback')?.dataset.submitState === status,
-    expectedStatus,
-  )
+  await waitForSubmitState(page, '#lead-feedback', expectedStatus)
 
   return page.evaluate(() => {
     const feedback = document.querySelector('#lead-feedback')
@@ -87,6 +98,7 @@ async function submitHomepageLead(page, baseUrl, expectedStatus) {
       status: feedback?.dataset.submitState || null,
       message: feedback?.textContent?.trim() || '',
       opsCount: JSON.parse(window.localStorage.getItem('ibl_lead_ops_v1') || '[]').length,
+      openedUrls: Array.isArray(window.__iblOpenedUrls) ? window.__iblOpenedUrls : [],
     }
   })
 }
@@ -94,21 +106,16 @@ async function submitHomepageLead(page, baseUrl, expectedStatus) {
 async function submitProductLead(page, baseUrl, expectedStatus) {
   await page.goto(`${baseUrl}/produtos/retroescavadeiras/580n/?ops=1&utm_source=phase5&utm_medium=launch-gate`, { waitUntil: 'networkidle' })
   await page.waitForSelector('#product-lead-form')
+  await page.evaluate(() => {
+    window.__iblOpenedUrls = []
+  })
   await page.fill('#product-lead-nome', 'Phase Five Product')
   await page.fill('#product-lead-whatsapp', '(67) 99999-0002')
   await page.fill('#product-lead-uso', 'Obras urbanas e terraplenagem')
 
-  const popupPromise = page.waitForEvent('popup').catch(() => null)
   await page.click('#product-lead-form button[type="submit"]')
-  const popup = await popupPromise
-  if (popup) {
-    await popup.close().catch(() => {})
-  }
 
-  await page.waitForFunction(
-    (status) => document.querySelector('#product-lead-feedback')?.dataset.submitState === status,
-    expectedStatus,
-  )
+  await waitForSubmitState(page, '#product-lead-feedback', expectedStatus)
 
   return page.evaluate(() => {
     const feedback = document.querySelector('#product-lead-feedback')
@@ -116,6 +123,7 @@ async function submitProductLead(page, baseUrl, expectedStatus) {
       status: feedback?.dataset.submitState || null,
       message: feedback?.textContent?.trim() || '',
       opsCount: JSON.parse(window.localStorage.getItem('ibl_lead_ops_v1') || '[]').length,
+      openedUrls: Array.isArray(window.__iblOpenedUrls) ? window.__iblOpenedUrls : [],
     }
   })
 }
@@ -128,10 +136,20 @@ async function main() {
   const { chromium } = loadPlaywright()
   const browser = await chromium.launch({ headless: true })
   const context = await browser.newContext()
-  const page = await context.newPage()
+  await context.addInitScript(() => {
+    window.__iblOpenedUrls = []
+    window.open = (...args) => {
+      window.__iblOpenedUrls.push(String(args[0] ?? ''))
+      return null
+    }
+  })
+  const homepagePage = await context.newPage()
+  const homepage = await submitHomepageLead(homepagePage, options.baseUrl, options.expectedStatus)
+  await homepagePage.close()
 
-  const homepage = await submitHomepageLead(page, options.baseUrl, options.expectedStatus)
-  const product = await submitProductLead(page, options.baseUrl, options.expectedStatus)
+  const productPage = await context.newPage()
+  const product = await submitProductLead(productPage, options.baseUrl, options.expectedStatus)
+  await productPage.close()
 
   const evidence = {
     generatedAt: new Date().toISOString(),
