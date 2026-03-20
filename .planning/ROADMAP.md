@@ -52,6 +52,7 @@ Only launch-critical additions are allowed, and only when they are required to m
 **Execution progress:**
 - Plan `01-01` completed on 2026-03-20. Desktop `/` and mobile `/mobile/` entry shells now share aligned browse/contact CTAs, explicit disabled placeholder states, and a local coverage summary panel that keeps shell-level smoke checks clean.
 - Plan `01-02` completed on 2026-03-20. Generated catalog/category/product templates now ship real browse-safe actions, shared title/mobile CTA guards, and a verified launch-category route sweep across `/produtos/**`.
+- Plan `01-03` completed on 2026-03-20. Shared browse-runtime sections in `main.js`, `webapp/main.js`, and `mobile/main.js` now agree on delegated CTA tracking, page-level breadcrumb schema targeting, and representative desktop/mobile route validation through `/produtos/retroescavadeiras/580n/`, completing Phase 1.
 
 ### Phase 2: Lead Flow Hardening
 

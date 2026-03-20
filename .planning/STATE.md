@@ -7,20 +7,20 @@
 
 The current focus is the v1 production-hardening initiative for the existing VARIANT site. This is a brownfield stabilization effort, so work should prioritize fixing and verifying the current customer-facing experience, lead flow, SEO/content trust, and generation reliability before any non-essential additions.
 
-Plan `01-02` is now complete and establishes the generated catalog/category/product baseline for the rest of Phase 1.
+Phase 1 is now complete. Plans `01-01` through `01-03` established entry-shell parity, generated-route browse safety, and shared-runtime consistency across the representative desktop and mobile browse journey.
 
 ## Current Phase
 
-- **Current phase:** Phase 1 - Site Experience Stabilization
-- **Phase status:** In progress - Plans 01 and 02 completed
+- **Current phase:** Phase 2 - Lead Flow Hardening
+- **Phase status:** Ready to begin after Phase 1 completion
 - **Roadmap status:** Active execution
 
 ## Phase Queue Status
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| Phase 1 - Site Experience Stabilization | In progress | Plans 01 and 02 completed: entry shells and generated browse surfaces now share launch-safe CTA behavior and route-verification baselines |
-| Phase 2 - Lead Flow Hardening | Queued | Starts after browsing experience is stable enough to validate conversions cleanly |
+| Phase 1 - Site Experience Stabilization | Completed | Plans 01 through 03 completed: homepage, generated browse surfaces, and mobile entry now share aligned launch-safe runtime behavior and representative route verification |
+| Phase 2 - Lead Flow Hardening | Ready | Browse-path stabilization is complete, so conversion and webhook reliability can be audited without shared-runtime blockers |
 | Phase 3 - SEO And Content Trust Hardening | Queued | Depends on stabilized page behavior and launch-page audit baseline |
 | Phase 4 - Generation And Frontend Reliability Stabilization | Queued | Hardens generator/runtime foundations after visible and trust-critical fixes are defined |
 | Phase 5 - Launch Verification And Operations Gate | Queued | Final release gate after Phases 1 through 4 |
@@ -35,7 +35,7 @@ Plan `01-02` is now complete and establishes the generated catalog/category/prod
 
 ## Next Planning Action
 
-Execute the next incomplete Phase 1 plan while preserving the generated-route baseline established by `01-02`.
+Execute the first incomplete Phase 2 plan while preserving the shared browse-runtime and route-verification baseline established by Phase 1.
 
 ## Execution Notes
 
@@ -45,7 +45,10 @@ Execute the next incomplete Phase 1 plan while preserving the generated-route ba
 - Plan `01-02` completed on 2026-03-20.
 - Generated header/footer/chat affordances under `produtos/` now use real destinations or explicit non-interactive copy, and generated breadcrumbs are isolated under dedicated breadcrumb nav markup.
 - Shared generated-page CSS now guards long titles, mobile CTA rows, wrapped footer actions, and floating chat sizing.
-- Generated route verification should continue to use the local generated-page server; `vite preview` currently falls back to the app shell for `/produtos/**` even though `npm run build` passes.
+- Plan `01-03` completed on 2026-03-20.
+- Shared browse-runtime behavior across `main.js`, `webapp/main.js`, and `mobile/main.js` now aligns for delegated CTA tracking, breadcrumb schema targeting, and the unit-summary behavior that remained stale in `main.js`.
+- Final representative route verification passed on desktop and mobile for `/`, `/mobile/`, `/produtos/`, `/produtos/retroescavadeiras/`, and `/produtos/retroescavadeiras/580n/` with clean console and network results.
+- Generated-route runtime verification should use the local Vite dev server for source-module execution; `vite preview` still falls back to the app shell for `/produtos/**`, and a raw static server exposes the HTML but not the CSS-importing runtime modules.
 
 ---
-*Last updated: 2026-03-20 after completing plan 01-02*
+*Last updated: 2026-03-20 after completing plan 01-03*
