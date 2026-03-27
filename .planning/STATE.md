@@ -9,9 +9,9 @@ The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero sta
 
 ## Current Phase
 
-- **Current phase:** Not started
-- **Phase status:** Defining requirements and roadmap for `v1.1`
-- **Roadmap status:** New milestone initialization in progress
+- **Current phase:** Phase 7
+- **Phase status:** Roadmap created, ready for discussion/planning
+- **Roadmap status:** Active milestone defined
 
 ## Milestone Queue Status
 
@@ -30,7 +30,7 @@ The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero sta
 
 ## Next Planning Action
 
-Create and approve the `v1.1` roadmap, then begin phase execution from phase 7.
+Run `$gsd-discuss-phase 7` to review the hero-stage foundation phase before execution.
 
 ## Archive Pointers
 
@@ -39,4 +39,4 @@ Create and approve the `v1.1` roadmap, then begin phase execution from phase 7.
 - `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
 
 ---
-*Last updated: 2026-03-27 after starting v1.1 milestone*
+*Last updated: 2026-03-27 after creating the v1.1 roadmap*

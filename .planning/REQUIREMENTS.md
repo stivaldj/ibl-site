@@ -51,23 +51,23 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HERO-01 | Unmapped | Pending |
-| HERO-02 | Unmapped | Pending |
-| HERO-03 | Unmapped | Pending |
-| VIS-01 | Unmapped | Pending |
-| VIS-02 | Unmapped | Pending |
-| VIS-03 | Unmapped | Pending |
-| OVR-01 | Unmapped | Pending |
-| OVR-02 | Unmapped | Pending |
-| OVR-03 | Unmapped | Pending |
-| RSP-01 | Unmapped | Pending |
-| RSP-02 | Unmapped | Pending |
-| RSP-03 | Unmapped | Pending |
+| HERO-01 | Phase 7 | Pending |
+| HERO-02 | Phase 7 | Pending |
+| HERO-03 | Phase 7 | Pending |
+| VIS-01 | Phase 8 | Pending |
+| VIS-02 | Phase 8 | Pending |
+| VIS-03 | Phase 8 | Pending |
+| OVR-01 | Phase 8 | Pending |
+| OVR-02 | Phase 8 | Pending |
+| OVR-03 | Phase 8 | Pending |
+| RSP-01 | Phase 9 | Pending |
+| RSP-02 | Phase 9 | Pending |
+| RSP-03 | Phase 9 | Pending |
 
 **Coverage:**
 - v1 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12 ⚠️
+- Mapped to phases: 12
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-27*
