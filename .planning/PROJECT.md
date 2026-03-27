@@ -10,6 +10,15 @@ The initial production-hardening milestone is now complete. The project has a ve
 
 Prospects can confidently evaluate equipment and convert into qualified opportunities through a trustworthy, fully functional website.
 
+## Current Milestone: v1.1 Hero First Fold Stability
+
+**Goal:** Stabilize the homepage hero so every machine presents with consistent visual weight, correctly centered stage effects, and non-competing overlays without redesigning the existing experience.
+
+**Target features:**
+- Model-specific hero stage metadata for machine, ring, badge, title, and support overlays
+- Anchored hero-stage layering that keeps the rotating ring visually centered on the active machine
+- Responsive-safe overlay and sizing normalization across the eight showcase models
+
 ## Requirements
 
 ### Validated
@@ -27,9 +36,9 @@ Prospects can confidently evaluate equipment and convert into qualified opportun
 
 ### Active
 
-- [ ] Define the next milestone's highest-value feature additions from the now-stable baseline
-- [ ] Decide which business improvements should become real product features instead of further hardening work
-- [ ] Validate the external `ibl-ai-os` acceptance path in the target production environment
+- [ ] Fix the first-dobra hero by replacing improvised positioning with a model-specific visual stage system
+- [ ] Preserve the current hero design while eliminating ring-centering drift and overlay competition
+- [ ] Keep hero interactions and category switching stable across desktop, tablet, and mobile layouts
 
 ### Out of Scope
 
@@ -43,7 +52,7 @@ Prospects can confidently evaluate equipment and convert into qualified opportun
 - 6 phases, 18 plans, and 21 / 21 milestone requirements satisfied
 - The formal launch gate verifies rebuild, packaged smoke, and homepage/mobile/product lead flows with enforced WhatsApp handoff
 - Build and generation workflows are documented in `docs/OPERATIONS.md`, `docs/LAUNCH-GATE.md`, and `docs/LAUNCH-READINESS.md`
-- Remaining non-blocking items are bounded and mostly external: optional image refresh, upstream CASE source refresh, and final `ibl-ai-os` acceptance in the target environment
+- `v1.1` now focuses on improving the homepage hero stage system from the shipped baseline without reopening platform-hardening scope
 
 ## Context
 
@@ -62,9 +71,9 @@ The primary audience remains prospective customers researching CASE machines, wh
 
 ## Next Milestone Goals
 
-- Choose the highest-value product or business improvements now that the launch baseline is stable
-- Preserve the v1.0 quality bar while adding new capability
-- Keep launch verification and operational evidence current as the product evolves
+- Replace the hero's hard-coded layout behavior with explicit per-model stage controls
+- Preserve the v1.0 quality bar while fixing the most visible first-fold presentation issues
+- Keep launch verification and operational evidence current as the hero implementation evolves
 
 ## Key Decisions
 
@@ -74,6 +83,8 @@ The primary audience remains prospective customers researching CASE machines, wh
 | Keep the site focused on both customer research and lead generation | The website must serve prospects while feeding commercial opportunity creation into `ibl-ai-os` | ✓ Validated in `v1.0` |
 | Allow only small must-have additions in the first roadmap | Some launch-critical gaps required additions, but broad expansion would have undermined stabilization | ✓ Validated in `v1.0` |
 | Use a full-sweep discovery approach instead of a fixed bug list | The user was non-technical and wanted the project to learn what was wrong through structured analysis | ✓ Validated in `v1.0` |
+| Preserve the current hero art direction while fixing first-fold composition issues | The business problem is visual instability in the shipped hero, not lack of a design direction | — Pending |
+| Solve hero consistency with per-model layout metadata instead of global offsets | Machine assets have different crops and proportions, so the stage must normalize perceived composition per asset | — Pending |
 
 ---
-*Last updated: 2026-03-20 after v1.0 milestone*
+*Last updated: 2026-03-27 after starting v1.1 milestone*

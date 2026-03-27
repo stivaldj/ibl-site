@@ -5,19 +5,20 @@
 
 ## Current Focus
 
-The current focus is no longer production hardening. `v1.0` has been shipped, audited, and archived. The next planning step is to define a new milestone from the verified baseline rather than continuing the archived roadmap.
+The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero stage so model presentation, rotating-ring centering, and overlay hierarchy stay visually stable without redesigning the existing experience.
 
 ## Current Phase
 
-- **Current phase:** Milestone archived
-- **Phase status:** `v1.0` shipped
-- **Roadmap status:** No active milestone
+- **Current phase:** Not started
+- **Phase status:** Defining requirements and roadmap for `v1.1`
+- **Roadmap status:** New milestone initialization in progress
 
 ## Milestone Queue Status
 
 | Milestone | Status | Notes |
 |-----------|--------|-------|
 | `v1.0` - Production Hardening | Archived | Phases 1 through 6 shipped and archived under `.planning/milestones/` |
+| `v1.1` - Hero First Fold Stability | Active | Requirements approved, roadmap pending |
 
 ## Stable Baseline
 
@@ -29,7 +30,7 @@ The current focus is no longer production hardening. `v1.0` has been shipped, au
 
 ## Next Planning Action
 
-Run `$gsd-new-milestone` to define the next milestone from the shipped baseline.
+Create and approve the `v1.1` roadmap, then begin phase execution from phase 7.
 
 ## Archive Pointers
 
@@ -38,4 +39,4 @@ Run `$gsd-new-milestone` to define the next milestone from the shipped baseline.
 - `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
 
 ---
-*Last updated: 2026-03-20 after archiving v1.0*
+*Last updated: 2026-03-27 after starting v1.1 milestone*
