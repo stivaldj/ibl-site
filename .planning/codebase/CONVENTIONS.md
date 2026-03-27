@@ -1,51 +1,58 @@
-# Codebase Conventions Map
+# Code Conventions
 
-## Repository Shape
-- The live site is a Vite-built static site rooted in `index.html`, `mobile/index.html`, and generated HTML under `produtos/**/index.html`.
-- `vite.config.js` dynamically includes every HTML file under `produtos/` as a build entry, so generated route files are first-class build inputs rather than post-build copies.
-- `dist/` is the packaged launch artifact, but the editable source-of-truth for content pages remains the checked-in HTML under `produtos/` plus the generator in `generate_pages.py`.
-- `src/README.md` exists specifically to quarantine the old scaffolded Vite starter. Treat `src/` as historical noise, not an active app surface.
+## Overview
+
+VARIANT is a static-site-first codebase with three runtime entrypoints:
+
+- `main.js` for the desktop homepage and shared runtime behavior
+- `webapp/main.js` for the alternate app-style surface
+- `mobile/main.js` for the mobile entrypoint
+
+The repo also has repo-local generators and maintenance scripts in `generate_pages.py`, `process_fotos.py`, `remove_bg_batch.py`, `scrape_specs.py`, and `scripts/*.mjs`.
 
 ## JavaScript Style
-- Browser logic is plain ES modules with top-level `import './style.css'` in `main.js`, `mobile/main.js`, and `webapp/main.js`.
-- Semicolons are generally omitted in frontend files. Object literals and constants are formatted with trailing commas used sparingly; the dominant style is compact and manual.
-- Shared constants use `UPPER_SNAKE_CASE`, for example `ANALYTICS_MILESTONES`, `ATTRIBUTION_STORAGE_KEY`, and `LEAD_OPS_STORAGE_KEY` in `main.js`.
-- Most behavior is organized as small named functions declared with `function`, not classes or framework components.
-- DOM behavior is imperative: `document.querySelector`, `dataset`, `classList`, `localStorage`, and `window` globals are the core API surface.
-- Frontend code leans on `import.meta.env` for environment wiring, especially `VITE_GA4_ID` and `VITE_LEAD_WEBHOOK_URL`.
 
-## Duplication Hotspots
-- `main.js`, `mobile/main.js`, and `webapp/main.js` are near-parallel runtime copies. When lead logic, analytics, attribution, or ops-state behavior changes in one, assume the same audit is needed in the other two.
-- `style.css`, `mobile/style.css`, and `webapp/style.css` repeat the same brand-token and utility-extension pattern, with only surface-specific differences layered on top.
-- Lead-flow contracts are intentionally mirrored across the runtime copies, including `data-submit-state`, webhook payload shape, and `ibl_lead_ops_v1` localStorage usage.
-- Launch verification scripts in `scripts/launch-gate-smoke.mjs`, `scripts/launch-gate-lead.mjs`, and `scripts/verify-dist.mjs` encode representative route assumptions directly. Those scripts are another maintenance seam when routes or selectors change.
+- The main runtime files use ESM imports, `const` for stable bindings, and function declarations for helpers.
+- The site JS is mostly semicolon-free and uses single quotes in the runtime files, while Node scripts under `scripts/` are more mixed and include semicolons and double quotes in places.
+- Guard clauses are common. Many helpers return early when a DOM node is missing or is not the expected element type.
+- Optional chaining and nullish coalescing are used heavily to keep the DOM code resilient.
+- Small pure helpers are preferred for state shaping and formatting, such as `createLeadSubmitResult()`, `escapeHtml()`, and `getLeadOpsSubmissionMeta()` in `main.js`.
 
-## Naming And Content Patterns
-- Product and category routes use lowercase slug directories such as `produtos/retroescavadeiras/` and `produtos/retroescavadeiras/580n/`.
-- Asset paths are site-root absolute paths like `/assets/...`, `/case-assets/...`, `/ibl-logo.png`, and `/casece-logo.svg`.
-- Processed transparent machine images use the `-nobg.png` suffix under `public/case-assets/**`.
-- Planning and operational filenames are explicit and phase-oriented, for example `.planning/phases/05-launch-verification-and-operations-gate/05-02-PLAN.md`.
+## DOM And State Patterns
+
+- The site uses direct DOM manipulation instead of a framework abstraction.
+- State is stored in `window.localStorage`, `window.dataLayer`, custom events, and in-memory maps/sets.
+- Event handlers are attached imperatively with `addEventListener`, usually after querying the required nodes.
+- Dynamic UI is built with `document.createElement()` and `innerHTML` in controlled sections, but user-supplied content is escaped first with `escapeHtml()`.
+- Runtime features rely on `dataset` attributes for state signaling, such as `data-submit-state` in lead flows.
+
+## Content And Generation
+
+- Generated product routes live under `produtos/**` and are produced by `generate_pages.py`.
+- The generator and runtime scripts depend on stable file paths and route structure; these are not abstracted behind a shared routing layer.
+- HTML is edited as a mix of source templates and generated output, so route-aware changes need to be checked in both the source generator and representative generated files.
 
 ## Styling Conventions
-- Tailwind v4 drives styling through CSS entry files, not a component framework. `style.css` declares `@import "tailwindcss";`, `@source` directives, and `@theme` variables.
-- Brand and design-system tokens are split between Tailwind theme variables such as `--color-case-yellow` and site-level CSS custom properties such as `--ds-accent` in `style.css`.
-- HTML templates use long utility-class strings directly in markup. There is little abstraction beyond reusable CSS classes like `.industrial-border`, `.hero-circle-glow`, and `.text-outline`.
-- Visual language is consistent across surfaces: dark backgrounds, CASE orange accents, bold uppercase headings, industrial borders, and hover-glow effects.
 
-## Generation And Script Conventions
-- `generate_pages.py`, `process_fotos.py`, `remove_bg_batch.py`, and `scrape_specs.py` are script-style Python entrypoints rather than reusable packages.
-- Those scripts prefer explicit filesystem constants and top-level orchestration over deep abstraction.
-- Operational Node scripts under `scripts/*.mjs` are also single-purpose CLIs with local `parseArgs()` helpers and direct `console.error` / `process.exit(1)` failure paths.
-- The repo favors executable scripts over test frameworks for verification and maintenance.
+- Styling is split between `style.css`, `webapp/style.css`, and `mobile/style.css`.
+- The CSS layer uses Tailwind v4 directives like `@import "tailwindcss";`, `@source`, and `@theme`.
+- Design tokens are defined in CSS custom properties such as `--ds-bg-base`, `--ds-accent`, and `--ds-radius-md`.
+- Visual style is industrial/dark-mode leaning, with custom accent colors and utility classes like `text-outline`, `industrial-border`, and `tech-grid`.
 
-## Operational Conventions
-- `docs/OPERATIONS.md` is the authoritative rebuild document. If it conflicts with older notes like `WORKING.md` or `PROJECT_ANALYSIS.md`, the operations doc wins.
-- `docs/LAUNCH-GATE.md` is the canonical release-check definition. The scripts in `scripts/` are expected to match its pass criteria closely.
-- `.tmp/launch-gate/latest/` is the durable evidence location for launch-gate output, while `.playwright-cli/` holds older exploratory browser artifacts.
-- The repo treats `?ops=1` as a real operator surface for inspecting lead status and SLA state, not just a local debug trick.
+## Naming And Structure
 
-## Practical Editing Guidance
-- Before changing route markup or selectors, inspect both the source HTML and the launch-gate scripts because selectors are asserted in `scripts/launch-gate-lead.mjs`.
-- Before changing generated product/category structure, inspect both `generate_pages.py` and representative files under `produtos/**` because generated HTML is committed and packaged.
-- Before changing lead-flow wording or state names, check all three runtime copies and the launch-readiness docs because the strings and dataset values are part of the verification contract.
-- Assume drift risk is highest where the repo mirrors behavior manually instead of importing shared modules.
+- Uppercase constants are used for shared keys and status enums, for example `LEAD_OPS_STORAGE_KEY` and `LEAD_SUBMIT_STATUS`.
+- Helper names are descriptive and action-oriented, especially around lead capture, telemetry, and SEO injection.
+- The repo distinguishes between generated content, runtime scripts, and maintenance scripts by directory rather than by a formal module layer.
+
+## Practical Examples
+
+- Lead flow and telemetry logic: `main.js`, `webapp/main.js`, `mobile/main.js`
+- Build and packaging config: `vite.config.js`, `tailwind.config.js`, `package.json`
+- Generated content pipeline: `generate_pages.py`
+- Local smoke and verification helpers: `scripts/launch-gate-smoke.mjs`, `scripts/launch-gate-lead.mjs`, `scripts/verify-dist.mjs`, `scripts/mock-lead-webhook.mjs`
+
+## Unknowns
+
+- There is no repo-wide lint configuration visible in the checked-in files.
+- The codebase does not currently expose a shared component or state library; duplication across the three runtime entrypoints appears intentional.

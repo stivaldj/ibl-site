@@ -1,81 +1,81 @@
-# VARIANT Repository Structure
+# Structure
 
-## Top-level map
-The repository is organized around live entry pages, generated catalog output, source content, deployable assets, scripts, and planning docs.
+## Top Level
 
-## Live entry surfaces
-- `index.html` is the desktop entry shell.
-- `mobile/index.html` is the mobile entry shell.
-- `main.js` is the shared runtime for generated catalog/category/product pages under `produtos/`.
-- `webapp/main.js` and `webapp/style.css` power the desktop home experience.
-- `mobile/main.js` and `mobile/style.css` power the mobile home experience.
-- `style.css` is the shared base stylesheet used by generated pages and the Vite build context.
+The repository is organized around a static site plus the tools that generate and verify it.
 
-## Generated site tree
-- `produtos/` is the generated static catalog tree.
-- `produtos/index.html` is the catalog landing page.
-- `produtos/<category>/index.html` is a generated category page such as `produtos/retroescavadeiras/index.html`.
-- `produtos/<category>/<model>/index.html` is a generated product page such as `produtos/retroescavadeiras/580n/index.html`.
-- The `produtos/` tree is derived from the scraper corpus and should be regenerated rather than hand-edited.
+- `index.html` is the main homepage entry
+- `mobile/` contains the mobile-specific route
+- `produtos/` contains generated catalog pages
+- `public/` contains stable assets served as-is
+- `scripts/` contains build and launch verification helpers
+- `docs/` contains operational guidance
+- `tasks/` contains milestone notes and planning artifacts
+- `Scrape Case/` holds upstream scraped product data
+- `src/` is intentionally not the live app source tree
 
-## Source content and asset inputs
-- `Scrape Case/scrape_db.json` is the catalog index used by page generation.
-- `Scrape Case/pt-br/southamerica/**/content.md` contains the structured machine content used to build each product page.
-- `Scrape Case/pt-br/southamerica/**/assets/` holds source assets copied into the public asset tree.
-- `fotos/` contains raw photo inputs for derivative generation.
-- `public/` is the static deploy asset root and contains branding files plus generated case assets.
+## Primary Pages
 
-## Generation and transform scripts
-- `generate_pages.py` turns the scraped data into `produtos/**` HTML and copies the related assets into `public/case-assets/**`.
-- `process_fotos.py` transforms raw photos into processed assets under `public/case-assets/fotos-processed/`.
-- `remove_bg_batch.py` manages transparent image derivatives and synchronization of generated assets.
-- `scrape_specs.py` refreshes the scraped CASE source corpus and the `scrape_db.json` index.
+- `index.html` is the desktop marketing homepage
+- `mobile/index.html` is the mobile landing page
+- `produtos/index.html` is the catalog landing page
+- `produtos/escavadeiras-hidraulicas/index.html` and sibling folders are category pages
+- `produtos/retroescavadeiras/580n/index.html` and sibling folders are product pages
 
-## Build, verification, and launch tooling
-- `vite.config.js` registers the root home page, mobile page, and all generated `produtos/**/*.html` files as build inputs.
-- `package.json` defines the primary commands: `generate:pages`, `build:site`, `rebuild:site`, `verify:dist`, `launch:gate:smoke`, `launch:gate:lead`, and `lead:webhook:mock`.
-- `scripts/verify-dist.mjs` verifies the built `dist/` artifact.
-- `scripts/launch-gate-smoke.mjs` checks representative packaged routes.
-- `scripts/launch-gate-lead.mjs` checks homepage, mobile, and product lead flows.
-- `scripts/mock-lead-webhook.mjs` provides the local webhook harness used during gate runs.
+## Generated Catalog Tree
 
-## Build output and release artifacts
-- `dist/` is the packaged release artifact produced by Vite.
-- `dist/index.html`, `dist/mobile/index.html`, and `dist/produtos/**/index.html` are the shipped HTML outputs.
-- `dist/assets/` contains bundled JS and CSS assets referenced by the packaged pages.
+The `produtos/` tree is generated and maintained by `generate_pages.py`.
+Its shape mirrors the product taxonomy:
 
-## Planning and operations docs
-- `.planning/ROADMAP.md` and `.planning/REQUIREMENTS.md` define milestone scope and requirement coverage.
-- `.planning/phases/**/` holds phase plans, summaries, and verification evidence.
-- `.planning/codebase/` stores the repository maps and related planning docs.
-- `docs/OPERATIONS.md` is the authoritative rebuild guide.
-- `docs/LAUNCH-GATE.md` is the formal release gate.
-- `docs/LAUNCH-READINESS.md` records the latest gate verdict and evidence.
+- `produtos/<category>/index.html`
+- `produtos/<category>/<model>/index.html`
 
-## Historical and supporting areas
-- `tasks/` contains historical sprint notes and backlog-style context.
-- `src/` is the old Vite starter scaffold and is not a live entry point.
-- `WORKING.md` and `PROJECT_ANALYSIS.md` are legacy reference notes.
-- `.tmp/` stores gate evidence and other ephemeral runtime artifacts.
-- `node_modules/` is local dependency state only and should not be treated as source.
+Representative categories currently include:
 
-## How data moves through the repo
-- Scraped CASE data starts in `Scrape Case/`.
-- `generate_pages.py` converts that data into `produtos/` HTML and copies assets into `public/case-assets/**`.
-- `vite build` packages the live entries and generated catalog into `dist/`.
-- The launch gate reads from `dist/` and from the runtime helpers in `scripts/`.
+- `produtos/escavadeiras-hidraulicas/`
+- `produtos/minicarregadeiras/`
+- `produtos/miniescavadeiras/`
+- `produtos/motoniveladoras/`
+- `produtos/pas-carregadeiras/`
+- `produtos/retroescavadeiras/`
+- `produtos/rolo-compactador/`
+- `produtos/tratores-de-esteiras/`
 
-## Where to make changes
-- Home page copy or behavior: `index.html` and `webapp/`.
-- Mobile behavior: `mobile/`.
-- Catalog/product templates: `generate_pages.py`.
-- Scraped source shape: `scrape_specs.py`.
-- Image processing: `process_fotos.py` and `remove_bg_batch.py`.
-- Build behavior: `vite.config.js`, `package.json`, and `scripts/`.
-- Operational policy: `docs/`.
+## Asset Layout
 
-## Directory-level conventions
-- Category slugs use kebab-case, for example `produtos/retroescavadeiras/` and `produtos/escavadeiras-hidraulicas/`.
-- Product pages are one level deeper under the model slug, for example `produtos/retroescavadeiras/580n/`.
-- Processed derivative files commonly use the `-nobg.png` suffix.
-- Generated assets live under `public/case-assets/<category>/<model>/`.
+Static assets live under `public/` and are referenced directly by the HTML pages.
+
+- `public/case-assets/**` stores model and category imagery
+- `public/casece-logo.svg` and `public/ibl-logo.png` are the brand assets
+- `public/favicon.ico` is the site favicon
+
+The generated pages depend on these paths staying stable.
+
+## Source And Tooling Files
+
+- `main.js` and `webapp/main.js` contain the shared runtime behavior
+- `mobile/main.js` mirrors the same runtime for the mobile route
+- `style.css`, `webapp/style.css`, and `mobile/style.css` contain the shared visual system
+- `tailwind.config.js` defines the Tailwind theme and content scan roots
+- `vite.config.js` defines multi-entry packaging, including all generated product HTML
+- `package.json` defines scripts for build, page generation, and launch checks
+
+## Operational And Verification Files
+
+- `docs/OPERATIONS.md` is the authoritative rebuild guide
+- `docs/LAUNCH-READINESS.md` records the last verified launch gate
+- `scripts/verify-dist.mjs` validates the packaged artifact
+- `scripts/launch-gate-smoke.mjs` checks representative routes
+- `scripts/launch-gate-lead.mjs` exercises lead submission flows
+- `scripts/mock-lead-webhook.mjs` simulates webhook responses during gate runs
+
+## Planning And History
+
+- `.planning/STATE.md` records the current planning state
+- `.planning/codebase/` now holds the refreshed codebase map
+- `tasks/` contains historical sprint notes and design work from earlier phases
+
+## Practical Notes
+
+The repository is intentionally flat at runtime: the HTML files, shared scripts, and generated pages are the shipped product.
+There is no long-lived application server in the repo; the important boundary is between source generators and packaged static output.
