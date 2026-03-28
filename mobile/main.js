@@ -1112,7 +1112,7 @@ function setupProductPageEnhancements() {
               Falar no WhatsApp
             </a>
           </div>
-          <p id="product-lead-feedback" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
+          <p id="product-lead-feedback" role="status" aria-live="polite" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
         </form>
       </div>
     </div>
@@ -1598,33 +1598,125 @@ function setupChatWidget() {
 }
 
 // === Machine Showcase ===
+const HERO_STAGE_DEFAULTS = {
+  scale: 1,
+  translateX: 0,
+  translateY: 0,
+  objectPosition: 'center 50%',
+  badgeScale: 1,
+  badgeTranslateX: 0,
+  badgeTranslateY: 0,
+  titleTranslateX: 0,
+  titleTranslateY: 0,
+  metaAlign: 'right',
+  techCardMode: 'right'
+}
+
+function formatPx(value) {
+  return `${value}px`
+}
+
+function normalizeHeroStage(stage = {}) {
+  return {
+    ...HERO_STAGE_DEFAULTS,
+    ...stage
+  }
+}
+
+function setStyleVariables(target, variables) {
+  if (!(target instanceof HTMLElement)) return
+
+  Object.entries(variables).forEach(([name, value]) => {
+    target.style.setProperty(name, String(value))
+  })
+}
+
 const showcaseMachines = [
-  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/fotos-processed/580n-series2.svg',                  href: '/produtos/retroescavadeiras/' },
-  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/fotos-processed/cx220c.svg',                        href: '/produtos/escavadeiras-hidraulicas/', pos: 'center 22%', translate: 'translateX(-150px)' },
-  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '70 A', img: '/case-assets/fotos-processed/w20g.svg',                          href: '/produtos/pas-carregadeiras/' },
-  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',        s4l: 'DESLOCAMENTO', s4v: '3,2 L',          s5l: 'VAZÃO BOMBA', s5v: '110 l/min',    s6l: 'PRESSÃO ALÍVIO', s6v: '360 bar', img: '/case-assets/minicarregadeiras/sv300b/sv300b-nobg.png',          href: '/produtos/minicarregadeiras/' },
-  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',               s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'MARCHAS',    s5v: '6F / 3R',      s6l: 'FLUXO HIDR.', s6v: '186 l/min', img: '/case-assets/fotos-processed/885b.svg',                          href: '/produtos/motoniveladoras/' },
-  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',              s4l: 'DESLOCAMENTO', s4v: '1,65 L',         s5l: 'VEL. GIRO',  s5v: '11 rpm',       s6l: 'TANQUE COMB.', s6v: '45 L', img: '/case-assets/fotos-processed/cx22d.svg',                         href: '/produtos/miniescavadeiras/' },
-  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',                s4l: 'PESO ROLO LISO', s4v: '11.380 kg',     s5l: 'EIXOS',       s5v: '3.003 mm',     s6l: 'LARGURA', s6v: '2.324 mm', img: '/case-assets/rolo-compactador/1107ex/1107ex-nobg.png',           href: '/produtos/rolo-compactador/' },
-  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TRANSMISSÃO', s5v: 'Hidrostática', s6l: 'TANQUE', s6v: '405 L', img: '/case-assets/fotos-processed/2050m.svg',                         href: '/produtos/tratores-de-esteiras/' },
+  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/fotos-processed/580n-series2.svg',                  href: '/produtos/retroescavadeiras/', stage: { scale: 1.02, translateX: 0, translateY: 6, objectPosition: 'center 50%', badgeScale: 1, badgeTranslateX: 0, badgeTranslateY: 0, titleTranslateX: -6, titleTranslateY: -4, metaAlign: 'right', techCardMode: 'right' } },
+  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/fotos-processed/cx220c.svg',                        href: '/produtos/escavadeiras-hidraulicas/', stage: { scale: 0.98, translateX: -12, translateY: 8, objectPosition: 'center 44%', badgeScale: 1, badgeTranslateX: 16, badgeTranslateY: -4, titleTranslateX: 18, titleTranslateY: -10, metaAlign: 'right', techCardMode: 'right' } },
+  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '70 A', img: '/case-assets/fotos-processed/w20g.svg',                          href: '/produtos/pas-carregadeiras/', stage: { scale: 1.05, translateX: 8, translateY: 2, objectPosition: 'center 53%', badgeScale: 0.98, badgeTranslateX: -14, badgeTranslateY: 4, titleTranslateX: -18, titleTranslateY: 2, metaAlign: 'left', techCardMode: 'left' } },
+  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',        s4l: 'DESLOCAMENTO', s4v: '3,2 L',          s5l: 'VAZÃO BOMBA', s5v: '110 l/min',    s6l: 'PRESSÃO ALÍVIO', s6v: '360 bar', img: '/case-assets/minicarregadeiras/sv300b/sv300b-nobg.png',          href: '/produtos/minicarregadeiras/', stage: { scale: 1.08, translateX: 6, translateY: 8, objectPosition: 'center 54%', badgeScale: 1.02, badgeTranslateX: 10, badgeTranslateY: 8, titleTranslateX: -22, titleTranslateY: -6, metaAlign: 'right', techCardMode: 'right' } },
+  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',               s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'MARCHAS',    s5v: '6F / 3R',      s6l: 'FLUXO HIDR.', s6v: '186 l/min', img: '/case-assets/fotos-processed/885b.svg',                          href: '/produtos/motoniveladoras/', stage: { scale: 0.96, translateX: 14, translateY: 4, objectPosition: 'center 46%', badgeScale: 1, badgeTranslateX: -4, badgeTranslateY: -2, titleTranslateX: -20, titleTranslateY: 0, metaAlign: 'left', techCardMode: 'left' } },
+  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',              s4l: 'DESLOCAMENTO', s4v: '1,65 L',         s5l: 'VEL. GIRO',  s5v: '11 rpm',       s6l: 'TANQUE COMB.', s6v: '45 L', img: '/case-assets/fotos-processed/cx22d.svg',                         href: '/produtos/miniescavadeiras/', stage: { scale: 1.1, translateX: -6, translateY: 2, objectPosition: 'center 48%', badgeScale: 0.98, badgeTranslateX: 14, badgeTranslateY: 2, titleTranslateX: 16, titleTranslateY: -8, metaAlign: 'right', techCardMode: 'right' } },
+  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',                s4l: 'PESO ROLO LISO', s4v: '11.380 kg',     s5l: 'EIXOS',       s5v: '3.003 mm',     s6l: 'LARGURA', s6v: '2.324 mm', img: '/case-assets/rolo-compactador/1107ex/1107ex-nobg.png',           href: '/produtos/rolo-compactador/', stage: { scale: 0.99, translateX: 4, translateY: 10, objectPosition: 'center 56%', badgeScale: 1.02, badgeTranslateX: 8, badgeTranslateY: -6, titleTranslateX: -24, titleTranslateY: 4, metaAlign: 'left', techCardMode: 'left' } },
+  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TRANSMISSÃO', s5v: 'Hidrostática', s6l: 'TANQUE', s6v: '405 L', img: '/case-assets/fotos-processed/2050m.svg',                         href: '/produtos/tratores-de-esteiras/', stage: { scale: 1.04, translateX: -8, translateY: 6, objectPosition: 'center 50%', badgeScale: 1, badgeTranslateX: 8, badgeTranslateY: 4, titleTranslateX: 20, titleTranslateY: -4, metaAlign: 'right', techCardMode: 'right' } },
 ]
 
-function switchShowcase(idx) {
+function applyShowcaseState(m, { animate = true } = {}) {
+  const stage = normalizeHeroStage(m.stage)
+  const shell = document.querySelector('.entry-hero-shell')
+  const img = document.getElementById('showcase-machine')
+  const badge = document.getElementById('hero-rotating-badge-wrap')
+  const title = document.getElementById('showcase-title')
+  const techCard = document.getElementById('hero-tech-card')
+  const meta = document.getElementById('hero-model-meta')
+
+  setStyleVariables(shell, {
+    '--hero-machine-scale': stage.scale,
+    '--hero-machine-x': formatPx(stage.translateX),
+    '--hero-machine-y': formatPx(stage.translateY),
+    '--hero-machine-object-position': stage.objectPosition,
+    '--hero-badge-scale': stage.badgeScale,
+    '--hero-badge-x': formatPx(stage.badgeTranslateX),
+    '--hero-badge-y': formatPx(stage.badgeTranslateY),
+    '--hero-title-x': formatPx(stage.titleTranslateX),
+    '--hero-title-y': formatPx(stage.titleTranslateY),
+    '--hero-meta-align': stage.metaAlign,
+    '--hero-tech-card-mode': stage.techCardMode
+  })
+
+  setStyleVariables(img, {
+    '--hero-machine-scale': stage.scale,
+    '--hero-machine-x': formatPx(stage.translateX),
+    '--hero-machine-y': formatPx(stage.translateY),
+    '--hero-machine-object-position': stage.objectPosition
+  })
+
+  setStyleVariables(badge, {
+    '--hero-badge-scale': stage.badgeScale,
+    '--hero-badge-x': formatPx(stage.badgeTranslateX),
+    '--hero-badge-y': formatPx(stage.badgeTranslateY)
+  })
+
+  setStyleVariables(title, {
+    '--hero-title-x': formatPx(stage.titleTranslateX),
+    '--hero-title-y': formatPx(stage.titleTranslateY)
+  })
+
+  setStyleVariables(techCard, {
+    '--hero-tech-card-mode': stage.techCardMode
+  })
+
+  setStyleVariables(meta, {
+    '--hero-meta-align': stage.metaAlign
+  })
+
+  if (img instanceof HTMLElement) {
+    const applyImage = () => {
+      img.src = m.img
+      img.alt = `Case ${m.model}`
+      img.style.objectPosition = stage.objectPosition
+      img.style.opacity = '1'
+    }
+
+    if (animate) {
+      img.style.opacity = '0'
+      window.setTimeout(applyImage, 280)
+    } else {
+      applyImage()
+    }
+  }
+}
+
+function switchShowcase(idx, options = {}) {
+  const { animate = true, track = true } = options
   const setText = (id, value) => {
     const el = document.getElementById(id)
     if (el) el.textContent = value
   }
 
-  const m = showcaseMachines[idx]
-  const img = document.getElementById('showcase-machine')
-  img.style.opacity = '0'
-  setTimeout(() => {
-    img.src = m.img
-    img.alt = `Case ${m.model}`
-    img.style.objectPosition = m.pos || 'center 52%'
-    img.style.setProperty('--img-translate', m.translate || 'translateX(0)')
-    img.style.opacity = '1'
-  }, 280)
+  const m = showcaseMachines[idx] || showcaseMachines[0]
+  applyShowcaseState(m, { animate })
   setText('showcase-title', m.title)
   setText('showcase-model', m.model)
   setText('showcase-cat', m.cat)
@@ -1646,16 +1738,20 @@ function switchShowcase(idx) {
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {
     btn.classList.toggle('is-active', i === idx)
   })
-  trackEvent('showcase_model_change', {
-    page_path: window.location.pathname,
-    category: m.cat,
-    model: m.model
-  })
+  if (track) {
+    trackEvent('showcase_model_change', {
+      page_path: window.location.pathname,
+      category: m.cat,
+      model: m.model
+    })
+  }
 }
 
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => switchShowcase(Number(btn.dataset.idx)))
 })
+
+switchShowcase(0, { animate: false, track: false })
 
 initAttribution()
 initAnalytics()
