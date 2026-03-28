@@ -366,6 +366,28 @@ main [id] {
     -webkit-text-stroke-color 1s ease;
 }
 
+.entry-hero-shell {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: visible;
+  box-sizing: border-box;
+}
+
+.entry-hero-shell > .container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.entry-hero-shell .showcase-stage {
+  width: 100%;
+  max-width: 100%;
+}
+
+.entry-hero-shell .showcase-machine-stage {
+  overflow: visible;
+}
+
 /* ================================================================
  *  SHOWCASE MACHINE IMAGE — visual unification
  * ================================================================ */
@@ -1227,7 +1249,9 @@ footer ul button {
 
   .entry-hero-shell {
     min-height: auto;
-    padding-bottom: 112px;
+    padding-bottom: clamp(112px, 28vw, 160px);
+    overflow-x: hidden;
+    overflow-y: visible;
   }
 
   .entry-cat-selector {

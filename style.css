@@ -418,6 +418,28 @@ body {
     -webkit-text-stroke-color 1s ease;
 }
 
+.entry-hero-shell {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+  overflow-y: visible;
+  box-sizing: border-box;
+}
+
+.entry-hero-shell > .container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.entry-hero-shell .showcase-stage {
+  width: 100%;
+  max-width: 100%;
+}
+
+.entry-hero-shell .showcase-machine-stage {
+  overflow: visible;
+}
+
 /* ================================================================
  *  SHOWCASE MACHINE IMAGE — visual unification
  * ================================================================ */

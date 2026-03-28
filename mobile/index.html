@@ -95,7 +95,7 @@
 
     <main class="entry-shell-main">
       <!-- Hero Section -->
-      <section class="entry-hero-shell relative min-h-[calc(100vh-110px)] pt-20 flex flex-col justify-between border-b border-case-border overflow-hidden">
+      <section class="entry-hero-shell relative min-h-[calc(100vh-110px)] pt-20 flex flex-col justify-between border-b border-case-border overflow-visible max-w-[100vw]">
         <div class="absolute inset-0 pointer-events-none">
           <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
           <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl"></div>
@@ -138,7 +138,7 @@
                 </a>
               </div>
             </div>
-            <div class="lg:col-span-6 relative h-[420px] lg:h-[560px] flex items-center justify-center group">
+            <div class="lg:col-span-6 relative h-[clamp(320px,84vw,420px)] lg:h-[560px] flex items-center justify-center group">
               <div class="showcase-stage">
                 <div id="hero-rotating-badge-wrap" class="showcase-ring absolute inset-0 pointer-events-none">
                 <svg viewBox="0 0 100 100" width="500" height="500" class="animate-spin-slow" overflow="visible">
