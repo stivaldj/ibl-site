@@ -426,6 +426,13 @@ body {
   width: 100%;
   height: 100%;
   isolation: isolate;
+  --hero-machine-scale: 1;
+  --hero-machine-x: 0px;
+  --hero-machine-y: 0px;
+  --hero-machine-object-position: center 50%;
+  --hero-badge-scale: 1;
+  --hero-badge-x: 0px;
+  --hero-badge-y: 0px;
 }
 
 .showcase-ring,
@@ -440,6 +447,8 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0.3;
+  transform: translate3d(var(--hero-badge-x, 0px), var(--hero-badge-y, 0px), 0) scale(var(--hero-badge-scale, 1));
+  transform-origin: center center;
   transition: opacity var(--ds-motion-slow) ease;
   pointer-events: none;
 }
@@ -453,6 +462,7 @@ body {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  overflow: visible;
 }
 
 .showcase-overlay {
@@ -506,7 +516,7 @@ body {
 }
 
 .showcase-machine-img {
-  object-position: center 52%;
+  object-position: var(--hero-machine-object-position, center 50%);
   filter:
     saturate(0.78)
     brightness(1.05)
@@ -515,12 +525,16 @@ body {
     drop-shadow(0 50px 40px rgba(0, 0, 0, 0.70))
     drop-shadow(0 80px 90px rgba(0, 0, 0, 0.40))
     drop-shadow(0 0 50px rgba(229, 142, 26, 0.08));
-  transform: var(--img-translate, translateX(0));
-  transition: opacity 0.3s ease-in-out;
+  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(var(--hero-machine-scale, 1));
+  transform-origin: center center;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.7s ease-out,
+    object-position 0.7s ease-out;
+  will-change: transform, opacity, object-position;
 }
 .showcase-machine-img:hover {
-  transform: var(--img-translate, translateX(0)) scale(1.05);
-  transition: opacity 0.3s ease-in-out, transform 0.7s ease-out;
+  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(calc(var(--hero-machine-scale, 1) * 1.05));
 }
 
 /* Case CE logo glow on hover */
