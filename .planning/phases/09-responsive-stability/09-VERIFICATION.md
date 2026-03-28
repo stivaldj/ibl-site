@@ -13,6 +13,12 @@ verification_scope:
   - ".planning/ROADMAP.md"
   - ".planning/REQUIREMENTS.md"
   - ".planning/phases/08-visual-balance/08-VERIFICATION.md"
+  - "index.html"
+  - "mobile/index.html"
+  - "main.js"
+  - "mobile/main.js"
+  - "style.css"
+  - "mobile/style.css"
 ---
 
 # Phase 9 Verification
@@ -23,7 +29,7 @@ status: passed
 
 Phase 9 passes.
 
-The plan split cleanly covers the responsive-stability requirements without leaking visual-balance ownership from Phase 8. `09-01` owns `RSP-01` and `RSP-02`, `09-02` owns `RSP-03`, and the roadmap and requirements files agree with that split.
+The plan split cleanly covers the responsive-stability requirements without leaking visual-balance ownership from Phase 8. `09-01` owns `RSP-01` and `RSP-02`, `09-02` owns `RSP-03`, and the roadmap and requirements files agree with that split. The runtime checks confirmed the hero-ready gate, bounded transition contract, and shell containment behavior in the touched code.
 
 ## Evidence
 
@@ -40,6 +46,11 @@ The plan split cleanly covers the responsive-stability requirements without leak
 - Execution readiness passed:
   - the wave split is coherent
   - the plans are actionable and non-overlapping
+- Build check passed:
+  - `npm run build` completed successfully during execution verification
+- Runtime check passed:
+  - `main.js` and `mobile/main.js` include the `hero-ready` gate and rapid-switch cleanup
+  - `style.css` and `mobile/style.css` include bounded transition and containment rules for the responsive hero
 
 ## Requirement Coverage
 
