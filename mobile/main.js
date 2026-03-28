@@ -1642,6 +1642,17 @@ const showcaseMachines = [
   { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TRANSMISSÃO', s5v: 'Hidrostática', s6l: 'TANQUE', s6v: '405 L', img: '/case-assets/fotos-processed/2050m.svg',                         href: '/produtos/tratores-de-esteiras/', stage: { scale: 1.03, translateX: -6, translateY: 4, objectPosition: 'center 50%', badgeScale: 1, badgeTranslateX: 6, badgeTranslateY: 4, titleTranslateX: 20, titleTranslateY: -4, metaAlign: 'right', techCardMode: 'right' } },
 ]
 
+let showcaseImageTimer = null
+let showcaseStateRevision = 0
+
+function scheduleHeroReady() {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.add('hero-ready')
+    })
+  })
+}
+
 function applyShowcaseState(m, { animate = true } = {}) {
   const stage = normalizeHeroStage(m.stage)
   const shell = document.querySelector('.entry-hero-shell')
@@ -1691,8 +1702,17 @@ function applyShowcaseState(m, { animate = true } = {}) {
     '--hero-meta-align': stage.metaAlign
   })
 
+  showcaseStateRevision += 1
+  const revision = showcaseStateRevision
+
+  if (showcaseImageTimer) {
+    window.clearTimeout(showcaseImageTimer)
+    showcaseImageTimer = null
+  }
+
   if (img instanceof HTMLElement) {
     const applyImage = () => {
+      if (revision !== showcaseStateRevision) return
       img.src = m.img
       img.alt = `Case ${m.model}`
       img.style.opacity = '1'
@@ -1700,7 +1720,10 @@ function applyShowcaseState(m, { animate = true } = {}) {
 
     if (animate) {
       img.style.opacity = '0'
-      window.setTimeout(applyImage, 280)
+      showcaseImageTimer = window.setTimeout(() => {
+        showcaseImageTimer = null
+        applyImage()
+      }, 280)
     } else {
       applyImage()
     }
@@ -1751,6 +1774,7 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
 })
 
 switchShowcase(0, { animate: false, track: false })
+scheduleHeroReady()
 
 initAttribution()
 initAnalytics()

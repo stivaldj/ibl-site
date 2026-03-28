@@ -27,9 +27,9 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ### Responsive Stability
 
-- [ ] **RSP-01**: The updated hero stage remains intact without clipping or overlay collisions at desktop `1440px`, laptop `1280px`, and tablet `1024px`.
-- [ ] **RSP-02**: The hero-stage changes do not reintroduce mobile overflow, broken touch targets, or incorrect variable leakage into the mobile-specific first-dobra layout.
-- [ ] **RSP-03**: Rapid category switching and initial load complete without abnormal flicker, jump, or broken active-state rendering.
+- [x] **RSP-01**: The updated hero stage remains intact without clipping or overlay collisions at desktop `1440px`, laptop `1280px`, and tablet `1024px`.
+- [x] **RSP-02**: The hero-stage changes do not reintroduce mobile overflow, broken touch targets, or incorrect variable leakage into the mobile-specific first-dobra layout.
+- [x] **RSP-03**: Rapid category switching and initial load complete without abnormal flicker, jump, or broken active-state rendering.
 
 ## v2 Requirements
 
@@ -60,9 +60,9 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 | OVR-01 | Phase 8 | Complete |
 | OVR-02 | Phase 8 | Complete |
 | OVR-03 | Phase 8 | Complete |
-| RSP-01 | Phase 9 | Pending |
-| RSP-02 | Phase 9 | Pending |
-| RSP-03 | Phase 9 | Pending |
+| RSP-01 | Phase 9 | Complete |
+| RSP-02 | Phase 9 | Complete |
+| RSP-03 | Phase 9 | Complete |
 
 **Coverage:**
 - v1 requirements: 12 total
@@ -71,4 +71,4 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ---
 *Requirements defined: 2026-03-27*
-*Last updated: 2026-03-27 after Phase 8 verification*
+*Last updated: 2026-03-28 after Phase 9 verification*

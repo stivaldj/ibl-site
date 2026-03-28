@@ -526,6 +526,12 @@ main [id] {
     object-position 0.7s ease-out;
   will-change: transform, opacity, object-position;
 }
+
+html:not(.hero-ready) .showcase-ring,
+html:not(.hero-ready) .showcase-machine-img {
+  transition: none;
+}
+
 .showcase-machine-img:hover {
   transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(calc(var(--hero-machine-scale, 1) * 1.05));
 }
