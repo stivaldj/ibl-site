@@ -9,8 +9,8 @@ The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero sta
 
 ## Current Phase
 
-- **Current phase:** Phase 8
-- **Phase status:** Phase 8 plan 08-01 complete; Phase 8 plan 08-02 pending execution
+- **Current phase:** Phase 9
+- **Phase status:** Phase 8 complete and verified; Phase 9 not planned yet
 - **Roadmap status:** Active milestone defined
 
 ## Milestone Queue Status
@@ -18,7 +18,7 @@ The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero sta
 | Milestone | Status | Notes |
 |-----------|--------|-------|
 | `v1.0` - Production Hardening | Archived | Phases 1 through 6 shipped and archived under `.planning/milestones/` |
-| `v1.1` - Hero First Fold Stability | Active | Phase 7 complete and verified; Phase 8 plans written and ready for execution |
+| `v1.1` - Hero First Fold Stability | Active | Phase 8 complete and verified; next is Phase 9 planning |
 
 ## Stable Baseline
 
@@ -30,7 +30,7 @@ The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero sta
 
 ## Next Planning Action
 
-Run `$gsd-execute-phase 8` to implement the remaining visual-balance plan from the new hero-stage baseline.
+Run `$gsd-plan-phase 9` to plan the responsive-stability phase from the tuned hero baseline.
 
 ## Archive Pointers
 
@@ -39,4 +39,4 @@ Run `$gsd-execute-phase 8` to implement the remaining visual-balance plan from t
 - `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
 
 ---
-*Last updated: 2026-03-27 after planning Phase 8*
+*Last updated: 2026-03-27 after verifying Phase 8 complete*

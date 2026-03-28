@@ -10,7 +10,7 @@ This milestone focuses on the homepage hero stage only. The goal is to keep the 
 ## Phases
 
 - [x] **Phase 7: Hero Stage Foundation** - Replace improvised hero positioning with explicit per-model stage metadata and layered markup
-- [ ] **Phase 8: Visual Balance** - Normalize perceived machine size, ring centering, and overlay hierarchy across all showcase models
+- [x] **Phase 8: Visual Balance** - Normalize perceived machine size, ring centering, and overlay hierarchy across all showcase models
 - [ ] **Phase 9: Responsive Stability** - Prove the updated hero stays stable across desktop, tablet, and rapid-switch interaction states
 
 ## Phase Details
@@ -43,8 +43,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 08-01: Per-model balance and ring tracking
-- [ ] 08-02: Overlay hierarchy and responsive guardrails
+- [x] 08-01: Per-model balance and ring tracking
+- [x] 08-02: Overlay hierarchy and responsive guardrails
 
 ### Phase 9: Responsive Stability
 **Goal:** Verify the updated hero remains intact across target breakpoints and interaction sequences.

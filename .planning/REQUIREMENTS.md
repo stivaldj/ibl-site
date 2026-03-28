@@ -15,15 +15,15 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ### Visual Balance
 
-- [ ] **VIS-01**: The rotating ring aligns to the active machine's visual center using per-model offsets instead of a single fixed shell center.
-- [ ] **VIS-02**: The active machine image uses CSS custom properties for translation and scale so all eight current models reach a consistent perceived visual mass on desktop hero layouts.
-- [ ] **VIS-03**: Hover amplification on the machine preserves the centered relationship between the machine and rotating ring without shifting the composed stage.
+- [x] **VIS-01**: The rotating ring aligns to the active machine's visual center using per-model offsets instead of a single fixed shell center.
+- [x] **VIS-02**: The active machine image uses CSS custom properties for translation and scale so all eight current models reach a consistent perceived visual mass on desktop hero layouts.
+- [x] **VIS-03**: Hover amplification on the machine preserves the centered relationship between the machine and rotating ring without shifting the composed stage.
 
 ### Overlay Hierarchy
 
-- [ ] **OVR-01**: The large machine title is positioned per model so it does not obscure the machine's critical silhouette.
-- [ ] **OVR-02**: The technical card uses controlled variable-driven positioning rather than the current fixed offset and does not visually collide with the model-meta block.
-- [ ] **OVR-03**: The model-meta block is positioned so it stays readable and does not compete with the technical card or ring badge across the eight hero models.
+- [x] **OVR-01**: The large machine title is positioned per model so it does not obscure the machine's critical silhouette.
+- [x] **OVR-02**: The technical card uses controlled variable-driven positioning rather than the current fixed offset and does not visually collide with the model-meta block.
+- [x] **OVR-03**: The model-meta block is positioned so it stays readable and does not compete with the technical card or ring badge across the eight hero models.
 
 ### Responsive Stability
 
@@ -54,12 +54,12 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 | HERO-01 | Phase 7 | Complete |
 | HERO-02 | Phase 7 | Complete |
 | HERO-03 | Phase 7 | Complete |
-| VIS-01 | Phase 8 | Pending |
-| VIS-02 | Phase 8 | Pending |
-| VIS-03 | Phase 8 | Pending |
-| OVR-01 | Phase 8 | Pending |
-| OVR-02 | Phase 8 | Pending |
-| OVR-03 | Phase 8 | Pending |
+| VIS-01 | Phase 8 | Complete |
+| VIS-02 | Phase 8 | Complete |
+| VIS-03 | Phase 8 | Complete |
+| OVR-01 | Phase 8 | Complete |
+| OVR-02 | Phase 8 | Complete |
+| OVR-03 | Phase 8 | Complete |
 | RSP-01 | Phase 9 | Pending |
 | RSP-02 | Phase 9 | Pending |
 | RSP-03 | Phase 9 | Pending |
@@ -71,4 +71,4 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ---
 *Requirements defined: 2026-03-27*
-*Last updated: 2026-03-27 after Phase 7 verification*
+*Last updated: 2026-03-27 after Phase 8 verification*
