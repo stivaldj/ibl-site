@@ -48,10 +48,10 @@
     <header class="fixed top-0 w-full z-50 bg-case-dark/90 backdrop-blur-md border-b border-case-border">
       <div class="entry-header-bar flex items-center justify-between h-20 px-6 max-w-[1920px] mx-auto">
         <div class="entry-header-brand flex items-center gap-4">
-          <a href="/"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
+          <a href="/" class="site-brand-link"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
           <span class="font-mono text-[10px] text-case-yellow tracking-widest uppercase">Official Dealer</span>
         </div>
-        <nav class="hidden lg:flex items-center gap-12">
+        <nav class="hidden lg:flex items-center gap-12" aria-label="Navegação principal">
           <a href="#catalogo" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Catálogo
@@ -70,6 +70,18 @@
           </a>
         </nav>
         <div class="flex items-center gap-6">
+          <details class="mobile-nav lg:hidden">
+            <summary class="mobile-nav-toggle" aria-label="Abrir navegação principal">
+              <span>Menu</span>
+              <i class="ph-bold ph-list text-lg"></i>
+            </summary>
+            <nav class="mobile-nav-panel" aria-label="Navegação principal móvel">
+              <a href="#catalogo" class="mobile-nav-link">Catálogo</a>
+              <a href="#tecnologia" class="mobile-nav-link">Tecnologia</a>
+              <a href="#posvenda" class="mobile-nav-link">Pós-venda</a>
+              <a href="#unidades" class="mobile-nav-link">Unidades</a>
+            </nav>
+          </details>
           <div class="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             TELEMETRIA ONLINE
@@ -127,7 +139,8 @@
               </div>
             </div>
             <div class="lg:col-span-6 relative h-[420px] lg:h-[560px] flex items-center justify-center group">
-              <div class="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-opacity duration-700">
+              <div class="showcase-stage">
+                <div id="hero-rotating-badge-wrap" class="showcase-ring absolute inset-0 pointer-events-none">
                 <svg viewBox="0 0 100 100" width="500" height="500" class="animate-spin-slow" overflow="visible">
                   <defs>
                     <filter id="hero-letter-glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -155,10 +168,14 @@
                     </textPath>
                   </text>
                 </svg>
-              </div>
-              <img id="showcase-machine" src="/case-assets/fotos-processed/580n-series2.svg" alt="Case 580N" loading="eager" decoding="async" fetchpriority="high" style="--img-translate: translateX(-150px);" class="relative z-10 w-full h-full object-contain showcase-machine-img" />
-              <div id="hero-tech-card" class="absolute top-14 w-[240px] z-20 hidden md:flex" style="right: -112px;">
-                <div class="w-full bg-black/78 backdrop-blur border border-white/10 rounded-lg p-4 flex flex-col">
+                </div>
+                <div class="showcase-machine-stage absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <img id="showcase-machine" src="/case-assets/fotos-processed/580n-series2.svg" alt="Case 580N" loading="eager" decoding="async" fetchpriority="high" class="relative z-10 w-full h-full object-contain showcase-machine-img" />
+                </div>
+                <div class="showcase-overlay absolute inset-0 z-20 pointer-events-none">
+                  <div class="showcase-tech-anchor showcase-overlay-anchor hidden md:flex">
+                    <div id="hero-tech-card" class="hero-tech-card w-[240px]">
+                      <div class="w-full bg-black/78 backdrop-blur border border-white/10 rounded-lg p-4 flex flex-col">
                   <span class="text-[11px] font-mono uppercase tracking-widest text-case-yellow">Ficha Técnica</span>
                   <div class="mt-4 space-y-2">
                     <div class="border-b border-white/10 pb-2">
@@ -195,16 +212,21 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <!-- Model title overlay -->
-              <div class="absolute top-1/4 -translate-y-[150px] left-[35px] z-20 pointer-events-none">
-                <span id="showcase-title" class="text-outline-hero text-6xl md:text-7xl xl:text-8xl font-display font-black uppercase pointer-events-auto" style="display:inline-block; transform-origin:left center">580N</span>
-              </div>
-              <div id="hero-model-meta" class="hero-machine-meta absolute z-20 text-right" style="right: 10px; bottom: 12px; left: auto; transform: none;">
-                <a id="showcase-link" class="hero-machine-link" href="/produtos/retroescavadeiras/">
-                  <span id="showcase-model" class="hero-machine-model block text-2xl md:text-3xl font-display font-black text-white">580N Series 2</span>
-                </a>
-                <span id="showcase-cat" class="hero-machine-cat text-gray-400 text-xs font-mono mt-1 block uppercase tracking-widest">Retroescavadeiras</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="showcase-title-anchor showcase-overlay-anchor">
+                    <span id="showcase-title" class="showcase-title text-outline-hero text-6xl md:text-7xl xl:text-8xl font-display font-black uppercase pointer-events-auto">580N</span>
+                  </div>
+                  <div class="showcase-meta-anchor showcase-overlay-anchor">
+                    <div id="hero-model-meta" class="hero-machine-meta hero-model-meta">
+                      <a id="showcase-link" class="hero-machine-link" href="/produtos/retroescavadeiras/">
+                        <span id="showcase-model" class="hero-machine-model block text-2xl md:text-3xl font-display font-black text-white">580N Series 2</span>
+                      </a>
+                      <span id="showcase-cat" class="hero-machine-cat text-gray-400 text-xs font-mono mt-1 block uppercase tracking-widest">Retroescavadeiras</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -301,7 +323,7 @@
                     WhatsApp Direto
                   </a>
                 </div>
-                <p id="lead-feedback" class="text-xs font-mono text-gray-500 uppercase tracking-widest"></p>
+                <p id="lead-feedback" role="status" aria-live="polite" class="text-xs font-mono text-gray-500 uppercase tracking-widest"></p>
               </form>
             </div>
           </div>
@@ -431,7 +453,7 @@
               <div>
                 <div class="flex items-center gap-3 mb-4">
                   <i class="ph-fill ph-cpu text-case-yellow text-2xl"></i>
-                  <span class="font-mono text-sm uppercase tracking-widest text-gray-400">System Intelligence</span>
+                  <span class="font-mono text-sm uppercase tracking-widest text-gray-400">Conectividade de Frota</span>
                 </div>
                 <h2 class="font-display font-black text-5xl md:text-7xl leading-none">
                   SiteWatch™<br /><span class="text-case-yellow">Connect</span>
@@ -440,7 +462,7 @@
               <div class="space-y-6">
                 <div class="bg-case-panel border border-case-border p-6 hover:border-case-yellow transition-colors cursor-default group">
                   <div class="flex justify-between items-start mb-2">
-                    <h4 class="font-bold text-xl uppercase">Telemetria Avançada</h4>
+                    <h3 class="font-bold text-xl uppercase">Telemetria Avançada</h3>
                     <i class="ph-bold ph-satellite text-2xl text-gray-500 group-hover:text-case-yellow transition-colors"></i>
                   </div>
                   <p class="text-gray-400 text-sm leading-relaxed">
@@ -449,7 +471,7 @@
                 </div>
                 <div class="bg-case-panel border border-case-border p-6 hover:border-case-yellow transition-colors cursor-default group">
                   <div class="flex justify-between items-start mb-2">
-                    <h4 class="font-bold text-xl uppercase">Manutenção Preditiva</h4>
+                    <h3 class="font-bold text-xl uppercase">Manutenção Preditiva</h3>
                     <i class="ph-bold ph-wrench text-2xl text-gray-500 group-hover:text-case-yellow transition-colors"></i>
                   </div>
                   <p class="text-gray-400 text-sm leading-relaxed">
@@ -457,8 +479,8 @@
                   </p>
                 </div>
               </div>
-              <a data-track="tecnologia_explorar_catalogo" href="/produtos/" class="inline-flex items-center gap-2 border-b border-case-yellow pb-1 text-case-yellow font-bold uppercase tracking-widest hover:text-white hover:border-white transition-colors">
-                Explorar Funcionalidades <i class="ph-bold ph-arrow-right"></i>
+              <a data-track="tecnologia_explorar_catalogo" href="/produtos/" class="inline-link-cta gap-2 border-b border-case-yellow pb-1 text-case-yellow font-bold uppercase tracking-widest hover:text-white hover:border-white transition-colors">
+                Ver soluções conectadas <i class="ph-bold ph-arrow-right"></i>
               </a>
             </div>
             <div class="relative">
@@ -466,20 +488,20 @@
               <div class="absolute -bottom-10 -left-10 w-32 h-32 border-b-2 border-l-2 border-case-yellow rounded-bl-3xl"></div>
               <div class="bg-case-panel border border-case-border p-2 relative overflow-hidden rounded-lg shadow-2xl shadow-black">
                 <div class="absolute inset-0 bg-case-yellow/5 z-0"></div>
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop" alt="Dashboard" loading="lazy" decoding="async" class="w-full relative z-10 opacity-80 hover:opacity-100 transition-opacity filter sepia-[.5] hue-rotate-[10deg]" />
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop" alt="Painel de monitoramento operacional para gestão de frota" loading="lazy" decoding="async" class="w-full relative z-10 opacity-80 hover:opacity-100 transition-opacity filter sepia-[.5] hue-rotate-[10deg]" />
                 <div class="absolute top-6 left-6 z-20 bg-black/80 text-green-500 px-3 py-1 font-mono text-xs border border-green-500/30 rounded flex items-center gap-2">
                   <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                  LIVE DATA FEED
+                  MONITORAMENTO ATIVO
                 </div>
                 <div class="absolute bottom-6 right-6 z-20 bg-black/90 p-4 border-l-2 border-case-yellow">
                   <div class="grid grid-cols-2 gap-4 text-xs font-mono">
                     <div>
-                      <span class="text-gray-500 block">STATUS</span>
-                      <span class="text-white">ACTIVE</span>
+                      <span class="text-gray-500 block">COBERTURA</span>
+                      <span class="text-white">REGIONAL</span>
                     </div>
                     <div>
-                      <span class="text-gray-500 block">SIGNAL</span>
-                      <span class="text-white">STRONG</span>
+                      <span class="text-gray-500 block">LEITURA</span>
+                      <span class="text-white">EM TEMPO REAL</span>
                     </div>
                   </div>
                 </div>
@@ -494,8 +516,8 @@
         <div class="container mx-auto px-6">
           <div class="flex flex-col lg:flex-row justify-between items-start mb-16 gap-8">
             <div>
-              <span class="text-case-yellow font-bold uppercase tracking-widest text-sm mb-2 block">/// Service Center</span>
-              <h2 class="font-display font-black text-5xl text-white">SUPORTE TOTAL</h2>
+              <span class="text-case-yellow font-bold uppercase tracking-widest text-sm mb-2 block">/// Pós-venda CASE</span>
+              <h2 class="font-display font-black text-5xl text-white">SUPORTE QUE RESPONDE</h2>
             </div>
             <p class="max-w-md text-gray-400">
               Estrutura completa de pós-venda para garantir a disponibilidade mecânica do seu equipamento no canteiro de obras.
@@ -511,7 +533,7 @@
               <p class="text-gray-400 group-hover:text-black/80 text-sm mb-8 leading-relaxed">
                 Maior estoque de peças de reposição da região. Garantia de procedência e durabilidade para sua máquina.
               </p>
-              <a data-track="posvenda_pecas_catalogo" href="/produtos/" class="inline-flex items-center font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
+              <a data-track="posvenda_pecas_catalogo" href="/produtos/" class="inline-link-cta font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
                 Consultar Estoque <i class="ph-bold ph-arrow-right ml-2"></i>
               </a>
             </div>
@@ -524,7 +546,7 @@
               <p class="text-gray-400 group-hover:text-black/80 text-sm mb-8 leading-relaxed">
                 Equipe técnica treinada na fábrica. Diagnóstico preciso e reparos com ferramentas especiais.
               </p>
-              <a data-track="posvenda_agendar_contato" href="#captacao-lead" class="inline-flex items-center font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
+              <a data-track="posvenda_agendar_contato" href="#captacao-lead" class="inline-link-cta font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
                 Agendar Visita <i class="ph-bold ph-arrow-right ml-2"></i>
               </a>
             </div>
@@ -537,7 +559,7 @@
               <p class="text-gray-400 group-hover:text-black/80 text-sm mb-8 leading-relaxed">
                 Capacitação operacional para seus operadores extraírem o máximo de produtividade do equipamento.
               </p>
-              <a data-track="posvenda_treinamento_contato" href="#captacao-lead" class="inline-flex items-center font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
+              <a data-track="posvenda_treinamento_contato" href="#captacao-lead" class="inline-link-cta font-bold text-sm uppercase tracking-widest border-b border-white/20 group-hover:border-black pb-1">
                 Saiba Mais <i class="ph-bold ph-arrow-right ml-2"></i>
               </a>
             </div>
@@ -564,7 +586,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">01</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">AC - Rio Branco</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">AC - Rio Branco</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Acre</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">Rodovia AC 40, 3395 - Vila Acre</p>
                     </div>
@@ -578,7 +600,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">02</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">AM - Manaus</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">AM - Manaus</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Amazonas</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">Av. Max Teixeira, 3159 - 1º Andar Térreo</p>
                     </div>
@@ -592,7 +614,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">03</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MS - Campo Grande (Matriz)</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MS - Campo Grande (Matriz)</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Mato Grosso do Sul</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">R. Carlos Henrique Spengler, 928</p>
                     </div>
@@ -606,7 +628,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">04</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Várzea Grande</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Várzea Grande</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Mato Grosso</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">Av. Júlio Domingos de Campos, 4922 (Lot D Industrial)</p>
                     </div>
@@ -620,7 +642,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">05</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Água Boa</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Água Boa</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Mato Grosso</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">Rua Vinte e Dois, 487 - Qd. 52 Lt. 07</p>
                     </div>
@@ -634,7 +656,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">06</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Sinop</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">MT - Sinop</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Mato Grosso</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">R. João Pedro Moreira de Carvalho, 5894</p>
                     </div>
@@ -648,7 +670,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">07</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">RO - Ariquemes</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">RO - Ariquemes</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Rondônia</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">BR-364, km 521 - n 8030</p>
                     </div>
@@ -662,7 +684,7 @@
                   <div class="flex items-center gap-4">
                     <div class="text-case-yellow font-mono text-xs">08</div>
                     <div>
-                      <h4 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">RR - Boa Vista</h4>
+                      <h3 class="font-bold text-white uppercase group-hover:text-case-yellow transition-colors">RR - Boa Vista</h3>
                       <p class="text-xs text-gray-500 uppercase tracking-wide">Roraima</p>
                       <p class="text-[11px] text-gray-400 mt-1 leading-snug">Avenida Surumu, 2258 - Mecejana</p>
                     </div>
@@ -683,13 +705,13 @@
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 border-b border-black/10 pb-12">
           <div>
-            <h2 class="font-display font-black text-6xl md:text-8xl tracking-tighter leading-[0.8]">WORK<br />WITH US</h2>
+            <h2 class="font-display font-black text-6xl md:text-8xl tracking-tighter leading-[0.9]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-xl mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar a construir o seu futuro.</p>
+            <p class="font-bold text-xl mb-6 max-w-sm lg:text-right">Especifique sua próxima CASE com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
             <div class="entry-footer-actions flex gap-4">
-              <a data-track="footer_whatsapp" href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20equipe%20IBL%20sobre%20m%C3%A1quinas%20CASE." target="_blank" rel="noopener noreferrer" class="btn px-8 py-3 font-bold uppercase tracking-widest">WhatsApp</a>
-              <a data-track="footer_solicitar_contato" href="#captacao-lead" class="btn px-8 py-3 font-bold uppercase tracking-widest">Solicitar Contato</a>
+              <a data-track="footer_whatsapp" href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20equipe%20IBL%20sobre%20m%C3%A1quinas%20CASE." target="_blank" rel="noopener noreferrer" class="footer-cta footer-cta-primary">WhatsApp</a>
+              <a data-track="footer_solicitar_contato" href="#captacao-lead" class="footer-cta footer-cta-secondary">Solicitar Contato</a>
             </div>
           </div>
         </div>
@@ -707,28 +729,25 @@
           <div class="space-y-4">
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4">Empresa</div>
             <ul class="space-y-2 font-medium">
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Sobre nós em breve" aria-disabled="true" disabled>Sobre Nós</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Carreiras em breve" aria-disabled="true" disabled>Carreiras</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Imprensa em breve" aria-disabled="true" disabled>Imprensa</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Investidores em breve" aria-disabled="true" disabled>Investidores</button></li>
+              <li><a href="/" class="hover:underline">Página Inicial</a></li>
+              <li><a href="#catalogo" class="hover:underline">Linhas CASE</a></li>
+              <li><a href="#unidades" class="hover:underline">Unidades IBL</a></li>
+              <li><a href="#tecnologia" class="hover:underline">Conectividade</a></li>
             </ul>
           </div>
           <div class="space-y-4">
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4">Suporte</div>
             <ul class="space-y-2 font-medium">
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Peças em breve" aria-disabled="true" disabled>Peças</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Serviços em breve" aria-disabled="true" disabled>Serviços</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Garantia em breve" aria-disabled="true" disabled>Garantia</button></li>
-              <li><button type="button" class="btn-disabled hover:underline opacity-70 cursor-not-allowed" aria-label="Manual do proprietário em breve" aria-disabled="true" disabled>Manual do Proprietário</button></li>
+              <li><a href="#posvenda" class="hover:underline">Pós-venda</a></li>
+              <li><a href="#captacao-lead" class="hover:underline">Solicitar suporte</a></li>
+              <li><a href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20preciso%20de%20suporte%20comercial%20para%20equipamentos%20CASE." target="_blank" rel="noopener noreferrer" class="hover:underline">Falar com especialista</a></li>
+              <li><a href="/produtos/" class="hover:underline">Ver catálogo completo</a></li>
             </ul>
           </div>
           <div class="space-y-4">
-            <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4">Social</div>
-            <div class="flex gap-4">
-              <button type="button" class="btn-disabled w-10 h-10 bg-black text-white flex items-center justify-center transition-colors opacity-70 cursor-not-allowed" aria-label="Instagram em breve" aria-disabled="true" disabled><i class="ph-fill ph-instagram-logo text-xl"></i></button>
-              <button type="button" class="btn-disabled w-10 h-10 bg-black text-white flex items-center justify-center transition-colors opacity-70 cursor-not-allowed" aria-label="Facebook em breve" aria-disabled="true" disabled><i class="ph-fill ph-facebook-logo text-xl"></i></button>
-              <button type="button" class="btn-disabled w-10 h-10 bg-black text-white flex items-center justify-center transition-colors opacity-70 cursor-not-allowed" aria-label="LinkedIn em breve" aria-disabled="true" disabled><i class="ph-fill ph-linkedin-logo text-xl"></i></button>
-            </div>
+            <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4">Contato</div>
+            <p class="font-medium leading-relaxed">Atendimento consultivo para compra, especificação e suporte comercial da linha CASE.</p>
+            <p class="font-mono text-[11px] uppercase tracking-widest opacity-70">Resposta ativa via WhatsApp e formulário.</p>
           </div>
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
