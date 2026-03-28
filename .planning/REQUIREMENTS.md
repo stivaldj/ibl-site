@@ -9,9 +9,9 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ### Hero Stage System
 
-- [ ] **HERO-01**: Each `showcaseMachines` entry defines explicit hero-stage layout metadata for its model, including machine, ring, badge, title, and supporting overlay positioning values.
-- [ ] **HERO-02**: `switchShowcase()` applies the active model's hero-stage metadata through one consolidated visual update path with safe neutral fallbacks for missing values.
-- [ ] **HERO-03**: The hero markup separates the right-side visual stage into independent ring, machine, and overlay layers with clear anchor wrappers for controlled positioning.
+- [x] **HERO-01**: Each `showcaseMachines` entry defines explicit hero-stage layout metadata for its model, including machine, ring, badge, title, and supporting overlay positioning values.
+- [x] **HERO-02**: `switchShowcase()` applies the active model's hero-stage metadata through one consolidated visual update path with safe neutral fallbacks for missing values.
+- [x] **HERO-03**: The hero markup separates the right-side visual stage into independent ring, machine, and overlay layers with clear anchor wrappers for controlled positioning.
 
 ### Visual Balance
 
@@ -51,9 +51,9 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HERO-01 | Phase 7 | Pending |
-| HERO-02 | Phase 7 | Pending |
-| HERO-03 | Phase 7 | Pending |
+| HERO-01 | Phase 7 | Complete |
+| HERO-02 | Phase 7 | Complete |
+| HERO-03 | Phase 7 | Complete |
 | VIS-01 | Phase 8 | Pending |
 | VIS-02 | Phase 8 | Pending |
 | VIS-03 | Phase 8 | Pending |
@@ -71,4 +71,4 @@ Requirements for `v1.1 Hero First Fold Stability`. Each maps to exactly one road
 
 ---
 *Requirements defined: 2026-03-27*
-*Last updated: 2026-03-27 after initial definition for v1.1*
+*Last updated: 2026-03-27 after Phase 7 verification*

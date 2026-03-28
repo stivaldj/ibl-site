@@ -9,7 +9,7 @@ This milestone focuses on the homepage hero stage only. The goal is to keep the 
 
 ## Phases
 
-- [ ] **Phase 7: Hero Stage Foundation** - Replace improvised hero positioning with explicit per-model stage metadata and layered markup
+- [x] **Phase 7: Hero Stage Foundation** - Replace improvised hero positioning with explicit per-model stage metadata and layered markup
 - [ ] **Phase 8: Visual Balance** - Normalize perceived machine size, ring centering, and overlay hierarchy across all showcase models
 - [ ] **Phase 9: Responsive Stability** - Prove the updated hero stays stable across desktop, tablet, and rapid-switch interaction states
 
@@ -24,10 +24,11 @@ This milestone focuses on the homepage hero stage only. The goal is to keep the 
 2. `switchShowcase()` updates the active hero from one visual state path with neutral fallbacks for missing values.
 3. The hero markup separates ring, machine, and overlay layers into independent wrappers.
 4. The category selector continues to behave as it does today while the stage system changes underneath it.
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run `$gsd-plan-phase 7` to break down)
+- [x] 07-01: Model-aware hero runtime contract
+- [x] 07-02: Hero stage wrappers and neutral CSS baseline
 
 ### Phase 8: Visual Balance
 **Goal:** Normalize the active machine's perceived scale and eliminate overlay competition while keeping the ring centered on the active asset.
