@@ -40,10 +40,11 @@ Plans:
 3. Hover amplification keeps the ring-machine relationship stable.
 4. The large title no longer obscures the machine silhouette.
 5. The technical card and model-meta block remain readable without colliding.
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run `$gsd-plan-phase 8` to break down)
+- [ ] 08-01: Per-model balance and ring tracking
+- [ ] 08-02: Overlay hierarchy and responsive guardrails
 
 ### Phase 9: Responsive Stability
 **Goal:** Verify the updated hero remains intact across target breakpoints and interaction sequences.
