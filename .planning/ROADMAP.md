@@ -11,7 +11,7 @@ This milestone focuses on the homepage hero stage only. The goal is to keep the 
 
 - [x] **Phase 7: Hero Stage Foundation** - Replace improvised hero positioning with explicit per-model stage metadata and layered markup
 - [x] **Phase 8: Visual Balance** - Normalize perceived machine size, ring centering, and overlay hierarchy across all showcase models
-- [ ] **Phase 9: Responsive Stability** - Prove the updated hero stays stable across desktop, tablet, and rapid-switch interaction states
+- [x] **Phase 9: Responsive Stability** - Prove the updated hero stays stable across desktop, tablet, and rapid-switch interaction states
 
 ## Phase Details
 
@@ -54,10 +54,11 @@ Plans:
 1. The hero stays unclipped and collision-free at desktop `1440px`, laptop `1280px`, and tablet `1024px`.
 2. The mobile layout does not inherit desktop hero overflow or broken touch targets.
 3. Rapid category switching and initial load complete without flicker, jump, or broken active-state rendering.
-**Plans:** TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run `$gsd-plan-phase 9` to break down)
+- [x] 09-01: Breakpoint containment and mobile guardrails
+- [x] 09-02: Initial-load and rapid-switch stability
 
 ## Coverage
 
