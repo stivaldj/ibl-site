@@ -5,38 +5,42 @@
 
 ## Current Focus
 
-The current focus is `v1.1 Hero First Fold Stability`: fix the homepage hero stage so model presentation, rotating-ring centering, and overlay hierarchy stay visually stable without redesigning the existing experience.
+No active milestone is currently open. The latest shipped baseline is `v1.1 Hero First Fold Stability`.
 
 ## Current Phase
 
-- **Current phase:** Phase 9
-- **Phase status:** Phase 9 complete and verified
-- **Roadmap status:** Active milestone defined
+- **Current phase:** None
+- **Phase status:** Milestone closeout complete
+- **Roadmap status:** Awaiting next milestone definition
 
 ## Milestone Queue Status
 
 | Milestone | Status | Notes |
 |-----------|--------|-------|
 | `v1.0` - Production Hardening | Archived | Phases 1 through 6 shipped and archived under `.planning/milestones/` |
-| `v1.1` - Hero First Fold Stability | Active | Phase 9 complete; ready for milestone audit and closeout |
+| `v1.1` - Hero First Fold Stability | Archived | Phases 7 through 9 shipped; archive and milestone audit are complete |
 
 ## Stable Baseline
 
 - **Core value:** Prospects can confidently evaluate equipment and convert into qualified opportunities through a trustworthy, fully functional website.
-- **Latest shipped milestone:** `v1.0` on 2026-03-20
-- **Requirements status:** 21 / 21 shipped requirements satisfied and archived
+- **Latest shipped milestone:** `v1.1` on 2026-03-28
+- **Archived milestone requirements:** `v1.0` satisfied 21 / 21 requirements; `v1.1` satisfied 12 / 12 requirements
 - **Launch gate:** rebuild, packaged smoke, homepage/mobile/product lead verification, and WhatsApp handoff enforcement are documented and passing
 - **Operational docs:** `docs/OPERATIONS.md`, `docs/LAUNCH-GATE.md`, and `docs/LAUNCH-READINESS.md` define the current release discipline
+- **Hero baseline:** the homepage first fold now uses per-model stage metadata, layered anchors, and responsive/runtime stability guardrails
 
 ## Next Planning Action
 
-Run `$gsd-audit-milestone` to confirm the completed v1.1 scope before milestone closeout.
+Run `$gsd-new-milestone` to define the next milestone from the shipped `v1.1` baseline.
 
 ## Archive Pointers
 
 - `.planning/milestones/v1.0-ROADMAP.md`
 - `.planning/milestones/v1.0-REQUIREMENTS.md`
+- `.planning/milestones/v1.1-ROADMAP.md`
+- `.planning/milestones/v1.1-REQUIREMENTS.md`
 - `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
+- `.planning/v1.1-v1.1-MILESTONE-AUDIT.md`
 
 ---
-*Last updated: 2026-03-28 after completing Phase 9*
+*Last updated: 2026-03-28 after closing v1.1 milestone*
