@@ -2,7 +2,7 @@
 
 ## System Shape
 
-VARIANT is a static, multi-entry marketing and catalog site built with Vite and Tailwind CSS.
+ibl-site is a static, multi-entry marketing and catalog site built with Vite and Tailwind CSS.
 The live surface is split across three entry families:
 
 - the homepage in `index.html`

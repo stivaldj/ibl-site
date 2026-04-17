@@ -14,7 +14,7 @@ verification_scope:
   - ".planning/phases/06-launch-gate-completion/06-02-SUMMARY.md"
   - ".planning/ROADMAP.md"
   - ".planning/REQUIREMENTS.md"
-  - ".planning/v1.0-v1.0-MILESTONE-AUDIT.md"
+  - ".planning/v1.0-MILESTONE-AUDIT.md"
   - "docs/LAUNCH-GATE.md"
   - "docs/LAUNCH-READINESS.md"
   - "package.json"
@@ -93,7 +93,7 @@ Bounded non-blockers:
 
 ## Verification Path
 
-1. Read `.planning/ROADMAP.md`, `.planning/REQUIREMENTS.md`, and `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`.
+1. Read `.planning/ROADMAP.md`, `.planning/REQUIREMENTS.md`, and `.planning/v1.0-MILESTONE-AUDIT.md`.
 2. Read both Phase 6 plans and both Phase 6 summaries.
 3. Verified `package.json`, `scripts/launch-gate-lead.mjs`, `docs/LAUNCH-GATE.md`, and `docs/LAUNCH-READINESS.md` against the stated closeout contract.
 4. Inspected the fresh evidence under `.tmp/launch-gate/latest/`.

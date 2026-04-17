@@ -1,8 +1,8 @@
-# VARIANT
+# ibl-site
 
 ## What This Is
 
-`VARIANT` is a customer-facing CASE Construction / IBL Máquinas website focused on machine discovery, product evaluation, and lead generation. It combines a marketing homepage, generated category and product pages, and webhook-based lead capture that creates opportunities inside `ibl-ai-os`.
+`ibl-site` is a customer-facing CASE Construction / IBL Máquinas website focused on machine discovery, product evaluation, and lead generation. It combines a marketing homepage, generated category and product pages, and webhook-based lead capture that creates opportunities inside `ibl-ai-os`.
 
 The initial production-hardening milestone is complete, and the homepage hero first-fold stabilization milestone is now complete as well. The project has a verified `v1.1` baseline, and future milestones should build from the shipped launch-ready foundation plus the stabilized hero system rather than reopening either by default.
 

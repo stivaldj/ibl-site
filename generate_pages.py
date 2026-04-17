@@ -81,10 +81,10 @@ HEADER_HTML = f"""\
     <header class="fixed top-0 w-full z-50 bg-case-dark/90 backdrop-blur-md border-b border-case-border">
       <div class="flex items-center justify-between h-20 px-6 max-w-[1920px] mx-auto">
         <div class="flex items-center gap-4">
-          <a href="/"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
+          <a href="/" class="site-brand-link"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
           <span class="font-mono text-[10px] text-case-yellow tracking-widest uppercase">Official Dealer</span>
         </div>
-        <div class="hidden lg:flex items-center gap-12" role="navigation" aria-label="Navegação principal">
+        <nav class="hidden lg:flex items-center gap-12" aria-label="Navegação principal">
           <a href="/#catalogo" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Catálogo
@@ -101,8 +101,20 @@ HEADER_HTML = f"""\
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Unidades
           </a>
-        </div>
+        </nav>
         <div class="flex items-center gap-6">
+          <details class="mobile-nav lg:hidden">
+            <summary class="mobile-nav-toggle" aria-label="Abrir navegação principal">
+              <span>Menu</span>
+              <i class="ph-bold ph-list text-lg"></i>
+            </summary>
+            <nav class="mobile-nav-panel" aria-label="Navegação principal móvel">
+              <a href="/#catalogo" class="mobile-nav-link">Catálogo</a>
+              <a href="/#tecnologia" class="mobile-nav-link">Tecnologia</a>
+              <a href="/#posvenda" class="mobile-nav-link">Pós-venda</a>
+              <a href="/#unidades" class="mobile-nav-link">Unidades</a>
+            </nav>
+          </details>
           <div class="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             TELEMETRIA ONLINE
@@ -120,10 +132,10 @@ FOOTER_HTML = f"""\
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 border-b border-black/10 pb-12">
           <div>
-            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.8]">WORK<br />WITH US</h2>
+            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.9]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar.</p>
+            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Especifique sua próxima CASE com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
             <div class="generated-footer-actions flex gap-4">
               <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas sobre os modelos CASE.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
               <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>
@@ -454,7 +466,7 @@ def render_spec_groups_html(tech_groups: list) -> str:
         <div class="mb-8">
           <div class="flex items-center gap-3 mb-4">
             <div class="w-1 h-6 bg-case-yellow"></div>
-            <h4 class="font-display font-black text-lg uppercase tracking-wider text-case-yellow">{g['group']}</h4>
+            <h3 class="font-display font-black text-lg uppercase tracking-wider text-case-yellow">{g['group']}</h3>
           </div>
           <div class="bg-case-panel border border-case-border p-6">
             {items_html}
@@ -593,7 +605,7 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
       <div class="absolute inset-0 pointer-events-none">
         <div class="absolute top-0 left-1/4 h-full w-px bg-case-border"></div>
         <div class="absolute top-0 right-1/4 h-full w-px bg-case-border"></div>
-        <div class="absolute top-[20%] left-[5%] w-[400px] h-[400px] bg-case-yellow/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-[20%] left-[5%] w-[70vw] h-[70vw] max-w-[400px] max-h-[400px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
       <div class="container mx-auto px-6 py-16 lg:py-24 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -697,7 +709,7 @@ def render_model_card(model: dict, cat_slug: str) -> str:
                     class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
                 </div>
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
-                  <h3 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">{title}</h3>
+                  <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">{title}</h2>
                   <div class="flex justify-between items-end">
                     <div class="flex gap-6">
                       {specs_html}
@@ -803,7 +815,7 @@ def generate_category_page(cat_entry: dict) -> str:
     <section class="py-16 bg-case-gray border-t border-case-border">
       <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         <div>
-          <h3 class="font-display font-black text-3xl uppercase">Não encontrou o que precisa?</h3>
+          <h2 class="font-display font-black text-3xl uppercase">Não encontrou o que precisa?</h2>
           <p class="text-gray-400 mt-2">Nossa equipe pode te ajudar a encontrar o equipamento ideal.</p>
         </div>
         <a href="{build_whatsapp_url(f'Olá, preciso de ajuda para escolher um equipamento da linha {category}.')}" target="_blank" rel="noopener noreferrer" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex-shrink-0">

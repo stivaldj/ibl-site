@@ -32,10 +32,10 @@
     <header class="fixed top-0 w-full z-50 bg-case-dark/90 backdrop-blur-md border-b border-case-border">
       <div class="flex items-center justify-between h-20 px-6 max-w-[1920px] mx-auto">
         <div class="flex items-center gap-4">
-          <a href="/"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
+          <a href="/" class="site-brand-link"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
           <span class="font-mono text-[10px] text-case-yellow tracking-widest uppercase">Official Dealer</span>
         </div>
-        <div class="hidden lg:flex items-center gap-12" role="navigation" aria-label="Navegação principal">
+        <nav class="hidden lg:flex items-center gap-12" aria-label="Navegação principal">
           <a href="/#catalogo" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Catálogo
@@ -52,8 +52,20 @@
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Unidades
           </a>
-        </div>
+        </nav>
         <div class="flex items-center gap-6">
+          <details class="mobile-nav lg:hidden">
+            <summary class="mobile-nav-toggle" aria-label="Abrir navegação principal">
+              <span>Menu</span>
+              <i class="ph-bold ph-list text-lg"></i>
+            </summary>
+            <nav class="mobile-nav-panel" aria-label="Navegação principal móvel">
+              <a href="/#catalogo" class="mobile-nav-link">Catálogo</a>
+              <a href="/#tecnologia" class="mobile-nav-link">Tecnologia</a>
+              <a href="/#posvenda" class="mobile-nav-link">Pós-venda</a>
+              <a href="/#unidades" class="mobile-nav-link">Unidades</a>
+            </nav>
+          </details>
           <div class="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             TELEMETRIA ONLINE
@@ -109,7 +121,7 @@
                     class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
                 </div>
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
-                  <h3 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 621E</h3>
+                  <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 621E</h2>
                   <div class="flex justify-between items-end">
                     <div class="flex gap-6">
                       <div><span class="text-gray-500 text-xs font-mono block">CARGA DE TOMBAMENTO</span><span class="text-white text-sm font-bold">8.953 kg</span></div><div><span class="text-gray-500 text-xs font-mono block">VOLUME DA CAÇAMBA</span><span class="text-white text-sm font-bold">De 1,6 até 3 m³</span></div>
@@ -133,7 +145,7 @@
                     class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
                 </div>
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
-                  <h3 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 721E</h3>
+                  <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 721E</h2>
                   <div class="flex justify-between items-end">
                     <div class="flex gap-6">
                       <div><span class="text-gray-500 text-xs font-mono block">CARGA DE TOMBAMENTO</span><span class="text-white text-sm font-bold">10.704 kg</span></div><div><span class="text-gray-500 text-xs font-mono block">VOLUME DA CAÇAMBA</span><span class="text-white text-sm font-bold">De 1,9 até 4,2 m³</span></div>
@@ -157,7 +169,7 @@
                     class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
                 </div>
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
-                  <h3 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 821E</h3>
+                  <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira 821E</h2>
                   <div class="flex justify-between items-end">
                     <div class="flex gap-6">
                       <div><span class="text-gray-500 text-xs font-mono block">CARGA DE TOMBAMENTO</span><span class="text-white text-sm font-bold">12.290 kg</span></div><div><span class="text-gray-500 text-xs font-mono block">VOLUME DA CAÇAMBA</span><span class="text-white text-sm font-bold">De 1,9 até 5 m³</span></div>
@@ -181,7 +193,7 @@
                     class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
                 </div>
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
-                  <h3 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira W20G</h3>
+                  <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">Pá Carregadeira W20G</h2>
                   <div class="flex justify-between items-end">
                     <div class="flex gap-6">
                       <div><span class="text-gray-500 text-xs font-mono block">CARGA DE TOMBAMENTO</span><span class="text-white text-sm font-bold">6.108 kg</span></div><div><span class="text-gray-500 text-xs font-mono block">VOLUME DA CAÇAMBA</span><span class="text-white text-sm font-bold">De 1,7 até 5 m³</span></div>
@@ -199,7 +211,7 @@
     <section class="py-16 bg-case-gray border-t border-case-border">
       <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         <div>
-          <h3 class="font-display font-black text-3xl uppercase">Não encontrou o que precisa?</h3>
+          <h2 class="font-display font-black text-3xl uppercase">Não encontrou o que precisa?</h2>
           <p class="text-gray-400 mt-2">Nossa equipe pode te ajudar a encontrar o equipamento ideal.</p>
         </div>
         <a href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20para%20escolher%20um%20equipamento%20da%20linha%20P%C3%A1s-Carregadeiras." target="_blank" rel="noopener noreferrer" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex-shrink-0">
@@ -214,10 +226,10 @@
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 border-b border-black/10 pb-12">
           <div>
-            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.8]">WORK<br />WITH US</h2>
+            <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.9]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Entre em contato hoje mesmo e descubra como podemos ajudar.</p>
+            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Especifique sua próxima CASE com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
             <div class="generated-footer-actions flex gap-4">
               <a href="https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20falar%20com%20um%20especialista%20da%20IBL%20M%C3%A1quinas%20sobre%20os%20modelos%20CASE." target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
               <a href="/#captacao-lead" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>

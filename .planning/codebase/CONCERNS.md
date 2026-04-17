@@ -1,6 +1,6 @@
 # Overview
 
-`VARIANT` is now a shipped v1.0 static marketing/catalog stack with a hardened launch baseline. The biggest launch blockers have been removed, but the codebase still carries a few bounded risks: generated-content drift, external service dependencies, and maintenance overhead from duplicated browser/runtime logic.
+`ibl-site` is now a shipped v1.0 static marketing/catalog stack with a hardened launch baseline. The biggest launch blockers have been removed, but the codebase still carries a few bounded risks: generated-content drift, external service dependencies, and maintenance overhead from duplicated browser/runtime logic.
 
 # Stabilized areas
 

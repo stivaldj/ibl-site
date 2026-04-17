@@ -63,11 +63,9 @@
   --ds-motion-slow: 560ms;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
+html,
 body {
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
@@ -89,12 +87,12 @@ main [id] {
 
 .text-outline {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
-  color: transparent;
+  color: rgba(255, 255, 255, 0.16);
 }
 
 .text-outline-yellow {
   -webkit-text-stroke: 1px #E58E1A;
-  color: transparent;
+  color: color-mix(in srgb, var(--ds-accent) 65%, white 35%);
 }
 
 /* Hero spinning circle */
@@ -170,7 +168,9 @@ main [id] {
 }
 
 .hero-machine-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   line-height: 1;
 }
 
@@ -247,9 +247,9 @@ main [id] {
 .cat-btn {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.03);
-  color: #6b7280;
+  color: #9ca3af;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 10px 4px;
@@ -276,6 +276,79 @@ main [id] {
   box-shadow:
     0 0 14px rgba(229, 142, 26, 0.45),
     inset 0 0 10px rgba(229, 142, 26, 0.08);
+}
+
+.site-brand-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.mobile-nav {
+  position: relative;
+}
+
+.mobile-nav[open] {
+  z-index: 70;
+}
+
+.mobile-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid color-mix(in srgb, #ffffff 24%, transparent);
+  border-radius: var(--ds-radius-sm);
+  background: color-mix(in srgb, #ffffff 4%, transparent);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  list-style: none;
+  cursor: pointer;
+}
+
+.mobile-nav-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-nav-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: min(280px, calc(100vw - 2rem));
+  padding: 0.75rem;
+  border: 1px solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-md);
+  background: rgba(5, 5, 5, 0.96);
+  box-shadow: var(--ds-shadow-md);
+}
+
+.mobile-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--ds-radius-sm);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mobile-nav-link:hover {
+  background: color-mix(in srgb, var(--ds-accent) 10%, transparent);
+  color: var(--ds-accent);
 }
 
 /* ================================================================
@@ -390,6 +463,39 @@ main [id] {
     transform var(--ds-motion-fast) ease;
 }
 
+.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 2rem;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-cta-primary {
+  background: #050505;
+  border: 2px solid #050505;
+  color: #ffffff;
+}
+
+.footer-cta-primary:hover {
+  background: #ffffff;
+  color: #050505;
+}
+
+.footer-cta-secondary {
+  border: 2px solid #050505;
+  color: #050505;
+}
+
+.footer-cta-secondary:hover {
+  background: #050505;
+  color: #ffffff;
+}
+
 .btn-disabled,
 .btn-disabled:hover,
 .btn-disabled:focus-visible {
@@ -485,6 +591,27 @@ main [id] {
   border-color: var(--ds-accent);
   color: var(--ds-accent);
   background: color-mix(in srgb, var(--ds-accent) 10%, transparent);
+}
+
+footer ul a,
+footer ul button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.inline-link-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.5rem;
+}
+
+.btn-disabled {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .compare-item {

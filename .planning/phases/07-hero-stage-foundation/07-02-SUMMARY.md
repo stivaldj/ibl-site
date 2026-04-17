@@ -2,9 +2,9 @@
 
 ## Outcome
 
-- Split the hero into explicit ring, machine, and overlay layers in both [index.html](/Users/joseoliveira/CODING/VARIANT/index.html) and [mobile/index.html](/Users/joseoliveira/CODING/VARIANT/mobile/index.html).
+- Split the hero into explicit ring, machine, and overlay layers in both [index.html](/Users/joseoliveira/CODING/ibl-site/index.html) and [mobile/index.html](/Users/joseoliveira/CODING/ibl-site/mobile/index.html).
 - Removed the hard-coded hero offsets from the markup and replaced them with wrapper-based anchors.
-- Added neutral stage-shell and wrapper baseline styles in [style.css](/Users/joseoliveira/CODING/VARIANT/style.css) and [mobile/style.css](/Users/joseoliveira/CODING/VARIANT/mobile/style.css).
+- Added neutral stage-shell and wrapper baseline styles in [style.css](/Users/joseoliveira/CODING/ibl-site/style.css) and [mobile/style.css](/Users/joseoliveira/CODING/ibl-site/mobile/style.css).
 
 ## Verification
 

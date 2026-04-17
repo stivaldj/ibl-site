@@ -1,0 +1,145 @@
+# Escavadeira Hidráulica CX220C Serie 2
+**URL**: https://www.casece.com/pt-br/southamerica/produtos/escavadeiras-hidraulicas/cx220c-s2
+**Categoria**: Escavadeiras Hidráulicas
+
+## Descrição
+A escavadeira hidráulica CX220C Série 2 possui 20 toneladas que garantem produtividade, versatilidade aprimorada, potência, operações confortáveis e seguras, além de fácil manutenção.  
+ Este modelo de escavadeira faz parte da série CASE C. Ela tem um peso operacional de 22.149 kg e potência de 158 hp.
+
+## Especificações Rápidas
+- **POTÊNCIA LÍQUIDA**: 147,8 hp (110,2 kW)
+- **PESO OPERACIONAL**: 22.149 kg
+
+## Especificações Técnicas
+### MOTOR
+- **Marca**: FPT
+- **Modelo**: NEF6 F4HE0687A*J101
+- **Cilindros**: 6 em linha
+- **Cilindrada**: 6.728 cc
+- **Diâmetro e curso**: 104 x 132 mm
+- **Tensão**: 24 V
+- **Alternador**: 90 A
+- **Motor de Partida**: 24 V 5,0 kW
+
+### SISTEMA HIDRÁULICO
+- **Bombas principais (vazão máxima)**: 2 x 211 l/min (55,7 gpm)  
+ a 1.800 rpm
+- **Bomba Piloto (vazão máxima)**: 18 l/min (4,7 gpm)
+- **Bomba piloto**: 1 de engrenagem
+- **Pressão do Circuito Piloto**: 39 bar (566 psi)
+- **Motor de giro**: Motor de pistões axiais com  
+  deslocamento fixo
+- **Freio**: Mecânico com freio a disco com SAHR
+- **Redutor final**: Redução por engrenagem  
+  planetária
+- **Rolamento mesa de giro**: Tipo esfera com  
+  engrenagem interna
+- **Velocidade máxima de giro**: 11,5 rpm
+- **Filtro de sucção**: 105 μm
+- **Filtro de retorno**: 6 μm
+- **Filtro linha piloto**: 8 μm
+
+### CONTROLES HIDRÁULICOS
+- **Deslocamento**: Sistema de controle da  
+ pressão piloto
+
+### SISTEMA ELÉTRICO
+- **Luzes de trabalho superior**: 1 X 24 V 70 W
+- **Luzes de trabalho Lança**: 2 X 24 V 70 W
+- **Luzes de trabalho Cabine**: 2 X 24 V 70 W
+- **Luzes de trabalho Cabine do operador**: 1 X 24 V 10 W
+- **Bateria**: 2 X 12 V 100 Ah/5HR
+- **Cabeamento**: Conector à prova d’água
+
+### AMBIENTE DO OPERADOR
+- **Nível de ruído interno**: 7 dB(A) (Conforme ISO 6396)
+- **Nível de ruído externo**: 101 dB(A) (Conforme ISO 6395)
+
+## Equipamento Padrão
+### Equipamento Padrão
+#### COMPARTIMENTO DO OPERADOR
+- Sistema de amortecimento a óleo com 4 coxins
+- Cabine com proteção ROPS E FOPS nível1
+- Assento de tecido com suspensão pneumática
+- Cinto de segurança de 3’’
+- Ar-condicionado automático
+- Rádio AM/FM com sintonia automática. Bluetooth e entrada USB
+- Painel de controle com visor de 7” e opção para câmera de visão traseira e lateral direita
+- Alavancas do tipo joystick para comando das funções hidráulicas
+- Pedais para translação com alavancas auxiliares para controle manual
+- Apoios para pés
+- Alavanca de segurança que neutraliza as funções hidráulicas com temporizador de retardo de ação
+- Para-brisa frontal rebatível para cima, com sensor de fim de curso
+- Teto solar e basculante
+- Limpador de para-brisa frontal intermitente com duas velocidades e esguicho de água
+- Janela lateral esquerda deslizante
+- Espelho retrovisor externo
+- Luz interna
+- Porta-copos, porta-objetos e porta-telefone
+- Chave geral dupla
+
+#### SISTEMA ELÉTRICO
+- Baterias (2)
+- Sistema de monitoramento /diagnóstico eletrônico
+- Luzes de trabalho da lança
+- Luzes de trabalho da parte frontal da cabine
+- Alternador de 90A
+
+#### SISTEMA HIDRÁULICO
+- Controles de pilotagem padrão ISO
+- Seletor de modo de trabalho: A,H & SP
+- Modo auxiliar para acessório (martelete,tesoura,processadores,etc.)
+- AUTO Power up
+- 2 bombas de pistão de fluxo variável 2x 211 l/min
+- Redução automática da vazão da bomba
+- Cilindros com amortecimento de fim de curso e sistema regenerativo
+
+#### MOTOR
+- FPT turboalimentado Tier 3 / Mar-1
+- Controle de aceleração do tipo dial
+- Desaceleração automática do motor
+- Controle eletrônico de rotação do motor
+- Dispositivo auto-idle
+- Pré-filtro de ar ciclônico
+
+#### CHASSI SUPERIOR
+- Lança: 5.700mm – monobloco
+- Braço de penetração: 2.400 mm
+- Freio de giro com gerenciado eletrônico
+- Coroa de giro em banho de graxa
+
+#### CHASSI INFERIOR
+- Sapatas: 600 mm com garra tripla
+- Comprimento da esteira: 4.470mm
+- Bitola: 2.390mm
+- Esteira selada e lubrificada
+- Acionamento da esteira por sistema de translação hidrostático de duas velocidades
+- Freios de estacionamento a disco (SAHR)
+
+#### OUTROS
+- Lubrificação centralizada para braço monobloco
+- Caçamba GD: 1.3m³ WD
+
+### Opcionais
+#### Opcionais
+- Braço de escavação: 2,94 m
+- Caçambas para aplicações gerais, para rocha e para aplicações severas (ver tabela página 4)
+- Sapatas – 700 mm, 800 mm
+- Guia de esteiras tripla
+- Predisposição para martelo hidráulico (acionamento por pedal ou joystick)
+- Predisposição para garra rotativa (acionamento por pedal ou joystick)
+- Predisposição para tesoura hidráulica (acionamento por pedal ou joystick)
+- Predisposição para processador florestal
+- Iluminação auxiliar
+- Proteção frontal
+- Proteção superior (FOPS NÍVEL 2)
+- Banco com suspensão mecânica de baixa frequência com molas helicoidais e amortecedor hidráulico de dupla ação
+- Sinalizador rotativo
+- Câmera de visão lateral
+- Câmera de visão traseira
+- Sinalizador rotativo
+- Sistema de monitoramento SiteWatch (telemetria Celular e/ou satelital) com opções de assinatura de 1, 2, 3, 4 ou 5 anos
+- Bomba de reabastecimento de combustível
+
+## Assets Locais
+- assets/55007306_1457a6f0ed344b968436ff9642c8781e.jpg

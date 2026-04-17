@@ -1,0 +1,89 @@
+# Lessons Learned
+
+## 2026-02-26
+- Correção recebida: o tratamento visual pesado nos cards do carrossel degradou o resultado final.
+- Regra preventiva: em ajustes de imagem no carrossel, priorizar efeitos de iluminação por camada (overlay) antes de filtros agressivos por categoria.
+- Regra preventiva: para mudanças estéticas, entregar primeiro uma versão sutil e iterar por intensidade com feedback visual do usuário.
+- Correção recebida: o holofote inicial estava estreito demais e iluminava só o centro da máquina.
+- Regra preventiva: em efeitos de spot light para cards largos, começar com cone aberto (topo 20-28% da largura e base 90-100%) e ajustar para baixo apenas se necessário.
+- Correção recebida: mesmo com cone aberto, a intensidade ainda ficou alta.
+- Regra preventiva: priorizar opacidade baixa no facho (faixa base 0.35-0.5) e só aumentar sob solicitação explícita.
+- Correção recebida: o efeito de holofote não agradou visualmente.
+- Regra preventiva: para efeitos cenográficos (holofote/glow dramático), sempre propor versão opcional antes de fixar no layout principal.
+- Correção recebida: mesmo sem borda, o fundo do card ainda gerava “retângulo” visual.
+- Regra preventiva: quando o pedido for “sem retângulo”, remover explicitamente fundo/sombra do container e mover o destaque para uma camada radial isolada.
+- Correção recebida: a mancha radial grande ainda denunciava as bordas do container.
+- Regra preventiva: manter glow com tamanho <70% da largura e <50% da altura do card quando houver `overflow: hidden`.
+- Correção recebida: o widget de chat com atalhos não atendia, o esperado era uma conversa em formato de mensageria.
+- Regra preventiva: quando o usuário pedir "chat", entregar interface conversacional completa (histórico + input + envio + resposta), não apenas CTAs.
+- Correção recebida: compactação agressiva da dobra inicial pode ocultar a faixa amarela e deslocar blocos de forma indesejada.
+- Regra preventiva: em ajustes de first fold, priorizar alterações incrementais (20-30px) e validar impacto visual global antes de reduzir tipografia/estrutura.
+
+- Correção recebida: o glow do título "SUPER" estava ativo sem interação.
+- Regra preventiva: efeitos de iluminação em headings destacados devem ser acionados apenas via hover (estado padrão neutro).
+- Correção recebida: informações de modelo e CTAs ficaram distantes da imagem principal e redundantes com os dados técnicos já no painel.
+- Regra preventiva: no hero, manter modelo/categoria e ações primárias próximos ao objeto visual principal; evitar repetir specs em dois lugares.
+
+- Correção recebida: card de infos/CTAs junto da máquina poluiu o hero e precisava remoção.
+- Regra preventiva: destacar modelo perto da máquina com overlay mínimo; manter CTAs primárias fora de cards pesados.
+- Correção recebida: bubble precisava ficar realmente colado ao canto inferior direito.
+- Regra preventiva: evitar deslocamento via transform no widget flutuante; posicionar com right/bottom explícitos.
+
+- Correção recebida: etiqueta de modelo com caixa preta ficou pesada visualmente sobre a máquina.
+- Regra preventiva: overlays de metadados no hero devem ser tipográficos (sem box) quando o usuário pedir visual mais limpo.
+- Correção recebida: duas etiquetas separadas de potência/peso no hero criavam ruído visual.
+- Regra preventiva: consolidar especificações em uma ficha técnica única com hierarquia clara e atualização dinâmica por modelo.
+- Correção recebida: ficha técnica precisava usar apenas dados do modelo e evitar metadados institucionais.
+- Regra preventiva: quando a seção é "ficha técnica", excluir qualquer item não técnico (ex.: atendimento/estrutura comercial).
+- Correção recebida: quando a ficha técnica ocupa card alto, poucos itens deixam “buraco” visual no fim.
+- Regra preventiva: para painéis altos no hero, garantir ao menos 6 linhas de specs dinâmicas por modelo.
+- Correção recebida: hover do título "SUPER" estava ativando fora da palavra por área de hitbox ampla.
+- Regra preventiva: títulos com efeito hover devem usar `inline-block` para restringir interação ao texto real.
+- Correção recebida: havia inconsistência de estados de botão (cores diferentes por seção).
+- Regra preventiva: padronizar botões de ação com texto branco no estado padrão e glow laranja no hover.
+- Correção recebida: hover de títulos acionava fora da palavra por hitbox ampla de elementos block.
+- Regra preventiva: para títulos com glow, usar `inline-block`/`fit-content` e hover no próprio elemento textual.
+- Correção recebida: usar `inline-block` global em headings pode deslocar composição do layout.
+- Regra preventiva: preferir `width: fit-content` mantendo `display` original para reduzir hitbox sem quebrar fluxo.
+- Correção recebida: no modo de edição, elementos saltavam de posição e tamanho ao selecionar/arrastar.
+- Regra preventiva: nunca materializar (`position/width/height`) no clique de seleção; aplicar isso apenas no início do drag/resize.
+- Correção recebida: redimensionamento não era previsível e controle de dimensão falhava.
+- Regra preventiva: usar uma única base de coordenadas (`position: fixed`) durante edição e persistir exatamente o valor final ao soltar.
+- Correção recebida: ficha técnica e círculo giratório perderam estilo por edição de texto indevida.
+- Regra preventiva: bloquear edição textual para nós não-folha e nós estruturais/complexos (SVG, containers com filhos).
+- Correção recebida: fluxo de edição sem undo/redo rápido aumenta retrabalho e frustração.
+- Regra preventiva: todo editor visual deve expor `Cmd/Ctrl+Z` e `Shift+Cmd/Ctrl+Z` (ou `Ctrl+Y`) com botões visíveis de Voltar/Refazer.
+- Correção recebida: bordas/seleção de containers gigantes bloqueiam clique em elementos abaixo.
+- Regra preventiva: no editor visual, priorizar seleção do menor alvo sob o cursor e nunca iniciar drag por clique em descendentes de um container selecionado.
+- Correção recebida: editar elementos sem painel de camadas gera perda de controle em layouts densos.
+- Regra preventiva: manter painel lateral de camadas com seleção direta, lock por item, foco em um item e agrupamento explícito para operações em lote.
+- Correção recebida: ferramentas fixas ocupando espaço sem minimizar tornam o fluxo cansativo.
+- Regra preventiva: todo painel de editor visual deve ter estado minimizado/expandido e manter o workspace desobstruído.
+- Correção recebida: mover/redimensionar sem ajuste fino gera frustração em composição visual.
+- Regra preventiva: suportar nudge por teclado (1px e 10px com modificador) e reset de tamanho padrão por elemento.
+- Correção recebida: `Ctrl+Z` não pode depender de foco fora de inputs; precisa funcionar globalmente no modo editor.
+- Regra preventiva: tratar atalhos de undo/redo antes dos guardas de foco em campos de formulário.
+- Correção recebida: hitbox de elementos enormes ainda sequestra seleção.
+- Regra preventiva: usar `elementsFromPoint` para permitir seleção em profundidade e ignorar elementos que ocupam grande fração da viewport.
+- Correção recebida: agrupamento com checkbox no painel é lento para edição visual rápida.
+- Regra preventiva: suportar multisseleção direta com `Ctrl/Cmd+Click` na tela e CTA explícita de “Agrupar” no toolbar.
+- Correção recebida: seletores por caminho (`body > ... nth-of-type`) causam referência instável e quebram undo/grupo.
+- Regra preventiva: para nós sem `id`, sempre gerar `data-layout-id` estável e persistir por seletor desse atributo.
+- Correção recebida: `Ctrl/Cmd+Click` em filhos internos agrupava nós errados.
+- Regra preventiva: na multisseleção, promover seleção para container-raiz preferido (ex.: `#hero-tech-card`, `#chat-widget`) antes de adicionar ao grupo.
+- Correção recebida: mover/redimensionar mídia falha quando o clique fica preso em descendente SVG/path.
+- Regra preventiva: normalizar alvo para nó editável de mídia (`#showcase-machine` e `svg.animate-spin-slow`) antes de selecionar e iniciar drag/resize.
+- Correção recebida: elementos de texto do hero estavam sendo persistidos como `fixed`, virando “flutuantes”.
+- Regra preventiva: persistir `fixed` apenas para o chat widget; demais elementos editáveis devem salvar em `absolute` relativo ao parent.
+- Correção recebida: elemento com `transform` (máquina com `--img-translate`) “foge” em direção contrária no drag.
+- Regra preventiva: ao materializar nó para edição posicional, neutralizar transforms de apresentação (especialmente translate de hero) para manter movimento 1:1 com o cursor.
+- Correção recebida: ao soltar a máquina no limite esquerdo, ela “rebate” para a direita.
+- Regra preventiva: para elementos de hero com geometria especial (`#showcase-machine` e `svg.animate-spin-slow`), manter persistência em `fixed` durante edição para evitar salto ao converter para `absolute`.
+- Correção recebida: resize pela alça parava de crescer em tamanhos grandes.
+- Regra preventiva: em editor visual, não limitar `width/height` por `window.innerWidth/innerHeight`; usar teto técnico alto apenas para proteção.
+- Correção recebida: o GIF giratório aumentava só de clicar.
+- Regra preventiva: iniciar drag com threshold mínimo de movimento e persistir apenas quando houver alteração real (`moved=true`).
+- Correção recebida: o GIF giratório ainda inflava ao mover/redimensionar por causa do bbox da rotação.
+- Regra preventiva: para SVG com animação de rotação, nunca usar `getBoundingClientRect()` como fonte de verdade de `width/height`; persistir tamanho estável via `style/computed/default`.
+- Correção recebida: redimensionar o título `580N` fazia o bloco fugir para cima/esquerda.
+- Regra preventiva: para overlays tipográficos do hero (`#showcase-title` e `#hero-model-meta`), persistir em modo estável (`fixed`) no modo editor.

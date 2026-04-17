@@ -1,4 +1,4 @@
-# Planning State: VARIANT
+# Planning State: ibl-site
 
 **Initialized:** 2026-03-20
 **Primary project reference:** `.planning/PROJECT.md`
@@ -39,8 +39,8 @@ Run `$gsd-new-milestone` to define the next milestone from the shipped `v1.1` ba
 - `.planning/milestones/v1.0-REQUIREMENTS.md`
 - `.planning/milestones/v1.1-ROADMAP.md`
 - `.planning/milestones/v1.1-REQUIREMENTS.md`
-- `.planning/v1.0-v1.0-MILESTONE-AUDIT.md`
-- `.planning/v1.1-v1.1-MILESTONE-AUDIT.md`
+- `.planning/v1.0-MILESTONE-AUDIT.md`
+- `.planning/v1.1-MILESTONE-AUDIT.md`
 
 ---
 *Last updated: 2026-03-28 after closing v1.1 milestone*

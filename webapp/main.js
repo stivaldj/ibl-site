@@ -1112,7 +1112,7 @@ function setupProductPageEnhancements() {
               Falar no WhatsApp
             </a>
           </div>
-          <p id="product-lead-feedback" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
+          <p id="product-lead-feedback" role="status" aria-live="polite" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
         </form>
       </div>
     </div>

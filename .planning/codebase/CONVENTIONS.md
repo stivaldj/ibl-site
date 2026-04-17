@@ -2,7 +2,7 @@
 
 ## Overview
 
-VARIANT is a static-site-first codebase with three runtime entrypoints:
+ibl-site is a static-site-first codebase with three runtime entrypoints:
 
 - `main.js` for the desktop homepage and shared runtime behavior
 - `webapp/main.js` for the alternate app-style surface
