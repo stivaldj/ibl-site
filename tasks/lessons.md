@@ -95,3 +95,10 @@
 - Regra preventiva: ao otimizar SVG com raster embutido, manter mesmas dimensões entre máscara (L) e imagem (RGB) e verificar programaticamente.
 - Descoberta: node_modules do repo é darwin-arm64; builds em ambiente Linux exigem cópia isolada com npm install próprio (nunca rodar npm install dentro do repo montado em outro OS).
 - Regra preventiva: a seção #unidades da home tem endereços mais atuais que o site WordPress público; em divergência de dados institucionais, tratar o repo como curadoria e flaggar para confirmação humana.
+
+## 2026-06-10 — Correção: ficha técnica sobre a máquina (hero home)
+- Correção recebida: a tabela de specs cobria a imagem da máquina no hero da home ao trocar de categoria.
+- Causa raiz: a home usa `webapp/main.js` (não `main.js`); o switchShowcase aplicava `translateX(-150px)` órfão nos modelos 580N/CX220C.
+- Regra preventiva: o hero da homepage vive em `webapp/` — validar mudanças de hero SEMPRE no entry real (conferir o `<script src>` do index.html antes de editar).
+- Regra preventiva: validar o hero interagindo (trocar todas as 8 categorias), não só no load inicial — estados pós-interação podem ter offsets próprios.
+- Regra preventiva: screenshots de preview devem cobrir mais de um tamanho de viewport antes de declarar "visual OK".
