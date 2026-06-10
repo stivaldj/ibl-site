@@ -1111,6 +1111,10 @@ function setupProductPageEnhancements() {
             <label class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2" for="product-lead-uso">Aplicação principal</label>
             <input class="input-field" id="product-lead-uso" name="uso" required placeholder="Ex.: terraplenagem pesada, locação, obras urbanas">
           </div>
+          <label class="flex items-start gap-3 pt-1 text-xs text-gray-400 leading-relaxed cursor-pointer">
+            <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[#E58E1A]">
+            <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
+          </label>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Solicitar orçamento</button>
             <a data-track="product_lead_whatsapp" href="${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">

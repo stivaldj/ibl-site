@@ -160,7 +160,9 @@ FOOTER_HTML = f"""\
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Empresa</div>
             <ul class="space-y-2 font-medium text-sm">
               <li><a href="/" class="hover:underline">Página Inicial</a></li>
-              <li><a href="/#unidades" class="hover:underline">Unidades IBL</a></li>
+              <li><a href="/sobre/" class="hover:underline">Sobre nós</a></li>
+              <li><a href="/filiais/" class="hover:underline">Nossas Filiais</a></li>
+              <li><a href="/contato/" class="hover:underline">Contato</a></li>
               <li><a href="/#tecnologia" class="hover:underline">Tecnologia CASE</a></li>
             </ul>
           </div>
@@ -174,12 +176,15 @@ FOOTER_HTML = f"""\
           </div>
           <div>
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Social</div>
-            <p class="font-medium text-sm leading-relaxed">Canais sociais em atualização para o lançamento.</p>
+            <ul class="space-y-2 font-medium text-sm">
+              <li><a href="https://www.instagram.com/iblmaquinas/" target="_blank" rel="noopener noreferrer" class="hover:underline">Instagram</a></li>
+              <li><a href="/privacidade/" class="hover:underline">Política de Privacidade</a></li>
+            </ul>
             <p class="font-mono text-[11px] uppercase tracking-widest mt-3 opacity-70">Atendimento ativo via WhatsApp e formulário.</p>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
-          <p>© 2026 IBL Máquinas. All rights reserved.</p>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2 pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
+          <p>© 2026 IBL Máquinas — Racine Comércio de Máquinas Ltda · CNPJ 28.265.622/0001-60</p>
           <p>Case Construction Authorized Dealer</p>
         </div>
       </div>
@@ -970,6 +975,341 @@ def generate_products_index(db: list) -> str:
 </html>"""
 
 
+# ─── Páginas institucionais ────────────────────────────────────────────────────
+
+FILIAIS_PATH = BASE_DIR / "data" / "filiais.json"
+
+
+def load_filiais() -> dict:
+    return json.loads(FILIAIS_PATH.read_text(encoding="utf-8"))
+
+
+def render_institutional_page(
+    page_name: str,
+    description: str,
+    canonical_path: str,
+    eyebrow: str,
+    title_html: str,
+    body_html: str,
+    schema_objects: list[dict],
+) -> str:
+    head_html = render_head(
+        page_name=page_name,
+        description=description,
+        canonical_path=canonical_path,
+        og_image=DEFAULT_OG_IMAGE,
+        schema_objects=schema_objects,
+    )
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+{head_html}
+</head>
+<body class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
+{HEADER_HTML}
+
+  <main class="pt-20">
+    <section class="py-20 border-b border-case-border bg-case-dark relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
+      </div>
+      <div class="container mx-auto px-6 relative z-10">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// {eyebrow}</span>
+        <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none">{title_html}</h1>
+      </div>
+    </section>
+{body_html}
+  </main>
+
+{FOOTER_HTML}
+
+</body>
+</html>"""
+
+
+def render_filial_card(filial: dict, index: int) -> str:
+    matriz_badge = (
+        '<span class="inline-block px-2 py-1 bg-case-yellow text-black text-[10px] font-mono font-bold tracking-widest uppercase">Matriz</span>'
+        if filial.get("matriz")
+        else ""
+    )
+    tel_link = filial["telefone_e164"]
+    maps_url = f"https://www.google.com/maps/search/?api=1&query={filial['lat']},{filial['lng']}"
+    return f"""
+          <div class="industrial-border bg-case-panel border border-case-border p-8 flex flex-col gap-4 hover:border-case-yellow transition-colors">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-xs text-case-yellow tracking-widest">{str(index + 1).zfill(2)}</span>
+              {matriz_badge}
+            </div>
+            <div>
+              <h2 class="font-display font-black text-2xl uppercase leading-none">{escape(filial['uf'])} — {escape(filial['cidade'])}</h2>
+              <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">{escape(filial['estado'])}</p>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed">{escape(filial['endereco'])}<br />CEP {escape(filial['cep'])}</p>
+            <div class="mt-auto flex flex-wrap gap-3 pt-4 border-t border-case-border">
+              <a href="tel:{escape(tel_link, quote=True)}" class="text-case-yellow font-bold text-sm uppercase tracking-widest hover:underline">{escape(filial['telefone'])}</a>
+              <a href="{escape(maps_url, quote=True)}" target="_blank" rel="noopener noreferrer" class="text-gray-400 text-sm uppercase tracking-widest hover:text-case-yellow transition-colors">Ver no mapa →</a>
+            </div>
+          </div>"""
+
+
+def build_local_business_schema(filial: dict, empresa: dict) -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": f"IBL Máquinas — {filial['cidade']}/{filial['uf']}",
+        "parentOrganization": {"@type": "Organization", "name": empresa["nome_fantasia"]},
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": filial["endereco"],
+            "addressLocality": filial["cidade"],
+            "addressRegion": filial["uf"],
+            "postalCode": filial["cep"],
+            "addressCountry": "BR",
+        },
+        "geo": {"@type": "GeoCoordinates", "latitude": filial["lat"], "longitude": filial["lng"]},
+        "telephone": filial["telefone_e164"],
+        "url": make_absolute_url("/filiais/"),
+    }
+
+
+def generate_institutional_pages() -> int:
+    data = load_filiais()
+    empresa = data["empresa"]
+    filiais = data["filiais"]
+    pages = 0
+
+    # ── /filiais/ ──
+    cards = "\n".join(render_filial_card(f, i) for i, f in enumerate(filiais))
+    filiais_body = f"""
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6">
+        <div class="flex items-center gap-8 mb-12 text-sm font-mono text-gray-400">
+          <span class="border border-case-border px-4 py-2">{len(filiais)} UNIDADES</span>
+          <span class="border border-case-border px-4 py-2">6 ESTADOS</span>
+          <span class="border border-case-border px-4 py-2">NORTE E CENTRO-OESTE</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+{cards}
+        </div>
+      </div>
+    </section>"""
+    schemas = [build_local_business_schema(f, empresa) for f in filiais]
+    schemas.append(build_breadcrumb_schema([("Home", "/"), ("Filiais", "/filiais/")]))
+    html = render_institutional_page(
+        page_name="Filiais",
+        description=(
+            "8 unidades IBL Máquinas em 6 estados (MS, MT, AC, AM, RO e RR) com vendas, "
+            "peças genuínas CASE e assistência técnica. Endereços, telefones e mapas."
+        ),
+        canonical_path="/filiais/",
+        eyebrow="Cobertura Regional",
+        title_html='Nossas<br /><span class="text-outline">Filiais</span>',
+        body_html=filiais_body,
+        schema_objects=schemas,
+    )
+    out = BASE_DIR / "filiais"
+    out.mkdir(exist_ok=True)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    pages += 1
+    print("  ✓ filiais/index.html")
+
+    # ── /sobre/ ──
+    sobre_body = f"""
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-7 space-y-6 text-gray-300 leading-relaxed">
+          <p>A <strong class="text-white">IBL Máquinas</strong> iniciou sua trajetória em maio de 1992, assumindo o desafio de representar a marca <strong class="text-white">CASE Construction</strong> em Mato Grosso do Sul. Com determinação, transformamos um sonho em uma empresa sólida, construída a partir do zero.</p>
+          <p>Em 2002, expandimos a operação para mais cinco estados: Mato Grosso, Rondônia, Acre, Amazonas e Roraima — consolidando uma das maiores coberturas regionais de equipamentos de construção do Norte e Centro-Oeste do Brasil.</p>
+          <p>Em 2004, integramos ao portfólio a <strong class="text-white">Dynapac</strong>, marca mundialmente reconhecida em soluções de compactação e pavimentação asfáltica.</p>
+          <p>Hoje, sob a liderança da segunda geração, seguimos investindo em novas tecnologias e mercados, com compromisso diário com a excelência no atendimento, a disponibilidade de peças genuínas e o pós-venda que mantém a operação dos nossos clientes ativa.</p>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="industrial-border bg-case-panel border border-case-border p-6 text-center">
+              <div class="font-display font-black text-4xl text-case-yellow">30+</div>
+              <div class="text-xs font-mono uppercase tracking-widest text-gray-400 mt-2">Anos de mercado</div>
+            </div>
+            <div class="industrial-border bg-case-panel border border-case-border p-6 text-center">
+              <div class="font-display font-black text-4xl text-case-yellow">8</div>
+              <div class="text-xs font-mono uppercase tracking-widest text-gray-400 mt-2">Unidades</div>
+            </div>
+            <div class="industrial-border bg-case-panel border border-case-border p-6 text-center">
+              <div class="font-display font-black text-4xl text-case-yellow">6</div>
+              <div class="text-xs font-mono uppercase tracking-widest text-gray-400 mt-2">Estados atendidos</div>
+            </div>
+            <div class="industrial-border bg-case-panel border border-case-border p-6 text-center">
+              <div class="font-display font-black text-4xl text-case-yellow">2</div>
+              <div class="text-xs font-mono uppercase tracking-widest text-gray-400 mt-2">Marcas líderes</div>
+            </div>
+          </div>
+          <a href="/filiais/" class="mt-6 block text-center px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Conheça nossas filiais</a>
+        </div>
+      </div>
+    </section>"""
+    sobre_schema = {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "Sobre a IBL Máquinas",
+        "url": make_absolute_url("/sobre/"),
+        "mainEntity": {
+            "@type": "Organization",
+            "name": empresa["nome_fantasia"],
+            "legalName": empresa["razao_social"],
+            "foundingDate": empresa["fundacao"],
+            "email": empresa["email"],
+            "url": SITE_URL,
+            "logo": DEFAULT_OG_IMAGE,
+            "sameAs": [empresa["instagram"]],
+            "brand": [{"@type": "Brand", "name": m} for m in empresa["marcas"]],
+        },
+    }
+    html = render_institutional_page(
+        page_name="Sobre nós",
+        description=(
+            "Desde 1992 representando a CASE Construction e, desde 2004, a Dynapac. "
+            "8 unidades em 6 estados do Norte e Centro-Oeste com vendas, peças e pós-venda."
+        ),
+        canonical_path="/sobre/",
+        eyebrow="Desde 1992",
+        title_html='Sobre a<br /><span class="text-outline">IBL Máquinas</span>',
+        body_html=sobre_body,
+        schema_objects=[sobre_schema, build_breadcrumb_schema([("Home", "/"), ("Sobre", "/sobre/")])],
+    )
+    out = BASE_DIR / "sobre"
+    out.mkdir(exist_ok=True)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    pages += 1
+    print("  ✓ sobre/index.html")
+
+    # ── /contato/ ──
+    matriz = next(f for f in filiais if f.get("matriz"))
+    contato_rows = "\n".join(
+        f"""
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 p-5 border border-case-border bg-case-panel">
+            <div>
+              <span class="font-bold text-white uppercase">{escape(f['uf'])} — {escape(f['cidade'])}</span>
+              <span class="block text-xs text-gray-500 mt-1">{escape(f['endereco'])} · CEP {escape(f['cep'])}</span>
+            </div>
+            <a href="tel:{escape(f['telefone_e164'], quote=True)}" class="text-case-yellow font-bold text-sm uppercase tracking-widest hover:underline whitespace-nowrap">{escape(f['telefone'])}</a>
+          </div>"""
+        for f in filiais
+    )
+    contato_body = f"""
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5 space-y-6">
+          <div class="industrial-border bg-case-panel border border-case-border p-8">
+            <h2 class="font-display font-black text-2xl uppercase mb-6">Canais diretos</h2>
+            <div class="space-y-4 text-sm">
+              <a href="{build_whatsapp_url('Olá, quero falar com a equipe IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-case-yellow font-bold uppercase tracking-widest hover:underline"><i class="ph-fill ph-whatsapp-logo text-2xl"></i> WhatsApp comercial</a>
+              <a href="mailto:{escape(empresa['email'], quote=True)}" class="flex items-center gap-3 text-gray-300 hover:text-case-yellow transition-colors"><i class="ph-bold ph-envelope text-2xl text-case-yellow"></i> {escape(empresa['email'])}</a>
+              <a href="tel:{escape(matriz['telefone_e164'], quote=True)}" class="flex items-center gap-3 text-gray-300 hover:text-case-yellow transition-colors"><i class="ph-bold ph-phone text-2xl text-case-yellow"></i> Matriz: {escape(matriz['telefone'])}</a>
+            </div>
+            <a href="/#captacao-lead" class="mt-8 block text-center px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Solicitar orçamento</a>
+            <p class="text-xs text-gray-500 mt-4 leading-relaxed">Resposta comercial em até 1 dia útil. Dados tratados conforme nossa <a href="/privacidade/" class="underline hover:text-case-yellow">Política de Privacidade</a>.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <h2 class="font-display font-black text-2xl uppercase mb-6">Telefones por unidade</h2>
+          <div class="space-y-3">
+{contato_rows}
+          </div>
+        </div>
+      </div>
+    </section>"""
+    contato_schema = {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contato — IBL Máquinas",
+        "url": make_absolute_url("/contato/"),
+    }
+    html = render_institutional_page(
+        page_name="Contato",
+        description=(
+            "Fale com a IBL Máquinas: WhatsApp comercial, e-mail e telefones das 8 unidades "
+            "em MS, MT, AC, AM, RO e RR. Resposta em até 1 dia útil."
+        ),
+        canonical_path="/contato/",
+        eyebrow="Fale Conosco",
+        title_html='Entre em<br /><span class="text-outline">Contato</span>',
+        body_html=contato_body,
+        schema_objects=[contato_schema, build_breadcrumb_schema([("Home", "/"), ("Contato", "/contato/")])],
+    )
+    out = BASE_DIR / "contato"
+    out.mkdir(exist_ok=True)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    pages += 1
+    print("  ✓ contato/index.html")
+
+    # ── /privacidade/ ──
+    privacidade_body = f"""
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6 max-w-4xl space-y-10 text-gray-300 leading-relaxed text-sm md:text-base">
+        <p class="text-xs font-mono uppercase tracking-widest text-gray-500">Última atualização: junho de 2026</p>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">1. Quem somos</h2>
+          <p>Esta Política de Privacidade descreve como a <strong class="text-white">{escape(empresa['razao_social'])}</strong> ("IBL Máquinas"), inscrita no CNPJ {escape(empresa['cnpj'])}, trata os dados pessoais coletados neste site, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 — LGPD).</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">2. Dados que coletamos</h2>
+          <p>Ao preencher nossos formulários de contato e orçamento, coletamos: <strong class="text-white">nome, telefone/WhatsApp e interesse comercial</strong> (modelo de máquina, tipo de uso e mensagem). Também coletamos dados de navegação (páginas visitadas e eventos de interação) por meio do Google Analytics, de forma pseudonimizada.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">3. Finalidade do tratamento</h2>
+          <p>Os dados são utilizados exclusivamente para: atendimento comercial e elaboração de orçamentos; contato via WhatsApp ou telefone solicitado por você; registro do atendimento em nosso sistema interno de gestão de oportunidades; e melhoria da experiência do site.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">4. Compartilhamento</h2>
+          <p>Seus dados não são vendidos nem compartilhados com terceiros para fins de marketing. O tratamento ocorre em sistemas da IBL Máquinas e em operadores estritamente necessários à operação (ex.: WhatsApp/Meta para mensagens iniciadas por você e Google Analytics para métricas de uso).</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">5. Retenção e segurança</h2>
+          <p>Os dados de leads são mantidos pelo período necessário ao atendimento comercial e às obrigações legais. Adotamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">6. Seus direitos</h2>
+          <p>Nos termos da LGPD, você pode solicitar a qualquer momento: confirmação do tratamento, acesso, correção, anonimização, portabilidade ou eliminação dos seus dados, além de revogar consentimentos. Para exercer seus direitos, contate <a href="mailto:{escape(empresa['email'], quote=True)}" class="text-case-yellow underline hover:no-underline">{escape(empresa['email'])}</a>.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">7. Cookies e analytics</h2>
+          <p>Utilizamos o Google Analytics 4 para entender o uso do site (páginas vistas, origem do acesso e eventos de interação). Você pode bloquear cookies nas configurações do seu navegador sem prejuízo à navegação.</p>
+        </div>
+
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase text-white mb-4">8. Contato do encarregado</h2>
+          <p>Dúvidas sobre esta política ou sobre o tratamento de dados podem ser encaminhadas para <a href="mailto:{escape(empresa['email'], quote=True)}" class="text-case-yellow underline hover:no-underline">{escape(empresa['email'])}</a>.</p>
+        </div>
+      </div>
+    </section>"""
+    html = render_institutional_page(
+        page_name="Política de Privacidade",
+        description=(
+            "Como a IBL Máquinas coleta, usa e protege seus dados pessoais em conformidade "
+            "com a LGPD (Lei nº 13.709/2018)."
+        ),
+        canonical_path="/privacidade/",
+        eyebrow="LGPD",
+        title_html='Política de<br /><span class="text-outline">Privacidade</span>',
+        body_html=privacidade_body,
+        schema_objects=[build_breadcrumb_schema([("Home", "/"), ("Privacidade", "/privacidade/")])],
+    )
+    out = BASE_DIR / "privacidade"
+    out.mkdir(exist_ok=True)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    pages += 1
+    print("  ✓ privacidade/index.html")
+
+    return pages
+
+
 # ─── Main ───────────────────────────────────────────────────────────────────────
 
 # Páginas estáticas mantidas à mão na raiz do repo (fora de /produtos/).
@@ -1067,7 +1407,11 @@ def main():
             sitemap_paths.append(f"/produtos/{cat_slug}/{model_slug}/")
             print(f"  ✓ produtos/{cat_slug}/{model_slug}/index.html")
 
-    # 3. Sitemap e robots.txt
+    # 3. Páginas institucionais
+    print("\n[Institucional] Gerando páginas institucionais ...")
+    total_pages += generate_institutional_pages()
+
+    # 4. Sitemap e robots.txt
     print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
     generate_sitemap(sitemap_paths)
 

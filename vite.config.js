@@ -40,6 +40,11 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'index.html'),
         mobile: resolve(__dirname, 'mobile/index.html'),
+        notfound: resolve(__dirname, '404.html'),
+        sobre: resolve(__dirname, 'sobre/index.html'),
+        filiais: resolve(__dirname, 'filiais/index.html'),
+        contato: resolve(__dirname, 'contato/index.html'),
+        privacidade: resolve(__dirname, 'privacidade/index.html'),
         ...collectHtmlEntries('produtos')
       }
     }

@@ -10,112 +10,113 @@
     "instagram": "https://www.instagram.com/iblmaquinas/",
     "whatsapp_comercial": "556733584100",
     "whatsapp_confirmado": false,
-    "_nota_whatsapp": "TODO_CONFIRMAR: usar o número WhatsApp Business oficial; fallback atual é o telefone da matriz (67) 3358-4100"
+    "_nota_whatsapp": "TODO_CONFIRMAR: usar o número WhatsApp Business oficial; fallback atual é o telefone da matriz (67) 3358-4100",
+    "_nota_fontes": "Endereços/coordenadas: seção #unidades do index.html (curadoria mais recente). Telefones: www.iblmaquinas.com.br/sobre-nos (site WP). Divergências de endereço (Rio Branco, Ariquemes) seguiram a curadoria do repo — confirmar com a IBL."
   },
   "filiais": [
     {
       "id": "campo-grande",
       "uf": "MS",
+      "estado": "Mato Grosso do Sul",
       "cidade": "Campo Grande",
       "matriz": true,
-      "endereco": "Rua Carlos Henrique Spengler, 928 — Parque dos Novos Estados",
+      "endereco": "Rua Carlos Henrique Spengler, 928 — Pólo Empresarial Norte",
       "cep": "79018-800",
       "telefone": "(67) 3358-4100",
       "telefone_e164": "+556733584100",
-      "maps": "https://www.google.com/maps/place/R.+Carlos+Henrique+Spengler,+928+-+Parque+dos+Novos+Estados,+Campo+Grande+-+MS,+79018-800/@-20.3884376,-54.5485897,17z",
-      "lat": -20.3884376,
-      "lng": -54.5485897
+      "lat": -20.388311981404,
+      "lng": -54.548588010738
     },
     {
       "id": "varzea-grande",
       "uf": "MT",
+      "estado": "Mato Grosso",
       "cidade": "Várzea Grande",
       "matriz": false,
-      "endereco": "Av. Gov. Júlio Campos, 4922 — Parque Industrial (Mapim)",
+      "endereco": "Av. Júlio Domingos de Campos, 4922 (Lot D Industrial) — Mapim",
       "cep": "78142-360",
       "telefone": "(65) 3688-2121",
       "telefone_e164": "+556536882121",
-      "maps": "https://www.google.com/maps/place/Av.+Gov.+J%C3%BAlio+Campos,+4922+-+Mapim,+V%C3%A1rzea+Grande+-+MT,+78155-300/@-15.6421422,-56.1634527,17z",
-      "lat": -15.6421422,
-      "lng": -56.1634527
+      "lat": -15.6317305,
+      "lng": -56.1681188
     },
     {
       "id": "sinop",
       "uf": "MT",
+      "estado": "Mato Grosso",
       "cidade": "Sinop",
       "matriz": false,
-      "endereco": "Rua João Pedro Moreira de Carvalho, 5894 — Lot. Alto da Glória",
+      "endereco": "Rua João Pedro Moreira de Carvalho, 5894 — Residencial Vila Rica",
       "cep": "78551-370",
       "telefone": "(69) 99661-0096",
       "telefone_e164": "+5569996610096",
-      "maps": "https://www.google.com/maps/place/R.+Jo%C3%A3o+Pedro+Moreira+de+Carvalho,+5894+-+Lot.+Alto+da+Gloria,+Sinop+-+MT,+78558-439/@-11.8561187,-55.4935257,17z",
-      "lat": -11.8561187,
-      "lng": -55.4935257
+      "lat": -11.824489991099,
+      "lng": -55.485269965364
     },
     {
       "id": "agua-boa",
       "uf": "MT",
+      "estado": "Mato Grosso",
       "cidade": "Água Boa",
       "matriz": false,
-      "endereco": "Rua 22, nº 487",
+      "endereco": "Rua Vinte e Dois, 487 — Quadra 52 Lote 07, Setor Industrial",
       "cep": "78635-000",
       "telefone": "(66) 3468-4348",
       "telefone_e164": "+556634684348",
-      "maps": "https://www.google.com/maps/place/IBL+M%C3%A1quinas+-+CASE+CONSTRUCTION/@-14.0554063,-52.1514116,14z",
-      "lat": -14.0554063,
-      "lng": -52.1514116
+      "lat": -14.05311499911,
+      "lng": -52.148773023928
     },
     {
       "id": "rio-branco",
       "uf": "AC",
+      "estado": "Acre",
       "cidade": "Rio Branco",
       "matriz": false,
-      "endereco": "Rodovia Chico Mendes, 2839 — Areial",
-      "cep": "69906-326",
+      "endereco": "Rodovia AC 40, 3395 — Vila Acre",
+      "cep": "69909-730",
       "telefone": "(68) 3221-0527",
       "telefone_e164": "+556832210527",
-      "maps": "https://www.google.com/maps/place/Via+Chico+Mendes,+2839+-+Areial,+Rio+Branco+-+AC,+69906-326/@-10.0032364,-67.8070296,17z",
-      "lat": -10.0032364,
-      "lng": -67.8070296
+      "lat": -10.057436829874,
+      "lng": -67.770744799631
     },
     {
       "id": "manaus",
       "uf": "AM",
+      "estado": "Amazonas",
       "cidade": "Manaus",
       "matriz": false,
-      "endereco": "Av. Max Teixeira, 3159 — Cidade Nova",
+      "endereco": "Av. Max Teixeira, 3159, 1º Andar Térreo — Cidade Nova",
       "cep": "69090-002",
       "telefone": "(92) 3581-3668",
       "telefone_e164": "+559235813668",
-      "maps": "https://www.google.com/maps/place/Av.+Max+Teixeira,+3159+-+Cidade+Nova,+Manaus+-+AM,+69090-002/@-3.0355821,-59.9992309,17z",
-      "lat": -3.0355821,
-      "lng": -59.9992309
+      "lat": -3.03558900628,
+      "lng": -59.999088020995
     },
     {
       "id": "ariquemes",
       "uf": "RO",
+      "estado": "Rondônia",
       "cidade": "Ariquemes",
       "matriz": false,
-      "endereco": "Av. Capitão Silvio, 1413 B — Áreas Especiais 01",
-      "cep": "76870-185",
+      "endereco": "BR-364, km 521, nº 8030",
+      "cep": "76870-192",
       "telefone": "(69) 3535-2022",
       "telefone_e164": "+556935352022",
-      "maps": "https://www.google.com/maps/place/Av.+Cap.+Silvio,+1413+-+%C3%81reas+Especiais+01,+Ariquemes+-+RO,+76876-728/@-9.9153599,-63.0519668,17z",
-      "lat": -9.9153599,
-      "lng": -63.0519668
+      "lat": -9.91619183746,
+      "lng": -63.05557756561
     },
     {
       "id": "boa-vista",
       "uf": "RR",
+      "estado": "Roraima",
       "cidade": "Boa Vista",
       "matriz": false,
       "endereco": "Av. Surumu, 2258 — Mecejana",
       "cep": "69304-555",
       "telefone": "(95) 3624-6827",
       "telefone_e164": "+559536246827",
-      "maps": "https://www.google.com/maps/place/Av.+Surumu,+2258+-+Mecejana,+Boa+Vista+-+RR,+69304-555/@2.8161095,-60.6898716,17z",
-      "lat": 2.8161095,
-      "lng": -60.6898716
+      "lat": 2.815853923167,
+      "lng": -60.690047229806
     }
   ]
 }
