@@ -87,3 +87,11 @@
 - Regra preventiva: para SVG com animação de rotação, nunca usar `getBoundingClientRect()` como fonte de verdade de `width/height`; persistir tamanho estável via `style/computed/default`.
 - Correção recebida: redimensionar o título `580N` fazia o bloco fugir para cima/esquerda.
 - Regra preventiva: para overlays tipográficos do hero (`#showcase-title` e `#hero-model-meta`), persistir em modo estável (`fixed`) no modo editor.
+
+## 2026-06-10 — v1.2 Production Go-Live
+- Descoberta: o placeholder de WhatsApp (5567999999999) estava replicado em 6 arquivos-fonte e 45 páginas geradas; o DDD 67 era coincidentemente correto (matriz é Campo Grande/MS), mas o número era fake.
+- Regra preventiva: dados de contato/empresa nunca hardcoded em múltiplos pontos — fonte única (env var + data/filiais.json) e o gerador propaga.
+- Descoberta: os "SVGs" de 4–7MB do hero eram PNGs 4059px embutidos em base64; recomprimir o raster interno para WebP preserva referência e máscara (30MB → 2MB).
+- Regra preventiva: ao otimizar SVG com raster embutido, manter mesmas dimensões entre máscara (L) e imagem (RGB) e verificar programaticamente.
+- Descoberta: node_modules do repo é darwin-arm64; builds em ambiente Linux exigem cópia isolada com npm install próprio (nunca rodar npm install dentro do repo montado em outro OS).
+- Regra preventiva: a seção #unidades da home tem endereços mais atuais que o site WordPress público; em divergência de dados institucionais, tratar o repo como curadoria e flaggar para confirmação humana.

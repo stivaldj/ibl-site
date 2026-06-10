@@ -5,31 +5,39 @@
 > Decisões: hosting Cloudflare Pages; webhook configurável (endpoint real pendente); dados reais extraídos de www.iblmaquinas.com.br
 
 ### Fase 1 — Dados reais e configs
-- [ ] Dados reais coletados (8 filiais, CNPJ 28.265.622/0001-60, razão social Racine Comércio de Máquinas Ltda, e-mail contato@iblmaquinas.com.br)
-- [ ] `data/filiais.json` como fonte única de dados institucionais
-- [ ] WhatsApp centralizado (VITE_WHATSAPP_NUMBER; fallback matriz 556733584100 — CONFIRMAR número WhatsApp Business oficial)
-- [ ] Substituir wa.me/5567999999999 em main.js, mobile/main.js, index.html, mobile/index.html, generate_pages.py
-- [ ] Title/OG profissional (remover "Industrial Edition")
+- [x] Dados reais coletados (8 filiais, CNPJ 28.265.622/0001-60, razão social Racine Comércio de Máquinas Ltda, e-mail contato@iblmaquinas.com.br)
+- [x] `data/filiais.json` como fonte única (endereços curados do repo + telefones do site WP)
+- [x] WhatsApp centralizado (VITE_WHATSAPP_NUMBER; fallback matriz 556733584100 — CONFIRMAR número WhatsApp Business oficial)
+- [x] Substituído wa.me/5567999999999 em main.js, mobile/main.js, index.html, mobile/index.html, webapp/main.js, generate_pages.py
+- [x] Title/OG profissional (removido "Industrial Edition")
 
 ### Fase 2 — SEO técnico e deploy
-- [ ] sitemap.xml + robots.txt gerados pelo generate_pages.py
-- [ ] 404.html
-- [ ] GitHub Actions → Cloudflare Pages (generate → build → verify → deploy)
-- [ ] docs/DEPLOY.md com passos de DNS/secrets
+- [x] sitemap.xml (46 rotas) + robots.txt gerados pelo generate_pages.py
+- [x] 404.html com identidade visual
+- [x] GitHub Actions → Cloudflare Pages (generate → build → verify → deploy)
+- [x] docs/DEPLOY.md com passos de DNS/secrets/cutover
 
 ### Fase 3 — Institucional + LGPD
-- [ ] /sobre/, /filiais/, /contato/, /privacidade/
-- [ ] Consentimento LGPD nos formulários de lead
-- [ ] Links no footer + seção filiais na home
+- [x] /sobre/, /filiais/, /contato/, /privacidade/ (geradas pelo generate_pages.py, shell compartilhado, JSON-LD)
+- [x] Consentimento LGPD obrigatório nos 3 formulários de lead
+- [x] Links institucionais nos footers (estático + gerado) + CNPJ no rodapé (home já tinha seção #unidades)
 
 ### Fase 4 — Performance
-- [ ] Comprimir SVGs 4–7MB (fotos-processed) e jpg 8,4MB
-- [ ] Pin de versão phosphor-icons
-- [ ] Lazy loading onde faltar
+- [x] SVGs do hero: PNG embutido → WebP q82 @2400px (30MB → ~2MB); máscaras alinhadas e verificadas
+- [x] JPGs >400KB recomprimidos (rolo 8,4MB → 165KB); dist total 63MB → 23MB
+- [x] phosphor-icons pinado @2.1.1
 
 ### Verificação
-- [ ] rebuild:site + verify:dist + launch gates
-- [ ] Revisão de diffs e atualização lessons.md
+- [x] rebuild:site + verify:dist passando (build Linux em cópia isolada); 9 rotas-chave HTTP 200; sem número fake no dist; consentimento presente
+- [ ] Launch gates Playwright (smoke + lead) — rodar na máquina local antes do merge: `npm run launch:gate:smoke` / `launch:gate:lead`
+- [ ] Validação visual do hero comprimido no browser (abrir homepage local)
+
+### Pendências de ambiente (fora do repo)
+- [ ] Confirmar WhatsApp Business oficial → atualizar VITE_WHATSAPP_NUMBER + regenerar
+- [ ] Expor endpoint de leads do ibl-ai-os + secret VITE_LEAD_WEBHOOK_URL
+- [ ] Criar GA4 + var VITE_GA4_ID
+- [ ] Setup Cloudflare Pages + secrets GitHub + DNS (docs/DEPLOY.md)
+- [ ] Push da branch + PR (gh indisponível na sandbox): `git push -u origin feature/v1.2-production-golive`
 
 ## Correções rápidas (2026-02-26)
 - [x] Corrigir sobreposição do widget de chat no mobile sem quebrar UX do chat.
