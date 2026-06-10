@@ -1309,7 +1309,9 @@ footer ul button {
  * ================================================================ */
 @media (min-width: 1024px) {
   .entry-hero-shell .showcase-machine-stage,
-  .entry-hero-shell .showcase-ring {
+  .entry-hero-shell .showcase-ring,
+  .entry-hero-shell .showcase-title-anchor,
+  .entry-hero-shell .showcase-meta-anchor {
     left: -14%;
     right: 33%;
   }
