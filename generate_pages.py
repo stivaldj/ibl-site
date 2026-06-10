@@ -333,16 +333,30 @@ def get_model_slug(model_path: str) -> str:
 
 # ─── Templates HTML ─────────────────────────────────────────────────────────────
 
+def find_nobg_image(cat_slug: str, model_slug: str = None):
+    """Prefere o derivativo curado *-nobg.png (máquina recortada) para cards."""
+    base = BASE_DIR / "public" / "case-assets" / cat_slug
+    if model_slug:
+        base = base / model_slug
+    if not base.exists():
+        return None
+    matches = sorted(base.rglob("*-nobg.png"))
+    if not matches:
+        return None
+    rel = matches[0].relative_to(BASE_DIR / "public")
+    return "/" + str(rel).replace("\\", "/")
+
+
 def category_badge(cat: str) -> str:
     badges = {
-        "escavadeiras-hidraulicas": "HEAVY LINE",
-        "minicarregadeiras": "COMPACT LOADERS",
-        "miniescavadeiras": "MINI SERIES",
-        "motoniveladoras": "GRADING",
-        "pas-carregadeiras": "LOADERS",
-        "retroescavadeiras": "VERSATILITY",
-        "rolo-compactador": "COMPACTION",
-        "tratores-de-esteiras": "DOZING",
+        "escavadeiras-hidraulicas": "LINHA PESADA",
+        "minicarregadeiras": "COMPACTAS",
+        "miniescavadeiras": "MINI SÉRIE",
+        "motoniveladoras": "NIVELAMENTO",
+        "pas-carregadeiras": "CARREGADEIRAS",
+        "retroescavadeiras": "VERSATILIDADE",
+        "rolo-compactador": "COMPACTAÇÃO",
+        "tratores-de-esteiras": "ESTEIRAS",
     }
     return badges.get(cat, cat.upper())
 
@@ -685,7 +699,7 @@ def render_model_card(model: dict, cat_slug: str) -> str:
 
     # Pegar imagem do modelo
     public_assets = copy_assets(model_path, cat_slug, model_slug)
-    img_src = public_assets[0] if public_assets else "https://images.unsplash.com/photo-1626296765727-4a4115f5732c?q=80&w=800&auto=format&fit=crop"
+    img_src = find_nobg_image(cat_slug, model_slug) or (public_assets[0] if public_assets else "https://images.unsplash.com/photo-1626296765727-4a4115f5732c?q=80&w=800&auto=format&fit=crop")
 
     # Ler specs básicas do content.md
     content_path = BASE_DIR / model_path / "content.md"
@@ -868,7 +882,7 @@ def generate_products_index(db: list) -> str:
         first_model = models[0]
         first_slug = get_model_slug(first_model["path"])
         public_assets = copy_assets(first_model["path"], cat_slug, first_slug)
-        img = public_assets[0] if public_assets else ""
+        img = find_nobg_image(cat_slug) or (public_assets[0] if public_assets else "")
         img_html = f'<img src="{img}" alt="{category}" class="w-full h-full object-contain p-6 filter grayscale group-hover:grayscale-0 opacity-40 group-hover:opacity-90 transition-all duration-500" />' if img else ""
 
         cat_cards.append(f"""
@@ -890,9 +904,9 @@ def generate_products_index(db: list) -> str:
                 {img_html}
               </div>
               <div class="relative z-10 border-t border-case-border pt-4">
-                <h3 class="font-display font-black text-2xl uppercase leading-none mb-2 group-hover:text-case-yellow transition-colors">{category}</h3>
+                <h3 class="font-display font-black text-xl uppercase leading-tight mb-2 group-hover:text-case-yellow transition-colors">{category}</h3>
                 <div class="flex justify-between items-center">
-                  <span class="text-gray-500 text-xs font-mono">{count} modelos</span>
+                  <span class="text-gray-500 text-xs font-mono">{count} {"modelo" if count == 1 else "modelos"}</span>
                   <span class="text-case-yellow text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform">Ver linha →</span>
                 </div>
               </div>
@@ -945,8 +959,11 @@ def generate_products_index(db: list) -> str:
       <div class="absolute inset-0 pointer-events-none">
         <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
+      <div class="absolute inset-y-0 right-0 w-1/2 hidden lg:flex items-center justify-end pr-12 pointer-events-none">
+        <img src="/case-assets/escavadeiras-hidraulicas/cx220c-s2/cx220c-nobg.png" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[320px] w-auto object-contain opacity-80 drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
+      </div>
       <div class="container mx-auto px-6 relative z-10">
-        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Inventory</span>
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Catálogo</span>
         <h1 class="font-display font-black text-6xl md:text-8xl uppercase leading-none">
           Nossa<br /><span class="text-outline">Frota</span>
         </h1>
