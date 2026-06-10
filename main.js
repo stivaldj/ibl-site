@@ -1370,52 +1370,16 @@ function setupUnitsMap() {
   const unitItems = [...document.querySelectorAll('.unit-item')]
   if (!mapEl || unitItems.length === 0) return
 
-  mapEl.innerHTML = `
-    <div class="unit-map-shell">
-      <span class="unit-map-shell__eyebrow">Cobertura IBL</span>
-      <h3 id="unit-map-title" class="unit-map-shell__title"></h3>
-      <p id="unit-map-subtitle" class="unit-map-shell__subtitle"></p>
-      <p id="unit-map-address" class="unit-map-shell__address"></p>
-      <div id="unit-map-states" class="unit-map-shell__states"></div>
-      <div class="unit-map-shell__stats">
-        <div class="unit-map-shell__stat">
-          <span class="unit-map-shell__stat-label">Estados</span>
-          <strong class="unit-map-shell__stat-value">6</strong>
-        </div>
-        <div class="unit-map-shell__stat">
-          <span class="unit-map-shell__stat-label">Lojas</span>
-          <strong class="unit-map-shell__stat-value">8</strong>
-        </div>
-      </div>
-      <a id="unit-map-link" class="unit-map-shell__link" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
-    </div>
-  `
-
-  const titleEl = document.getElementById('unit-map-title')
-  const subtitleEl = document.getElementById('unit-map-subtitle')
-  const addressEl = document.getElementById('unit-map-address')
-  const linkEl = document.getElementById('unit-map-link')
-  const statesEl = document.getElementById('unit-map-states')
-
-  const states = [...new Set(unitItems.map((item) => item.querySelector('p')?.textContent?.trim()).filter(Boolean))]
-  if (statesEl) {
-    statesEl.innerHTML = states
-      .map((state) => `<span class="unit-map-shell__state-pill">${state}</span>`)
-      .join('')
-  }
+  const LEAFLET_BASE = 'https://unpkg.com/leaflet@1.9.4/dist'
 
   function getUnitMeta(item) {
     const unitId = item.getAttribute('data-unit-id')
     const lat = Number(item.getAttribute('data-lat'))
     const lng = Number(item.getAttribute('data-lng'))
     const address = item.getAttribute('data-address') || ''
-    const title = item.querySelector('h4')?.textContent?.trim() || 'Unidade'
-    const subtitle = item.querySelector('p')?.textContent?.trim() || ''
-    const mapsUrl = Number.isNaN(lat) || Number.isNaN(lng)
-      ? ''
-      : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-
-    return { unitId, address, title, subtitle, mapsUrl }
+    const title = item.querySelector('h3, h4')?.textContent?.trim() || 'Unidade'
+    const hasCoords = !Number.isNaN(lat) && !Number.isNaN(lng)
+    return { unitId, lat, lng, address, title, hasCoords }
   }
 
   function setActive(unitId) {
@@ -1426,47 +1390,115 @@ function setupUnitsMap() {
     })
   }
 
-  function updateSummary(item) {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
-
-    if (titleEl) titleEl.textContent = meta.title
-    if (subtitleEl) subtitleEl.textContent = meta.subtitle
-    if (addressEl) addressEl.textContent = meta.address
-    if (linkEl) linkEl.href = meta.mapsUrl
-  }
-
-  function activateUnit(item) {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
-
-    setActive(meta.unitId)
-    updateSummary(item)
-    trackEvent('unit_map_focus', {
-      page_path: window.location.pathname,
-      unit_id: meta.unitId
+  function ensureLeaflet() {
+    return new Promise((resolve, reject) => {
+      if (window.L) {
+        resolve(window.L)
+        return
+      }
+      if (!document.querySelector('link[data-leaflet]')) {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = `${LEAFLET_BASE}/leaflet.css`
+        link.setAttribute('data-leaflet', '')
+        document.head.appendChild(link)
+      }
+      const script = document.createElement('script')
+      script.src = `${LEAFLET_BASE}/leaflet.js`
+      script.onload = () => resolve(window.L)
+      script.onerror = () => reject(new Error('leaflet_load_failed'))
+      document.head.appendChild(script)
     })
   }
 
-  unitItems.forEach((item) => {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
+  function renderFallback() {
+    mapEl.innerHTML = `
+      <div class="unit-map-fallback">
+        <span class="font-mono text-xs uppercase tracking-widest text-case-yellow">Cobertura IBL</span>
+        <p class="text-gray-300 text-sm leading-relaxed">8 lojas em 6 estados do Norte e Centro-Oeste. Selecione uma unidade ao lado para ver endereço e telefone.</p>
+      </div>
+    `
+  }
 
-    item.tabIndex = 0
-    item.setAttribute('role', 'button')
-    item.setAttribute('aria-label', `Selecionar unidade ${meta.title}`)
-    item.setAttribute('aria-controls', 'unit-map')
-    item.setAttribute('aria-pressed', 'false')
-    item.addEventListener('click', () => activateUnit(item))
-    item.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return
-      event.preventDefault()
-      activateUnit(item)
+  function wireItems(activateUnit) {
+    unitItems.forEach((item) => {
+      const meta = getUnitMeta(item)
+      if (!meta.unitId) return
+      item.tabIndex = 0
+      item.setAttribute('role', 'button')
+      item.setAttribute('aria-label', `Selecionar unidade ${meta.title}`)
+      item.setAttribute('aria-controls', 'unit-map')
+      item.setAttribute('aria-pressed', 'false')
+      item.addEventListener('click', () => activateUnit(item))
+      item.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        activateUnit(item)
+      })
     })
-  })
+  }
 
-  const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
-  if (defaultItem) activateUnit(defaultItem)
+  ensureLeaflet()
+    .then((L) => {
+      mapEl.innerHTML = ''
+      const map = L.map(mapEl, { scrollWheelZoom: false, attributionControl: true })
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 18
+      }).addTo(map)
+
+      const markers = new Map()
+      const bounds = []
+      unitItems.forEach((item) => {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId || !meta.hasCoords) return
+        const icon = L.divIcon({
+          className: 'unit-marker',
+          html: '<span class="unit-marker__dot"></span>',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8]
+        })
+        const marker = L.marker([meta.lat, meta.lng], { icon, title: meta.title }).addTo(map)
+        marker.bindPopup(`<strong>${meta.title}</strong><br>${meta.address}`)
+        marker.on('click', () => setActive(meta.unitId))
+        markers.set(meta.unitId, marker)
+        bounds.push([meta.lat, meta.lng])
+      })
+      if (bounds.length) map.fitBounds(bounds, { padding: [36, 36] })
+
+      function activateUnit(item) {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId) return
+        setActive(meta.unitId)
+        const marker = markers.get(meta.unitId)
+        if (marker) {
+          map.flyTo(marker.getLatLng(), 11, { duration: 1.0 })
+          marker.openPopup()
+        }
+        trackEvent('unit_map_focus', {
+          page_path: window.location.pathname,
+          unit_id: meta.unitId
+        })
+      }
+
+      wireItems(activateUnit)
+
+      const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
+      if (defaultItem) setActive(getUnitMeta(defaultItem).unitId)
+    })
+    .catch(() => {
+      renderFallback()
+      wireItems((item) => {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId) return
+        setActive(meta.unitId)
+        trackEvent('unit_map_focus', {
+          page_path: window.location.pathname,
+          unit_id: meta.unitId
+        })
+      })
+    })
 }
 
 function setupChatWidget() {
