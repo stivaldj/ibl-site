@@ -1,0 +1,121 @@
+{
+  "empresa": {
+    "nome_fantasia": "IBL Máquinas",
+    "razao_social": "Racine Comércio de Máquinas Ltda",
+    "cnpj": "28.265.622/0001-60",
+    "email": "contato@iblmaquinas.com.br",
+    "site": "https://iblmaquinas.com.br",
+    "fundacao": "1992",
+    "marcas": ["CASE Construction", "Dynapac"],
+    "instagram": "https://www.instagram.com/iblmaquinas/",
+    "whatsapp_comercial": "556733584100",
+    "whatsapp_confirmado": false,
+    "_nota_whatsapp": "TODO_CONFIRMAR: usar o número WhatsApp Business oficial; fallback atual é o telefone da matriz (67) 3358-4100"
+  },
+  "filiais": [
+    {
+      "id": "campo-grande",
+      "uf": "MS",
+      "cidade": "Campo Grande",
+      "matriz": true,
+      "endereco": "Rua Carlos Henrique Spengler, 928 — Parque dos Novos Estados",
+      "cep": "79018-800",
+      "telefone": "(67) 3358-4100",
+      "telefone_e164": "+556733584100",
+      "maps": "https://www.google.com/maps/place/R.+Carlos+Henrique+Spengler,+928+-+Parque+dos+Novos+Estados,+Campo+Grande+-+MS,+79018-800/@-20.3884376,-54.5485897,17z",
+      "lat": -20.3884376,
+      "lng": -54.5485897
+    },
+    {
+      "id": "varzea-grande",
+      "uf": "MT",
+      "cidade": "Várzea Grande",
+      "matriz": false,
+      "endereco": "Av. Gov. Júlio Campos, 4922 — Parque Industrial (Mapim)",
+      "cep": "78142-360",
+      "telefone": "(65) 3688-2121",
+      "telefone_e164": "+556536882121",
+      "maps": "https://www.google.com/maps/place/Av.+Gov.+J%C3%BAlio+Campos,+4922+-+Mapim,+V%C3%A1rzea+Grande+-+MT,+78155-300/@-15.6421422,-56.1634527,17z",
+      "lat": -15.6421422,
+      "lng": -56.1634527
+    },
+    {
+      "id": "sinop",
+      "uf": "MT",
+      "cidade": "Sinop",
+      "matriz": false,
+      "endereco": "Rua João Pedro Moreira de Carvalho, 5894 — Lot. Alto da Glória",
+      "cep": "78551-370",
+      "telefone": "(69) 99661-0096",
+      "telefone_e164": "+5569996610096",
+      "maps": "https://www.google.com/maps/place/R.+Jo%C3%A3o+Pedro+Moreira+de+Carvalho,+5894+-+Lot.+Alto+da+Gloria,+Sinop+-+MT,+78558-439/@-11.8561187,-55.4935257,17z",
+      "lat": -11.8561187,
+      "lng": -55.4935257
+    },
+    {
+      "id": "agua-boa",
+      "uf": "MT",
+      "cidade": "Água Boa",
+      "matriz": false,
+      "endereco": "Rua 22, nº 487",
+      "cep": "78635-000",
+      "telefone": "(66) 3468-4348",
+      "telefone_e164": "+556634684348",
+      "maps": "https://www.google.com/maps/place/IBL+M%C3%A1quinas+-+CASE+CONSTRUCTION/@-14.0554063,-52.1514116,14z",
+      "lat": -14.0554063,
+      "lng": -52.1514116
+    },
+    {
+      "id": "rio-branco",
+      "uf": "AC",
+      "cidade": "Rio Branco",
+      "matriz": false,
+      "endereco": "Rodovia Chico Mendes, 2839 — Areial",
+      "cep": "69906-326",
+      "telefone": "(68) 3221-0527",
+      "telefone_e164": "+556832210527",
+      "maps": "https://www.google.com/maps/place/Via+Chico+Mendes,+2839+-+Areial,+Rio+Branco+-+AC,+69906-326/@-10.0032364,-67.8070296,17z",
+      "lat": -10.0032364,
+      "lng": -67.8070296
+    },
+    {
+      "id": "manaus",
+      "uf": "AM",
+      "cidade": "Manaus",
+      "matriz": false,
+      "endereco": "Av. Max Teixeira, 3159 — Cidade Nova",
+      "cep": "69090-002",
+      "telefone": "(92) 3581-3668",
+      "telefone_e164": "+559235813668",
+      "maps": "https://www.google.com/maps/place/Av.+Max+Teixeira,+3159+-+Cidade+Nova,+Manaus+-+AM,+69090-002/@-3.0355821,-59.9992309,17z",
+      "lat": -3.0355821,
+      "lng": -59.9992309
+    },
+    {
+      "id": "ariquemes",
+      "uf": "RO",
+      "cidade": "Ariquemes",
+      "matriz": false,
+      "endereco": "Av. Capitão Silvio, 1413 B — Áreas Especiais 01",
+      "cep": "76870-185",
+      "telefone": "(69) 3535-2022",
+      "telefone_e164": "+556935352022",
+      "maps": "https://www.google.com/maps/place/Av.+Cap.+Silvio,+1413+-+%C3%81reas+Especiais+01,+Ariquemes+-+RO,+76876-728/@-9.9153599,-63.0519668,17z",
+      "lat": -9.9153599,
+      "lng": -63.0519668
+    },
+    {
+      "id": "boa-vista",
+      "uf": "RR",
+      "cidade": "Boa Vista",
+      "matriz": false,
+      "endereco": "Av. Surumu, 2258 — Mecejana",
+      "cep": "69304-555",
+      "telefone": "(95) 3624-6827",
+      "telefone_e164": "+559536246827",
+      "maps": "https://www.google.com/maps/place/Av.+Surumu,+2258+-+Mecejana,+Boa+Vista+-+RR,+69304-555/@2.8161095,-60.6898716,17z",
+      "lat": 2.8161095,
+      "lng": -60.6898716
+    }
+  ]
+}

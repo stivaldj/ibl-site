@@ -6,6 +6,7 @@ Output: produtos/{cat}/index.html + produtos/{cat}/{model}/index.html
 """
 
 import json
+import os
 import re
 import shutil
 from html import escape
@@ -20,7 +21,9 @@ SITE_URL = "https://iblmaquinas.com.br"
 SITE_NAME = "IBL Máquinas"
 SITE_BRAND = "CASE Construction"
 DEFAULT_OG_IMAGE = f"{SITE_URL}/ibl-logo.png"
-WHATSAPP_NUMBER = "5567999999999"
+# Número WhatsApp comercial (E.164 sem "+"). Mesmo env var usado pelo Vite (main.js).
+# Fallback: telefone da matriz Campo Grande/MS. TODO_CONFIRMAR número WhatsApp Business oficial.
+WHATSAPP_NUMBER = os.environ.get("VITE_WHATSAPP_NUMBER", "556733584100")
 WHATSAPP_BASE_URL = f"https://wa.me/{WHATSAPP_NUMBER}"
 HOME_CONTACT_URL = "/#captacao-lead"
 ZERO_WIDTH_CHARS = {

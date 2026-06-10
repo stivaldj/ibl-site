@@ -1,5 +1,36 @@
 # Plano de Transformação UX/UI — IBL Máquinas (Meta: padrão projeto US$20k)
 
+## v1.2 — Production Go-Live (2026-06-10)
+> Ref: tasks/AUDITORIA_PRODUCAO.md | Branch: feature/v1.2-production-golive
+> Decisões: hosting Cloudflare Pages; webhook configurável (endpoint real pendente); dados reais extraídos de www.iblmaquinas.com.br
+
+### Fase 1 — Dados reais e configs
+- [ ] Dados reais coletados (8 filiais, CNPJ 28.265.622/0001-60, razão social Racine Comércio de Máquinas Ltda, e-mail contato@iblmaquinas.com.br)
+- [ ] `data/filiais.json` como fonte única de dados institucionais
+- [ ] WhatsApp centralizado (VITE_WHATSAPP_NUMBER; fallback matriz 556733584100 — CONFIRMAR número WhatsApp Business oficial)
+- [ ] Substituir wa.me/5567999999999 em main.js, mobile/main.js, index.html, mobile/index.html, generate_pages.py
+- [ ] Title/OG profissional (remover "Industrial Edition")
+
+### Fase 2 — SEO técnico e deploy
+- [ ] sitemap.xml + robots.txt gerados pelo generate_pages.py
+- [ ] 404.html
+- [ ] GitHub Actions → Cloudflare Pages (generate → build → verify → deploy)
+- [ ] docs/DEPLOY.md com passos de DNS/secrets
+
+### Fase 3 — Institucional + LGPD
+- [ ] /sobre/, /filiais/, /contato/, /privacidade/
+- [ ] Consentimento LGPD nos formulários de lead
+- [ ] Links no footer + seção filiais na home
+
+### Fase 4 — Performance
+- [ ] Comprimir SVGs 4–7MB (fotos-processed) e jpg 8,4MB
+- [ ] Pin de versão phosphor-icons
+- [ ] Lazy loading onde faltar
+
+### Verificação
+- [ ] rebuild:site + verify:dist + launch gates
+- [ ] Revisão de diffs e atualização lessons.md
+
 ## Correções rápidas (2026-02-26)
 - [x] Corrigir sobreposição do widget de chat no mobile sem quebrar UX do chat.
 - [x] Eliminar erro de `favicon.ico` 404.

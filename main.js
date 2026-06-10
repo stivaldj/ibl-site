@@ -1,5 +1,10 @@
 import './style.css'
 
+// Número WhatsApp comercial (E.164 sem "+"). Fallback: telefone da matriz Campo Grande/MS.
+// TODO_CONFIRMAR: validar com a IBL o número WhatsApp Business oficial.
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '556733584100'
+const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`
+
 const ANALYTICS_MILESTONES = [25, 50, 75, 90]
 const ATTRIBUTION_STORAGE_KEY = 'ibl_attribution_v1'
 const LEAD_OPS_STORAGE_KEY = 'ibl_lead_ops_v1'
@@ -564,7 +569,7 @@ function setupLeadForm() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse em ${payload.interesse}.${sourceSuffix}`
     )
-    const whatsappUrl = `https://wa.me/5567999999999?text=${message}`
+    const whatsappUrl = `${WHATSAPP_BASE_URL}?text=${message}`
 
     applyLeadSubmitFeedback(feedback, submitResult)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
@@ -782,7 +787,7 @@ function setupProductCatalogTools() {
       comparePanel.classList.add('hidden')
       compareList.innerHTML = ''
       if (compareContact) {
-        compareContact.href = 'https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.'
+        compareContact.href = `${WHATSAPP_BASE_URL}?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.`
       }
       return
     }
@@ -829,7 +834,7 @@ function setupProductCatalogTools() {
         return model?.name
       }).filter(Boolean)
       const whatsappText = encodeURIComponent(`Olá, quero comparar os modelos: ${selectedModels.join(', ')}.`)
-      compareContact.href = `https://wa.me/5567999999999?text=${whatsappText}`
+      compareContact.href = `${WHATSAPP_BASE_URL}?text=${whatsappText}`
     }
   }
 
@@ -1108,7 +1113,7 @@ function setupProductPageEnhancements() {
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Solicitar orçamento</button>
-            <a data-track="product_lead_whatsapp" href="https://wa.me/5567999999999?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
+            <a data-track="product_lead_whatsapp" href="${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
               Falar no WhatsApp
             </a>
           </div>
@@ -1164,7 +1169,7 @@ function setupProductPageEnhancements() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse no modelo ${payload.modelo} para ${payload.uso}.${sourceSuffix}`
     )
-    window.open(`https://wa.me/5567999999999?text=${message}`, '_blank', 'noopener,noreferrer')
+    window.open(`${WHATSAPP_BASE_URL}?text=${message}`, '_blank', 'noopener,noreferrer')
     applyLeadSubmitFeedback(productFeedback, submitResult)
     if (shouldResetLeadForm(submitResult)) {
       productForm.reset()
@@ -1585,7 +1590,7 @@ function setupChatWidget() {
       appendMessage('agent', reply)
       if (value.toLowerCase().includes('whatsapp') || value.toLowerCase().includes('zap')) {
         const text = encodeURIComponent(`Olá, vim do chat do site IBL e quero falar com um consultor. Minha mensagem: "${value}"`)
-        window.open(`https://wa.me/5567999999999?text=${text}`, '_blank', 'noopener,noreferrer')
+        window.open(`${WHATSAPP_BASE_URL}?text=${text}`, '_blank', 'noopener,noreferrer')
       }
     }, 650)
   })
