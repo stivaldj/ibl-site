@@ -1319,7 +1319,13 @@ footer ul button {
   /* Título outline acima do anel giratório (anel: topo do círculo ~y193;
      header fixo termina em ~y81 — -135px limpa ambos com os offsets por modelo) */
   .entry-hero-shell .showcase-title-anchor {
-    transform: translateY(-135px);
+    transform: translateY(-122px);
+  }
+
+  /* Outline do modelo como marca d'água: 72px fixos em desktop para caber
+     na banda entre o header fixo e o topo do anel giratório */
+  .entry-hero-shell .showcase-title {
+    font-size: 4.5rem;
   }
 }
 
