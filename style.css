@@ -1300,3 +1300,17 @@ footer ul button {
     scroll-behavior: auto !important;
   }
 }
+
+/* ================================================================
+ *  v1.2 — Hero: máquina centralizada com anel atrás, ficha técnica
+ *  à direita sem sobreposição (coluna 5/7).
+ *  O deslocamento via inset preserva os transforms por modelo
+ *  (--hero-machine-*, --hero-badge-*) do contrato de stage v1.1.
+ * ================================================================ */
+@media (min-width: 1024px) {
+  .entry-hero-shell .showcase-machine-stage,
+  .entry-hero-shell .showcase-ring {
+    left: -14%;
+    right: 33%;
+  }
+}
