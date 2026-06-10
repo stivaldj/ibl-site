@@ -1315,4 +1315,10 @@ footer ul button {
     left: -14%;
     right: 33%;
   }
+
+  /* Título outline acima do anel giratório (anel: topo do círculo ~y193;
+     header fixo termina em ~y81 — -135px limpa ambos com os offsets por modelo) */
+  .entry-hero-shell .showcase-title-anchor {
+    transform: translateY(-135px);
+  }
 }
