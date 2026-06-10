@@ -1400,3 +1400,35 @@ footer ul button {
   color: #E58E1A !important;
   font-weight: 700;
 }
+
+/* v1.2 — Primeira dobra compacta em telas baixas: faixa laranja visível.
+   Reduz tipografia/espaçamentos da coluna esquerda e a ficha técnica
+   apenas quando a altura do viewport é limitada. */
+@media (min-width: 1024px) and (max-height: 840px) {
+  .entry-hero-shell h1 > span:nth-child(1),
+  .entry-hero-shell h1 > span:nth-child(3) {
+    font-size: 3.25rem;
+  }
+  .entry-hero-shell h1 > .hero-super-title {
+    font-size: 4rem;
+  }
+  .entry-hero-shell .lg\:col-span-5 > :not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  .entry-hero-shell .cat-btn {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 10px;
+  }
+  .entry-hero-shell .entry-hero-actions > a {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+  .entry-hero-shell .showcase-stage {
+    --hero-tech-card-scale: 0.9;
+    --hero-tech-pad-top: 2rem;
+  }
+  .entry-hero-shell .showcase-title-anchor {
+    transform: translateY(-110px);
+  }
+}
