@@ -1379,7 +1379,8 @@ function setupUnitsMap() {
     const address = item.getAttribute('data-address') || ''
     const title = item.querySelector('h3, h4')?.textContent?.trim() || 'Unidade'
     const hasCoords = !Number.isNaN(lat) && !Number.isNaN(lng)
-    return { unitId, lat, lng, address, title, hasCoords }
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`IBL Máquinas - ${address}`)}`
+    return { unitId, lat, lng, address, title, hasCoords, mapsUrl }
   }
 
   function setActive(unitId) {
@@ -1435,6 +1436,20 @@ function setupUnitsMap() {
         event.preventDefault()
         activateUnit(item)
       })
+
+      const infoBlock = item.querySelector('h3, h4')?.parentElement
+      if (infoBlock && !infoBlock.querySelector('.unit-maps-link')) {
+        const mapsLink = document.createElement('a')
+        mapsLink.href = meta.mapsUrl
+        mapsLink.target = '_blank'
+        mapsLink.rel = 'noopener noreferrer'
+        mapsLink.className = 'unit-maps-link'
+        mapsLink.setAttribute('data-track', 'unit_maps_link')
+        mapsLink.setAttribute('aria-label', `Abrir ${meta.title} no Google Maps`)
+        mapsLink.textContent = 'Google Maps ↗'
+        mapsLink.addEventListener('click', (event) => event.stopPropagation())
+        infoBlock.appendChild(mapsLink)
+      }
     })
   }
 
@@ -1460,7 +1475,7 @@ function setupUnitsMap() {
           iconAnchor: [8, 8]
         })
         const marker = L.marker([meta.lat, meta.lng], { icon, title: meta.title }).addTo(map)
-        marker.bindPopup(`<strong>${meta.title}</strong><br>${meta.address}`)
+        marker.bindPopup(`<strong>${meta.title}</strong><br>${meta.address}<br><a class="unit-popup-link" href="${meta.mapsUrl}" target="_blank" rel="noopener noreferrer">Abrir no Google Maps →</a>`)
         marker.on('click', () => setActive(meta.unitId))
         markers.set(meta.unitId, marker)
         bounds.push([meta.lat, meta.lng])

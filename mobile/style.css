@@ -1510,3 +1510,26 @@ footer ul button {
   gap: 0.75rem;
   padding: 2rem;
 }
+
+/* Link Google Maps nos cards de unidade e no popup do mapa */
+.unit-maps-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #E58E1A;
+  text-decoration: none;
+}
+.unit-maps-link:hover { text-decoration: underline; }
+#unit-map .unit-popup-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #E58E1A !important;
+  font-weight: 700;
+}
