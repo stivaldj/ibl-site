@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Página não encontrada | IBL Máquinas</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --accent: #E58E1A;
+        --bg: #050505;
+        --surface: #121212;
+        --border: #333333;
+        --text: #ffffff;
+        --muted: #9ca3af;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', system-ui, sans-serif;
+        background-image: linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px);
+        background-size: 48px 48px;
+        padding: 24px;
+      }
+      .card {
+        max-width: 560px;
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 48px 40px;
+        text-align: center;
+      }
+      .code {
+        font-family: 'Archivo', sans-serif;
+        font-weight: 900;
+        font-size: clamp(72px, 18vw, 120px);
+        line-height: 1;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+      }
+      h1 {
+        font-family: 'Archivo', sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 16px 0 8px;
+      }
+      p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 28px; }
+      .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+      .btn {
+        display: inline-block;
+        padding: 13px 26px;
+        font-family: 'Archivo', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        border: 1px solid var(--accent);
+        transition: all .2s ease;
+      }
+      .btn-primary { background: var(--accent); color: #050505; }
+      .btn-primary:hover { background: #f6aa41; border-color: #f6aa41; }
+      .btn-secondary { color: var(--accent); background: transparent; }
+      .btn-secondary:hover { background: rgba(229, 142, 26, 0.1); }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div class="code">404</div>
+      <h1>Página não encontrada</h1>
+      <p>O endereço que você acessou não existe ou foi movido. Explore nosso catálogo de máquinas CASE ou volte para a página inicial.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/">Página inicial</a>
+        <a class="btn btn-secondary" href="/produtos/">Ver catálogo</a>
+      </div>
+    </main>
+  </body>
+</html>

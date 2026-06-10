@@ -972,6 +972,51 @@ def generate_products_index(db: list) -> str:
 
 # ─── Main ───────────────────────────────────────────────────────────────────────
 
+# Páginas estáticas mantidas à mão na raiz do repo (fora de /produtos/).
+STATIC_PAGE_PATHS = [
+    "/",
+    "/sobre/",
+    "/filiais/",
+    "/contato/",
+    "/privacidade/",
+]
+
+
+def generate_sitemap(page_paths: list[str]) -> None:
+    """Gera public/sitemap.xml e public/robots.txt a partir das rotas conhecidas."""
+    from datetime import date
+
+    public_dir = BASE_DIR / "public"
+    public_dir.mkdir(exist_ok=True)
+    today = date.today().isoformat()
+
+    entries = []
+    for path in page_paths:
+        loc = make_absolute_url(path)
+        priority = "1.0" if path == "/" else ("0.8" if path.count("/") <= 2 else "0.6")
+        entries.append(
+            f"  <url>\n    <loc>{escape(loc)}</loc>\n    <lastmod>{today}</lastmod>\n    <priority>{priority}</priority>\n  </url>"
+        )
+
+    sitemap = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(entries)
+        + "\n</urlset>\n"
+    )
+    (public_dir / "sitemap.xml").write_text(sitemap, encoding="utf-8")
+    print(f"  ✓ public/sitemap.xml ({len(page_paths)} rotas)")
+
+    robots = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /mobile/\n\n"
+        f"Sitemap: {SITE_URL}/sitemap.xml\n"
+    )
+    (public_dir / "robots.txt").write_text(robots, encoding="utf-8")
+    print("  ✓ public/robots.txt")
+
+
 def main():
     print("=== GERANDO PÁGINAS FRONTEND ===\n")
 
@@ -982,6 +1027,7 @@ def main():
     (BASE_DIR / "public" / "case-assets").mkdir(parents=True, exist_ok=True)
 
     total_pages = 0
+    sitemap_paths = list(STATIC_PAGE_PATHS) + ["/produtos/"]
 
     # 1. Página índice /produtos/index.html
     print("[1/N] Gerando /produtos/index.html ...")
@@ -1005,6 +1051,7 @@ def main():
         cat_html = generate_category_page(cat_entry)
         (cat_dir / "index.html").write_text(cat_html, encoding="utf-8")
         total_pages += 1
+        sitemap_paths.append(f"/produtos/{cat_slug}/")
         print(f"  ✓ produtos/{cat_slug}/index.html")
 
         # Páginas de produto
@@ -1017,7 +1064,12 @@ def main():
             prod_html = generate_product_page(model, category, cat_slug)
             (model_dir / "index.html").write_text(prod_html, encoding="utf-8")
             total_pages += 1
+            sitemap_paths.append(f"/produtos/{cat_slug}/{model_slug}/")
             print(f"  ✓ produtos/{cat_slug}/{model_slug}/index.html")
+
+    # 3. Sitemap e robots.txt
+    print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
+    generate_sitemap(sitemap_paths)
 
     print(f"\n=== {total_pages} páginas geradas em /produtos/ ===")
     print("\nPróximo passo: atualize tailwind.config.js para incluir os novos HTMLs")
