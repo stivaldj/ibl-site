@@ -1398,7 +1398,7 @@ def generate_consorcio_page() -> str:
         <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
       <div class="absolute inset-y-0 right-0 w-[60%] hidden lg:flex items-center justify-end pointer-events-none">
-        <img src="/case-assets/fotos-processed/580n-series2.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="w-full object-contain object-right scale-110 origin-right drop-shadow-[0_40px_40px_rgba(0,0,0,0.85)]" />
+        <img src="/case-assets/fotos-processed/580n-series2.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="w-full object-contain object-right scale-110 origin-right translate-y-[10px] drop-shadow-[0_40px_40px_rgba(0,0,0,0.85)]" />
       </div>
       <div class="container mx-auto px-6 relative z-10">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Consórcio Nacional CASE</span>
