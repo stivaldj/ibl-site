@@ -461,7 +461,7 @@ body {
   --hero-badge-y: 0px;
   --hero-title-scale: 1;
   --hero-tech-card-scale: 1;
-  --hero-card-max-width: 240px;
+  --hero-card-max-width: 272px;
   --hero-title-pad-top: 4rem;
   --hero-title-pad-left: 2.25rem;
   --hero-tech-pad-top: 3.5rem;
@@ -600,7 +600,7 @@ html:not(.hero-ready) .showcase-machine-img {
 
 @media (max-width: 1280px) {
   .showcase-stage {
-    --hero-card-max-width: 224px;
+    --hero-card-max-width: 256px;
     --hero-tech-pad-top: 3rem;
     --hero-title-pad-top: 3.5rem;
   }
@@ -608,7 +608,7 @@ html:not(.hero-ready) .showcase-machine-img {
 
 @media (max-width: 1024px) {
   .showcase-stage {
-    --hero-card-max-width: 216px;
+    --hero-card-max-width: 248px;
     --hero-title-scale: 0.96;
     --hero-tech-card-scale: 0.98;
     --hero-title-pad-top: 3rem;
