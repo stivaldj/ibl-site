@@ -105,3 +105,8 @@
 - Correção recebida (2ª iteração): remover o translate órfão não bastou — máquina (~680px de pixels reais) + ficha (240px) não cabiam na coluna de ~690px; sobreposição era geométrica.
 - Regra preventiva: para overlap de elementos visuais, medir os pixels reais (canvas alpha-scan) antes de propor fix; interseção de bounding box não conta a história toda.
 - Regra preventiva: verificação visual do hero agora é automatizável: scripts Playwright + pixel-scan por modelo/viewport (ver verify-hero.mjs na sessão; considerar incorporar ao launch gate).
+
+## 2026-06-11 — Página /consorcio/ expôs crash pré-existente
+- Descoberta: `switchShowcase` acessava `#showcase-link.href` sem guarda; em páginas sem hero (produtos/*, consorcio) o TypeError matava TODO o JS subsequente — formulários de produto estavam mortos em produção silenciosamente.
+- Regra preventiva: uncaught exceptions não aparecem como console.error em harness Playwright — capturar SEMPRE o evento `pageerror` nos checks.
+- Regra preventiva: todo acesso a elemento de seção específica em script compartilhado entre páginas precisa de guard (if el).

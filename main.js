@@ -1122,6 +1122,7 @@ function setupProductPageEnhancements() {
             </a>
           </div>
           <p id="product-lead-feedback" role="status" aria-live="polite" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
+          <a data-track="product_consorcio_cta" href="/consorcio/" class="block text-center text-xs font-mono uppercase tracking-widest text-case-yellow hover:underline pt-1">Prefere comprar sem juros? Conheça o Consórcio CASE →</a>
         </form>
       </div>
     </div>
@@ -1801,7 +1802,8 @@ function switchShowcase(idx, options = {}) {
   setText('showcase-title', m.title)
   setText('showcase-model', m.model)
   setText('showcase-cat', m.cat)
-  document.getElementById('showcase-link').href = m.href
+  const showcaseLink = document.getElementById('showcase-link')
+  if (showcaseLink) showcaseLink.href = m.href
   setText('tech-model-value', m.model)
   setText('tech-cat-value', m.cat)
   setText('tech-spec-a-label', m.s1l)

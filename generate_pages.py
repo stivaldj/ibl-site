@@ -104,6 +104,10 @@ HEADER_HTML = f"""\
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Unidades
           </a>
+          <a href="/consorcio/" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
+            <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+            Consórcio
+          </a>
         </nav>
         <div class="flex items-center gap-6">
           <details class="mobile-nav lg:hidden">
@@ -116,6 +120,7 @@ HEADER_HTML = f"""\
               <a href="/#tecnologia" class="mobile-nav-link">Tecnologia</a>
               <a href="/#posvenda" class="mobile-nav-link">Pós-venda</a>
               <a href="/#unidades" class="mobile-nav-link">Unidades</a>
+              <a href="/consorcio/" class="mobile-nav-link">Consórcio</a>
             </nav>
           </details>
           <div class="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400">
@@ -163,6 +168,7 @@ FOOTER_HTML = f"""\
               <li><a href="/sobre/" class="hover:underline">Sobre nós</a></li>
               <li><a href="/filiais/" class="hover:underline">Nossas Filiais</a></li>
               <li><a href="/contato/" class="hover:underline">Contato</a></li>
+              <li><a href="/consorcio/" class="hover:underline">Consórcio CASE</a></li>
               <li><a href="/#tecnologia" class="hover:underline">Tecnologia CASE</a></li>
             </ul>
           </div>
@@ -1327,6 +1333,232 @@ def generate_institutional_pages() -> int:
     return pages
 
 
+def generate_consorcio_page() -> str:
+    """Página /consorcio/ — Consórcio Nacional CASE (Primo Rossi)."""
+    faq_items = [
+        ("O que é a contemplação?", "É o momento em que você recebe a carta de crédito para retirar sua máquina. Acontece nas assembleias mensais, por sorteio ou por lance — sem obrigação de ofertar lance."),
+        ("Como funciona o lance?", "O lance é uma antecipação de parcelas que aumenta sua chance de contemplação. Quem não quer ou não pode ofertar continua concorrendo normalmente nos sorteios mensais."),
+        ("Meu crédito perde valor com o tempo?", "Não. O valor da carta de crédito é corrigido sempre que o valor do bem de referência é ajustado — você mantém o poder de compra até a contemplação."),
+        ("Posso usar o crédito em qualquer máquina CASE?", "Sim. A carta de crédito contempla a linha CASE Construction — escavadeiras, retroescavadeiras, pás carregadeiras, motoniveladoras, tratores de esteiras e linha compacta — com retirada e pós-venda na IBL."),
+        ("Quem administra o consórcio?", "A Primo Rossi Administradora de Consórcio Ltda (CNPJ 51.597.300/0001-30), administradora oficial do Consórcio Nacional CASE desde 2017 e a mais antiga do Brasil, fundada em 1964. Autorizada e fiscalizada pelo Banco Central."),
+        ("Onde consulto o regulamento?", "O regulamento completo está disponível no site oficial da Primo Rossi. Nossa equipe também orienta sobre grupos, prazos e condições vigentes no atendimento."),
+    ]
+    faq_html = "\n".join(
+        f"""
+          <details class="border border-case-border bg-case-panel group">
+            <summary class="cursor-pointer list-none p-5 flex items-center justify-between gap-4">
+              <span class="font-bold text-white uppercase text-sm tracking-wide">{escape(q)}</span>
+              <i class="ph-bold ph-plus text-case-yellow group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="px-5 pb-5 text-sm text-gray-300 leading-relaxed">{escape(a)}</p>
+          </details>"""
+        for q, a in faq_items
+    )
+    faq_schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in faq_items
+        ],
+    }
+    service_schema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Consórcio Nacional CASE",
+        "serviceType": "Consórcio de máquinas de construção",
+        "provider": {"@type": "Organization", "name": "Primo Rossi Administradora de Consórcio Ltda"},
+        "broker": {"@type": "Organization", "name": SITE_NAME, "url": SITE_URL},
+        "areaServed": "Norte e Centro-Oeste do Brasil",
+        "url": make_absolute_url("/consorcio/"),
+    }
+    head_html = render_head(
+        page_name="Consórcio CASE sem juros",
+        description=(
+            "Compre sua máquina CASE sem juros e sem entrada com o Consórcio Nacional CASE, "
+            "administrado pela Primo Rossi desde 2017. Simule com a IBL Máquinas."
+        ),
+        canonical_path="/consorcio/",
+        og_image=DEFAULT_OG_IMAGE,
+        schema_objects=[service_schema, faq_schema, build_breadcrumb_schema([("Home", "/"), ("Consórcio", "/consorcio/")])],
+    )
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+{head_html}
+</head>
+<body class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
+{HEADER_HTML}
+
+  <main class="pt-20">
+
+    <!-- Hero -->
+    <section class="py-20 border-b border-case-border bg-case-dark relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
+      </div>
+      <div class="absolute inset-y-0 right-0 w-1/2 hidden lg:flex items-center justify-end pr-12 pointer-events-none">
+        <img src="/case-assets/retroescavadeiras/580n/580n-nobg.png" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[340px] w-auto object-contain opacity-80 drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
+      </div>
+      <div class="container mx-auto px-6 relative z-10">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Consórcio Nacional CASE</span>
+        <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none max-w-3xl">
+          Sua próxima CASE<br /><span class="text-outline">sem juros e sem entrada</span>
+        </h1>
+        <p class="text-gray-300 mt-6 max-w-xl text-lg">Compra planejada com a administradora de consórcios mais antiga do Brasil. Você programa, a IBL entrega — com pós-venda completo na sua região.</p>
+        <div class="flex flex-wrap gap-4 mt-8">
+          <a data-track="consorcio_cta_simular" href="#consorcio-lead" class="px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Quero simular</a>
+          <a data-track="consorcio_cta_whatsapp" href="{build_whatsapp_url('Olá, quero saber mais sobre o Consórcio CASE com a IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-case-yellow text-case-yellow font-bold uppercase tracking-widest hover:bg-case-yellow/10 transition-colors">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prova social -->
+    <section class="border-b border-case-border bg-case-gray">
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-case-border">
+        <div class="p-8 md:p-10 text-center"><div class="font-display font-black text-4xl text-case-yellow">Desde 1964</div><div class="font-mono text-xs text-gray-400 uppercase tracking-widest mt-2">Primo Rossi — a administradora mais antiga do Brasil</div></div>
+        <div class="p-8 md:p-10 text-center"><div class="font-display font-black text-4xl text-case-yellow">+200</div><div class="font-mono text-xs text-gray-400 uppercase tracking-widest mt-2">Contemplações por mês</div></div>
+        <div class="p-8 md:p-10 text-center"><div class="font-display font-black text-4xl text-case-yellow">+R$ 13 bi</div><div class="font-mono text-xs text-gray-400 uppercase tracking-widest mt-2">Em créditos já entregues</div></div>
+      </div>
+    </section>
+
+    <!-- Como funciona -->
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Como funciona</span>
+        <h2 class="font-display font-black text-4xl md:text-5xl uppercase mb-12">4 passos até a sua máquina</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div class="industrial-border bg-case-panel p-8"><span class="font-mono text-case-yellow text-xs">01</span><h3 class="font-display font-black text-xl uppercase mt-3 mb-3">Escolha o crédito</h3><p class="text-sm text-gray-300 leading-relaxed">Defina o valor da carta de crédito de acordo com a máquina que sua operação precisa.</p></div>
+          <div class="industrial-border bg-case-panel p-8"><span class="font-mono text-case-yellow text-xs">02</span><h3 class="font-display font-black text-xl uppercase mt-3 mb-3">Parcelas no orçamento</h3><p class="text-sm text-gray-300 leading-relaxed">Sem juros e sem entrada: as parcelas cabem no fluxo de caixa, com prazo do grupo escolhido.</p></div>
+          <div class="industrial-border bg-case-panel p-8"><span class="font-mono text-case-yellow text-xs">03</span><h3 class="font-display font-black text-xl uppercase mt-3 mb-3">Assembleias mensais</h3><p class="text-sm text-gray-300 leading-relaxed">Concorra todo mês por sorteio ou antecipe a contemplação com lance — sem obrigatoriedade.</p></div>
+          <div class="industrial-border bg-case-panel p-8"><span class="font-mono text-case-yellow text-xs">04</span><h3 class="font-display font-black text-xl uppercase mt-3 mb-3">Retire na IBL</h3><p class="text-sm text-gray-300 leading-relaxed">Contemplado, você escolhe o modelo e retira na IBL — com garantia CASE e pós-venda regional.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consórcio vs Financiamento -->
+    <section class="py-24 bg-[#080808] border-y border-case-border">
+      <div class="container mx-auto px-6">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Qual caminho?</span>
+        <h2 class="font-display font-black text-4xl md:text-5xl uppercase mb-12">Consórcio ou financiamento</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border border-case-border">
+            <thead>
+              <tr class="bg-case-panel font-mono text-xs uppercase tracking-widest text-gray-400">
+                <th class="text-left p-4 border-b border-case-border"></th>
+                <th class="text-left p-4 border-b border-l border-case-border text-case-yellow">Consórcio CASE</th>
+                <th class="text-left p-4 border-b border-l border-case-border text-white">Financiamento Banco CNH</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-300">
+              <tr><td class="p-4 border-b border-case-border font-bold text-white">Juros</td><td class="p-4 border-b border-l border-case-border">Sem juros (taxa de administração)</td><td class="p-4 border-b border-l border-case-border">Com juros da operação</td></tr>
+              <tr><td class="p-4 border-b border-case-border font-bold text-white">Entrada</td><td class="p-4 border-b border-l border-case-border">Sem entrada</td><td class="p-4 border-b border-l border-case-border">Conforme condição vigente</td></tr>
+              <tr><td class="p-4 border-b border-case-border font-bold text-white">Quando recebo a máquina</td><td class="p-4 border-b border-l border-case-border">Na contemplação (sorteio ou lance)</td><td class="p-4 border-b border-l border-case-border">Imediato, após aprovação</td></tr>
+              <tr><td class="p-4 font-bold text-white">Ideal para</td><td class="p-4 border-l border-case-border">Renovação programada e expansão planejada</td><td class="p-4 border-l border-case-border">Necessidade imediata de equipamento</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-gray-400 text-sm mt-6">Tem pressa? A IBL também opera o financiamento do <strong class="text-white">Banco CNH</strong>, o banco oficial da CASE. <a href="/contato/" class="text-case-yellow underline hover:no-underline">Fale com a equipe</a> e compare os dois caminhos para o seu caso.</p>
+      </div>
+    </section>
+
+    <!-- Para quem é + faixas -->
+    <section class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
+          <h2 class="font-display font-black text-3xl uppercase mb-8">Para quem faz sentido</h2>
+          <div class="space-y-4">
+            <div class="border border-case-border bg-case-panel p-6"><h3 class="font-bold uppercase text-case-yellow text-sm tracking-widest mb-2">Renovação programada de frota</h3><p class="text-sm text-gray-300">Substitua máquinas no momento certo do ciclo, sem comprometer o caixa com juros.</p></div>
+            <div class="border border-case-border bg-case-panel p-6"><h3 class="font-bold uppercase text-case-yellow text-sm tracking-widest mb-2">Expansão planejada</h3><p class="text-sm text-gray-300">Novas frentes de obra no radar? Programe a aquisição e chegue com equipamento próprio.</p></div>
+            <div class="border border-case-border bg-case-panel p-6"><h3 class="font-bold uppercase text-case-yellow text-sm tracking-widest mb-2">Locadores e prestadores de serviço</h3><p class="text-sm text-gray-300">Aumente a frota de locação com previsibilidade de custo e margem protegida.</p></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-display font-black text-3xl uppercase mb-8">Faixas de crédito</h2>
+          <div class="industrial-border bg-case-panel p-8">
+            <div class="flex items-end gap-3"><span class="font-display font-black text-4xl text-case-yellow">R$ 293 mil</span><span class="text-gray-400 mb-1">a</span><span class="font-display font-black text-4xl text-case-yellow">R$ 1,3 mi</span></div>
+            <p class="text-sm text-gray-300 mt-4 leading-relaxed">Cartas de crédito para toda a linha CASE Construction — da minicarregadeira à escavadeira de grande porte.</p>
+            <p class="text-xs text-gray-500 mt-4 font-mono uppercase tracking-wide">* Valores de referência. Grupos, prazos e condições vigentes são informados pela administradora no atendimento.</p>
+          </div>
+          <a data-track="consorcio_cta_simular_2" href="#consorcio-lead" class="mt-6 block text-center px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Simular meu consórcio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-[#080808] border-y border-case-border">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <h2 class="font-display font-black text-4xl uppercase mb-10">Perguntas frequentes</h2>
+        <div class="space-y-3">
+{faq_html}
+        </div>
+      </div>
+    </section>
+
+    <!-- Lead -->
+    <section id="consorcio-lead" class="py-24 bg-case-dark">
+      <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-6">
+          <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Simulação</span>
+          <h2 class="font-display font-black text-4xl md:text-5xl uppercase leading-[0.95]">Receba uma simulação do seu consórcio</h2>
+          <p class="text-gray-300 mt-5 max-w-xl">Informe a linha de interesse e nossa equipe retorna com grupos, prazos e parcelas vigentes do Consórcio Nacional CASE.</p>
+        </div>
+        <div class="lg:col-span-6">
+          <form id="lead-form" class="industrial-border bg-case-panel p-6 md:p-7 space-y-4">
+            <h3 class="font-display font-black text-2xl uppercase">Simular consórcio</h3>
+            <div>
+              <label for="lead-nome" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Nome</label>
+              <input id="lead-nome" name="nome" required class="input-field" placeholder="Seu nome completo" />
+            </div>
+            <div>
+              <label for="lead-telefone" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">WhatsApp</label>
+              <input id="lead-telefone" name="telefone" required class="input-field" placeholder="(00) 00000-0000" />
+            </div>
+            <div>
+              <label for="lead-interesse" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Linha de interesse</label>
+              <select id="lead-interesse" name="interesse" required class="input-field">
+                <option value="">Selecione uma categoria</option>
+                <option>Consórcio — Escavadeiras Hidráulicas</option>
+                <option>Consórcio — Retroescavadeiras</option>
+                <option>Consórcio — Pás-Carregadeiras</option>
+                <option>Consórcio — Minicarregadeiras</option>
+                <option>Consórcio — Motoniveladoras</option>
+                <option>Consórcio — Miniescavadeiras</option>
+                <option>Consórcio — Rolo Compactador</option>
+                <option>Consórcio — Tratores de Esteira</option>
+              </select>
+            </div>
+            <label class="flex items-start gap-3 pt-1 text-xs text-gray-400 leading-relaxed cursor-pointer">
+              <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[#E58E1A]" />
+              <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <button data-track="consorcio_lead_submit" type="submit" class="btn btn-primary w-full">Quero simular</button>
+              <a data-track="consorcio_lead_whatsapp" href="{build_whatsapp_url('Olá, quero simular o Consórcio CASE.')}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">WhatsApp direto</a>
+            </div>
+            <p id="lead-feedback" role="status" aria-live="polite" class="text-xs font-mono text-gray-500 uppercase tracking-widest"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compliance -->
+    <section class="py-12 bg-[#080808] border-t border-case-border">
+      <div class="container mx-auto px-6 text-xs text-gray-500 leading-relaxed space-y-2">
+        <p><strong class="text-gray-300">Administradora oficial:</strong> Primo Rossi Administradora de Consórcio Ltda — CNPJ 51.597.300/0001-30 — autorizada e fiscalizada pelo Banco Central do Brasil. Administradora do Consórcio Nacional CASE desde 2017.</p>
+        <p>O consórcio não garante contemplação imediata. Valores, grupos, prazos e taxas são os vigentes na contratação, informados pela administradora. Regulamento disponível em <a href="https://primorossi.com.br/" target="_blank" rel="noopener noreferrer" class="underline hover:text-case-yellow">primorossi.com.br</a>.</p>
+        <p>A IBL Máquinas atua como ponto de venda autorizado e responsável pela entrega e pós-venda dos equipamentos CASE.</p>
+      </div>
+    </section>
+
+  </main>
+
+{FOOTER_HTML}
+
+</body>
+</html>"""
+
+
 # ─── Main ───────────────────────────────────────────────────────────────────────
 
 # Páginas estáticas mantidas à mão na raiz do repo (fora de /produtos/).
@@ -1335,6 +1567,7 @@ STATIC_PAGE_PATHS = [
     "/sobre/",
     "/filiais/",
     "/contato/",
+    "/consorcio/",
     "/privacidade/",
 ]
 
@@ -1427,6 +1660,13 @@ def main():
     # 3. Páginas institucionais
     print("\n[Institucional] Gerando páginas institucionais ...")
     total_pages += generate_institutional_pages()
+
+    # 3b. Página de consórcio
+    consorcio_dir = BASE_DIR / "consorcio"
+    consorcio_dir.mkdir(exist_ok=True)
+    (consorcio_dir / "index.html").write_text(generate_consorcio_page(), encoding="utf-8")
+    total_pages += 1
+    print("  ✓ consorcio/index.html")
 
     # 4. Sitemap e robots.txt
     print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
