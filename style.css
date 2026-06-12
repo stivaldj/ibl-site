@@ -574,7 +574,7 @@ body {
     drop-shadow(0 50px 40px rgba(0, 0, 0, 0.70))
     drop-shadow(0 80px 90px rgba(0, 0, 0, 0.40))
     drop-shadow(0 0 50px rgba(229, 142, 26, 0.08));
-  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(var(--hero-machine-scale, 1));
+  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(var(--hero-machine-scale-x, var(--hero-machine-scale, 1)), var(--hero-machine-scale, 1));
   transform-origin: center center;
   transition:
     opacity 0.3s ease-in-out,
@@ -589,7 +589,7 @@ html:not(.hero-ready) .showcase-machine-img {
 }
 
 .showcase-machine-img:hover {
-  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(calc(var(--hero-machine-scale, 1) * 1.05));
+  transform: translate3d(var(--hero-machine-x, 0px), var(--hero-machine-y, 0px), 0) scale(calc(var(--hero-machine-scale-x, var(--hero-machine-scale, 1)) * 1.05), calc(var(--hero-machine-scale, 1) * 1.05));
 }
 
 @media (max-width: 1440px) {
