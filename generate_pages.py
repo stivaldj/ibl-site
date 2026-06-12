@@ -1398,12 +1398,13 @@ def generate_consorcio_page() -> str:
         <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
       <div class="absolute inset-y-0 right-0 w-1/2 hidden lg:flex items-center justify-end pr-12 pointer-events-none">
-        <img src="/case-assets/retroescavadeiras/580n/580n-nobg.png" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[340px] w-auto object-contain opacity-80 drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
+        <img src="/case-assets/fotos-processed/580n-series2.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[420px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
       </div>
       <div class="container mx-auto px-6 relative z-10">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Consórcio Nacional CASE</span>
-        <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none max-w-3xl">
-          Sua próxima CASE<br /><span class="text-outline">sem juros e sem entrada</span>
+        <h1 class="font-display font-black uppercase leading-[0.95] max-w-2xl">
+          <span class="block text-5xl md:text-6xl">Sua próxima CASE</span>
+          <span class="block text-outline text-3xl md:text-4xl mt-2 tracking-tight">Sem juros. Sem entrada.</span>
         </h1>
         <p class="text-gray-300 mt-6 max-w-xl text-lg">Compra planejada com a administradora de consórcios mais antiga do Brasil. Você programa, a IBL entrega — com pós-venda completo na sua região.</p>
         <div class="flex flex-wrap gap-4 mt-8">
