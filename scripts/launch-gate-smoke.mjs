@@ -46,7 +46,7 @@ const ROUTES = [
   { path: '/case/retroescavadeiras/580n/', label: 'case-product', required: ['/assets/', 'Retroescavadeira 580N S2'] },
   { path: '/dynapac/', label: 'dynapac-home', required: ['/assets/', 'DYNAPAC'] },
   { path: '/dynapac/compactacao/', label: 'dynapac-category', required: ['/assets/', 'Compactação'] },
-  { path: '/dynapac/compactacao/ca250d/', label: 'dynapac-product', required: ['/assets/', 'CA250D'] },
+  { path: '/dynapac/compactacao/ca25d-rhino/', label: 'dynapac-product', required: ['/assets/', 'CA25D Rhino'] },
 ]
 
 async function main() {

@@ -1915,7 +1915,7 @@ def generate_dynapac_category_page(cat: dict) -> str:
           <div class="flex items-center gap-3 mb-6">
             <div class="w-1 h-6 bg-case-yellow"></div>
             <h2 class="font-display font-black text-2xl uppercase tracking-wide">{escape(sub['nome'])}</h2>
-            <span class="font-mono text-xs text-gray-500">{len(sub['modelos'])} modelos</span>
+            <span class="font-mono text-xs text-gray-500">{len(sub['modelos'])} {"modelo" if len(sub['modelos']) == 1 else "modelos"}</span>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">{cards}</div>
         </div>""")
@@ -1929,7 +1929,7 @@ def generate_dynapac_category_page(cat: dict) -> str:
         {breadcrumb}
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mt-8 mb-4">/// Dynapac · {escape(cat['nome'])}</span>
         <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none">{escape(cat['nome'])}</h1>
-        <p class="text-gray-400 max-w-2xl mt-6">{total} equipamentos Dynapac com vendas, peças e assistência técnica da IBL Máquinas no Norte do Brasil.</p>
+        <p class="text-gray-400 max-w-2xl mt-6">{total} {"equipamento" if total == 1 else "equipamentos"} Dynapac com vendas, peças e assistência técnica da IBL Máquinas no Norte do Brasil.</p>
       </div>
     </section>
     <section class="py-16"><div class="container mx-auto px-6">{''.join(sections)}</div></section>
@@ -2137,8 +2137,44 @@ def generate_dynapac(sitemap_paths: list[str]) -> int:
                 (model_dir / "index.html").write_text(generate_dynapac_model_page(cat, sub, m), encoding="utf-8")
                 pages += 1
                 sitemap_paths.append(f"/dynapac/{cat['slug']}/{m['slug']}/")
-    print(f"  ✓ {pages} páginas Dynapac")
+
+    removidos = prune_dynapac_orfaos(db)
+    print(f"  ✓ {pages} páginas Dynapac" + (f" ({removidos} rotas órfãs removidas)" if removidos else ""))
     return pages
+
+
+def prune_dynapac_orfaos(db: dict) -> int:
+    """Apaga páginas e imagens de modelos que saíram do catálogo nacional.
+
+    Sem isso, um modelo descontinuado na Dynapac continuaria publicado (o Vite
+    empacota qualquer index.html encontrado em `dynapac/`).
+    """
+    validos = {
+        (cat["slug"], m["slug"])
+        for cat in db["categorias"]
+        for sub in cat["subcategorias"]
+        for m in sub["modelos"]
+    }
+    categorias = {cat["slug"] for cat in db["categorias"]}
+    removidos = 0
+
+    for base, rotulo in ((DYNAPAC_OUT_DIR, "página"), (BASE_DIR / "public" / "dynapac-assets", "imagem")):
+        if not base.exists():
+            continue
+        for cat_dir in base.iterdir():
+            if not cat_dir.is_dir():
+                continue
+            if cat_dir.name not in categorias:
+                shutil.rmtree(cat_dir)
+                removidos += 1
+                print(f"  - {rotulo}s removidas: dynapac/{cat_dir.name}/ (categoria fora do catálogo)")
+                continue
+            for model_dir in cat_dir.iterdir():
+                if model_dir.is_dir() and (cat_dir.name, model_dir.name) not in validos:
+                    shutil.rmtree(model_dir)
+                    removidos += 1
+                    print(f"  - {rotulo} removida: {cat_dir.name}/{model_dir.name}")
+    return removidos
 
 
 def main():

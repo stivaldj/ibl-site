@@ -8,7 +8,7 @@ const requiredPaths = [
   'dist/case/catalogo/index.html',
   'dist/case/retroescavadeiras/580n/index.html',
   'dist/dynapac/index.html',
-  'dist/dynapac/compactacao/ca250d/index.html',
+  'dist/dynapac/compactacao/ca25d-rhino/index.html',
 ]
 
 const missing = requiredPaths.filter((relativePath) => !existsSync(join(root, relativePath)))
@@ -27,7 +27,7 @@ const representativeHtml = [
   'dist/case/catalogo/index.html',
   'dist/case/retroescavadeiras/580n/index.html',
   'dist/dynapac/index.html',
-  'dist/dynapac/compactacao/ca250d/index.html',
+  'dist/dynapac/compactacao/ca25d-rhino/index.html',
 ]
 
 for (const relativePath of representativeHtml) {
