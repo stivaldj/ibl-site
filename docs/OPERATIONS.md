@@ -81,7 +81,40 @@ npm run assets:nobg:sync
 
 Use `python3 remove_bg_batch.py --sync --force` when you need a full rebuild regardless of timestamps.
 
-### 4. Rebuild the launch artifact
+### 4. Refresh the Dynapac catalog (national site)
+
+The Dynapac catalog mirrors the Brazilian site, `dynapac.com/br-pt`. Its
+"Produtos" tab hides everything flagged `data-discontinued="true"`
+("Interrompido"), so only active models are mirrored. Mesas/screeds are
+intentionally excluded: they are paver attachments, not catalog machines.
+
+```bash
+npm run dynapac:sync
+```
+
+Equivalent raw commands:
+
+```bash
+python3 scripts/dynapac-scrape-nacional.py
+python3 scripts/dynapac-download-fotos.py
+npm run rebuild:site
+```
+
+Notes:
+
+- The scraper caches every fetched page under `.tmp/dynapac-br/`. Re-run it with
+  `--offline` to rebuild `data/dynapac-db.json` from that cache without touching
+  the network. Delete the cache to force a real refresh.
+- The photo downloader is idempotent: it skips models that already have a file
+  under `fotos-dynapac/`. Use `--force` to re-fetch everything.
+- Each model carries fallback image URLs. Dynapac serves photos from two CDNs
+  (`pdf.dynapac.com` and `pim.dynapac.com`) and several `/Full/` gallery links
+  are dead, so the downloader tries the candidates in order.
+- `generate_pages.py` prunes `dynapac/**` pages and `public/dynapac-assets/**`
+  images for models that left the catalog. A model discontinued upstream
+  disappears from the build on the next rebuild.
+
+### 5. Rebuild the launch artifact
 
 ```bash
 npm run rebuild:site

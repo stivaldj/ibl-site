@@ -110,3 +110,16 @@
 - Descoberta: `switchShowcase` acessava `#showcase-link.href` sem guarda; em páginas sem hero (produtos/*, consorcio) o TypeError matava TODO o JS subsequente — formulários de produto estavam mortos em produção silenciosamente.
 - Regra preventiva: uncaught exceptions não aparecem como console.error em harness Playwright — capturar SEMPRE o evento `pageerror` nos checks.
 - Regra preventiva: todo acesso a elemento de seção específica em script compartilhado entre páginas precisa de guard (if el).
+
+## 2026-09-16 — Revisão geral + espelhamento Dynapac
+- Padrão observado: exclusão de itens do catálogo feita só no gerador (`EXCLUDED_MODEL_SLUGS`) deixa páginas e imagens órfãs em disco, e o Vite empacota qualquer `index.html` que encontrar.
+- Regra preventiva: toda regra de exclusão em gerador de páginas precisa vir acompanhada de poda do output (ver `prune_dynapac_orfaos`). Gerar não é o mesmo que sincronizar.
+- Padrão observado: duas árvores de rotas para o mesmo conteúdo (`produtos/` e `case/`) sobreviveram a uma migração porque só o gerador e o Vite foram atualizados.
+- Regra preventiva: ao migrar rotas, varrer `href`, `tailwind.config.js`, scripts de verificação e docstrings — e remover a árvore antiga no mesmo commit do redirect.
+- Padrão observado: truncagem aplicada em dois pontos da pipeline (no chamador e em `render_head`) produz reticências no meio da frase.
+- Regra preventiva: quem monta a string calcula o orçamento de caracteres uma vez (ver `build_meta_description`); nunca truncar duas vezes.
+- Padrão observado: `.env` com segredo de webhook fora do `.gitignore`, a um `git add -A` de vazar.
+- Regra preventiva: antes de qualquer `git add -A` em repo alheio, conferir `git check-ignore` para `.env*` e artefatos locais; usar stage seletivo quando houver dúvida.
+- Padrão observado: dados de fornecedor misturam convenções (mesmo número como "2,130 mm" e "2.130 mm" na mesma ficha) e servem imagens de dois CDNs com links mortos.
+- Regra preventiva: em scraper de catálogo, normalizar valores antes de deduplicar e emitir lista de URLs candidatas em vez de uma única — deixar o downloader tentar em ordem.
+- Correção recebida: não inventar dado de negócio não verificável (telefone de Sinop com DDD de outro estado). Sinalizar no próprio dado e reportar, em vez de "corrigir" adivinhando.

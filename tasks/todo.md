@@ -300,18 +300,39 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 - [ ] VOCÊ: automação Bitrix "novo lead → notificação/WhatsApp" + Search Console pós-go-live
 
 ## Revisão geral pré-go-live + espelhamento Dynapac nacional (2026-09-16)
-> Fonte nacional Dynapac = dynapac.com/br-pt (PIM "br"). Lista de 127 modelos ativos extraída em scratchpad (dynapac-nacional-ativos.json).
+> Fonte nacional Dynapac = dynapac.com/br-pt (a aba "Produtos" esconde o que está "Interrompido").
+> Fluxo: `npm run dynapac:sync` (documentado em docs/OPERATIONS.md §4).
 
-### Correções gerais (aguardando OK)
-- [ ] Remover árvore morta `produtos/` (gerador e Vite usam `case/`; .htaccess já redireciona 301) e trocar `404.html:87` para `/case/`
-- [ ] Imagens quebradas em `case/`: CX370C-ME, CX490C, CX500C, CX800B (arquivos apagados de public/case-assets) e 3 cards `-nobg.webp` que só existem em .png (CX22D, 865B, W20G)
-- [ ] Meta description Dynapac truncada duas vezes (`generate_pages.py:1999` + `truncate_text`) → reticências no meio
-- [ ] Copy CASE em páginas Dynapac: "Especifique sua próxima CASE" e sufixo "- CASE Construction" no <title>
-- [ ] `index.html:94` "28 modelos" → 32
-- [ ] `data/filiais.json`: Sinop/MT com DDD 69; bloco whatsapp desatualizado (site já usa 5565999808288 confirmado)
-- [ ] 404.html sem description/canonical/og:image/footer
-- [ ] Cosmético: "Official Dealer" em inglês; "Home" no breadcrumb JSON-LD; TODO em main.js:4
+### Correções gerais — CONCLUÍDO (commit fe53002)
+- [x] Remover árvore morta `produtos/` e corrigir `404.html` para `/case/`
+- [x] Remover páginas órfãs dos 4 modelos CASE excluídos (CX370C-ME, CX490C, CX500C, CX800B)
+- [x] 7 imagens quebradas resolvidas ao regerar as páginas
+- [x] Meta description Dynapac: fim da truncagem dupla (`build_meta_description`)
+- [x] Títulos por marca: páginas Dynapac não terminam mais em "CASE Construction"
+- [x] Copy CASE nas páginas Dynapac corrigida na regeração
+- [x] Total do catálogo CASE passa a aplicar a exclusão (32 → 28, bate com a home)
+- [x] WhatsApp: fallbacks sincronizados com o número confirmado do `.env`
+- [x] `tailwind.config.js` apontando para `case/` e `dynapac/`
+- [x] 404 com meta description; "Official Dealer" → "Concessionária Autorizada"; breadcrumb "Home" → "Início"
+- [x] SEGURANÇA: `.env` (BITRIX_WEBHOOK_URL) não estava no `.gitignore` — corrigido + `.env.example`
 
-### Dynapac (escopo a confirmar)
-- [ ] Remover 4 modelos "Interrompido" no site nacional: CA250D, CP274, F1200CS, CM2500
-- [ ] (se espelho completo) adicionar ~90 modelos ativos faltantes com fotos/specs do br-pt
+### Dynapac — CONCLUÍDO (commit 9ddd70f)
+- [x] Scraper do catálogo nacional (`scripts/dynapac-scrape-nacional.py`)
+- [x] 36 → 108 modelos; saem CA250D, CP274, F1200CS e CM2500 (descontinuados no Brasil)
+- [x] Mesas/screeds (18) fora do espelho, conforme escopo aprovado
+- [x] 108/108 fotos oficiais baixadas (2 CDNs + fallback de URL)
+- [x] Specs normalizadas para o padrão brasileiro e rótulos traduzidos
+- [x] `prune_dynapac_orfaos`: modelo que sai do catálogo some do build
+
+### Verificação
+- [x] `npm run rebuild:site` ✓ · `launch-gate-smoke` ✓ (7 rotas)
+- [x] `dist/`: 0 links quebrados, 0 imagens quebradas, sitemap 156/156
+- [x] Revisão visual no navegador (home, categoria, ficha de modelo)
+
+### Pendente com a IBL (não dá para resolver no código)
+- [ ] Telefone de Sinop/MT está com DDD 69 (Rondônia) em `data/filiais.json`. Sinalizado
+      no próprio arquivo (`_nota_telefone`). Não foi "corrigido" para 66 porque seria
+      inventar um número. Confirmar antes do go-live.
+- [ ] Decidir se `fotos-dynapac/` (136 MB de originais) continua versionado. Hoje segue
+      a convenção do repo, mas é re-baixável: as URLs estão em `data/dynapac-downloads.json`
+      e o downloader é idempotente.
