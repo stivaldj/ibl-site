@@ -6,12 +6,15 @@
     "email": "contato@iblmaquinas.com.br",
     "site": "https://iblmaquinas.com.br",
     "fundacao": "1992",
-    "marcas": ["CASE Construction", "Dynapac"],
+    "marcas": [
+      "CASE Construction",
+      "Dynapac"
+    ],
     "instagram": "https://www.instagram.com/iblmaquinas/",
-    "whatsapp_comercial": "556733584100",
-    "whatsapp_confirmado": false,
-    "_nota_whatsapp": "TODO_CONFIRMAR: usar o número WhatsApp Business oficial; fallback atual é o telefone da matriz (67) 3358-4100",
-    "_nota_fontes": "Endereços/coordenadas: seção #unidades do index.html (curadoria mais recente). Telefones: www.iblmaquinas.com.br/sobre-nos (site WP). Divergências de endereço (Rio Branco, Ariquemes) seguiram a curadoria do repo — confirmar com a IBL."
+    "whatsapp_comercial": "5565999808288",
+    "whatsapp_confirmado": true,
+    "_nota_fontes": "Endereços/coordenadas: seção #unidades do index.html (curadoria mais recente). Telefones: www.iblmaquinas.com.br/sobre-nos (site WP). Divergências de endereço (Rio Branco, Ariquemes) seguiram a curadoria do repo — confirmar com a IBL.",
+    "_nota_whatsapp": "Número WhatsApp Business oficial confirmado com a IBL (go-live v1.3). Mantido em sincronia com VITE_WHATSAPP_NUMBER."
   },
   "filiais": [
     {
@@ -25,7 +28,10 @@
       "telefone": "(67) 3358-4100",
       "telefone_e164": "+556733584100",
       "lat": -20.388311981404,
-      "lng": -54.548588010738
+      "lng": -54.548588010738,
+      "marcas": [
+        "CASE Construction"
+      ]
     },
     {
       "id": "varzea-grande",
@@ -38,7 +44,10 @@
       "telefone": "(65) 3688-2121",
       "telefone_e164": "+556536882121",
       "lat": -15.6317305,
-      "lng": -56.1681188
+      "lng": -56.1681188,
+      "marcas": [
+        "CASE Construction"
+      ]
     },
     {
       "id": "sinop",
@@ -51,7 +60,11 @@
       "telefone": "(69) 99661-0096",
       "telefone_e164": "+5569996610096",
       "lat": -11.824489991099,
-      "lng": -55.485269965364
+      "lng": -55.485269965364,
+      "marcas": [
+        "CASE Construction"
+      ],
+      "_nota_telefone": "TODO_CONFIRMAR: número com DDD 69 (Rondônia) cadastrado para a unidade de Sinop/MT (DDD 66). Confirmar com a IBL antes do go-live."
     },
     {
       "id": "agua-boa",
@@ -64,7 +77,10 @@
       "telefone": "(66) 3468-4348",
       "telefone_e164": "+556634684348",
       "lat": -14.05311499911,
-      "lng": -52.148773023928
+      "lng": -52.148773023928,
+      "marcas": [
+        "CASE Construction"
+      ]
     },
     {
       "id": "rio-branco",
@@ -77,7 +93,11 @@
       "telefone": "(68) 3221-0527",
       "telefone_e164": "+556832210527",
       "lat": -10.057436829874,
-      "lng": -67.770744799631
+      "lng": -67.770744799631,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
     },
     {
       "id": "manaus",
@@ -90,7 +110,11 @@
       "telefone": "(92) 3581-3668",
       "telefone_e164": "+559235813668",
       "lat": -3.03558900628,
-      "lng": -59.999088020995
+      "lng": -59.999088020995,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
     },
     {
       "id": "ariquemes",
@@ -103,7 +127,11 @@
       "telefone": "(69) 3535-2022",
       "telefone_e164": "+556935352022",
       "lat": -9.91619183746,
-      "lng": -63.05557756561
+      "lng": -63.05557756561,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
     },
     {
       "id": "boa-vista",
@@ -116,7 +144,11 @@
       "telefone": "(95) 3624-6827",
       "telefone_e164": "+559536246827",
       "lat": 2.815853923167,
-      "lng": -60.690047229806
+      "lng": -60.690047229806,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
     }
   ]
 }

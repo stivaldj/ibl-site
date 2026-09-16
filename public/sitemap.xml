@@ -2,237 +2,422 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iblmaquinas.com.br/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://iblmaquinas.com.br/sobre/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iblmaquinas.com.br/filiais/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iblmaquinas.com.br/contato/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iblmaquinas.com.br/consorcio/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iblmaquinas.com.br/privacidade/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/catalogo/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx130c/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/dynapac/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx180c/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/cx130c/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx220c-s2/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/cx180c/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx240c-me/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/cx220c-s2/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx350c/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/cx240c-me/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx370c-me/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/escavadeiras-hidraulicas/cx350c/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx490c/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx500c/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sr150b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/escavadeiras-hidraulicas/cx800b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sr175b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sr200b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sr150b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sr250b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sr175b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sv185b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sr200b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/minicarregadeiras/sv300b/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sr250b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/miniescavadeiras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sv185b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/miniescavadeiras/cx22d/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/minicarregadeiras/sv300b/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/miniescavadeiras/cx35d/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/miniescavadeiras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/motoniveladoras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/miniescavadeiras/cx22d/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/motoniveladoras/845b-series-2/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/miniescavadeiras/cx35d/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/motoniveladoras/865b-series-2/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/motoniveladoras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/motoniveladoras/885b-series-2/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/motoniveladoras/845b-series-2/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/pas-carregadeiras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/motoniveladoras/865b-series-2/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/pas-carregadeiras/621e/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/motoniveladoras/885b-series-2/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/pas-carregadeiras/721e/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/pas-carregadeiras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/pas-carregadeiras/821e/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/pas-carregadeiras/621e/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/pas-carregadeiras/w20g/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/pas-carregadeiras/721e/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/retroescavadeiras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/pas-carregadeiras/821e/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/retroescavadeiras/575sv/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/pas-carregadeiras/w20g/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/retroescavadeiras/580n/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/retroescavadeiras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/rolo-compactador/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/retroescavadeiras/575sv/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/rolo-compactador/1107ex/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/retroescavadeiras/580n/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/rolo-compactador/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/750m/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/rolo-compactador/1107ex/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/850m/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/1150l/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/750m/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/1650l/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/850m/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/case/tratores-de-esteiras/2050m/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/1150l/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/1650l/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca1300d/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iblmaquinas.com.br/produtos/tratores-de-esteiras/2050m/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca1400d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca15d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca25d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca30d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca35d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/ca250d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc900/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc1000/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc1100-vi/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc1200-vi/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc3300c/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cc4200c-vi/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cp1200/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/compactacao/cp274/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd2500c/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd2500cs/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd2550c/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd2550cs/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd1800c/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/sd1800w/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/f1200cs/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/f1250cs/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/pavimentacao/cm2500/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dfp6/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dfp7/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dfp9x/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dfp12d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/drp25d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/drp45dx/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dr6x/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dr7x/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/done/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/dtr75d/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/f80w/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iblmaquinas.com.br/dynapac/equipamentos-leves/s100/</loc>
+    <lastmod>2026-09-16</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>

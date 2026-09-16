@@ -33,3 +33,20 @@ dist-ssr
 __pycache__/
 *.pyc
 codedb.snapshot
+
+# Segredos do endpoint de leads
+public/api/lead-config.php
+dist/api/lead-config.php
+_build-input.tgz
+
+# Segredos de ambiente (BITRIX_WEBHOOK_URL, GA4, etc.) — nunca versionar
+.env
+.env.*
+!.env.example
+.env.bak
+
+# Artefatos locais e material de descarte
+_to_delete/
+*.tgz
+*.tar
+*.zip

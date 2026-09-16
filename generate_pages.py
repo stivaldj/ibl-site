@@ -2,7 +2,7 @@
 """
 Gerador de páginas frontend - IBL Máquinas
 Cria páginas estáticas seguindo a hierarquia do Scrape Case
-Output: produtos/{cat}/index.html + produtos/{cat}/{model}/index.html
+Output: case/{cat}/index.html + case/{cat}/{model}/index.html
 """
 
 import json
@@ -16,14 +16,14 @@ from urllib.parse import quote
 
 BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "Scrape Case" / "scrape_db.json"
-OUT_DIR = BASE_DIR / "produtos"
+OUT_DIR = BASE_DIR / "case"
 SITE_URL = "https://iblmaquinas.com.br"
 SITE_NAME = "IBL Máquinas"
 SITE_BRAND = "CASE Construction"
-DEFAULT_OG_IMAGE = f"{SITE_URL}/ibl-logo.png"
+DEFAULT_OG_IMAGE = f"{SITE_URL}/og-image.jpg"
 # Número WhatsApp comercial (E.164 sem "+"). Mesmo env var usado pelo Vite (main.js).
-# Fallback: telefone da matriz Campo Grande/MS. TODO_CONFIRMAR número WhatsApp Business oficial.
-WHATSAPP_NUMBER = os.environ.get("VITE_WHATSAPP_NUMBER", "556733584100")
+# Número WhatsApp Business confirmado pela IBL em 2026-07-29.
+WHATSAPP_NUMBER = os.environ.get("VITE_WHATSAPP_NUMBER", "5565999808288")
 WHATSAPP_BASE_URL = f"https://wa.me/{WHATSAPP_NUMBER}"
 HOME_CONTACT_URL = "/#captacao-lead"
 ZERO_WIDTH_CHARS = {
@@ -32,7 +32,56 @@ ZERO_WIDTH_CHARS = {
     "\u200d",  # zero-width joiner
     "\ufeff",  # BOM / zero-width no-break space
 }
-GENERATED_DERIVATIVE_PATTERN = re.compile(r".+-nobg\.png$", re.IGNORECASE)
+# Modelos fora do portfólio do site (decisão IBL 2026-08-10): escavadeiras acima da CX350C
+EXCLUDED_MODEL_SLUGS = {"cx370c-me", "cx490c", "cx500c", "cx800b"}
+
+GENERATED_DERIVATIVE_PATTERN = re.compile(r".+-nobg\.png$|.+\.webp$", re.IGNORECASE)
+
+# Otimização de imagens: acima deste tamanho, um derivativo .webp é gerado e
+# preferido nas páginas (o original permanece como fonte do derivativo).
+WEBP_THRESHOLD_BYTES = 250 * 1024
+WEBP_MAX_DIM = 1400
+
+
+def ensure_webp_derivative(image_path: "Path") -> "Path | None":
+    """Gera (se necessário) um derivativo .webp para imagens pesadas.
+
+    Retorna o caminho do .webp quando ele existe/foi gerado, senão None.
+    Degrada silenciosamente se o Pillow não estiver disponível.
+    """
+    if image_path.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
+        return None
+    try:
+        if image_path.stat().st_size < WEBP_THRESHOLD_BYTES:
+            return None
+    except OSError:
+        return None
+
+    webp_path = image_path.with_suffix(".webp")
+    try:
+        if webp_path.exists() and webp_path.stat().st_mtime_ns >= image_path.stat().st_mtime_ns:
+            return webp_path
+    except OSError:
+        pass
+
+    try:
+        from PIL import Image
+    except ImportError:
+        print("  ! Pillow indisponível — derivativos .webp não gerados")
+        return webp_path if webp_path.exists() else None
+
+    try:
+        with Image.open(image_path) as img:
+            has_alpha = img.mode in ("RGBA", "LA") or (
+                img.mode == "P" and "transparency" in img.info
+            )
+            img = img.convert("RGBA" if has_alpha else "RGB")
+            img.thumbnail((WEBP_MAX_DIM, WEBP_MAX_DIM), Image.LANCZOS)
+            img.save(webp_path, "WEBP", quality=80 if has_alpha else 75, method=6)
+        return webp_path
+    except Exception as exc:  # noqa: BLE001 — otimização nunca deve quebrar o build
+        print(f"  ! Falha ao gerar webp de {image_path.name}: {exc}")
+        return None
 
 
 def build_whatsapp_url(message: str) -> str:
@@ -63,15 +112,19 @@ def is_managed_generated_derivative(path: Path) -> bool:
 HEAD_ASSETS_TEMPLATE = """\
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>try{var t=localStorage.getItem("ibl_theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <meta name="ibl-build" content="v3.6-20260810-2231" />
   <link rel="icon" href="/favicon.ico" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/vendor/phosphor/bold.css" />
+  <link rel="stylesheet" href="/vendor/phosphor/fill.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@100..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <script type="module" src="/main.js"></script>
   <style>
     /* Prevent FOUC before JS/CSS loads */
-    :root { background-color: #050505; color: #fff; }
+    :root { background-color: #050505; color: #fff; } :root[data-theme="light"] { background-color: #f4f2ed; color: #171717; }
   </style>"""
 
 DEFAULT_DESCRIPTION = (
@@ -85,22 +138,18 @@ HEADER_HTML = f"""\
       <div class="flex items-center justify-between h-20 px-6 max-w-[1920px] mx-auto">
         <div class="flex items-center gap-4">
           <a href="/" class="site-brand-link"><img src="/ibl-logo.png" alt="IBL Máquinas" class="h-16 w-auto" /></a>
-          <span class="font-mono text-[10px] text-case-yellow tracking-widest uppercase">Official Dealer</span>
+          <span class="font-mono text-[10px] text-case-yellow tracking-widest uppercase">Concessionária Autorizada</span>
         </div>
         <nav class="hidden lg:flex items-center gap-12" aria-label="Navegação principal">
-          <a href="/#catalogo" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
+          <a href="/case/" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            Catálogo
+            CASE
           </a>
-          <a href="/#tecnologia" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
+          <a href="/dynapac/" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            Tecnologia
+            Dynapac
           </a>
-          <a href="/#posvenda" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
-            <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            Pós-Venda
-          </a>
-          <a href="/#unidades" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
+          <a href="/filiais/" class="font-mono text-sm uppercase hover:text-case-yellow transition-colors flex items-center gap-2 group">
             <span class="w-1.5 h-1.5 bg-case-yellow rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
             Unidades
           </a>
@@ -116,17 +165,17 @@ HEADER_HTML = f"""\
               <i class="ph-bold ph-list text-lg"></i>
             </summary>
             <nav class="mobile-nav-panel" aria-label="Navegação principal móvel">
-              <a href="/#catalogo" class="mobile-nav-link">Catálogo</a>
-              <a href="/#tecnologia" class="mobile-nav-link">Tecnologia</a>
-              <a href="/#posvenda" class="mobile-nav-link">Pós-venda</a>
-              <a href="/#unidades" class="mobile-nav-link">Unidades</a>
+              <a href="/case/" class="mobile-nav-link">CASE</a>
+              <a href="/dynapac/" class="mobile-nav-link">Dynapac</a>
+              <a href="/filiais/" class="mobile-nav-link">Unidades</a>
               <a href="/consorcio/" class="mobile-nav-link">Consórcio</a>
             </nav>
           </details>
           <div class="hidden md:flex items-center gap-2 text-xs font-mono text-gray-400">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            TELEMETRIA ONLINE
+            <span class="w-2 h-2 bg-case-yellow rounded-full"></span>
+            8 LOJAS · 6 ESTADOS
           </div>
+          <button type="button" data-theme-toggle class="w-10 h-10 flex items-center justify-center border border-case-border text-gray-400 hover:text-case-yellow hover:border-case-yellow transition-colors" aria-label="Alternar tema"><i class="ph-bold ph-sun text-lg"></i></button>
           <a href="{HOME_CONTACT_URL}" class="bg-white text-black hover:bg-case-yellow hover:text-black transition-colors px-6 py-2.5 font-bold uppercase text-xs tracking-widest border border-white">
             Solicitar Orçamento
           </a>
@@ -143,22 +192,27 @@ FOOTER_HTML = f"""\
             <h2 class="font-display font-black text-5xl md:text-7xl tracking-tighter leading-[0.9]">FALE<br />COM A IBL</h2>
           </div>
           <div class="flex flex-col justify-end items-start lg:items-end">
-            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Especifique sua próxima CASE com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
+            <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Especifique sua próxima máquina com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
             <div class="generated-footer-actions flex gap-4">
-              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas sobre os modelos CASE.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
+              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
               <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>
             </div>
           </div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div>
-            <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Máquinas</div>
+            <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">CASE Construction</div>
             <ul class="space-y-2 font-medium text-sm">
-              <li><a href="/produtos/escavadeiras-hidraulicas/" class="hover:underline">Escavadeiras</a></li>
-              <li><a href="/produtos/retroescavadeiras/" class="hover:underline">Retroescavadeiras</a></li>
-              <li><a href="/produtos/pas-carregadeiras/" class="hover:underline">Pás Carregadeiras</a></li>
-              <li><a href="/produtos/motoniveladoras/" class="hover:underline">Motoniveladoras</a></li>
-              <li><a href="/produtos/tratores-de-esteiras/" class="hover:underline">Tratores</a></li>
+              <li><a href="/case/escavadeiras-hidraulicas/" class="hover:underline">Escavadeiras</a></li>
+              <li><a href="/case/retroescavadeiras/" class="hover:underline">Retroescavadeiras</a></li>
+              <li><a href="/case/pas-carregadeiras/" class="hover:underline">Pás Carregadeiras</a></li>
+              <li><a href="/case/catalogo/" class="hover:underline">Catálogo completo</a></li>
+            </ul>
+            <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 mt-6 text-sm">Dynapac</div>
+            <ul class="space-y-2 font-medium text-sm">
+              <li><a href="/dynapac/compactacao/" class="hover:underline">Compactação</a></li>
+              <li><a href="/dynapac/pavimentacao/" class="hover:underline">Pavimentação</a></li>
+              <li><a href="/dynapac/equipamentos-leves/" class="hover:underline">Linha Leve</a></li>
             </ul>
           </div>
           <div>
@@ -177,7 +231,7 @@ FOOTER_HTML = f"""\
             <ul class="space-y-2 font-medium text-sm">
               <li><a href="/#posvenda" class="hover:underline">Pós-venda</a></li>
               <li><a href="{HOME_CONTACT_URL}" class="hover:underline">Solicitar suporte</a></li>
-              <li><a href="{build_whatsapp_url('Olá, preciso de suporte comercial para equipamentos CASE.')}" target="_blank" rel="noopener noreferrer" class="hover:underline">Falar com especialista</a></li>
+              <li><a href="{build_whatsapp_url('Olá, preciso de suporte comercial da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="hover:underline">Falar com especialista</a></li>
             </ul>
           </div>
           <div>
@@ -191,12 +245,12 @@ FOOTER_HTML = f"""\
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center gap-2 pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
           <p>© 2026 IBL Máquinas — Racine Comércio de Máquinas Ltda · CNPJ 28.265.622/0001-60</p>
-          <p>Case Construction Authorized Dealer</p>
+          <p>CASE Construction &amp; Dynapac — Concessionária Autorizada</p>
         </div>
       </div>
     </footer>
     <div class="fixed bottom-8 right-8 z-50">
-      <a href="{build_whatsapp_url('Olá, vim do catálogo CASE e quero falar com um consultor da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
+      <a href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
         <i class="generated-floating-chat__icon ph-fill ph-chats-circle text-3xl text-black group-hover:scale-110 transition-transform"></i>
         <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-black rounded-full animate-pulse"></span>
       </a>
@@ -312,14 +366,19 @@ def copy_assets(model_path_str: str, cat_slug: str, model_slug: str) -> list:
             continue
         if existing_file.name in managed_derivative_names:
             continue
-        existing_file.unlink()
+        try:
+            existing_file.unlink()
+        except OSError as exc:
+            print(f"  ! Não foi possível remover {existing_file.name}: {exc}")
 
     public_paths = []
     for asset_file in source_files:
         dst = dst_dir / asset_file.name
         if not dst.exists() or asset_file.stat().st_mtime_ns > dst.stat().st_mtime_ns:
             shutil.copy2(asset_file, dst)
-        public_paths.append(f"/case-assets/{cat_slug}/{model_slug}/{asset_file.name}")
+        webp = ensure_webp_derivative(dst)
+        public_name = webp.name if webp is not None else asset_file.name
+        public_paths.append(f"/case-assets/{cat_slug}/{model_slug}/{public_name}")
 
     return public_paths
 
@@ -339,6 +398,17 @@ def get_model_slug(model_path: str) -> str:
 
 # ─── Templates HTML ─────────────────────────────────────────────────────────────
 
+def find_card_image(cat_slug: str, model_slug: str):
+    """Card de modelo: foto ambientada curada ({slug}-card.webp) tem prioridade;
+    senão recorte nobg. Retorna (caminho_publico|None, eh_foto)."""
+    base = BASE_DIR / "public" / "case-assets" / cat_slug / model_slug
+    card = base / f"{model_slug}-card.webp"
+    if card.exists():
+        return f"/case-assets/{cat_slug}/{model_slug}/{card.name}", True
+    nobg = find_nobg_image(cat_slug, model_slug)
+    return nobg, False
+
+
 def find_nobg_image(cat_slug: str, model_slug: str = None):
     """Prefere o derivativo curado *-nobg.png (máquina recortada) para cards."""
     base = BASE_DIR / "public" / "case-assets" / cat_slug
@@ -346,7 +416,7 @@ def find_nobg_image(cat_slug: str, model_slug: str = None):
         base = base / model_slug
     if not base.exists():
         return None
-    matches = sorted(base.rglob("*-nobg.png"))
+    matches = sorted(base.rglob("*-nobg.webp")) or sorted(base.rglob("*-nobg.png"))
     if not matches:
         return None
     rel = matches[0].relative_to(BASE_DIR / "public")
@@ -376,6 +446,25 @@ def truncate_text(text: str, max_length: int = 160) -> str:
     return f"{truncated}…"
 
 
+def build_meta_description(prefix: str, body: str, suffix: str, max_length: int = 160) -> str:
+    """Monta uma meta description que já cabe em `max_length`.
+
+    Evita a truncagem dupla (aqui e em `render_head`) que deixava reticências no
+    meio da frase. Prefere encerrar o corpo na primeira frase completa.
+    """
+    budget = max_length - len(prefix) - len(suffix)
+    normalized = clean_text(body)
+    if budget <= 0:
+        return truncate_text(f"{prefix}{normalized}", max_length)
+
+    first_sentence = normalized.split(". ")[0].rstrip(".").strip()
+    if first_sentence and len(first_sentence) + 1 <= budget:
+        core = f"{first_sentence}."
+    else:
+        core = truncate_text(normalized, budget)
+    return f"{prefix}{core}{suffix}"
+
+
 def make_absolute_url(path: str) -> str:
     if not path:
         return SITE_URL
@@ -386,8 +475,8 @@ def make_absolute_url(path: str) -> str:
     return f"{SITE_URL}{path}"
 
 
-def build_page_title(page_name: str) -> str:
-    return f"{page_name} | {SITE_NAME} - {SITE_BRAND}"
+def build_page_title(page_name: str, brand: str = SITE_BRAND) -> str:
+    return f"{page_name} | {SITE_NAME} - {brand}"
 
 
 def render_json_ld(schema_objects: list[dict]) -> str:
@@ -437,8 +526,9 @@ def render_head(
     og_image: Optional[str] = None,
     schema_objects: Optional[list[dict]] = None,
     og_type: str = "website",
+    brand: str = SITE_BRAND,
 ) -> str:
-    page_title = build_page_title(page_name)
+    page_title = build_page_title(page_name, brand)
     meta_description = truncate_text(description or DEFAULT_DESCRIPTION)
     canonical_url = make_absolute_url(canonical_path)
     image_url = make_absolute_url(og_image or DEFAULT_OG_IMAGE)
@@ -465,11 +555,11 @@ def render_breadcrumb(cat_name: str, cat_slug: str, model_title: str = None) -> 
     crumbs = [
         '<li><a href="/" class="hover:text-case-yellow transition-colors">Home</a></li>',
         '<li aria-hidden="true"><i class="ph-bold ph-caret-right text-xs"></i></li>',
-        f'<li><a href="/produtos/" class="hover:text-case-yellow transition-colors">Produtos</a></li>',
+        f'<li><a href="/case/" class="hover:text-case-yellow transition-colors">CASE</a></li>',
         '<li aria-hidden="true"><i class="ph-bold ph-caret-right text-xs"></i></li>',
     ]
     if model_title:
-        crumbs.append(f'<li><a href="/produtos/{cat_slug}/" class="hover:text-case-yellow transition-colors">{cat_name}</a></li>')
+        crumbs.append(f'<li><a href="/case/{cat_slug}/" class="hover:text-case-yellow transition-colors">{cat_name}</a></li>')
         crumbs.append('<li aria-hidden="true"><i class="ph-bold ph-caret-right text-xs"></i></li>')
         crumbs.append(f'<li><span aria-current="page" class="text-white">{model_title}</span></li>')
     else:
@@ -552,16 +642,16 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
     summary_pills = render_summary_pills(data["summary_specs"])
     spec_groups = render_spec_groups_html(data["tech_groups"])
     badge = category_badge(cat_slug)
-    canonical_path = f"/produtos/{cat_slug}/{model_slug}/"
+    canonical_path = f"/case/{cat_slug}/{model_slug}/"
     meta_description = data["description"] or (
         f"{title} na linha {SITE_BRAND} da {SITE_NAME} com ficha técnica, "
         "especificações e atendimento comercial especializado."
     )
     breadcrumb_schema = build_breadcrumb_schema(
         [
-            ("Home", "/"),
-            ("Produtos", "/produtos/"),
-            (category, f"/produtos/{cat_slug}/"),
+            ("Início", "/"),
+            ("CASE", "/case/"),
+            (category, f"/case/{cat_slug}/"),
             (title, canonical_path),
         ]
     )
@@ -651,7 +741,7 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
               <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-3 text-sm">
                 Solicitar Orçamento <i class="ph-bold ph-arrow-right"></i>
               </a>
-              <a href="/produtos/{cat_slug}/" class="border border-case-border text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition-colors text-sm">
+              <a href="/case/{cat_slug}/" class="border border-case-border text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition-colors text-sm">
                 ← Ver Categoria
               </a>
             </div>
@@ -703,9 +793,26 @@ def render_model_card(model: dict, cat_slug: str) -> str:
     model_path = model["path"]
     model_slug = get_model_slug(model_path)
 
-    # Pegar imagem do modelo
+    # Pegar imagem do modelo (foto ambientada curada > recorte > primeiro asset)
     public_assets = copy_assets(model_path, cat_slug, model_slug)
-    img_src = find_nobg_image(cat_slug, model_slug) or (public_assets[0] if public_assets else "https://images.unsplash.com/photo-1626296765727-4a4115f5732c?q=80&w=800&auto=format&fit=crop")
+    img_src, is_photo = find_card_image(cat_slug, model_slug)
+    if not img_src:
+        img_src = public_assets[0] if public_assets else "/og-image.jpg"
+        is_photo = True
+    if is_photo:
+        card_img_html = (
+            f'<img src="{img_src}" alt="{model["title"]}" loading="lazy" decoding="async" '
+            'class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 '
+            'group-hover:scale-105 opacity-80 group-hover:opacity-100" />'
+            '<div class="absolute inset-0 bg-gradient-to-t from-case-panel via-case-panel/40 to-transparent"></div>'
+        )
+    else:
+        card_img_html = (
+            '<div class="absolute inset-0 flex items-center justify-center">'
+            f'<img src="{img_src}" alt="{model["title"]}" loading="lazy" decoding="async" '
+            'class="w-[88%] max-w-none transition-transform duration-700 group-hover:scale-105 '
+            'opacity-90 group-hover:opacity-100 object-contain" /></div>'
+        )
 
     # Ler specs básicas do content.md
     content_path = BASE_DIR / model_path / "content.md"
@@ -724,7 +831,7 @@ def render_model_card(model: dict, cat_slug: str) -> str:
     short_title = title.split()[-1] if title else model_slug.upper()
 
     return f"""
-            <a href="/produtos/{cat_slug}/{model_slug}/" class="group block">
+            <a href="/case/{cat_slug}/{model_slug}/" class="group block">
               <div class="industrial-border h-[420px] bg-case-panel relative overflow-hidden flex flex-col justify-between p-6 hover-industrial cursor-pointer transition-all duration-300 hover:border-case-yellow/50">
                 <div class="absolute top-0 right-0 p-3 z-10">
                   <i class="ph-bold ph-arrow-up-right text-xl opacity-0 group-hover:opacity-100 transition-opacity text-case-yellow"></i>
@@ -732,10 +839,7 @@ def render_model_card(model: dict, cat_slug: str) -> str:
                 <div class="relative z-10">
                   <span class="inline-block px-2 py-1 bg-white/10 text-[10px] font-mono tracking-widest mb-3">{short_title}</span>
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <img src="{img_src}" alt="{title}"
-                    class="w-[80%] max-w-none transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-90 object-contain" />
-                </div>
+{card_img_html}
                 <div class="relative z-10 border-t border-case-border pt-4 mt-4">
                   <h2 class="font-display font-black text-xl uppercase leading-tight mb-3 group-hover:text-case-yellow transition-colors">{title}</h2>
                   <div class="flex justify-between items-end">
@@ -758,7 +862,7 @@ def generate_category_page(cat_entry: dict) -> str:
     breadcrumb = render_breadcrumb(category, cat_slug)
     cards_html = "\n".join(render_model_card(m, cat_slug) for m in models)
     count = len(models)
-    canonical_path = f"/produtos/{cat_slug}/"
+    canonical_path = f"/case/{cat_slug}/"
     first_model = models[0] if models else None
     first_slug = get_model_slug(first_model["path"]) if first_model else ""
     category_image = DEFAULT_OG_IMAGE
@@ -772,8 +876,8 @@ def generate_category_page(cat_entry: dict) -> str:
     )
     breadcrumb_schema = build_breadcrumb_schema(
         [
-            ("Home", "/"),
-            ("Produtos", "/produtos/"),
+            ("Início", "/"),
+            ("CASE", "/case/"),
             (category, canonical_path),
         ]
     )
@@ -785,7 +889,7 @@ def generate_category_page(cat_entry: dict) -> str:
         "url": make_absolute_url(canonical_path),
         "image": make_absolute_url(category_image),
         "mainEntity": build_item_list(
-            [(model["title"], f"/produtos/{cat_slug}/{get_model_slug(model['path'])}/") for model in models]
+            [(model["title"], f"/case/{cat_slug}/{get_model_slug(model['path'])}/") for model in models]
         ),
     }
     head_html = render_head(
@@ -816,7 +920,7 @@ def generate_category_page(cat_entry: dict) -> str:
     <!-- Hero categoria -->
     <section class="py-16 border-b border-case-border bg-case-dark relative overflow-hidden">
       <div class="absolute inset-0 pointer-events-none opacity-5"
-           style="background-image: radial-gradient(#E58E1A 1px, transparent 1px); background-size: 30px 30px;"></div>
+           style="background-image: radial-gradient(var(--color-case-yellow) 1px, transparent 1px); background-size: 30px 30px;"></div>
       <div class="container mx-auto px-6 relative z-10">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-3">/// {badge}</span>
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -877,7 +981,7 @@ def generate_products_index(db: list) -> str:
 
     for i, cat in enumerate(db):
         category = cat["category"]
-        models = cat["models"]
+        models = [m for m in cat["models"] if get_model_slug(m["path"]) not in EXCLUDED_MODEL_SLUGS]
         cat_slug = get_cat_slug(models[0]["path"]) if models else ""
         badge = category_badge(cat_slug)
         count = len(models)
@@ -888,11 +992,19 @@ def generate_products_index(db: list) -> str:
         first_model = models[0]
         first_slug = get_model_slug(first_model["path"])
         public_assets = copy_assets(first_model["path"], cat_slug, first_slug)
-        img = find_nobg_image(cat_slug) or (public_assets[0] if public_assets else "")
-        img_html = f'<img src="{img}" alt="{category}" class="w-full h-full object-contain p-6 filter grayscale group-hover:grayscale-0 opacity-40 group-hover:opacity-90 transition-all duration-500" />' if img else ""
+        card_img, card_is_photo = find_card_image(cat_slug, first_slug)
+        if card_img and card_is_photo:
+            img_html = (
+                f'<img src="{card_img}" alt="{category}" loading="lazy" decoding="async" '
+                'class="w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-opacity duration-500" />'
+                '<div class="absolute inset-0 bg-gradient-to-t from-case-panel via-case-panel/45 to-case-panel/25"></div>'
+            )
+        else:
+            img = find_nobg_image(cat_slug) or (public_assets[0] if public_assets else "")
+            img_html = f'<img src="{img}" alt="{category}" class="w-full h-full object-contain p-6 opacity-80 group-hover:opacity-100 transition-all duration-500" />' if img else ""
 
         cat_cards.append(f"""
-          <a href="/produtos/{cat_slug}/" class="group block">
+          <a href="/case/{cat_slug}/" class="group block">
             <div class="industrial-border h-[360px] bg-case-panel relative overflow-hidden flex flex-col justify-between p-8 hover-industrial cursor-pointer">
               <div class="absolute top-0 right-0 p-4 z-10">
                 <i class="ph-bold ph-arrow-up-right text-2xl opacity-0 group-hover:opacity-100 transition-opacity text-case-yellow"></i>
@@ -920,18 +1032,21 @@ def generate_products_index(db: list) -> str:
           </a>""")
 
     cards_html = "\n".join(cat_cards)
-    total_models = sum(len(c["models"]) for c in db)
-    canonical_path = "/produtos/"
+    total_models = sum(
+        len([m for m in c["models"] if get_model_slug(m["path"]) not in EXCLUDED_MODEL_SLUGS])
+        for c in db
+    )
+    canonical_path = "/case/catalogo/"
     meta_description = (
         f"Catálogo CASE da {SITE_NAME} com {len(db)} categorias e {total_models} modelos "
         "de equipamentos, fichas técnicas e suporte comercial especializado."
     )
     category_items = []
     for cat in db:
-        models = cat["models"]
+        models = [m for m in cat["models"] if get_model_slug(m["path"]) not in EXCLUDED_MODEL_SLUGS]
         if not models:
             continue
-        category_items.append((cat["category"], f"/produtos/{get_cat_slug(models[0]['path'])}/"))
+        category_items.append((cat["category"], f"/case/{get_cat_slug(models[0]['path'])}/"))
     catalog_schema = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -941,7 +1056,7 @@ def generate_products_index(db: list) -> str:
         "image": DEFAULT_OG_IMAGE,
         "mainEntity": build_item_list(category_items),
     }
-    breadcrumb_schema = build_breadcrumb_schema([("Home", "/"), ("Produtos", canonical_path)])
+    breadcrumb_schema = build_breadcrumb_schema([("Início", "/"), ("Produtos", canonical_path)])
     head_html = render_head(
         page_name="Produtos",
         description=meta_description,
@@ -966,7 +1081,7 @@ def generate_products_index(db: list) -> str:
         <div class="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
       <div class="absolute inset-y-0 right-0 w-1/2 hidden lg:flex items-center justify-end pr-12 pointer-events-none">
-        <img src="/case-assets/escavadeiras-hidraulicas/cx220c-s2/cx220c-nobg.png" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[320px] w-auto object-contain opacity-80 drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
+        <img src="/case-assets/escavadeiras-hidraulicas/cx220c-s2/cx220c-nobg.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" class="max-h-[320px] w-auto object-contain opacity-80 drop-shadow-[0_30px_30px_rgba(0,0,0,0.8)]" />
       </div>
       <div class="container mx-auto px-6 relative z-10">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Catálogo</span>
@@ -1056,6 +1171,10 @@ def render_filial_card(filial: dict, index: int) -> str:
         if filial.get("matriz")
         else ""
     )
+    brand_badges = "".join(
+        f'<span class="inline-block px-2 py-0.5 border border-case-border text-gray-400 text-[9px] font-mono tracking-widest uppercase">{m}</span>'
+        for m in filial.get("marcas", ["CASE Construction"])
+    )
     tel_link = filial["telefone_e164"]
     maps_url = f"https://www.google.com/maps/search/?api=1&query={filial['lat']},{filial['lng']}"
     return f"""
@@ -1064,6 +1183,7 @@ def render_filial_card(filial: dict, index: int) -> str:
               <span class="font-mono text-xs text-case-yellow tracking-widest">{str(index + 1).zfill(2)}</span>
               {matriz_badge}
             </div>
+            <div class="flex flex-wrap gap-2 -mt-2">{brand_badges}</div>
             <div>
               <h2 class="font-display font-black text-2xl uppercase leading-none">{escape(filial['uf'])} — {escape(filial['cidade'])}</h2>
               <p class="text-xs text-gray-500 uppercase tracking-wide mt-1">{escape(filial['estado'])}</p>
@@ -1118,7 +1238,7 @@ def generate_institutional_pages() -> int:
       </div>
     </section>"""
     schemas = [build_local_business_schema(f, empresa) for f in filiais]
-    schemas.append(build_breadcrumb_schema([("Home", "/"), ("Filiais", "/filiais/")]))
+    schemas.append(build_breadcrumb_schema([("Início", "/"), ("Filiais", "/filiais/")]))
     html = render_institutional_page(
         page_name="Filiais",
         description=(
@@ -1144,7 +1264,7 @@ def generate_institutional_pages() -> int:
         <div class="lg:col-span-7 space-y-6 text-gray-300 leading-relaxed">
           <p>A <strong class="text-white">IBL Máquinas</strong> iniciou sua trajetória em maio de 1992, assumindo o desafio de representar a marca <strong class="text-white">CASE Construction</strong> em Mato Grosso do Sul. Com determinação, transformamos um sonho em uma empresa sólida, construída a partir do zero.</p>
           <p>Em 2002, expandimos a operação para mais cinco estados: Mato Grosso, Rondônia, Acre, Amazonas e Roraima — consolidando uma das maiores coberturas regionais de equipamentos de construção do Norte e Centro-Oeste do Brasil.</p>
-          <p>Em 2004, integramos ao portfólio a <strong class="text-white">Dynapac</strong>, marca mundialmente reconhecida em soluções de compactação e pavimentação asfáltica.</p>
+          <p>Em 2004, integramos ao portfólio a <strong class="text-white">Dynapac</strong>, marca mundialmente reconhecida em soluções de compactação e pavimentação asfáltica — linha disponível sob consulta com nossa equipe comercial.</p>
           <p>Hoje, sob a liderança da segunda geração, seguimos investindo em novas tecnologias e mercados, com compromisso diário com a excelência no atendimento, a disponibilidade de peças genuínas e o pós-venda que mantém a operação dos nossos clientes ativa.</p>
         </div>
         <div class="lg:col-span-5">
@@ -1197,7 +1317,7 @@ def generate_institutional_pages() -> int:
         eyebrow="Desde 1992",
         title_html='Sobre a<br /><span class="text-outline">IBL Máquinas</span>',
         body_html=sobre_body,
-        schema_objects=[sobre_schema, build_breadcrumb_schema([("Home", "/"), ("Sobre", "/sobre/")])],
+        schema_objects=[sobre_schema, build_breadcrumb_schema([("Início", "/"), ("Sobre", "/sobre/")])],
     )
     out = BASE_DIR / "sobre"
     out.mkdir(exist_ok=True)
@@ -1257,7 +1377,7 @@ def generate_institutional_pages() -> int:
         eyebrow="Fale Conosco",
         title_html='Entre em<br /><span class="text-outline">Contato</span>',
         body_html=contato_body,
-        schema_objects=[contato_schema, build_breadcrumb_schema([("Home", "/"), ("Contato", "/contato/")])],
+        schema_objects=[contato_schema, build_breadcrumb_schema([("Início", "/"), ("Contato", "/contato/")])],
     )
     out = BASE_DIR / "contato"
     out.mkdir(exist_ok=True)
@@ -1322,7 +1442,7 @@ def generate_institutional_pages() -> int:
         eyebrow="LGPD",
         title_html='Política de<br /><span class="text-outline">Privacidade</span>',
         body_html=privacidade_body,
-        schema_objects=[build_breadcrumb_schema([("Home", "/"), ("Privacidade", "/privacidade/")])],
+        schema_objects=[build_breadcrumb_schema([("Início", "/"), ("Privacidade", "/privacidade/")])],
     )
     out = BASE_DIR / "privacidade"
     out.mkdir(exist_ok=True)
@@ -1380,7 +1500,7 @@ def generate_consorcio_page() -> str:
         ),
         canonical_path="/consorcio/",
         og_image=DEFAULT_OG_IMAGE,
-        schema_objects=[service_schema, faq_schema, build_breadcrumb_schema([("Home", "/"), ("Consórcio", "/consorcio/")])],
+        schema_objects=[service_schema, faq_schema, build_breadcrumb_schema([("Início", "/"), ("Consórcio", "/consorcio/")])],
     )
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
@@ -1530,7 +1650,7 @@ def generate_consorcio_page() -> str:
               </select>
             </div>
             <label class="flex items-start gap-3 pt-1 text-xs text-gray-400 leading-relaxed cursor-pointer">
-              <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[#E58E1A]" />
+              <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[var(--color-case-yellow)]" />
               <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
             </label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -1562,7 +1682,7 @@ def generate_consorcio_page() -> str:
 
 # ─── Main ───────────────────────────────────────────────────────────────────────
 
-# Páginas estáticas mantidas à mão na raiz do repo (fora de /produtos/).
+# Páginas estáticas mantidas à mão na raiz do repo (fora de /case/).
 STATIC_PAGE_PATHS = [
     "/",
     "/sobre/",
@@ -1600,12 +1720,425 @@ def generate_sitemap(page_paths: list[str]) -> None:
 
     robots = (
         "User-agent: *\n"
-        "Allow: /\n"
-        "Disallow: /mobile/\n\n"
+        "Allow: /\n\n"
         f"Sitemap: {SITE_URL}/sitemap.xml\n"
     )
     (public_dir / "robots.txt").write_text(robots, encoding="utf-8")
     print("  ✓ public/robots.txt")
+
+
+
+
+# ─── Dynapac (marca 2) ─────────────────────────────────────────────────────────
+
+DYNAPAC_DB_PATH = BASE_DIR / "data" / "dynapac-db.json"
+DYNAPAC_OUT_DIR = BASE_DIR / "dynapac"
+DYNAPAC_STATES = ["AC", "AM", "RO", "RR"]
+DYNAPAC_COVERAGE = "Concessionária Dynapac no Acre, Amazonas, Rondônia e Roraima"
+DYNAPAC_META_SUFFIX = " Vendas, peças e assistência IBL no AC, AM, RO e RR."
+DYNAPAC_BRAND = "Dynapac"
+
+DYNAPAC_CATEGORY_ICONS = {
+    "compactacao": "ph-fill ph-circle-dashed",
+    "pavimentacao": "ph-fill ph-road-horizon",
+    "equipamentos-leves": "ph-fill ph-hand-fist",
+}
+
+
+def dynapac_filiais() -> list[dict]:
+    data = load_filiais()
+    return [f for f in data["filiais"] if f["uf"] in DYNAPAC_STATES]
+
+
+def process_dynapac_image(cat_slug: str, model_slug: str) -> str:
+    """Converte fotos-dynapac/{cat}/{slug}/original.* em public/dynapac-assets/.../{slug}.webp.
+
+    Fundo branco contíguo vira transparência (flood fill pelas bordas) para
+    integrar ao layout dark. Retorna caminho público ou "".
+    """
+    src_dir = BASE_DIR / "fotos-dynapac" / cat_slug / model_slug
+    if not src_dir.exists():
+        return ""
+    sources = [p for p in iter_sorted_files(src_dir) if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"} and not p.name.startswith(".")]
+    if not sources:
+        return ""
+    src = sources[0]
+
+    dst_dir = BASE_DIR / "public" / "dynapac-assets" / cat_slug / model_slug
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dst = dst_dir / f"{model_slug}.webp"
+    public_path = f"/dynapac-assets/{cat_slug}/{model_slug}/{model_slug}.webp"
+
+    try:
+        if dst.exists() and dst.stat().st_mtime_ns >= src.stat().st_mtime_ns:
+            return public_path
+    except OSError:
+        pass
+
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        print("  ! Pillow indisponível — imagens Dynapac não processadas")
+        return ""
+
+    try:
+        with Image.open(src) as img:
+            img = img.convert("RGBA")
+            img.thumbnail((1200, 1200), Image.LANCZOS)
+            # Fundo branco -> alpha, apenas se os cantos forem quase brancos
+            w, h = img.size
+            corners = [img.getpixel(p) for p in [(2, 2), (w - 3, 2), (2, h - 3), (w - 3, h - 3)]]
+            whiteish = sum(1 for c in corners if c[0] > 232 and c[1] > 232 and c[2] > 232 and c[3] > 200)
+            if whiteish >= 3:
+                for p in [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]:
+                    try:
+                        ImageDraw.floodfill(img, p, (0, 0, 0, 0), thresh=42)
+                    except (ValueError, RecursionError):
+                        pass
+            img.save(dst, "WEBP", quality=82, method=6)
+        return public_path
+    except Exception as exc:  # noqa: BLE001
+        print(f"  ! Falha ao processar imagem Dynapac {model_slug}: {exc}")
+        return ""
+
+
+def render_dynapac_page(*, page_name, description, canonical_path, body_html, schema_objects=None, og_image=None):
+    head_html = render_head(
+        page_name=page_name,
+        description=description,
+        canonical_path=canonical_path,
+        og_image=og_image or DEFAULT_OG_IMAGE,
+        schema_objects=schema_objects or [],
+        brand=DYNAPAC_BRAND,
+    )
+    return f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+{head_html}
+</head>
+<body data-brand="dynapac" class="antialiased tech-grid bg-case-dark text-white selection:bg-case-yellow selection:text-black">
+{HEADER_HTML}
+
+  <main class="pt-20">
+{body_html}
+  </main>
+
+{FOOTER_HTML}
+
+</body>
+</html>"""
+
+
+def render_dynapac_breadcrumb(items: list[tuple[str, str]]) -> str:
+    crumbs = ['<li><a href="/" class="hover:text-case-yellow transition-colors">Home</a></li>']
+    for label, href in items[:-1]:
+        crumbs.append('<li aria-hidden="true"><i class="ph-bold ph-caret-right text-xs"></i></li>')
+        crumbs.append(f'<li><a href="{href}" class="hover:text-case-yellow transition-colors">{escape(label)}</a></li>')
+    crumbs.append('<li aria-hidden="true"><i class="ph-bold ph-caret-right text-xs"></i></li>')
+    crumbs.append(f'<li><span aria-current="page" class="text-white">{escape(items[-1][0])}</span></li>')
+    return (
+        '<nav aria-label="Breadcrumb" data-breadcrumb-nav class="generated-breadcrumb flex items-center gap-2 '
+        'text-xs font-mono text-gray-400"><ol class="flex flex-wrap items-center gap-2">' + "".join(crumbs) + "</ol></nav>"
+    )
+
+
+def render_dynapac_coverage_strip() -> str:
+    return f"""
+    <div class="bg-case-yellow text-black py-3">
+      <div class="container mx-auto px-6 flex flex-wrap items-center gap-x-6 gap-y-1">
+        <span class="font-mono text-xs font-bold uppercase tracking-widest">/// Cobertura Dynapac</span>
+        <span class="text-sm font-bold uppercase">Acre · Amazonas · Rondônia · Roraima</span>
+      </div>
+    </div>"""
+
+
+def render_dynapac_unidades_section() -> str:
+    cards = "".join(render_filial_card(f, i) for i, f in enumerate(dynapac_filiais()))
+    return f"""
+    <section class="py-20 border-t border-case-border" id="unidades-dynapac">
+      <div class="container mx-auto px-6">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Onde atendemos Dynapac</span>
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-4">4 unidades no Norte</h2>
+        <p class="text-gray-400 max-w-2xl mb-10">A linha Dynapac é atendida pela IBL nas unidades do Acre, Amazonas, Rondônia e Roraima — com vendas, peças e assistência técnica. Nos demais estados, atendemos a linha CASE Construction.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">{cards}</div>
+      </div>
+    </section>"""
+
+
+def render_dynapac_cta_section(model_name: str) -> str:
+    wa = build_whatsapp_url(f"Olá, tenho interesse no equipamento Dynapac {model_name}. Atendo pela região Norte.")
+    return f"""
+    <section class="py-20 bg-case-panel border-t border-case-border">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase mb-6">Solicitar Orçamento</h2>
+        <p class="text-gray-400 max-w-xl mx-auto mb-8">Fale com a equipe IBL da sua região para condições comerciais, disponibilidade e prazo de entrega do {escape(model_name)}.</p>
+        <a href="{wa}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
+      </div>
+    </section>"""
+
+
+def _spec_label(key: str) -> str:
+    return key.replace("_", " ").capitalize().replace("Forca", "Força").replace("Potencia", "Potência").replace("pavimentacao", "pavimentação").replace("percussao", "percussão")
+
+
+def render_dynapac_model_card(cat_slug: str, model: dict) -> str:
+    img = model.get("_img") or ""
+    img_html = (
+        f'<img src="{img}" alt="{escape(model["nome_completo"], quote=True)}" loading="lazy" decoding="async" '
+        'class="w-full h-full object-contain p-4 opacity-90 group-hover:scale-105 transition-transform duration-500" />'
+        if img else '<i class="ph-fill ph-wrench text-6xl text-gray-700"></i>'
+    )
+    pills = "".join(
+        f'<span class="font-mono text-[10px] uppercase tracking-wide text-gray-400 border border-case-border px-2 py-1">{escape(_spec_label(k))}: {escape(str(v))}</span>'
+        for k, v in list(model.get("specs", {}).items())[:2] if v
+    )
+    return f"""
+          <a href="/dynapac/{cat_slug}/{model['slug']}/" class="group block industrial-border bg-case-panel border border-case-border hover:border-case-yellow transition-colors">
+            <div class="h-48 flex items-center justify-center bg-gradient-to-b from-case-gray/40 to-transparent overflow-hidden">{img_html}</div>
+            <div class="p-6 border-t border-case-border">
+              <h3 class="font-display font-black text-xl uppercase group-hover:text-case-yellow transition-colors">{escape(model['modelo'])}</h3>
+              <p class="text-xs text-gray-500 mt-1 mb-3 line-clamp-2">{escape(truncate_text(model.get('descricao', ''), 110))}</p>
+              <div class="flex flex-wrap gap-2">{pills}</div>
+            </div>
+          </a>"""
+
+
+def generate_dynapac_category_page(cat: dict) -> str:
+    cat_slug = cat["slug"]
+    sections = []
+    total = 0
+    for sub in cat["subcategorias"]:
+        cards = "".join(render_dynapac_model_card(cat_slug, m) for m in sub["modelos"])
+        total += len(sub["modelos"])
+        sections.append(f"""
+        <div class="mb-16">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-1 h-6 bg-case-yellow"></div>
+            <h2 class="font-display font-black text-2xl uppercase tracking-wide">{escape(sub['nome'])}</h2>
+            <span class="font-mono text-xs text-gray-500">{len(sub['modelos'])} modelos</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">{cards}</div>
+        </div>""")
+
+    breadcrumb = render_dynapac_breadcrumb([("Dynapac", "/dynapac/"), (cat["nome"], f"/dynapac/{cat_slug}/")])
+    body = f"""
+    {render_dynapac_coverage_strip()}
+    <section class="py-16 border-b border-case-border relative overflow-hidden">
+      <div class="absolute top-[10%] right-[5%] w-[420px] h-[420px] bg-case-yellow/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="container mx-auto px-6 relative z-10">
+        {breadcrumb}
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mt-8 mb-4">/// Dynapac · {escape(cat['nome'])}</span>
+        <h1 class="font-display font-black text-5xl md:text-7xl uppercase leading-none">{escape(cat['nome'])}</h1>
+        <p class="text-gray-400 max-w-2xl mt-6">{total} equipamentos Dynapac com vendas, peças e assistência técnica da IBL Máquinas no Norte do Brasil.</p>
+      </div>
+    </section>
+    <section class="py-16"><div class="container mx-auto px-6">{''.join(sections)}</div></section>
+    {render_dynapac_unidades_section()}"""
+
+    schema = [
+        build_breadcrumb_schema([("Início", "/"), ("Dynapac", "/dynapac/"), (cat["nome"], f"/dynapac/{cat_slug}/")]),
+        build_item_list([(m["nome_completo"], f"/dynapac/{cat_slug}/{m['slug']}/") for s in cat["subcategorias"] for m in s["modelos"]]),
+    ]
+    return render_dynapac_page(
+        page_name=cat["nome"],
+        description=f"Linha Dynapac de {cat['nome'].lower()} na IBL Máquinas — {DYNAPAC_COVERAGE.lower()}. {total} modelos com peças e assistência técnica.",
+        canonical_path=f"/dynapac/{cat_slug}/",
+        body_html=body,
+        schema_objects=schema,
+    )
+
+
+def generate_dynapac_model_page(cat: dict, sub: dict, model: dict) -> str:
+    cat_slug = cat["slug"]
+    slug = model["slug"]
+    img = model.get("_img") or ""
+    nome = model["nome_completo"]
+
+    specs_items = "".join(
+        f"""<div class="flex items-start justify-between py-3 border-b border-case-border last:border-0 gap-4">
+              <span class="text-gray-400 text-sm font-mono flex-shrink-0 w-48">{escape(_spec_label(k))}</span>
+              <span class="text-white text-sm text-right">{escape(str(v))}</span>
+            </div>"""
+        for k, v in model.get("specs", {}).items() if v
+    )
+    pills = render_summary_pills({_spec_label(k): v for k, v in list(model.get("specs", {}).items())[:4] if v})
+    img_html = (
+        f'<img src="{img}" alt="{escape(nome, quote=True)}" class="max-h-[420px] w-auto object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.8)]" />'
+        if img else ""
+    )
+    breadcrumb = render_dynapac_breadcrumb([
+        ("Dynapac", "/dynapac/"), (cat["nome"], f"/dynapac/{cat_slug}/"), (model["modelo"], f"/dynapac/{cat_slug}/{slug}/"),
+    ])
+
+    body = f"""
+    {render_dynapac_coverage_strip()}
+    <section class="py-16 border-b border-case-border relative overflow-hidden">
+      <div class="absolute top-[10%] left-[40%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="container mx-auto px-6 relative z-10">
+        {breadcrumb}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-10">
+          <div>
+            <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// {escape(sub['nome'])}</span>
+            <h1 class="font-display font-black text-5xl md:text-6xl uppercase leading-none">{escape(nome)}</h1>
+            <p class="text-gray-400 mt-6 leading-relaxed">{escape(model.get('descricao', ''))}</p>
+            <div class="grid grid-cols-2 gap-4 mt-8">{pills}</div>
+          </div>
+          <div class="flex items-center justify-center">{img_html}</div>
+        </div>
+      </div>
+    </section>
+    <section class="py-16">
+      <div class="container mx-auto px-6 max-w-4xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-1 h-6 bg-case-yellow"></div>
+          <h2 class="font-display font-black text-2xl uppercase tracking-wide">Ficha Técnica</h2>
+        </div>
+        <div class="bg-case-panel border border-case-border p-6">{specs_items}</div>
+        <p class="text-xs text-gray-600 font-mono mt-4 uppercase tracking-wide">Especificações de referência do fabricante. Confirme a configuração exata com a equipe comercial IBL.</p>
+      </div>
+    </section>
+    <section class="py-20 bg-case-panel border-t border-case-border">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase mb-6">Solicitar Orçamento</h2>
+        <p class="text-gray-400 max-w-xl mx-auto mb-8">Fale com a equipe IBL da sua região para condições, disponibilidade e prazo de entrega.</p>
+        <a href="{build_whatsapp_url(f'Olá, tenho interesse no equipamento Dynapac {nome}.')}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
+      </div>
+    </section>
+    {render_dynapac_unidades_section()}"""
+
+    schema = [
+        build_breadcrumb_schema([
+            ("Início", "/"), ("Dynapac", "/dynapac/"), (cat["nome"], f"/dynapac/{cat_slug}/"), (nome, f"/dynapac/{cat_slug}/{slug}/"),
+        ]),
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": nome,
+            "brand": {"@type": "Brand", "name": "Dynapac"},
+            "description": model.get("descricao", ""),
+            "image": make_absolute_url(img) if img else make_absolute_url(DEFAULT_OG_IMAGE),
+            "url": make_absolute_url(f"/dynapac/{cat_slug}/{slug}/"),
+        },
+    ]
+    return render_dynapac_page(
+        page_name=nome,
+        description=build_meta_description(f"{nome}: ", model.get("descricao", ""), DYNAPAC_META_SUFFIX),
+        canonical_path=f"/dynapac/{cat_slug}/{slug}/",
+        body_html=body,
+        og_image=img or None,
+        schema_objects=schema,
+    )
+
+
+def generate_dynapac_home(db: dict) -> str:
+    cats_cards = []
+    total_models = 0
+    for i, cat in enumerate(db["categorias"]):
+        count = sum(len(s["modelos"]) for s in cat["subcategorias"])
+        total_models += count
+        icon = DYNAPAC_CATEGORY_ICONS.get(cat["slug"], "ph-fill ph-wrench")
+        first_img = ""
+        for s in cat["subcategorias"]:
+            for m in s["modelos"]:
+                if m.get("_img"):
+                    first_img = m["_img"]
+                    break
+            if first_img:
+                break
+        img_html = (
+            f'<img src="{first_img}" alt="{escape(cat["nome"], quote=True)}" loading="lazy" decoding="async" class="w-full h-full object-contain p-6 opacity-50 group-hover:opacity-90 transition-all duration-500" />'
+            if first_img else ""
+        )
+        cats_cards.append(f"""
+          <a href="/dynapac/{cat['slug']}/" class="group block industrial-border bg-case-panel border border-case-border hover:border-case-yellow transition-colors relative overflow-hidden">
+            <div class="absolute top-4 left-4 font-mono text-xs text-gray-600">{str(i + 1).zfill(2)}</div>
+            <div class="h-56">{img_html}</div>
+            <div class="p-8 border-t border-case-border">
+              <div class="flex items-center justify-between mb-2">
+                <h2 class="font-display font-black text-2xl uppercase group-hover:text-case-yellow transition-colors">{escape(cat['nome'])}</h2>
+                <i class="{icon} text-2xl text-case-yellow"></i>
+              </div>
+              <p class="font-mono text-xs text-gray-500 uppercase tracking-widest">{count} equipamentos →</p>
+            </div>
+          </a>""")
+
+    body = f"""
+    {render_dynapac_coverage_strip()}
+    <section class="py-24 border-b border-case-border relative overflow-hidden">
+      <div class="absolute top-[15%] right-[8%] w-[560px] h-[560px] bg-case-yellow/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="container mx-auto px-6 relative z-10">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-6">/// IBL Máquinas · Concessionária Autorizada</span>
+        <h1 class="font-display font-black text-6xl md:text-8xl uppercase leading-[0.9]">DYNAPAC<br /><span class="text-case-yellow">COMPACTAÇÃO &amp;<br />PAVIMENTAÇÃO</span></h1>
+        <p class="text-gray-400 max-w-2xl mt-8 text-lg">Equipamentos Dynapac para compactação de solos e asfalto, pavimentação e obras urbanas — com vendas, peças originais e assistência técnica da IBL no Acre, Amazonas, Rondônia e Roraima.</p>
+        <div class="flex flex-wrap gap-4 mt-10">
+          <a href="#linhas" class="px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Ver Linhas</a>
+          <a href="{build_whatsapp_url('Olá, quero falar sobre equipamentos Dynapac com a IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-white/30 font-bold uppercase tracking-widest hover:border-case-yellow hover:text-case-yellow transition-colors">Falar com Consultor</a>
+        </div>
+      </div>
+    </section>
+    <section class="py-20" id="linhas">
+      <div class="container mx-auto px-6">
+        <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Linhas de produto</span>
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-12">{total_models} equipamentos em 3 linhas</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">{''.join(cats_cards)}</div>
+      </div>
+    </section>
+    {render_dynapac_unidades_section()}"""
+
+    schema = [
+        build_breadcrumb_schema([("Início", "/"), ("Dynapac", "/dynapac/")]),
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "IBL Máquinas — Dynapac",
+            "url": make_absolute_url("/dynapac/"),
+            "brand": {"@type": "Brand", "name": "Dynapac"},
+            "areaServed": ["Acre", "Amazonas", "Rondônia", "Roraima"],
+        },
+    ]
+    return render_dynapac_page(
+        page_name="Compactação e Pavimentação",
+        description=f"{DYNAPAC_COVERAGE}: rolos compactadores, pavimentadoras e linha leve Dynapac com vendas, peças e assistência técnica IBL Máquinas.",
+        canonical_path="/dynapac/",
+        body_html=body,
+        schema_objects=schema,
+    )
+
+
+def generate_dynapac(sitemap_paths: list[str]) -> int:
+    if not DYNAPAC_DB_PATH.exists():
+        print("  ! data/dynapac-db.json ausente — páginas Dynapac não geradas")
+        return 0
+    db = json.loads(DYNAPAC_DB_PATH.read_text(encoding="utf-8"))
+    pages = 0
+
+    # Processar imagens e anexar caminho público a cada modelo
+    for cat in db["categorias"]:
+        for sub in cat["subcategorias"]:
+            for m in sub["modelos"]:
+                m["_img"] = process_dynapac_image(cat["slug"], m["slug"])
+
+    DYNAPAC_OUT_DIR.mkdir(exist_ok=True)
+    (DYNAPAC_OUT_DIR / "index.html").write_text(generate_dynapac_home(db), encoding="utf-8")
+    pages += 1
+    print("  ✓ dynapac/index.html")
+
+    for cat in db["categorias"]:
+        cat_dir = DYNAPAC_OUT_DIR / cat["slug"]
+        cat_dir.mkdir(exist_ok=True)
+        (cat_dir / "index.html").write_text(generate_dynapac_category_page(cat), encoding="utf-8")
+        pages += 1
+        sitemap_paths.append(f"/dynapac/{cat['slug']}/")
+        print(f"  ✓ dynapac/{cat['slug']}/index.html")
+        for sub in cat["subcategorias"]:
+            for m in sub["modelos"]:
+                model_dir = cat_dir / m["slug"]
+                model_dir.mkdir(exist_ok=True)
+                (model_dir / "index.html").write_text(generate_dynapac_model_page(cat, sub, m), encoding="utf-8")
+                pages += 1
+                sitemap_paths.append(f"/dynapac/{cat['slug']}/{m['slug']}/")
+    print(f"  ✓ {pages} páginas Dynapac")
+    return pages
 
 
 def main():
@@ -1617,20 +2150,33 @@ def main():
     OUT_DIR.mkdir(exist_ok=True)
     (BASE_DIR / "public" / "case-assets").mkdir(parents=True, exist_ok=True)
 
-    total_pages = 0
-    sitemap_paths = list(STATIC_PAGE_PATHS) + ["/produtos/"]
+    # Derivativos .webp para imagens pesadas já presentes em public/case-assets
+    # (curadas ou de execuções anteriores) — as páginas preferem o .webp.
+    print("[ASSETS] Gerando derivativos .webp para imagens pesadas ...")
+    webp_count = 0
+    for candidate in sorted((BASE_DIR / "public" / "case-assets").rglob("*")):
+        if candidate.is_file() and ensure_webp_derivative(candidate) is not None:
+            webp_count += 1
+    print(f"  ✓ {webp_count} derivativos .webp disponíveis\n")
 
-    # 1. Página índice /produtos/index.html
-    print("[1/N] Gerando /produtos/index.html ...")
+    total_pages = 0
+    sitemap_paths = list(STATIC_PAGE_PATHS) + ["/case/", "/case/catalogo/", "/dynapac/"]
+
+    # 1. Página índice do catálogo CASE em /case/catalogo/
+    # (/case/index.html é a home da marca, arquivo estático versionado — não gerar por cima)
+    print("[1/N] Gerando /case/catalogo/index.html ...")
     idx_html = generate_products_index(db)
-    (OUT_DIR / "index.html").write_text(idx_html, encoding="utf-8")
+    catalogo_dir = OUT_DIR / "catalogo"
+    catalogo_dir.mkdir(parents=True, exist_ok=True)
+    (catalogo_dir / "index.html").write_text(idx_html, encoding="utf-8")
     total_pages += 1
-    print("  ✓ produtos/index.html")
+    print("  ✓ case/catalogo/index.html")
 
     # 2. Páginas de categoria e produto
     for cat_entry in db:
         category = cat_entry["category"]
-        models = cat_entry["models"]
+        models = [m for m in cat_entry["models"] if get_model_slug(m["path"]) not in EXCLUDED_MODEL_SLUGS]
+        cat_entry = {**cat_entry, "models": models}
         if not models:
             continue
         cat_slug = get_cat_slug(models[0]["path"])
@@ -1642,8 +2188,8 @@ def main():
         cat_html = generate_category_page(cat_entry)
         (cat_dir / "index.html").write_text(cat_html, encoding="utf-8")
         total_pages += 1
-        sitemap_paths.append(f"/produtos/{cat_slug}/")
-        print(f"  ✓ produtos/{cat_slug}/index.html")
+        sitemap_paths.append(f"/case/{cat_slug}/")
+        print(f"  ✓ case/{cat_slug}/index.html")
 
         # Páginas de produto
         for model in models:
@@ -1655,12 +2201,16 @@ def main():
             prod_html = generate_product_page(model, category, cat_slug)
             (model_dir / "index.html").write_text(prod_html, encoding="utf-8")
             total_pages += 1
-            sitemap_paths.append(f"/produtos/{cat_slug}/{model_slug}/")
-            print(f"  ✓ produtos/{cat_slug}/{model_slug}/index.html")
+            sitemap_paths.append(f"/case/{cat_slug}/{model_slug}/")
+            print(f"  ✓ case/{cat_slug}/{model_slug}/index.html")
 
     # 3. Páginas institucionais
     print("\n[Institucional] Gerando páginas institucionais ...")
     total_pages += generate_institutional_pages()
+
+    # 3a-bis. Páginas Dynapac
+    print("\n[Dynapac] Gerando páginas da marca ...")
+    total_pages += generate_dynapac(sitemap_paths)
 
     # 3b. Página de consórcio
     consorcio_dir = BASE_DIR / "consorcio"
@@ -1673,9 +2223,7 @@ def main():
     print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
     generate_sitemap(sitemap_paths)
 
-    print(f"\n=== {total_pages} páginas geradas em /produtos/ ===")
-    print("\nPróximo passo: atualize tailwind.config.js para incluir os novos HTMLs")
-    print("  content: ['./index.html', './produtos/**/*.html', './src/**/*.{js,ts,jsx,tsx}']")
+    print(f"\n=== {total_pages} páginas geradas em /case/ ===")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /mobile/
 
 Sitemap: https://iblmaquinas.com.br/sitemap.xml

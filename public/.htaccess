@@ -1,0 +1,50 @@
+# IBL Máquinas — configuração Apache/cPanel
+# Gerado pelo repositório (public/.htaccess) — entra no dist/ em todo build.
+
+# --- HTTPS + domínio canônico (sem www) ---
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^(.*)$ https://iblmaquinas.com.br/$1 [L,R=301]
+</IfModule>
+
+# --- Migração de rotas (v2 multi-marca) ---
+RedirectMatch 301 ^/produtos/(.*)$ /case/$1
+
+# --- Página de erro ---
+ErrorDocument 404 /404.html
+
+# --- Compressão ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml application/xml text/plain
+</IfModule>
+
+# --- Cache ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Assets com hash no nome são imutáveis
+<IfModule mod_headers.c>
+  <FilesMatch "-[A-Za-z0-9_-]{8}\.(js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# --- Segurança básica ---
+Options -Indexes
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>

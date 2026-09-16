@@ -40,11 +40,13 @@ Options:
 }
 
 const ROUTES = [
-  { path: '/', label: 'home', required: ['captacao-lead', '/assets/'] },
-  { path: '/mobile/', label: 'mobile', required: ['captacao-lead', '/assets/'] },
-  { path: '/produtos/', label: 'catalog', required: ['/assets/', 'CASE'] },
-  { path: '/produtos/retroescavadeiras/', label: 'category', required: ['/assets/', 'Retroescavadeiras'] },
-  { path: '/produtos/retroescavadeiras/580n/', label: 'product', required: ['/assets/', 'Retroescavadeira 580N S2'] },
+  { path: '/', label: 'home', required: ['captacao-lead', '/assets/', 'DYNAPAC'] },
+  { path: '/case/', label: 'case-home', required: ['captacao-lead', '/assets/'] },
+  { path: '/case/catalogo/', label: 'case-catalog', required: ['/assets/', 'CASE'] },
+  { path: '/case/retroescavadeiras/580n/', label: 'case-product', required: ['/assets/', 'Retroescavadeira 580N S2'] },
+  { path: '/dynapac/', label: 'dynapac-home', required: ['/assets/', 'DYNAPAC'] },
+  { path: '/dynapac/compactacao/', label: 'dynapac-category', required: ['/assets/', 'Compactação'] },
+  { path: '/dynapac/compactacao/ca250d/', label: 'dynapac-product', required: ['/assets/', 'CA250D'] },
 ]
 
 async function main() {

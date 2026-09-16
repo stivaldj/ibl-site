@@ -1,0 +1,601 @@
+{
+ "marca": "Dynapac",
+ "fonte": "dynapac.com/br-pt (coletado 2026-08-06)",
+ "categorias": [
+  {
+   "nome": "Compactação",
+   "slug": "compactacao",
+   "subcategorias": [
+    {
+     "nome": "Rolos de Um Cilindro para Solos",
+     "slug": "rolos-de-um-cilindro-para-solos",
+     "modelos": [
+      {
+       "modelo": "CA1300D",
+       "nome_completo": "Dynapac CA1300D",
+       "descricao": "Rolo compactador vibratório de um cilindro para solos, projetado para compactação em valas de tubulação, estradas, ruas e estacionamentos. Destaca-se em espaços confinados e terrenos íngremes pelo tamanho compacto e manobrabilidade.",
+       "specs": {
+        "peso_operacional": "4.800 kg (máx.)",
+        "largura_tambor": "1.370 mm",
+        "motor": "Kubota V 3307 CR-TE4",
+        "potencia": "55 kW (75 hp) @ 2.200 rpm",
+        "diametro_tambor": "1.000 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA1300D_ROPS_Right%20ISO%20View.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca1300d",
+       "slug": "ca1300d"
+      },
+      {
+       "modelo": "CA1400D",
+       "nome_completo": "Dynapac CA1400D",
+       "descricao": "Rolo compactador vibratório de um cilindro para compactação de solos em construção rodoviária, com sistema hidráulico avançado e modo Eco de economia de combustível.",
+       "specs": {
+        "peso_operacional": "6.500 kg (ROPS)",
+        "largura_tambor": "1.676 mm",
+        "motor": "Kubota V 3307 CR-TE4",
+        "potencia": "55 kW (75 hp) @ 2.200 rpm",
+        "diametro_tambor": "1.219 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA1400D_ROPS_Right_ISO%20View.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca1400d",
+       "slug": "ca1400d"
+      },
+      {
+       "modelo": "CA15D",
+       "nome_completo": "Dynapac CA15D Rhino",
+       "descricao": "Rolo compactador de um cilindro para solos com transmissão hidrostática, vibração e direção mecânico-hidráulica, voltado para obras de construção rodoviária.",
+       "specs": {
+        "peso_operacional": "6.500 kg (com cabine)",
+        "largura_tambor": "1.680 mm",
+        "motor": "Kubota V3307-DI",
+        "potencia": "55 kW (75 hp) @ 2.200 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA15D_front01.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca15d",
+       "slug": "ca15d"
+      },
+      {
+       "modelo": "CA25D",
+       "nome_completo": "Dynapac CA25D Rhino",
+       "descricao": "Rolo compactador de um cilindro para solos em construção rodoviária, com Excêntricos de Eficiência para economia de combustível e motor com emissões Stage V.",
+       "specs": {
+        "peso_operacional": "10.400 kg",
+        "largura_tambor": "2.130 mm",
+        "motor": "Cummins F3.8",
+        "potencia": "100 kW (134 hp) @ 2.200 rpm",
+        "diametro_tambor": "1.500 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25_front_side01.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca25d",
+       "slug": "ca25d"
+      },
+      {
+       "modelo": "CA30D",
+       "nome_completo": "Dynapac CA30D Rhino",
+       "descricao": "Rolo compactador vibratório projetado para compactação em valas de tubulação, acostamentos e áreas confinadas em serviços de reaterro, além de reparos em barragens, usinas, estacionamentos e pistas de pouso.",
+       "specs": {
+        "peso_operacional": "11.200 kg",
+        "largura_tambor": "2.130 mm",
+        "motor": "Cummins F3.8",
+        "potencia": "100 kW (134 hp) @ 2.200 rpm",
+        "diametro_tambor": "1.500 mm",
+        "carga_linear_estatica": "30 kg/cm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25_front_side01.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca30d",
+       "slug": "ca30d"
+      },
+      {
+       "modelo": "CA35D",
+       "nome_completo": "Dynapac CA35D Rhino",
+       "descricao": "Rolo compactador de um cilindro para solos com transmissão hidrostática e tecnologia vibratória eficiente para projetos de construção rodoviária.",
+       "specs": {
+        "peso_operacional": "12.200 kg",
+        "largura_tambor": "2.130 mm",
+        "motor": "Cummins F3.8",
+        "potencia": "100 kW (134 hp) @ 2.200 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25_front_side01.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca35d",
+       "slug": "ca35d"
+      },
+      {
+       "modelo": "CA250D",
+       "nome_completo": "Dynapac CA250D",
+       "descricao": "Máquina utilitária típica, projetada para longas jornadas de trabalho em aplicações severas, utilizada na compactação da maioria dos tipos de solo em rodovias, aeroportos, barragens, portos e áreas industriais. Versão fabricada no Brasil.",
+       "specs": {
+        "peso_operacional": "10.600 kg",
+        "largura_tambor": "2.130 mm",
+        "motor": "Cummins QSB 4.5",
+        "potencia": "82 kW (110 hp) @ 2.200 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/RCE/RCE_CA250PD_BR_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca250d-brazilian",
+       "slug": "ca250d"
+      }
+     ]
+    },
+    {
+     "nome": "Rolos Tandem",
+     "slug": "rolos-tandem",
+     "modelos": [
+      {
+       "modelo": "CC900",
+       "nome_completo": "Dynapac CC900",
+       "descricao": "Membro da família de pequenos rolos para asfalto. Com tambor de 900 mm, é usado principalmente em trabalhos de compactação de pequena escala, como calçadas, ciclovias, ruas pequenas e estacionamentos.",
+       "specs": {
+        "peso_operacional": "1.665 kg (máx.)",
+        "largura_tambor": "900 mm",
+        "motor": "Kubota D1105-E4B",
+        "potencia": "18 kW (24 hp) @ 2.800 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/RCE/RCE_CC900_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc900",
+       "slug": "cc900"
+      },
+      {
+       "modelo": "CC1000",
+       "nome_completo": "Dynapac CC1000",
+       "descricao": "Rolo tandem compacto projetado para compactação de asfalto e solo em obras de construção rodoviária e serviços urbanos.",
+       "specs": {
+        "peso_operacional": "1.750 kg (máx.)",
+        "largura_tambor": "1.000 mm",
+        "motor": "Kubota D1105-E4B",
+        "potencia": "18 kW (24 hp) @ 2.800 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/RCE/RCE_CC1000_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1000",
+       "slug": "cc1000"
+      },
+      {
+       "modelo": "CC1100 VI",
+       "nome_completo": "Dynapac CC1100 VI",
+       "descricao": "Rolo tandem vibratório compacto para compactação de asfalto e solos em construção rodoviária, com velocidade de 0-10 km/h.",
+       "specs": {
+        "peso_operacional": "2.400 kg",
+        "largura_tambor": "1.070 mm",
+        "motor": "Kubota D1703-M",
+        "potencia": "26 kW (35 hp) @ 2.800 rpm",
+        "diametro_tambor": "700 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/CC1100VI/CC1100VI%20(1).jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1100-vi",
+       "slug": "cc1100-vi"
+      },
+      {
+       "modelo": "CC1200 VI",
+       "nome_completo": "Dynapac CC1200 VI",
+       "descricao": "Rolo tandem vibratório compacto para compactação de asfalto e solos em construção rodoviária, com tambor de 1.200 mm.",
+       "specs": {
+        "peso_operacional": "2.600 kg (com ROPS)",
+        "largura_tambor": "1.200 mm",
+        "motor": "Kubota D1703-M",
+        "potencia": "26 kW (35 hp) @ 2.800 rpm",
+        "diametro_tambor": "702 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1200VI_front%20side01.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1200-vi",
+       "slug": "cc1200-vi"
+      }
+     ]
+    },
+    {
+     "nome": "Rolos Combinados",
+     "slug": "rolos-combinados",
+     "modelos": [
+      {
+       "modelo": "CC3300C",
+       "nome_completo": "Dynapac CC3300C",
+       "descricao": "Rolo combinado (tambor vibratório + pneus) para compactação de asfalto e solos em construção rodoviária, com hidráulica de deslocamento variável e velocidade de até 12 km/h.",
+       "specs": {
+        "peso_operacional": "8.900 kg (máx.)",
+        "largura_tambor": "1.730 mm",
+        "motor": "Deutz TCD 3.6",
+        "potencia": "75 kW (100 hp) @ 2.200 rpm",
+        "diametro_tambor": "1.150 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/RCE/RCE_CC3300C_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc3300c",
+       "slug": "cc3300c"
+      },
+      {
+       "modelo": "CC4200C VI",
+       "nome_completo": "Dynapac CC4200C VI",
+       "descricao": "Rolo combinado para compactação de asfalto e solos em construção rodoviária, com estação do operador deslizante com rotação de 180° e display touchscreen.",
+       "specs": {
+        "peso_operacional": "9.400 kg",
+        "largura_tambor": "1.680 mm",
+        "motor": "Cummins F3.8 V",
+        "potencia": "100 kW (135 hp) @ 2.200 rpm",
+        "forca_centrifuga": "113 / 69 kN"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC5200CVI_right_side_cab.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc4200c-vi",
+       "slug": "cc4200c-vi"
+      }
+     ]
+    },
+    {
+     "nome": "Compactadores de Pneus",
+     "slug": "compactadores-de-pneus",
+     "modelos": [
+      {
+       "modelo": "CP1200",
+       "nome_completo": "Dynapac CP1200",
+       "descricao": "Compactador de pneus com motor turbodiesel Kubota, projetado para construção rodoviária e compactação de asfalto, com velocidade de 0-18 km/h e lastro máximo de 12.100 kg.",
+       "specs": {
+        "peso_operacional": "5.580 kg (ROPS), lastro máx. 12.100 kg",
+        "motor": "Kubota V3307",
+        "potencia": "55 kW (74 hp) @ 2.200 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Coming%20Soon/CP1200%20Kubota-low.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/cp1200-kubota",
+       "slug": "cp1200"
+      },
+      {
+       "modelo": "CP274",
+       "nome_completo": "Dynapac CP274",
+       "descricao": "Compactador de pneus para compactação de solos em construção rodoviária, com bombas de pistão axial de deslocamento variável e freios multidisco.",
+       "specs": {
+        "peso_operacional": "10.800 kg",
+        "motor": "Cummins QSB 4.5",
+        "potencia": "82 kW (110 hp) @ 2.200 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CP/Full/CP274_front_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/compaction/cp2741",
+       "slug": "cp274"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Pavimentação",
+   "slug": "pavimentacao",
+   "subcategorias": [
+    {
+     "nome": "Pavimentadoras de Esteira",
+     "slug": "pavimentadoras-de-esteira",
+     "modelos": [
+      {
+       "modelo": "SD2500C",
+       "nome_completo": "Dynapac SD2500C",
+       "descricao": "Pavimentadora rodoviária de esteiras com interface intuitiva PaveManager 2.0, soluções avançadas de nivelamento integradas e trem de força eficiente para obras rodoviárias.",
+       "specs": {
+        "largura_pavimentacao": "2.550 mm até 9,0 m",
+        "motor": "Cummins QSB6.7",
+        "potencia": "129 kW @ 2.200 rpm",
+        "peso": "19,0 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2500C_carousel_images/Paver_FrontSide.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500c",
+       "slug": "sd2500c"
+      },
+      {
+       "modelo": "SD2500CS",
+       "nome_completo": "Dynapac SD2500CS",
+       "descricao": "Pavimentadora rodoviária de esteiras com interface PaveManager 2.0, nivelamento avançado e esteira AddTraxxion para aplicações de pavimentação de grandes dimensões.",
+       "specs": {
+        "largura_pavimentacao": "2.550 mm até 10,0 m",
+        "capacidade_descarga": "800 m³/h",
+        "motor": "Cummins QSB6.7-C190",
+        "potencia": "142 kW @ 2.200 rpm",
+        "peso": "19,0 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2500CS.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500cs",
+       "slug": "sd2500cs"
+      },
+      {
+       "modelo": "SD2550C",
+       "nome_completo": "Dynapac SD2550C",
+       "descricao": "Pavimentadora rodoviária de esteiras com PaveManager 2.0 e soluções avançadas de nivelamento integradas para pavimentação de asfalto em larguras de até 12 m.",
+       "specs": {
+        "largura_pavimentacao": "2.550 mm até 12,0 m",
+        "capacidade_descarga": "900 m³/h",
+        "motor": "Cummins QSB6.7-C220",
+        "potencia": "164 kW @ 2.200 rpm",
+        "peso": "21,0 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2550C.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2550c",
+       "slug": "sd2550c"
+      },
+      {
+       "modelo": "SD2550CS",
+       "nome_completo": "Dynapac SD2550CS",
+       "descricao": "Pavimentadora de esteiras com PaveManager 2.0 e nivelamento avançado, com grande volume de moega e excelente visibilidade com cabine deslizante.",
+       "specs": {
+        "largura_pavimentacao": "2.550 mm até 14,0 m",
+        "motor": "Cummins QSB6.7-C260",
+        "potencia": "194 kW @ 2.200 rpm",
+        "peso": "21,0 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2550CS.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2550cs",
+       "slug": "sd2550cs"
+      }
+     ]
+    },
+    {
+     "nome": "Pavimentadoras Urbanas",
+     "slug": "pavimentadoras-urbanas",
+     "modelos": [
+      {
+       "modelo": "SD1800C",
+       "nome_completo": "Dynapac SD1800C",
+       "descricao": "Pavimentadora urbana compacta de esteiras com interface PaveManager 2.0 e soluções avançadas de nivelamento integradas para pavimentação eficiente em áreas urbanas.",
+       "specs": {
+        "largura_pavimentacao": "1,75 m até 4,70 m",
+        "motor": "Deutz TD 2.9 L4",
+        "potencia": "55,4 kW",
+        "peso": "11,0 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_SD1800C_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd1800c",
+       "slug": "sd1800c"
+      },
+      {
+       "modelo": "SD1800W",
+       "nome_completo": "Dynapac SD1800W",
+       "descricao": "Pavimentadora urbana compacta sobre pneus com largura básica de 1,75 m e capacidade teórica de descarga de 350 t/h para pavimentação em áreas urbanas.",
+       "specs": {
+        "largura_pavimentacao": "1,75 m até 4,70 m",
+        "capacidade_descarga": "350 t/h",
+        "motor": "Deutz TD 2.9 L4",
+        "potencia": "55,4 kW",
+        "peso": "10,5 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/Dynapac_SD1800W_front_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd1800w",
+       "slug": "sd1800w"
+      }
+     ]
+    },
+    {
+     "nome": "Pavimentadoras Compactas",
+     "slug": "pavimentadoras-compactas",
+     "modelos": [
+      {
+       "modelo": "F1200CS",
+       "nome_completo": "Dynapac F1200CS",
+       "descricao": "Pequena mas poderosa pavimentadora de esteiras projetada para obras que exigem baixas larguras de trabalho, ideal para ciclovias, calçadas e campos de esportes.",
+       "specs": {
+        "largura_pavimentacao": "1,20 m até 3,10 m",
+        "motor": "Deutz TD2.9 L4",
+        "potencia": "54 kW (72 hp) @ 2.200 rpm",
+        "peso": "5,9 t"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_F1200CS_front_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1200cs",
+       "slug": "f1200cs"
+      },
+      {
+       "modelo": "F1250CS",
+       "nome_completo": "Dynapac F1250CS",
+       "descricao": "Pavimentadora compacta para obras de alta qualidade entre 0,5 m e 3,5 m, com excelente acabamento da camada asfáltica e controle remoto RC 360.",
+       "specs": {
+        "largura_pavimentacao": "1,20 m até 3,50 m",
+        "motor": "Deutz TD2.9 L4",
+        "potencia": "55,4 kW (75 hp) @ 2.200 rpm",
+        "peso": "7,0 t (com mesa)"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_F1250CS_left_view.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1250cs",
+       "slug": "f1250cs"
+      },
+      {
+       "modelo": "CM2500",
+       "nome_completo": "Dynapac CM2500 Compactasphalt",
+       "descricao": "Pavimentadora compacta com módulo Compactasphalt de 2,55 m, desenvolvida para estradas com largura inferior a 7,5 m, com mecanismo de tração frontal.",
+       "specs": {
+        "largura_pavimentacao": "2,55 m até 7,50 m",
+        "capacidade_descarga": "160 t/h",
+        "motor": "Deutz TCD 2013 L04",
+        "potencia": "116 kW @ 1.800 rpm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/CM2500_full.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/paving/cm2500",
+       "slug": "cm2500"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nome": "Equipamentos Leves",
+   "slug": "equipamentos-leves",
+   "subcategorias": [
+    {
+     "nome": "Placas Vibratórias",
+     "slug": "placas-vibratorias",
+     "modelos": [
+      {
+       "modelo": "DFP6",
+       "nome_completo": "Dynapac DFP6",
+       "descricao": "Placa vibratória unidirecional compacta para compactação de solos em pequenas obras e espaços confinados. Leve e de fácil manuseio, com motor Honda a gasolina.",
+       "specs": {
+        "peso": "65 kg",
+        "forca_centrifuga": "10 kN",
+        "motor": "Honda GX 120",
+        "largura_trabalho": "350 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP6_front_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp6",
+       "slug": "dfp6"
+      },
+      {
+       "modelo": "DFP7",
+       "nome_completo": "Dynapac DFP7",
+       "descricao": "Placa vibratória unidirecional para compactação de solos e asfalto em obras de construção. Velocidade de trabalho de até 25 m/min.",
+       "specs": {
+        "peso": "72 kg",
+        "forca_centrifuga": "12 kN",
+        "motor": "Honda GX 120",
+        "largura_trabalho": "400 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP7_front_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp7",
+       "slug": "dfp7"
+      },
+      {
+       "modelo": "DFP9X",
+       "nome_completo": "Dynapac DFP9X",
+       "descricao": "Placa vibratória unidirecional robusta para compactação de solos e asfalto, com placa base de alta resistência ao desgaste e motor Honda GX160.",
+       "specs": {
+        "peso": "99 kg",
+        "forca_centrifuga": "19 kN",
+        "motor": "Honda GX160",
+        "largura_trabalho": "500 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DFP9X/DFP9X%20(3).png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp9x",
+       "slug": "dfp9x"
+      },
+      {
+       "modelo": "DFP12D",
+       "nome_completo": "Dynapac DFP12D",
+       "descricao": "Placa vibratória unidirecional a diesel para compactação de solos em obras viárias, com baixo consumo de combustível e velocidade de até 30 m/min.",
+       "specs": {
+        "peso": "122 kg",
+        "motor": "Hatz 1B 20 diesel",
+        "largura_trabalho": "500 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP12D_front_side.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp12d",
+       "slug": "dfp12d"
+      },
+      {
+       "modelo": "DRP25D",
+       "nome_completo": "Dynapac DRP25D",
+       "descricao": "Placa vibratória reversível a diesel para compactação de solos e materiais de construção, com deslocamento para frente e ré.",
+       "specs": {
+        "peso": "280 kg",
+        "forca_centrifuga": "40 kN",
+        "motor": "Hatz 1B20 diesel",
+        "largura_trabalho": "600 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP25D_8WOB.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp25d",
+       "slug": "drp25d"
+      },
+      {
+       "modelo": "DRP45DX",
+       "nome_completo": "Dynapac DRP45DX",
+       "descricao": "Placa vibratória reversível de alto desempenho para compactação de solos, com funcionalidade de avanço e ré para trabalhos pesados de construção.",
+       "specs": {
+        "peso": "460 kg",
+        "forca_centrifuga": "60 kN",
+        "motor": "Hatz 1B 40 diesel",
+        "largura_trabalho": "650 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP45DX_WOB.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp45dx",
+       "slug": "drp45dx"
+      }
+     ]
+    },
+    {
+     "nome": "Compactadores de Percussão",
+     "slug": "compactadores-de-percussao",
+     "modelos": [
+      {
+       "modelo": "DR6X",
+       "nome_completo": "Dynapac DR6X",
+       "descricao": "Compactador de percussão (sapo vibratório) com motor a gasolina refrigerado a ar, ideal para compactação de solos em valas e espaços confinados.",
+       "specs": {
+        "peso": "58 kg",
+        "forca_impacto": "15 kN",
+        "motor": "Honda GXR 120",
+        "largura_sapata": "230 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/8front.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dr6x",
+       "slug": "dr6x"
+      },
+      {
+       "modelo": "DR7X",
+       "nome_completo": "Dynapac DR7X",
+       "descricao": "Compactador de percussão compacto a gasolina para compactação de solos em obras leves, com cobertura de área de até 336 m²/h e motor Honda.",
+       "specs": {
+        "peso": "68 kg",
+        "forca_impacto": "17 kN",
+        "motor": "Honda GXR 120",
+        "largura_sapata": "280 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/DR7X.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dr7x",
+       "slug": "dr7x"
+      }
+     ]
+    },
+    {
+     "nome": "Compactadores de Valeta e Rolos Leves",
+     "slug": "compactadores-de-valeta-e-rolos-leves",
+     "modelos": [
+      {
+       "modelo": "D.ONE",
+       "nome_completo": "Dynapac D.ONE",
+       "descricao": "Compactador de valeta com tecnologia de oscilador direcionado, com qualidade superior de compactação e controle automático de vibração em espaços confinados.",
+       "specs": {
+        "peso": "1.480 kg",
+        "forca_centrifuga": "72 kN",
+        "motor": "Kohler KDW 1003 diesel",
+        "largura_trabalho": "850 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/D.one/D.one_1.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-d.one",
+       "slug": "done"
+      },
+      {
+       "modelo": "DTR75D",
+       "nome_completo": "Dynapac DTR75D",
+       "descricao": "Rolo compactador duplex leve conduzido a pé, a diesel, para compactação de asfalto e solos em obras viárias de pequeno porte.",
+       "specs": {
+        "peso": "740 kg",
+        "forca_centrifuga": "25 kN",
+        "motor": "Kohler KD15-440 diesel",
+        "largura_tambor": "650 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DTR75D%20with%20shadow.png",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dtr75d-kohler",
+       "slug": "dtr75d"
+      }
+     ]
+    },
+    {
+     "nome": "Mini Pavimentadoras e Espalhadoras",
+     "slug": "mini-pavimentadoras-e-espalhadoras",
+     "modelos": [
+      {
+       "modelo": "F80W",
+       "nome_completo": "Dynapac F80W",
+       "descricao": "Mini pavimentadora sobre rodas para aplicações de pavimentação asfáltica de pequeno e médio porte, com foco em confiabilidade e produtividade.",
+       "specs": {
+        "peso": "1.260 kg",
+        "motor": "Hatz 1B50E diesel",
+        "largura_pavimentacao": "1,15 m"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Front%20left%20iso.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-f80w1",
+       "slug": "f80w"
+      },
+      {
+       "modelo": "S100",
+       "nome_completo": "Dynapac S100",
+       "descricao": "Espalhadora de massa leve para obras rodoviárias, com largura de trabalho ajustável de 250 a 1.000 mm e motor Honda a gasolina.",
+       "specs": {
+        "peso": "500 kg (operação)",
+        "motor": "Honda GXV 160",
+        "largura_trabalho": "250–1.000 mm"
+       },
+       "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Mix%20Spreader/Full/Dynapac_S100.jpg",
+       "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-s100",
+       "slug": "s100"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

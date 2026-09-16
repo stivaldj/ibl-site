@@ -113,8 +113,20 @@ async function main() {
   const evidenceFile = resolve(options.evidenceFile)
   await mkdir(dirname(evidenceFile), { recursive: true })
 
-  const browser = await chromium.launch({ headless: true })
+  const launchOptions = { headless: true }
+  if (process.env.PLAYWRIGHT_CHROMIUM_PATH) {
+    launchOptions.executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH
+  }
+  const browser = await chromium.launch(launchOptions)
   const context = await browser.newContext()
+  // Gate hermético: bloqueia requests externas (tiles de mapa, CDNs) para não
+  // depender de rede de terceiros na verificação.
+  const baseHost = new URL(options.baseUrl).host
+  await context.route('**/*', (route) => {
+    const host = new URL(route.request().url()).host
+    if (host === baseHost) return route.continue()
+    return route.abort()
+  })
   await context.addInitScript(() => {
     window.__iblOpenedUrls = []
     window.open = (...args) => {
@@ -134,6 +146,7 @@ async function main() {
       await page.fill('#lead-nome', 'Phase Six Home')
       await page.fill('#lead-telefone', '(67) 99999-0001')
       await page.selectOption('#lead-interesse', { index: 1 })
+      await page.check('#lead-form input[name="consentimento"]')
       await page.click('#lead-form button[type="submit"]')
     },
   })
@@ -142,15 +155,16 @@ async function main() {
   const mobilePage = await context.newPage()
   const mobile = await submitLead(mobilePage, {
     baseUrl: options.baseUrl,
-    route: '/mobile/?ops=1&utm_source=phase6&utm_medium=launch-gate',
+    route: '/?ops=1&utm_source=phase6&utm_medium=launch-gate',
     expectedStatus: options.expectedStatus,
     feedbackSelector: '#lead-feedback',
-    formLabel: 'mobile',
+    formLabel: 'homepage-mobile-viewport',
     viewport: { width: 390, height: 844 },
     fill: async (page) => {
       await page.fill('#lead-nome', 'Phase Six Mobile')
       await page.fill('#lead-telefone', '(67) 99999-0003')
       await page.selectOption('#lead-interesse', { index: 1 })
+      await page.check('#lead-form input[name="consentimento"]')
       await page.click('#lead-form button[type="submit"]')
     },
   })
@@ -159,7 +173,7 @@ async function main() {
   const productPage = await context.newPage()
   const product = await submitLead(productPage, {
     baseUrl: options.baseUrl,
-    route: '/produtos/retroescavadeiras/580n/?ops=1&utm_source=phase6&utm_medium=launch-gate',
+    route: '/case/retroescavadeiras/580n/?ops=1&utm_source=phase6&utm_medium=launch-gate',
     expectedStatus: options.expectedStatus,
     feedbackSelector: '#product-lead-feedback',
     formLabel: 'product',
@@ -169,6 +183,7 @@ async function main() {
       await page.fill('#product-lead-nome', 'Phase Six Product')
       await page.fill('#product-lead-whatsapp', '(67) 99999-0002')
       await page.fill('#product-lead-uso', 'Obras urbanas e terraplenagem')
+      await page.check('#product-lead-form input[name="consentimento"]')
       await page.click('#product-lead-form button[type="submit"]')
     },
   })

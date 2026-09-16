@@ -2,7 +2,9 @@
 export default {
   content: [
     "./index.html",
-    "./produtos/**/*.html",
+    "./case/**/*.html",
+    "./dynapac/**/*.html",
+    "./*/index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {

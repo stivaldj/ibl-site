@@ -1,4 +1,7 @@
-name: Deploy — Cloudflare Pages
+name: CI — Build e Verificação
+
+# Deploy é feito manualmente no cPanel (ver docs/DEPLOY-CPANEL.md).
+# Este workflow apenas garante que todo push/PR gera um dist/ válido.
 
 on:
   push:
@@ -8,11 +11,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-and-verify:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +31,9 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          python3 -m pip install --upgrade pillow
 
       - name: Generate pages + build + verify
         run: npm run rebuild:site
@@ -38,11 +42,3 @@ jobs:
           VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
           VITE_LEAD_WEBHOOK_URL: ${{ secrets.VITE_LEAD_WEBHOOK_URL }}
           VITE_LEAD_SLA_HOURS: ${{ vars.VITE_LEAD_SLA_HOURS }}
-
-      - name: Deploy to Cloudflare Pages
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=ibl-site

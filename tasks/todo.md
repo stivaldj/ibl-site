@@ -279,3 +279,39 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 - Resize do editor não usa mais teto da viewport, removendo travamento de crescimento da máquina.
 - Clique simples em elementos editáveis não dispara mais persistência/materialização (evita crescimento indevido no GIF).
 - Blocos de título/modelo do hero foram fixados em modo de persistência estável no editor para impedir fuga de posição.
+
+## v1.3 — Production Go-Live (2026-07-29)
+> Plano ativo: tasks/PLANO_GOLIVE_v1.3.md | Auditoria: tasks/AUDITORIA_PRE_DEPLOY_2026-07-29.md
+> Decisões: cPanel; webhook ibl-ai-os antes do go-live; GA4 conta 334862278 (falta Measurement ID); remover /mobile/; escopo completo
+
+### Execução v1.3 (2026-07-29) — Fases 1–3 + 5 concluídas por Claude
+- [x] /mobile/ removido do build (vite, verify-dist, gates, robots)
+- [x] Favicon real (.ico multi-size + apple-touch-icon) e OG image 1200×630
+- [x] Unsplash → foto local WebP; TELEMETRIA/status "Aberto"/chat com copy honesto (telefones reais por unidade)
+- [x] sameAs Instagram; nota Dynapac na página Sobre
+- [x] 28 imagens pesadas → WebP (−85%); phosphor + leaflet self-host (zero unpkg/unsplash no dist)
+- [x] public/.htaccess (HTTPS, 404, cache, gzip); CI verify-only; package:deploy (injeta lead-config, poda originais)
+- [x] WhatsApp Business confirmado: 5565999808288 (env + fallbacks + filiais.json)
+- [x] Leads → Bitrix24 via /api/lead.php no cPanel (token via .env, fora do git) + fallback WhatsApp
+- [x] GA4 reutilizado: G-P3EYZ24YQZ (fluxo IBL MAQUINAS, histórico preservado) — baked no bundle
+- [x] Gates: verify-dist ✓, smoke 4 rotas ✓, lead success E failure ✓ (E2E com PHP + mock Bitrix)
+- [x] Pacote: ibl-site-deploy-20260729.zip (8,2 MB, 224 arquivos, .htaccess + api/lead-config.php)
+- [ ] VOCÊ: backup do WordPress → extrair zip no public_html → AutoSSL → testes (docs/DEPLOY-CPANEL.md)
+- [ ] VOCÊ: automação Bitrix "novo lead → notificação/WhatsApp" + Search Console pós-go-live
+
+## Revisão geral pré-go-live + espelhamento Dynapac nacional (2026-09-16)
+> Fonte nacional Dynapac = dynapac.com/br-pt (PIM "br"). Lista de 127 modelos ativos extraída em scratchpad (dynapac-nacional-ativos.json).
+
+### Correções gerais (aguardando OK)
+- [ ] Remover árvore morta `produtos/` (gerador e Vite usam `case/`; .htaccess já redireciona 301) e trocar `404.html:87` para `/case/`
+- [ ] Imagens quebradas em `case/`: CX370C-ME, CX490C, CX500C, CX800B (arquivos apagados de public/case-assets) e 3 cards `-nobg.webp` que só existem em .png (CX22D, 865B, W20G)
+- [ ] Meta description Dynapac truncada duas vezes (`generate_pages.py:1999` + `truncate_text`) → reticências no meio
+- [ ] Copy CASE em páginas Dynapac: "Especifique sua próxima CASE" e sufixo "- CASE Construction" no <title>
+- [ ] `index.html:94` "28 modelos" → 32
+- [ ] `data/filiais.json`: Sinop/MT com DDD 69; bloco whatsapp desatualizado (site já usa 5565999808288 confirmado)
+- [ ] 404.html sem description/canonical/og:image/footer
+- [ ] Cosmético: "Official Dealer" em inglês; "Home" no breadcrumb JSON-LD; TODO em main.js:4
+
+### Dynapac (escopo a confirmar)
+- [ ] Remover 4 modelos "Interrompido" no site nacional: CA250D, CP274, F1200CS, CM2500
+- [ ] (se espelho completo) adicionar ~90 modelos ativos faltantes com fotos/specs do br-pt

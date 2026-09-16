@@ -39,14 +39,14 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, 'index.html'),
-        mobile: resolve(__dirname, 'mobile/index.html'),
         notfound: resolve(__dirname, '404.html'),
         sobre: resolve(__dirname, 'sobre/index.html'),
         filiais: resolve(__dirname, 'filiais/index.html'),
         contato: resolve(__dirname, 'contato/index.html'),
         consorcio: resolve(__dirname, 'consorcio/index.html'),
         privacidade: resolve(__dirname, 'privacidade/index.html'),
-        ...collectHtmlEntries('produtos')
+        ...collectHtmlEntries('case'),
+        ...collectHtmlEntries('dynapac')
       }
     }
   }

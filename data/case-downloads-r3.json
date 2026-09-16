@@ -1,0 +1,132 @@
+[
+ {
+  "dest": "escavadeiras-hidraulicas/cx130c",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/60b7e1549aaf4bb590cba0b444b10456?v=da728214"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx130c",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/43aad06b69fb41e5b773bd61df428d20?v=ce998157"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx180c",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/87dd5a251ff5492a8710db27392774a6?v=7f3d421e"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx220c-s2",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/6d782eae8c1c416187b0be4c9c2d3157?v=8805be4f"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx220c-s2",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/df14da1b6f75407b8bbb1641c787bfe8?v=d14a9cff"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx220c-s2",
+  "name": "c",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/056aaa27129e40ff87c338451e8dc09c?v=6ee9d88a"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx240c-me",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/bc43f57976d34e838150ca247405ffaf?v=ed20021c"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx350c",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/5731f9cfb94e4a9db0d83680b1a67524?v=9af496fe"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx350c",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/60747712235d45468955068f511c02bf?v=fdea67ac"
+ },
+ {
+  "dest": "escavadeiras-hidraulicas/cx350c",
+  "name": "c",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/33ce55f874b44811837935a05ac1e0d7?v=893c86c7"
+ },
+ {
+  "dest": "minicarregadeiras/sv300b",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/ed153f7b53e94030b6cf848576d775b2?v=cf73b5d7"
+ },
+ {
+  "dest": "minicarregadeiras/sv300b",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/b82cb82a15304a3b8ae84e820947bc6c?v=d35f5ef4"
+ },
+ {
+  "dest": "miniescavadeiras/cx22d",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c291a08fafff4eb7b5a28e531c87ff55?v=b5c072ea"
+ },
+ {
+  "dest": "miniescavadeiras/cx22d",
+  "name": "b",
+  "url": "https://preview.thenewsmarket.com/Previews/CNHA/StillAssets/1920x1080/697835.jpg"
+ },
+ {
+  "dest": "miniescavadeiras/cx35d",
+  "name": "a",
+  "url": "https://preview.thenewsmarket.com/Previews/CNHA/StillAssets/1920x1080/726323_v2.jpg"
+ },
+ {
+  "dest": "tratores-de-esteiras/850m",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/0aafab7f45d740619e5a18f57e732db9?v=4dd8136c"
+ },
+ {
+  "dest": "tratores-de-esteiras/850m",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/8aef309b3b5941ec8d45c79e022aad00?v=b10c2f16"
+ },
+ {
+  "dest": "tratores-de-esteiras/1150l",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/cc6d9f3763bb4dc5a67b792ebeeb677d?v=63d36f28"
+ },
+ {
+  "dest": "tratores-de-esteiras/1150l",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/a6b9a8307fa94086a65d4b7a467c9292?v=6251f091"
+ },
+ {
+  "dest": "tratores-de-esteiras/2050m",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f009ee7e60614b71b499b1ab70cf5224?v=fa7cc237"
+ },
+ {
+  "dest": "tratores-de-esteiras/2050m",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/882675e226614e06883232703b42404e?v=f6cfdb5d"
+ },
+ {
+  "dest": "motoniveladoras/845b-series-2",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/f708766876e3461fbdab6307eb58df0c?v=ccf65aed"
+ },
+ {
+  "dest": "motoniveladoras/845b-series-2",
+  "name": "b",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/3b6da5957dd7495087d4a41994c2c1c7?v=dc96a836"
+ },
+ {
+  "dest": "motoniveladoras/865b-series-2",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/659e4b703edc4af08f353fcc1850be29?v=3c823618"
+ },
+ {
+  "dest": "motoniveladoras/885b-series-2",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/4e080f706e8040f1b5b2d1ab625ac66a?v=fde72464"
+ },
+ {
+  "dest": "rolo-compactador/1107ex",
+  "name": "a",
+  "url": "https://cnhi-p-001-delivery.sitecorecontenthub.cloud/api/public/content/c259e26123d24244b189865ec89eaecc?v=403842fd"
+ }
+]
