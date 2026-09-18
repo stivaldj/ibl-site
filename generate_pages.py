@@ -1758,18 +1758,20 @@ def process_dynapac_image(cat_slug: str, model_slug: str) -> str:
     Fundo branco contíguo vira transparência (flood fill pelas bordas) para
     integrar ao layout dark. Retorna caminho público ou "".
     """
-    src_dir = BASE_DIR / "fotos-dynapac" / cat_slug / model_slug
-    if not src_dir.exists():
-        return ""
-    sources = [p for p in iter_sorted_files(src_dir) if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"} and not p.name.startswith(".")]
-    if not sources:
-        return ""
-    src = sources[0]
-
     dst_dir = BASE_DIR / "public" / "dynapac-assets" / cat_slug / model_slug
-    dst_dir.mkdir(parents=True, exist_ok=True)
     dst = dst_dir / f"{model_slug}.webp"
     public_path = f"/dynapac-assets/{cat_slug}/{model_slug}/{model_slug}.webp"
+
+    # Os originais (fotos-dynapac/) não são versionados; o WebP publicado é.
+    # Sem o original (ex.: build do CI), usamos o derivado já existente.
+    src_dir = BASE_DIR / "fotos-dynapac" / cat_slug / model_slug
+    sources = []
+    if src_dir.exists():
+        sources = [p for p in iter_sorted_files(src_dir) if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"} and not p.name.startswith(".")]
+    if not sources:
+        return public_path if dst.exists() else ""
+    src = sources[0]
+    dst_dir.mkdir(parents=True, exist_ok=True)
 
     try:
         if dst.exists() and dst.stat().st_mtime_ns >= src.stat().st_mtime_ns:

@@ -107,6 +107,11 @@ Notes:
   the network. Delete the cache to force a real refresh.
 - The photo downloader is idempotent: it skips models that already have a file
   under `fotos-dynapac/`. Use `--force` to re-fetch everything.
+- `fotos-dynapac/` is NOT versioned (gitignored). Originals are large (~136 MB)
+  and re-downloadable. What ships and is versioned is the WebP under
+  `public/dynapac-assets/`. Without the originals (fresh clone, CI), the
+  generator reuses those WebP files, so the build output is identical. Run
+  `npm run dynapac:fotos` only when a photo must be reprocessed.
 - Each model carries fallback image URLs. Dynapac serves photos from two CDNs
   (`pdf.dynapac.com` and `pim.dynapac.com`) and several `/Full/` gallery links
   are dead, so the downloader tries the candidates in order.

@@ -332,6 +332,5 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 ### Pendente com a IBL (não dá para resolver no código)
 - [x] Telefone de Sinop/MT → (65) 99980-8288, atendimento nacional da rede (IBL, 2026-09-18).
       Todo lead de WhatsApp do site cai neste número; verificado com a variável de CI vazia.
-- [ ] Decidir se `fotos-dynapac/` (136 MB de originais) continua versionado. Hoje segue
-      a convenção do repo, mas é re-baixável: as URLs estão em `data/dynapac-downloads.json`
-      e o downloader é idempotente.
+- [x] `fotos-dynapac/` fora do git (decisão do José, 2026-09-18). Originais re-baixáveis;
+      o gerador reusa o WebP versionado quando o original falta (CI/clone limpo).

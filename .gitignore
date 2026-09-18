@@ -50,3 +50,8 @@ _to_delete/
 *.tgz
 *.tar
 *.zip
+
+# Originais das fotos Dynapac: re-baixáveis (`npm run dynapac:fotos`, URLs em
+# data/dynapac-downloads.json). O que é publicado e versionado é o WebP em
+# public/dynapac-assets/.
+fotos-dynapac/
