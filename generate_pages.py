@@ -23,7 +23,9 @@ SITE_BRAND = "CASE Construction"
 DEFAULT_OG_IMAGE = f"{SITE_URL}/og-image.jpg"
 # Número WhatsApp comercial (E.164 sem "+"). Mesmo env var usado pelo Vite (main.js).
 # Número WhatsApp Business confirmado pela IBL em 2026-07-29.
-WHATSAPP_NUMBER = os.environ.get("VITE_WHATSAPP_NUMBER", "5565999808288")
+# Atendimento nacional da rede: todo lead cai neste número. O `or` cobre a variável
+# definida porém vazia (o GitHub Actions passa "" quando `vars.VITE_WHATSAPP_NUMBER` não existe).
+WHATSAPP_NUMBER = os.environ.get("VITE_WHATSAPP_NUMBER") or "5565999808288"
 WHATSAPP_BASE_URL = f"https://wa.me/{WHATSAPP_NUMBER}"
 HOME_CONTACT_URL = "/#captacao-lead"
 ZERO_WIDTH_CHARS = {

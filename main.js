@@ -1,6 +1,6 @@
 import './style.css'
 
-// Número WhatsApp comercial (E.164 sem "+"). Fallback: telefone da matriz Campo Grande/MS.
+// Atendimento nacional da rede (E.164 sem "+"): todos os leads caem neste WhatsApp.
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '5565999808288'
 const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 

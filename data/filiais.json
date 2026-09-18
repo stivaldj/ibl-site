@@ -14,7 +14,7 @@
     "whatsapp_comercial": "5565999808288",
     "whatsapp_confirmado": true,
     "_nota_fontes": "Endereços/coordenadas: seção #unidades do index.html (curadoria mais recente). Telefones: www.iblmaquinas.com.br/sobre-nos (site WP). Divergências de endereço (Rio Branco, Ariquemes) seguiram a curadoria do repo — confirmar com a IBL.",
-    "_nota_whatsapp": "Número WhatsApp Business oficial confirmado com a IBL (go-live v1.3). Mantido em sincronia com VITE_WHATSAPP_NUMBER."
+    "_nota_whatsapp": "Atendimento nacional da rede: todos os leads caem neste WhatsApp. Confirmado pela IBL. Mantido em sincronia com VITE_WHATSAPP_NUMBER."
   },
   "filiais": [
     {
@@ -57,14 +57,14 @@
       "matriz": false,
       "endereco": "Rua João Pedro Moreira de Carvalho, 5894 — Residencial Vila Rica",
       "cep": "78551-370",
-      "telefone": "(69) 99661-0096",
-      "telefone_e164": "+5569996610096",
+      "telefone": "(65) 99980-8288",
+      "telefone_e164": "+5565999808288",
       "lat": -11.824489991099,
       "lng": -55.485269965364,
       "marcas": [
         "CASE Construction"
       ],
-      "_nota_telefone": "TODO_CONFIRMAR: número com DDD 69 (Rondônia) cadastrado para a unidade de Sinop/MT (DDD 66). Confirmar com a IBL antes do go-live."
+      "_nota_telefone": "Unidade atendida pelo atendimento nacional da rede (WhatsApp comercial), confirmado pela IBL em 2026-09-18."
     },
     {
       "id": "agua-boa",

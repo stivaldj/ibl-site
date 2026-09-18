@@ -330,9 +330,8 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 - [x] Revisão visual no navegador (home, categoria, ficha de modelo)
 
 ### Pendente com a IBL (não dá para resolver no código)
-- [ ] Telefone de Sinop/MT está com DDD 69 (Rondônia) em `data/filiais.json`. Sinalizado
-      no próprio arquivo (`_nota_telefone`). Não foi "corrigido" para 66 porque seria
-      inventar um número. Confirmar antes do go-live.
+- [x] Telefone de Sinop/MT → (65) 99980-8288, atendimento nacional da rede (IBL, 2026-09-18).
+      Todo lead de WhatsApp do site cai neste número; verificado com a variável de CI vazia.
 - [ ] Decidir se `fotos-dynapac/` (136 MB de originais) continua versionado. Hoje segue
       a convenção do repo, mas é re-baixável: as URLs estão em `data/dynapac-downloads.json`
       e o downloader é idempotente.
