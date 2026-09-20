@@ -334,3 +334,22 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
       Todo lead de WhatsApp do site cai neste número; verificado com a variável de CI vazia.
 - [x] `fotos-dynapac/` fora do git (decisão do José, 2026-09-18). Originais re-baixáveis;
       o gerador reusa o WebP versionado quando o original falta (CI/clone limpo).
+
+## Fotos oficiais CASE — rodada 1 (2026-09-20)
+Fonte: CASE Brand (casebrand.com), acervo oficial CNH. Mapeados 839 arquivos nas
+11 linhas; 24 dos 28 modelos têm foto de estúdio disponível.
+
+Aplicado nesta rodada (as 5 máquinas de baixa resolução do site):
+| Modelo | Antes | Depois | Origem |
+|---|---|---|---|
+| 1150L | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11491 |
+| 2050M | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11499 |
+| 845B  | 1114 px | 1335 px | CCE-IMG-26411 |
+| 885B  | 1114 px | 1335 px | CCE-IMG-26501 |
+| SR175B | 1024 px | pendente | CCE-IMG-13186/13187/13188 |
+
+- [ ] SR175B: os 3 estúdio do portal não expõem URL de preview; baixar em alta
+      pelo botão da página (o navegador passou a bloquear download automático).
+- [ ] 845B e 885B: existe versão em alta (~9 MB) no portal; hoje entrou o preview
+      de 1335 px, que já supera o anterior. Rebaixar em alta quando possível.
+- [ ] Próximas rodadas: 2ª e 3ª foto por modelo (galeria) e folhetos técnicos em PDF.
