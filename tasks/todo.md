@@ -345,11 +345,12 @@ Aplicado nesta rodada (as 5 máquinas de baixa resolução do site):
 | 1150L | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11491 |
 | 2050M | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11499 |
 | 845B  | 1114 px | 1335 px | CCE-IMG-26411 |
-| 885B  | 1114 px | 1335 px | CCE-IMG-26501 |
+| 885B  | 1114 px | 9009 px (reduzida a 2400) | CCE-IMG-26501 |
 | SR175B | 1024 px | pendente | CCE-IMG-13186/13187/13188 |
 
 - [ ] SR175B: os 3 estúdio do portal não expõem URL de preview; baixar em alta
       pelo botão da página (o navegador passou a bloquear download automático).
-- [ ] 845B e 885B: existe versão em alta (~9 MB) no portal; hoje entrou o preview
-      de 1335 px, que já supera o anterior. Rebaixar em alta quando possível.
+- [x] 885B: versão em alta (9009 px) aplicada.
+- [ ] 845B: a foto em alta que o portal entregou é traseira; o ângulo certo
+      (CCE-IMG-26411) só saiu em preview de 1335 px. Rebaixar em alta.
 - [ ] Próximas rodadas: 2ª e 3ª foto por modelo (galeria) e folhetos técnicos em PDF.
