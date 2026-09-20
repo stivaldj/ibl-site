@@ -73,7 +73,20 @@ npm run assets:photos:sync
 
 Use `python3 process_fotos.py --sync --force` when you need a full rebuild regardless of timestamps.
 
-### 3. Refresh curated transparent derivatives
+### 3. Cut the background of CASE studio photos
+
+```bash
+npm run case:recortar
+```
+
+The manufacturer's studio photos come on a white background and, on the dark
+page, render as a white box around the machine. `scripts/case-recortar.py`
+writes a `{name}-nobg.webp` next to each studio photo and `generate_pages.py`
+prefers it. Field photos (dirt, sky, jobsite) are detected and left untouched:
+there the background is the content. Both this and the Dynapac cut share
+`scripts/recorte_fundo.py` and need Python 3.11 with `rembg`.
+
+### 4. Refresh curated transparent derivatives
 
 ```bash
 npm run assets:nobg:sync
@@ -81,7 +94,7 @@ npm run assets:nobg:sync
 
 Use `python3 remove_bg_batch.py --sync --force` when you need a full rebuild regardless of timestamps.
 
-### 4. Refresh the Dynapac catalog (national site)
+### 5. Refresh the Dynapac catalog (national site)
 
 The Dynapac catalog mirrors the Brazilian site, `dynapac.com/br-pt`. Its
 "Produtos" tab hides everything flagged `data-discontinued="true"`
@@ -127,7 +140,7 @@ Notes:
   images for models that left the catalog. A model discontinued upstream
   disappears from the build on the next rebuild.
 
-### 5. Rebuild the launch artifact
+### 6. Rebuild the launch artifact
 
 ```bash
 npm run rebuild:site

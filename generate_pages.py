@@ -380,6 +380,11 @@ def copy_assets(model_path_str: str, cat_slug: str, model_slug: str) -> list:
             shutil.copy2(asset_file, dst)
         webp = ensure_webp_derivative(dst)
         public_name = webp.name if webp is not None else asset_file.name
+        # Foto de estúdio recortada (scripts/case-recortar.py) tem prioridade:
+        # sem ela, a foto do fabricante vira uma caixa branca na página escura.
+        recortada = dst_dir / f"{dst.stem}-nobg.webp"
+        if recortada.exists():
+            public_name = recortada.name
         public_paths.append(f"/case-assets/{cat_slug}/{model_slug}/{public_name}")
 
     return public_paths

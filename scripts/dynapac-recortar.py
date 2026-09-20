@@ -26,102 +26,16 @@ import sys
 from collections import deque
 from pathlib import Path
 
-import numpy as np
 from PIL import Image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from recorte_fundo import MODELO, abrir_sessao, recortar  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 DB = REPO / "data" / "dynapac-db.json"
 ORIGENS = REPO / "fotos-dynapac"
 SAIDA = REPO / "public" / "dynapac-assets"
 
-MODELO = "birefnet-general"  # preserva alça fina e alça branca sobre fundo branco
-MAX_ENTRADA = 1600   # limite antes do modelo, por memória
-MAX_SAIDA = 1200     # limite do arquivo publicado
-MASCARA = 320        # resolução da análise de fragmentos
-AREA_MINIMA = 0.03   # fragmento menor que isto (vs. maior peça) é candidato a descarte
-FOLGA_PECA = 11      # px (na máscara) de distância até o corpo para ainda ser peça da máquina
-MARGEM = 12          # folga ao recortar o excesso transparente
-
-
-def componentes(mask: np.ndarray) -> list[tuple[int, np.ndarray]]:
-    """Componentes conexos (4-vizinhos), do maior para o menor."""
-    h, w = mask.shape
-    visto = np.zeros_like(mask, dtype=bool)
-    achados: list[tuple[int, np.ndarray]] = []
-    for y in range(h):
-        for x in range(w):
-            if not mask[y, x] or visto[y, x]:
-                continue
-            fila = deque([(y, x)])
-            visto[y, x] = True
-            pixels = []
-            while fila:
-                cy, cx = fila.popleft()
-                pixels.append((cy, cx))
-                for ny, nx in ((cy - 1, cx), (cy + 1, cx), (cy, cx - 1), (cy, cx + 1)):
-                    if 0 <= ny < h and 0 <= nx < w and mask[ny, nx] and not visto[ny, nx]:
-                        visto[ny, nx] = True
-                        fila.append((ny, nx))
-            comp = np.zeros_like(mask, dtype=bool)
-            ys, xs = zip(*pixels)
-            comp[list(ys), list(xs)] = True
-            achados.append((len(pixels), comp))
-    achados.sort(key=lambda c: -c[0])
-    return achados
-
-
-def limpar_fragmentos(img: Image.Image) -> tuple[Image.Image, int]:
-    """Apaga peças soltas longe da máquina (selos de campanha, respingos).
-
-    Só o tamanho não serve como critério: a alça de uma placa vibratória é fina
-    e pode sair do modelo como peça separada, enquanto o selo de campanha fica
-    num canto, longe de tudo. Por isso um fragmento pequeno só é descartado
-    quando também está distante do corpo principal.
-    """
-    from PIL import ImageFilter
-
-    alpha = np.asarray(img.getchannel("A"))
-    pequena = Image.fromarray(alpha).resize((MASCARA, MASCARA), Image.NEAREST)
-    mask = np.asarray(pequena) > 128
-    if not mask.any():
-        return img, 0
-    comps = componentes(mask)
-    if len(comps) <= 1:
-        return img, 0
-
-    maior_area, maior_comp = comps[0]
-    # Vizinhança do corpo principal: o que encostar aqui é considerado peça dele.
-    vizinhanca = np.asarray(
-        Image.fromarray((maior_comp * 255).astype(np.uint8))
-        .filter(ImageFilter.MaxFilter(FOLGA_PECA * 2 + 1))
-    ) > 128
-
-    manter = np.zeros_like(mask)
-    removidos = 0
-    for area, comp in comps:
-        perto = bool((comp & vizinhanca).any())
-        if area >= maior_area * AREA_MINIMA or perto:
-            manter |= comp
-        else:
-            removidos += 1
-    if not removidos:
-        return img, 0
-    manter_full = np.asarray(
-        Image.fromarray((manter * 255).astype(np.uint8)).resize(img.size, Image.BILINEAR)
-    ) > 64
-    novo = np.array(img)
-    novo[..., 3] = np.where(manter_full, novo[..., 3], 0)
-    return Image.fromarray(novo, "RGBA"), removidos
-
-
-def cortar_sobra(img: Image.Image) -> Image.Image:
-    caixa = img.getchannel("A").point(lambda v: 255 if v > 8 else 0).getbbox()
-    if not caixa:
-        return img
-    x0, y0, x1, y1 = caixa
-    x0 = max(0, x0 - MARGEM); y0 = max(0, y0 - MARGEM)
-    x1 = min(img.width, x1 + MARGEM); y1 = min(img.height, y1 + MARGEM)
-    return img.crop((x0, y0, x1, y1))
 
 
 def origem(cat: str, slug: str) -> Path | None:
@@ -142,13 +56,12 @@ def main() -> int:
     filtro = {s.strip() for s in args.only.split(",")} if args.only else None
 
     try:
-        from rembg import new_session, remove
+        sessao = abrir_sessao(args.modelo)
     except ImportError:
         print("! rembg indisponível. Use python3.11 (veja docs/OPERATIONS.md).", file=sys.stderr)
         return 1
 
     db = json.loads(DB.read_text(encoding="utf-8"))
-    sessao = new_session(args.modelo)
     feitos = pulados = falhas = limpos = 0
 
     for cat in db["categorias"]:
@@ -169,12 +82,7 @@ def main() -> int:
                     continue
                 try:
                     with Image.open(src) as im:
-                        im = im.convert("RGBA")
-                        im.thumbnail((MAX_ENTRADA, MAX_ENTRADA), Image.LANCZOS)
-                        recortada = remove(im, session=sessao)
-                    recortada, removidos = limpar_fragmentos(recortada)
-                    recortada = cortar_sobra(recortada)
-                    recortada.thumbnail((MAX_SAIDA, MAX_SAIDA), Image.LANCZOS)
+                        recortada, removidos = recortar(im, sessao)
                     dst_dir.mkdir(parents=True, exist_ok=True)
                     recortada.save(dst, "WEBP", quality=82, method=6)
                     feitos += 1

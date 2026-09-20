@@ -141,3 +141,11 @@
 - Regra preventiva: antes de rodar lote de imagens, comparar modelos nos casos mais difíceis (peça fina, peça da cor do fundo) e só então processar tudo.
 - Padrão observado: `pgrep -f "script.py"` dentro de um laço de espera casa com o próprio laço, então a espera nunca termina.
 - Regra preventiva: em espera por processo, filtrar pelo interpretador junto do caminho (`pgrep -f "python3.11 script.py"`) ou conferir por efeito no disco.
+
+## 2026-09-20 — Recorte das fotos CASE
+- Padrão observado: o problema da CASE era o oposto do da Dynapac. Não havia recorte errado; as fotos de estúdio do fabricante iam para a página sem recorte nenhum, virando caixa branca sobre o fundo escuro.
+- Regra preventiva: ao auditar imagem, comparar o que a página publica com o fundo real da página, não só o arquivo. O defeito aparece na composição, não no arquivo isolado.
+- Padrão observado: nem toda foto deve ser recortada. As 13 fotos de obra perderiam o sentido sem o fundo.
+- Regra preventiva: recorte automático precisa de um teste de "foto de estúdio" (bordas claras e uniformes) antes de rodar, e o resultado da classificação precisa ser conferido a olho.
+- Padrão observado: rodar o mesmo script em segundo plano e em primeiro plano ao mesmo tempo gerou leitura de arquivo pela metade.
+- Regra preventiva: garantir processo único antes de relançar um lote; conferir com `pgrep -x` no interpretador, não com o caminho do script.
