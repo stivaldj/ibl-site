@@ -344,13 +344,14 @@ Aplicado nesta rodada (as 5 máquinas de baixa resolução do site):
 |---|---|---|---|
 | 1150L | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11491 |
 | 2050M | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11499 |
-| 845B  | 1114 px | 1335 px | CCE-IMG-26411 |
+| 845B  | 1114 px | 8697 px (reduzida a 2400) | CCE-IMG-26411 |
 | 885B  | 1114 px | 9009 px (reduzida a 2400) | CCE-IMG-26501 |
-| SR175B | 1024 px | pendente | CCE-IMG-13186/13187/13188 |
+| SR175B | 1024 px | mantida a atual (ver nota) | — |
 
-- [ ] SR175B: os 3 estúdio do portal não expõem URL de preview; baixar em alta
-      pelo botão da página (o navegador passou a bloquear download automático).
+- [x] SR175B: NÃO trocada de propósito. A foto de estúdio do portal (CCE-IMG-13186,
+      5895 px) é da geração anterior, a SR175 sem "B". A foto atual do site, embora
+      de obra e com 1024 px, mostra a SR175B correta. Trocar seria anunciar outro
+      modelo. Se a IBL quiser estúdio nessa máquina, é preciso foto da série B.
 - [x] 885B: versão em alta (9009 px) aplicada.
-- [ ] 845B: a foto em alta que o portal entregou é traseira; o ângulo certo
-      (CCE-IMG-26411) só saiu em preview de 1335 px. Rebaixar em alta.
+- [x] 845B: ângulo de três quartos em alta (8697 px) aplicado.
 - [ ] Próximas rodadas: 2ª e 3ª foto por modelo (galeria) e folhetos técnicos em PDF.
