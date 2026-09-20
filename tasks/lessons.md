@@ -131,3 +131,13 @@
 - Regra preventiva: antes de aplicar um efeito, medir a cobertura real do seletor no `dist/`. Quando não houver classe comum, marcar por função (WhatsApp, âncora de lead, submit, `data-track`).
 - Padrão observado: o painel do navegador estrangula `requestAnimationFrame`, então medir animação por amostragem lá dá falso negativo.
 - Regra preventiva: validar curva de animação em Node (função pura) e usar Playwright com `emulateMedia` para checar `prefers-reduced-motion`.
+
+## 2026-09-20 — Recorte de fundo das fotos Dynapac
+- Padrão observado: recorte por preenchimento a partir dos cantos não alcança área cercada (vão da alça) nem sombra em degradê (laje de estúdio). Saiu fundo remanescente em cerca de 90 das 108 fotos.
+- Regra preventiva: para recorte de produto, usar segmentação por modelo (rembg), não preenchimento por cor. O preenchimento só serve para fundo chapado sem vãos.
+- Padrão observado: limpar "fragmentos soltos" só por área apagou a alça de uma placa vibratória, que sai do modelo como peça separada.
+- Regra preventiva: descartar fragmento exige dois critérios, tamanho E distância do corpo principal. Peça encostada ou próxima é parte da máquina.
+- Padrão observado: a escolha do modelo muda o resultado. `u2net` apaga alça fina; `isnet-general-use` perde alça branca sobre fundo branco; `birefnet-general` preservou ambas.
+- Regra preventiva: antes de rodar lote de imagens, comparar modelos nos casos mais difíceis (peça fina, peça da cor do fundo) e só então processar tudo.
+- Padrão observado: `pgrep -f "script.py"` dentro de um laço de espera casa com o próprio laço, então a espera nunca termina.
+- Regra preventiva: em espera por processo, filtrar pelo interpretador junto do caminho (`pgrep -f "python3.11 script.py"`) ou conferir por efeito no disco.

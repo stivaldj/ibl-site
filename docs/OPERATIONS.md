@@ -115,6 +115,14 @@ Notes:
 - Each model carries fallback image URLs. Dynapac serves photos from two CDNs
   (`pdf.dynapac.com` and `pim.dynapac.com`) and several `/Full/` gallery links
   are dead, so the downloader tries the candidates in order.
+- Background removal runs in `scripts/dynapac-recortar.py`, with `rembg` under
+  Python 3.11 (`npm run dynapac:recortar`). It replaces the old corner flood
+  fill, which could not reach enclosed areas (the gap inside a plate compactor's
+  handle) nor soft studio shadows (the light slab under the machine). The script
+  also drops loose fragments far from the machine, such as campaign badges.
+  Model choice matters: `birefnet-general` is the default because `u2net` erases
+  thin handles and `isnet-general-use` loses the white handle of the DRP60D
+  against the white studio background.
 - `generate_pages.py` prunes `dynapac/**` pages and `public/dynapac-assets/**`
   images for models that left the catalog. A model discontinued upstream
   disappears from the build on the next rebuild.
