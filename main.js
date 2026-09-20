@@ -122,6 +122,16 @@ function applyLeadSubmitFeedback(target, submitResult) {
   if (!(target instanceof HTMLElement)) return
   target.dataset.submitState = submitResult.status
   target.textContent = getLeadSubmitFeedbackMessage(submitResult)
+  playFeedbackPop(target)
+}
+
+/** Reinicia a animação de entrada do retorno do formulário.
+ *  Sem o reflow, uma segunda mensagem seguida não reanima. */
+function playFeedbackPop(target) {
+  if (!(target instanceof HTMLElement)) return
+  target.classList.remove('feedback-pop')
+  void target.offsetWidth
+  target.classList.add('feedback-pop')
 }
 
 function shouldResetLeadForm(submitResult) {
@@ -537,7 +547,10 @@ function setupLeadForm() {
     }
 
     if (!payload.nome || !payload.telefone || !payload.interesse) {
-      if (feedback) feedback.textContent = 'Preencha os campos obrigatórios.'
+      if (feedback) {
+        feedback.textContent = 'Preencha os campos obrigatórios.'
+        playFeedbackPop(feedback)
+      }
       return
     }
 
@@ -1139,7 +1152,10 @@ function setupProductPageEnhancements() {
     const payload = Object.fromEntries(formData.entries())
 
     if (!payload.nome || !payload.telefone || !payload.uso) {
-      if (productFeedback) productFeedback.textContent = 'Preencha os campos obrigatórios.'
+      if (productFeedback) {
+        productFeedback.textContent = 'Preencha os campos obrigatórios.'
+        playFeedbackPop(productFeedback)
+      }
       return
     }
 
@@ -1881,4 +1897,120 @@ function initThemeToggle() {
   })
 }
 
+/** Usuário pediu menos movimento no sistema operacional. */
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
+}
+
+/** Números que sobem, passam levemente do alvo e assentam.
+ *  Marcação: <span data-count-to="108">108</span>. */
+function setupCountUp() {
+  const elements = [...document.querySelectorAll('[data-count-to]')]
+  if (!elements.length) return
+
+  const format = new Intl.NumberFormat('pt-BR')
+  // Desaceleração sem ultrapassar o alvo: um catálogo não pode exibir uma
+  // quantidade falsa, nem por um quadro. O peso vem do pulo de escala no fim.
+  const settle = (t) => 1 - Math.pow(1 - t, 3)
+
+  const run = (el) => {
+    const target = Number(el.dataset.countTo)
+    if (!Number.isFinite(target)) return
+    if (prefersReducedMotion() || typeof requestAnimationFrame !== 'function') {
+      el.textContent = format.format(target)
+      return
+    }
+    const duration = 900
+    const started = performance.now()
+    const step = (now) => {
+      const t = Math.min(1, (now - started) / duration)
+      const value = t >= 1 ? target : Math.round(target * settle(t))
+      el.textContent = format.format(value)
+      if (t < 1) {
+        requestAnimationFrame(step)
+        return
+      }
+      el.classList.add('count-settled')
+    }
+    requestAnimationFrame(step)
+  }
+
+  if (typeof IntersectionObserver !== 'function') {
+    elements.forEach(run)
+    return
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+      observer.unobserve(entry.target)
+      run(entry.target)
+    })
+  }, { threshold: 0.6 })
+  elements.forEach((el) => observer.observe(el))
+}
+
+/** Traço que desliza até o item da navegação sob o cursor e
+ *  volta para a seção atual ao sair. */
+function setupNavGlide() {
+  const nav = document.querySelector('header nav[aria-label="Navegação principal"]')
+  if (!nav) return
+  const links = [...nav.querySelectorAll('a[href]')]
+  if (!links.length) return
+
+  nav.style.position = 'relative'
+  const pill = document.createElement('span')
+  pill.className = 'nav-glide'
+  pill.setAttribute('aria-hidden', 'true')
+  nav.appendChild(pill)
+
+  const path = window.location.pathname
+  const current = links.find((link) => {
+    const target = link.getAttribute('href') || ''
+    return target.length > 1 && target.startsWith('/') && path.startsWith(target)
+  }) || null
+
+  const moveTo = (el, animate) => {
+    if (!el) {
+      pill.style.opacity = '0'
+      return
+    }
+    const navBox = nav.getBoundingClientRect()
+    const box = el.getBoundingClientRect()
+    if (!box.width) return
+    pill.style.transition = animate && !prefersReducedMotion()
+      ? 'transform 320ms var(--ds-motion-glide), width 320ms var(--ds-motion-glide), opacity 160ms ease'
+      : 'none'
+    pill.style.width = `${box.width}px`
+    pill.style.transform = `translateX(${box.left - navBox.left}px)`
+    pill.style.opacity = '1'
+  }
+
+  moveTo(current, false)
+  links.forEach((link) => {
+    link.addEventListener('mouseenter', () => moveTo(link, true))
+    link.addEventListener('focus', () => moveTo(link, true))
+  })
+  nav.addEventListener('mouseleave', () => moveTo(current, true))
+  window.addEventListener('resize', () => moveTo(current, false))
+}
+
+/** Resposta tátil no clique das ações que geram negócio.
+ *  Marca por função (WhatsApp, orçamento, envio, CTA rastreada) porque as
+ *  páginas geradas usam classes utilitárias, sem um seletor comum de botão. */
+function setupPressFeedback() {
+  const seletores = [
+    '.btn',
+    '.footer-cta',
+    '[data-track]',
+    'button[type="submit"]',
+    'a[href^="https://wa.me/"]',
+    'a[href*="#captacao-lead"]',
+    'a[href*="#consorcio-lead"]'
+  ].join(',')
+  document.querySelectorAll(seletores).forEach((el) => el.classList.add('press-target'))
+}
+
+setupPressFeedback()
+setupCountUp()
+setupNavGlide()
 initThemeToggle()

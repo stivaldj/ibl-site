@@ -123,3 +123,11 @@
 - Padrão observado: dados de fornecedor misturam convenções (mesmo número como "2,130 mm" e "2.130 mm" na mesma ficha) e servem imagens de dois CDNs com links mortos.
 - Regra preventiva: em scraper de catálogo, normalizar valores antes de deduplicar e emitir lista de URLs candidatas em vez de uma única — deixar o downloader tentar em ordem.
 - Correção recebida: não inventar dado de negócio não verificável (telefone de Sinop com DDD de outro estado). Sinalizar no próprio dado e reportar, em vez de "corrigir" adivinhando.
+
+## 2026-09-20 — Movimento com peso
+- Padrão observado: curva easeOutBack em contador numérico ultrapassa ~10% do alvo. Num catálogo isso exibe uma quantidade falsa ("119 equipamentos") antes de assentar.
+- Regra preventiva: número que representa dado real nunca ultrapassa o alvo. Use desaceleração monotônica e tire o "peso" de um pulo de escala no elemento.
+- Padrão observado: efeito preso a `.btn` cobria 4 de 157 páginas, porque as páginas geradas usam classes utilitárias.
+- Regra preventiva: antes de aplicar um efeito, medir a cobertura real do seletor no `dist/`. Quando não houver classe comum, marcar por função (WhatsApp, âncora de lead, submit, `data-track`).
+- Padrão observado: o painel do navegador estrangula `requestAnimationFrame`, então medir animação por amostragem lá dá falso negativo.
+- Regra preventiva: validar curva de animação em Node (função pura) e usar Playwright com `emulateMedia` para checar `prefers-reduced-motion`.

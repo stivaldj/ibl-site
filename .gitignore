@@ -55,3 +55,4 @@ _to_delete/
 # data/dynapac-downloads.json). O que é publicado e versionado é o WebP em
 # public/dynapac-assets/.
 fotos-dynapac/
+.playwright-mcp/

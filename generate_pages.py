@@ -873,7 +873,8 @@ def generate_category_page(cat_entry: dict) -> str:
         if public_assets:
             category_image = public_assets[0]
     meta_description = (
-        f"Linha CASE de {category} na {SITE_NAME} com {count} modelos disponíveis, "
+        f"Linha CASE de {category} na {SITE_NAME} com {count} "
+        f"{'modelo disponível' if count == 1 else 'modelos disponíveis'}, "
         "fichas técnicas e atendimento comercial especializado."
     )
     breadcrumb_schema = build_breadcrumb_schema(
@@ -1092,7 +1093,7 @@ def generate_products_index(db: list) -> str:
         </h1>
         <div class="flex items-center gap-8 mt-8 text-sm font-mono text-gray-400">
           <span class="border border-case-border px-4 py-2">{len(db)} CATEGORIAS</span>
-          <span class="border border-case-border px-4 py-2">{total_models} MODELOS</span>
+          <span class="border border-case-border px-4 py-2"><span data-count-to="{total_models}">{total_models}</span> MODELOS</span>
           <span class="border border-case-border px-4 py-2">CASE CONSTRUCTION</span>
         </div>
       </div>
@@ -1862,7 +1863,7 @@ def render_dynapac_unidades_section() -> str:
     <section class="py-20 border-t border-case-border" id="unidades-dynapac">
       <div class="container mx-auto px-6">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Onde atendemos Dynapac</span>
-        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-4">4 unidades no Norte</h2>
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-4"><span data-count-to="{len(dynapac_filiais())}">{len(dynapac_filiais())}</span> unidades no Norte</h2>
         <p class="text-gray-400 max-w-2xl mb-10">A linha Dynapac é atendida pela IBL nas unidades do Acre, Amazonas, Rondônia e Roraima — com vendas, peças e assistência técnica. Nos demais estados, atendemos a linha CASE Construction.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">{cards}</div>
       </div>
@@ -2083,7 +2084,7 @@ def generate_dynapac_home(db: dict) -> str:
     <section class="py-20" id="linhas">
       <div class="container mx-auto px-6">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// Linhas de produto</span>
-        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-12">{total_models} equipamentos em 3 linhas</h2>
+        <h2 class="font-display font-black text-3xl md:text-5xl uppercase leading-none mb-12"><span data-count-to="{total_models}">{total_models}</span> equipamentos em 3 linhas</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">{''.join(cats_cards)}</div>
       </div>
     </section>
