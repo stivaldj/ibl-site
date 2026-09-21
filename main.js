@@ -1679,42 +1679,8 @@ function setupChatWidget() {
 
 // === Machine Showcase ===
 // As imagens do hero saem de scripts/hero-normalizar.py: mesmo canvas, mesma
-// linha de chão e porte relativo já embutidos. Por isso nenhuma máquina precisa
-// de `stage` próprio; HERO_STAGE_DEFAULTS vale para todas.
-const HERO_STAGE_DEFAULTS = {
-  scale: 1,
-  flip: 1,
-  translateX: 0,
-  translateY: 0,
-  objectPosition: 'center 50%',
-  badgeScale: 1,
-  badgeTranslateX: 0,
-  badgeTranslateY: 0,
-  titleTranslateX: 0,
-  titleTranslateY: 0,
-  metaAlign: 'right',
-  techCardMode: 'right'
-}
-
-function formatPx(value) {
-  return `${value}px`
-}
-
-function normalizeHeroStage(stage = {}) {
-  return {
-    ...HERO_STAGE_DEFAULTS,
-    ...stage
-  }
-}
-
-function setStyleVariables(target, variables) {
-  if (!(target instanceof HTMLElement)) return
-
-  Object.entries(variables).forEach(([name, value]) => {
-    target.style.setProperty(name, String(value))
-  })
-}
-
+// linha de chão e porte relativo já embutidos. Trocar de máquina é só trocar
+// a imagem e os textos — não há ajuste de posição por modelo.
 // Gerado por generate_pages.py a partir das fichas (data/hero-machines.json).
 // Não editar à mão: mude a ficha ou a lista HERO_MACHINES do gerador.
 const showcaseMachines = heroMachines
@@ -1731,55 +1697,7 @@ function scheduleHeroReady() {
 }
 
 function applyShowcaseState(m, { animate = true } = {}) {
-  const stage = normalizeHeroStage(m.stage)
-  const shell = document.querySelector('.entry-hero-shell')
   const img = document.getElementById('showcase-machine')
-  const badge = document.getElementById('hero-rotating-badge-wrap')
-  const title = document.getElementById('showcase-title')
-  const techCard = document.getElementById('hero-tech-card')
-  const meta = document.getElementById('hero-model-meta')
-
-  setStyleVariables(shell, {
-    '--hero-machine-scale': stage.scale,
-    '--hero-machine-scale-x': stage.scale * (stage.flip || 1),
-    '--hero-machine-x': formatPx(stage.translateX),
-    '--hero-machine-y': formatPx(stage.translateY),
-    '--hero-machine-object-position': stage.objectPosition,
-    '--hero-badge-scale': stage.badgeScale,
-    '--hero-badge-x': formatPx(stage.badgeTranslateX),
-    '--hero-badge-y': formatPx(stage.badgeTranslateY),
-    '--hero-title-x': formatPx(stage.titleTranslateX),
-    '--hero-title-y': formatPx(stage.titleTranslateY),
-    '--hero-meta-align': stage.metaAlign,
-    '--hero-tech-card-mode': stage.techCardMode
-  })
-
-  setStyleVariables(img, {
-    '--hero-machine-scale': stage.scale,
-    '--hero-machine-scale-x': stage.scale * (stage.flip || 1),
-    '--hero-machine-x': formatPx(stage.translateX),
-    '--hero-machine-y': formatPx(stage.translateY),
-    '--hero-machine-object-position': stage.objectPosition
-  })
-
-  setStyleVariables(badge, {
-    '--hero-badge-scale': stage.badgeScale,
-    '--hero-badge-x': formatPx(stage.badgeTranslateX),
-    '--hero-badge-y': formatPx(stage.badgeTranslateY)
-  })
-
-  setStyleVariables(title, {
-    '--hero-title-x': formatPx(stage.titleTranslateX),
-    '--hero-title-y': formatPx(stage.titleTranslateY)
-  })
-
-  setStyleVariables(techCard, {
-    '--hero-tech-card-mode': stage.techCardMode
-  })
-
-  setStyleVariables(meta, {
-    '--hero-meta-align': stage.metaAlign
-  })
 
   showcaseStateRevision += 1
   const revision = showcaseStateRevision

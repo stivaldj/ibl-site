@@ -369,7 +369,7 @@ próprio) compensadas por 96 números manuais no main.js.
 - [x] 4. Dados do hero gerados das fichas: `generate_pages.py` escreve `data/hero-machines.json` (lista HERO_MACHINES) e preenche o HTML inicial de case/index.html; main.js só importa o JSON
 - [x] 5. Anel de texto giratório removido; ficou um halo parado (círculo fino + brilho) atrás da máquina
 - [x] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
-- [ ] 7. CSS do hero num bloco único (id duplicado hero-rotating-badge-wrap já corrigido: o JS aplicava as variáveis no fundo, não no anel)
+- [x] 7. Limpeza do hero: id duplicado corrigido; saiu do JS todo o ajuste de posição por máquina (HERO_STAGE_DEFAULTS, normalizeHeroStage, setStyleVariables) e do CSS as regras do título fantasma e do anel. Não juntei o CSS restante num bloco único: reordenar regras muda a cascata e o ganho é só de leitura.
 - Pendência de conteúdo: SV300B é a única voltada para a direita; o portal não tem estúdio dela.
 
 ## Mobile — correções (auditoria em 390 px)
