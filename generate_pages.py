@@ -733,8 +733,8 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
         <div class="absolute top-[20%] left-[5%] w-[70vw] h-[70vw] max-w-[400px] max-h-[400px] bg-case-yellow/5 rounded-full blur-3xl"></div>
       </div>
       <div class="container mx-auto px-6 py-16 lg:py-24 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div class="lg:col-span-5 space-y-8">
+        <div class="generated-product-hero-grid grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="generated-product-copy lg:col-span-5 space-y-8">
             <div>
               <span class="inline-block px-3 py-1 bg-case-yellow/10 border border-case-yellow/30 font-mono text-xs text-case-yellow tracking-widest uppercase mb-4">{badge}</span>
               <h1 class="generated-product-title font-display font-black text-4xl md:text-5xl xl:text-6xl uppercase leading-tight">{title}</h1>
@@ -753,7 +753,7 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
               </a>
             </div>
           </div>
-          <div class="lg:col-span-7 relative h-[400px] lg:h-[600px] flex items-center justify-center">
+          <div class="generated-product-media lg:col-span-7 relative h-[400px] lg:h-[600px] flex items-center justify-center">
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="w-full h-full relative overflow-hidden industrial-border">
                 <img src="{hero_img}" alt="{title}" class="w-full h-full object-contain p-8 filter drop-shadow-2xl hover:scale-105 transition-transform duration-700" />
@@ -1899,15 +1899,15 @@ def render_dynapac_model_card(cat_slug: str, model: dict) -> str:
         if img else '<i class="ph-fill ph-wrench text-6xl text-gray-700"></i>'
     )
     pills = "".join(
-        f'<span class="font-mono text-[10px] uppercase tracking-wide text-gray-400 border border-case-border px-2 py-1">{escape(_spec_label(k))}: {escape(str(v))}</span>'
+        f'<span class="dynapac-model-card__pill font-mono text-[10px] uppercase tracking-wide text-gray-400 border border-case-border px-2 py-1">{escape(_spec_label(k))}: {escape(str(v))}</span>'
         for k, v in list(model.get("specs", {}).items())[:2] if v
     )
     return f"""
-          <a href="/dynapac/{cat_slug}/{model['slug']}/" class="group block industrial-border bg-case-panel border border-case-border hover:border-case-yellow transition-colors">
-            <div class="h-48 flex items-center justify-center bg-gradient-to-b from-case-gray/40 to-transparent overflow-hidden">{img_html}</div>
-            <div class="p-6 border-t border-case-border">
+          <a href="/dynapac/{cat_slug}/{model['slug']}/" class="dynapac-model-card group block industrial-border bg-case-panel border border-case-border hover:border-case-yellow transition-colors">
+            <div class="dynapac-model-card__media h-48 flex items-center justify-center bg-gradient-to-b from-case-gray/40 to-transparent overflow-hidden">{img_html}</div>
+            <div class="dynapac-model-card__body p-6 border-t border-case-border">
               <h3 class="font-display font-black text-xl uppercase group-hover:text-case-yellow transition-colors">{escape(model['modelo'])}</h3>
-              <p class="text-xs text-gray-500 mt-1 mb-3 line-clamp-2">{escape(truncate_text(model.get('descricao', ''), 110))}</p>
+              <p class="dynapac-model-card__desc text-xs text-gray-500 mt-1 mb-3 line-clamp-2">{escape(truncate_text(model.get('descricao', ''), 110))}</p>
               <div class="flex flex-wrap gap-2">{pills}</div>
             </div>
           </a>"""
@@ -1916,13 +1916,18 @@ def render_dynapac_model_card(cat_slug: str, model: dict) -> str:
 def generate_dynapac_category_page(cat: dict) -> str:
     cat_slug = cat["slug"]
     sections = []
+    atalhos = []
     total = 0
-    for sub in cat["subcategorias"]:
+    for idx, sub in enumerate(cat["subcategorias"]):
+        ancora = f"linha-{idx + 1}"
+        atalhos.append(
+            f'<a href="#{ancora}" class="dynapac-sub-nav__link">{escape(sub["nome"])} <span>{len(sub["modelos"])}</span></a>'
+        )
         cards = "".join(render_dynapac_model_card(cat_slug, m) for m in sub["modelos"])
         total += len(sub["modelos"])
         sections.append(f"""
-        <div class="mb-16">
-          <div class="flex items-center gap-3 mb-6">
+        <div id="{ancora}" class="dynapac-sub-section mb-16">
+          <div class="flex flex-wrap items-center gap-3 mb-6">
             <div class="w-1 h-6 bg-case-yellow"></div>
             <h2 class="font-display font-black text-2xl uppercase tracking-wide">{escape(sub['nome'])}</h2>
             <span class="font-mono text-xs text-gray-500">{len(sub['modelos'])} {"modelo" if len(sub['modelos']) == 1 else "modelos"}</span>
@@ -1931,6 +1936,11 @@ def generate_dynapac_category_page(cat: dict) -> str:
         </div>""")
 
     breadcrumb = render_dynapac_breadcrumb([("Dynapac", "/dynapac/"), (cat["nome"], f"/dynapac/{cat_slug}/")])
+    # Atalhos por linha: só quando há mais de uma, para pular direto ao que interessa
+    sub_nav = (
+        f'<nav class="dynapac-sub-nav" aria-label="Linhas de {escape(cat["nome"], quote=True)}"><div class="container mx-auto px-6"><div class="dynapac-sub-nav__track">{"".join(atalhos)}</div></div></nav>'
+        if len(atalhos) > 1 else ""
+    )
     body = f"""
     {render_dynapac_coverage_strip()}
     <section class="py-16 border-b border-case-border relative overflow-hidden">
@@ -1942,6 +1952,7 @@ def generate_dynapac_category_page(cat: dict) -> str:
         <p class="text-gray-400 max-w-2xl mt-6">{total} {"equipamento" if total == 1 else "equipamentos"} Dynapac com vendas, peças e assistência técnica da IBL Máquinas no Norte do Brasil.</p>
       </div>
     </section>
+    {sub_nav}
     <section class="py-16"><div class="container mx-auto px-6">{''.join(sections)}</div></section>
     {render_dynapac_unidades_section()}"""
 
@@ -1986,14 +1997,14 @@ def generate_dynapac_model_page(cat: dict, sub: dict, model: dict) -> str:
       <div class="absolute top-[10%] left-[40%] w-[500px] h-[500px] bg-case-yellow/5 rounded-full blur-3xl pointer-events-none"></div>
       <div class="container mx-auto px-6 relative z-10">
         {breadcrumb}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-10">
-          <div>
+        <div class="generated-product-hero-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-10">
+          <div class="generated-product-copy">
             <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// {escape(sub['nome'])}</span>
-            <h1 class="font-display font-black text-5xl md:text-6xl uppercase leading-none">{escape(nome)}</h1>
+            <h1 class="generated-product-title font-display font-black text-5xl md:text-6xl uppercase leading-none">{escape(nome)}</h1>
             <p class="text-gray-400 mt-6 leading-relaxed">{escape(model.get('descricao', ''))}</p>
             <div class="grid grid-cols-2 gap-4 mt-8">{pills}</div>
           </div>
-          <div class="flex items-center justify-center">{img_html}</div>
+          <div class="generated-product-media flex items-center justify-center">{img_html}</div>
         </div>
       </div>
     </section>

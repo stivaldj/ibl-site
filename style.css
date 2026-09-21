@@ -73,6 +73,9 @@
 html,
 body {
   overflow-x: hidden;
+  /* clip corta igual, mas não transforma o body em caixa de rolagem —
+     com hidden, nenhum `position: sticky` do site funcionava */
+  overflow-x: clip;
 }
 
 ::-webkit-scrollbar {
@@ -2015,5 +2018,178 @@ html[data-theme="light"] {
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     gap: 0.5rem;
+  }
+}
+
+/* ================================================================
+ *  Ficha de produto no celular: título, foto, depois o texto.
+ *  A coluna de texto vira `display: contents` para a foto entrar
+ *  logo abaixo do título (antes vinha depois de ~1,5 tela de texto).
+ * ================================================================ */
+@media (max-width: 767px) {
+  .generated-product-hero-grid {
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .container:has(> .generated-product-hero-grid) {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .generated-product-copy {
+    display: contents;
+  }
+
+  .generated-product-copy > * {
+    order: 3;
+    margin-top: 0 !important;
+  }
+
+  .generated-product-copy > :first-child,
+  .generated-product-copy > h1 {
+    order: 1;
+  }
+
+  .generated-product-media {
+    order: 2;
+    height: clamp(240px, 70vw, 320px);
+  }
+
+  .generated-product-media img {
+    max-height: 100%;
+    padding: 1rem;
+  }
+
+  /* Palavra longa (RETROESCAVADEIRA, MOTONIVELADORA) cabe inteira na linha */
+  .generated-product-title,
+  .generated-category-title {
+    font-size: clamp(1.25rem, 6.2vw, 2.25rem);
+    line-height: 1.05;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* Trilha em uma linha só, rolando para o lado */
+  .generated-breadcrumb ol {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    gap: 0;
+  }
+
+  .generated-breadcrumb ol::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ================================================================
+ *  Categoria Dynapac: atalhos por linha e, no celular, cards em
+ *  fileira (foto à esquerda) — compactação tinha 36 telas de rolagem.
+ * ================================================================ */
+.dynapac-sub-nav {
+  position: sticky;
+  top: 5rem;
+  z-index: 30;
+  background: color-mix(in srgb, var(--color-case-dark, #050505) 92%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-case-border);
+}
+
+.dynapac-sub-nav__track {
+  display: flex;
+  gap: 0.5rem;
+  padding-block: 0.625rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dynapac-sub-nav__track::-webkit-scrollbar {
+  display: none;
+}
+
+.dynapac-sub-nav__link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.875rem;
+  border: 1px solid var(--color-case-border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #d1d5db;
+}
+
+.dynapac-sub-nav__link:hover {
+  border-color: var(--color-case-yellow);
+  color: var(--color-case-yellow);
+}
+
+.dynapac-sub-nav__link > span {
+  color: var(--color-case-yellow);
+}
+
+.dynapac-sub-section {
+  scroll-margin-top: 10rem;
+}
+
+[data-theme="light"] .dynapac-sub-nav__link {
+  color: #1f2937;
+}
+
+@media (max-width: 767px) {
+  .dynapac-sub-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .dynapac-sub-section > .grid {
+    gap: 0.625rem;
+  }
+
+  .dynapac-model-card {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .dynapac-model-card__media {
+    height: auto;
+    min-height: 6.5rem;
+  }
+
+  .dynapac-model-card__media img {
+    padding: 0.5rem;
+  }
+
+  .dynapac-model-card__body {
+    padding: 0.75rem 0.875rem;
+    border-top: 0;
+    border-left: 1px solid var(--color-case-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .dynapac-model-card__body h3 {
+    font-size: 1.0625rem;
+    line-height: 1.15;
+  }
+
+  .dynapac-model-card__desc {
+    display: none;
+  }
+
+  .dynapac-model-card__pill {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    padding: 0.125rem 0.375rem;
+    color: #d1d5db;
   }
 }

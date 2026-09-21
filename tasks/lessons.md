@@ -158,3 +158,5 @@
 
 - Toda mudança visual é medida também em 390 px antes de dizer que está pronta; validar só no desktop deixou o cabeçalho cortado passar em 157 páginas.
 - `right`/`bottom` em elemento `position: relative` desloca em vez de ancorar: posição de flutuante vai no wrapper `fixed`.
+- `overflow-x: hidden` em html/body transforma o body em caixa de rolagem e mata `position: sticky`; usar `overflow-x: clip` (com hidden de fallback).
+- Para intercalar foto entre blocos de uma coluna de texto no celular: `display: contents` na coluna + `order` nos filhos, zerando as margens do `space-y`.

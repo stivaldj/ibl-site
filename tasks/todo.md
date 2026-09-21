@@ -377,8 +377,8 @@ próprio) compensadas por 96 números manuais no main.js.
 - [x] 1. Cabeçalho cabe na tela em todas as páginas (selo oculto, menu só ícone, CTA "Orçamento", alvos de 44 px)
 - [x] 2. Chat flutuante: só ícone no celular; corrigido `right/bottom` aplicado em elemento `relative` (ficava deslocado 2rem)
 - [x] 3. Hero da CASE: máquina na primeira tela (topo em ~340 px, antes 886), seletor em faixa horizontal que acompanha a linha ativa, botões lado a lado terminando em 711 px
-- [ ] 4. Ficha de produto: título sem quebra no meio da palavra, foto logo abaixo do título, breadcrumb em uma linha
-- [ ] 5. Categoria Dynapac: duas colunas compactas, etiquetas legíveis (hoje 36 telas)
+- [x] 4. Ficha de produto (CASE e Dynapac): foto logo abaixo do título (topo em ~405 px, antes 1378), título sem quebra no meio da palavra (150 páginas medidas a 360 px), trilha em uma linha
+- [x] 5. Categoria Dynapac: cards em fileira no celular (36 → 17 telas), etiquetas em 11 px, atalhos por linha fixos no topo; `overflow-x: hidden` global trocado por `clip` (quebrava todo `sticky`); 156 páginas sem rolagem lateral
 - [ ] 6. Alvos de toque < 40 px em filiais e contato
 
 Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termina em 364 px; smoke e lead gates passaram.
