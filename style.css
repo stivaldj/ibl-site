@@ -2193,3 +2193,19 @@ html[data-theme="light"] {
     color: #d1d5db;
   }
 }
+
+/* ================================================================
+ *  Celular: telefone, e-mail, WhatsApp e mapa com área de toque de 44 px.
+ *  O texto não muda de tamanho; só cresce a área clicável.
+ * ================================================================ */
+@media (max-width: 767px) {
+  main a[href^="tel:"],
+  main a[href^="mailto:"],
+  main a[href^="https://wa.me/"],
+  main a[href*="google.com/maps"],
+  main a[href$="/privacidade/"] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
