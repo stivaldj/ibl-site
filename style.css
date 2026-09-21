@@ -1311,12 +1311,22 @@ footer ul button {
  *  (--hero-machine-*, --hero-badge-*) do contrato de stage v1.1.
  * ================================================================ */
 @media (min-width: 1024px) {
+  /* Palco com limites (2026-09-21). Antes: left -14% / right 33%. O -14%
+     entrava na coluna de texto e os 33% não acompanhavam a largura real da
+     ficha, então máquina larga cobria o parágrafo e passava sob a ficha.
+     Agora o palco vai do vão da grade até a borda da ficha, medida de verdade. */
+  .entry-hero-shell .showcase-stage {
+    --hero-stage-bleed: 2.5rem;      /* cabe no gap-12 (3rem) da grade: nunca toca o texto */
+    --hero-stage-card-gap: 1.5rem;   /* respiro entre a máquina e a ficha */
+    --hero-stage-right: calc(var(--hero-card-max-width) * var(--hero-tech-card-scale, 1) + var(--hero-tech-pad-right, 0px) + var(--hero-stage-card-gap));
+  }
+
   .entry-hero-shell .showcase-machine-stage,
   .entry-hero-shell .showcase-ring,
   .entry-hero-shell .showcase-title-anchor,
   .entry-hero-shell .showcase-meta-anchor {
-    left: -14%;
-    right: 33%;
+    left: calc(var(--hero-stage-bleed) * -1);
+    right: var(--hero-stage-right);
   }
 
   /* Título outline acima do anel giratório (anel: topo do círculo ~y193;

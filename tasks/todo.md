@@ -361,7 +361,10 @@ Auditoria: o estranhamento vinha das imagens (SVG do Canva com enquadramento
 próprio) compensadas por 96 números manuais no main.js.
 - [x] 1. Imagens normalizadas (mesmo palco, mesma linha de chão, porte relativo);
       580N e W20G trocadas por estúdio oficial (CCE-IMG-28032 e 28489); 96 números removidos
-- [ ] 2. Palco com limites: CX220C e 885B ainda encostam no parágrafo e passam sob a ficha
+- [x] 2. Palco com limites: vai do vão da grade até a borda real da ficha. Medido nas
+      8 máquinas em 1440, 1200 e 1024 px: zero colisão com texto, botões e ficha.
+      Custo: a maior máquina caiu de ~640 para 520 px em 1440. O passo 3 devolve
+      essa largura ao enxugar a ficha.
 - [ ] 3. Nome do modelo uma vez só; ficha com 3 dados + "Ver ficha completa" para o modelo
 - [ ] 4. Dados do hero gerados do banco das fichas (hoje divergem do HTML inicial)
 - [ ] 5. Anel giratório: remover ou deixar estático

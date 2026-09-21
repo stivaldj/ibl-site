@@ -149,3 +149,9 @@
 - Regra preventiva: recorte automático precisa de um teste de "foto de estúdio" (bordas claras e uniformes) antes de rodar, e o resultado da classificação precisa ser conferido a olho.
 - Padrão observado: rodar o mesmo script em segundo plano e em primeiro plano ao mesmo tempo gerou leitura de arquivo pela metade.
 - Regra preventiva: garantir processo único antes de relançar um lote; conferir com `pgrep -x` no interpretador, não com o caminho do script.
+
+## 2026-09-21 — Hero da home CASE
+- Padrão observado: muitas iterações visuais sem convergir costumam indicar que o defeito está na entrada (imagens com enquadramento próprio), não no CSS. Ajuste manual por item em pixels é o sintoma.
+- Regra preventiva: antes de calibrar posição por item, normalizar os insumos (mesmo canvas, mesma linha de base). Se sobrar mais de um número por item, a normalização está incompleta.
+- Padrão observado: limite de layout escrito em porcentagem fixa (right: 33%) não acompanha o elemento vizinho, que tem largura em px e escala própria.
+- Regra preventiva: amarrar o limite à medida real do vizinho via variáveis CSS, e validar colisão por medição de retângulos em várias larguras, não só por captura de tela.
