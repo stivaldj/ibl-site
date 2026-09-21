@@ -366,7 +366,7 @@ próprio) compensadas por 96 números manuais no main.js.
       Custo: a maior máquina caiu de ~640 para 520 px em 1440. O passo 3 devolve
       essa largura ao enxugar a ficha.
 - [x] 3. Nome do modelo uma vez só (saíram o título fantasma e a linha da ficha); ficha com 3 dados + "Ver ficha completa" para a página do modelo; ficha 272 → 216 px, palco 520 → 586 px em 1440; valores iniciais do HTML iguais aos do JS (7.540 kg)
-- [ ] 4. Dados do hero gerados do banco das fichas (hoje divergem do HTML inicial)
+- [x] 4. Dados do hero gerados das fichas: `generate_pages.py` escreve `data/hero-machines.json` (lista HERO_MACHINES) e preenche o HTML inicial de case/index.html; main.js só importa o JSON
 - [x] 5. Anel de texto giratório removido; ficou um halo parado (círculo fino + brilho) atrás da máquina
 - [x] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
 - [ ] 7. CSS do hero num bloco único (id duplicado hero-rotating-badge-wrap já corrigido: o JS aplicava as variáveis no fundo, não no anel)

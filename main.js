@@ -1,4 +1,5 @@
 import './style.css'
+import heroMachines from './data/hero-machines.json'
 
 // Atendimento nacional da rede (E.164 sem "+"): todos os leads caem neste WhatsApp.
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '5565999808288'
@@ -1714,16 +1715,9 @@ function setStyleVariables(target, variables) {
   })
 }
 
-const showcaseMachines = [
-  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',  img: '/case-assets/hero/580n.webp',                  href: '/case/retroescavadeiras/', page: '/case/retroescavadeiras/580n/' },
-  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',  img: '/case-assets/hero/cx220c.webp',                        href: '/case/escavadeiras-hidraulicas/', page: '/case/escavadeiras-hidraulicas/cx220c-s2/' },
-  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',  img: '/case-assets/hero/w20g.webp',                          href: '/case/pas-carregadeiras/', page: '/case/pas-carregadeiras/w20g/' },
-  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',  img: '/case-assets/hero/sv300b.webp',          href: '/case/minicarregadeiras/', page: '/case/minicarregadeiras/sv300b/' },
-  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',  img: '/case-assets/hero/885b.webp',                          href: '/case/motoniveladoras/', page: '/case/motoniveladoras/885b-series-2/' },
-  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',  img: '/case-assets/hero/cx22d.webp',                         href: '/case/miniescavadeiras/', page: '/case/miniescavadeiras/cx22d/' },
-  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',  img: '/case-assets/hero/1107ex.webp',           href: '/case/rolo-compactador/', page: '/case/rolo-compactador/1107ex/' },
-  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',  img: '/case-assets/hero/2050m.webp',                         href: '/case/tratores-de-esteiras/', page: '/case/tratores-de-esteiras/2050m/' },
-]
+// Gerado por generate_pages.py a partir das fichas (data/hero-machines.json).
+// Não editar à mão: mude a ficha ou a lista HERO_MACHINES do gerador.
+const showcaseMachines = heroMachines
 
 let showcaseImageTimer = null
 let showcaseStateRevision = 0
@@ -1829,12 +1823,10 @@ function switchShowcase(idx, options = {}) {
   const showcaseLink = document.getElementById('showcase-link')
   if (showcaseLink) showcaseLink.href = m.page
   setText('tech-cat-value', m.cat)
-  setText('tech-spec-a-label', m.s1l)
-  setText('tech-spec-a-value', m.s1v)
-  setText('tech-spec-b-label', m.s2l)
-  setText('tech-spec-b-value', m.s2v)
-  setText('tech-spec-c-label', m.s3l)
-  setText('tech-spec-c-value', m.s3v)
+  ;['a', 'b', 'c'].forEach((slot, i) => {
+    setText(`tech-spec-${slot}-label`, m.specs[i]?.label || '')
+    setText(`tech-spec-${slot}-value`, m.specs[i]?.value || '')
+  })
   const fullLink = document.getElementById('tech-full-link')
   if (fullLink) fullLink.href = m.page
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {

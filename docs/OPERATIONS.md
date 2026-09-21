@@ -98,6 +98,13 @@ share of the stage the machine takes, which keeps the sense of size between a
 skid steer and a 22 t excavator. `main.js` therefore needs no per-machine
 offsets. Studio sources that are not cut yet live in `fotos/hero-src/`.
 
+The hero specs are not typed by hand either. `generate_pages.py` reads the
+`HERO_MACHINES` list (one model per selector button, same order as
+`case/index.html`), takes three specs from each model's `content.md`, writes
+`data/hero-machines.json` (imported by `main.js`) and fills the first machine
+into the static hero HTML. To change a machine or a number, edit the list or the
+spec sheet and run `npm run rebuild:site`.
+
 ### 4. Refresh curated transparent derivatives
 
 ```bash

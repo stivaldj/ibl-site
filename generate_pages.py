@@ -2198,6 +2198,97 @@ def prune_dynapac_orfaos(db: dict) -> int:
     return removidos
 
 
+# ─── Hero da home CASE: dados tirados das fichas ─────────────────────────────
+# Uma máquina por linha, na ordem dos botões do seletor em case/index.html.
+# (slug do modelo, título curto, nome exibido, rótulo da linha)
+HERO_MACHINES = [
+    ("580n", "580N", "580N Series 2", "Retroescavadeiras"),
+    ("cx220c-s2", "CX220C", "CX220C Série 2", "Escavadeiras Hidráulicas"),
+    ("w20g", "W20G", "W20G", "Pás Carregadeiras"),
+    ("sv300b", "SV300B", "SV300B", "Minicarregadeiras"),
+    ("885b-series-2", "885B", "885B Series 2", "Motoniveladoras"),
+    ("cx22d", "CX22D", "CX22D", "Miniescavadeiras"),
+    ("1107ex", "1107EX", "1107EX", "Rolo Compactador"),
+    ("2050m", "2050M", "2050M", "Tratores Esteiras"),
+]
+HERO_DATA_PATH = BASE_DIR / "data" / "hero-machines.json"
+HERO_LABELS = {
+    "CARGA DE TOMBAMENTO": "CARGA TOMBAMENTO",
+    "VOLUME DA CAÇAMBA": "VOLUME CAÇAMBA",
+    "PESO OPERACIONAL PATA DE CARNEIRO": "PESO PATA",
+    "PESO OPERACIONAL ROLO LISO": "PESO ROLO LISO",
+    "DESLOCAMENTO": "CILINDRADA",
+}
+
+
+def _hero_value(value: str, key: str = "") -> str:
+    """Valor curto para a ficha do hero: sem a conversão entre parênteses."""
+    value = re.sub(r"\s*\([^)]*\)", "", str(value)).strip()
+    value = re.sub(r"^De\s+(.+?)\s+até\s+", r"\1 a ", value)
+    value = re.sub(r"(?<=\d)\.(?=\d\b|\d{2}\b)(?!\d{3})", ",", value)  # 20.9 hp → 20,9 hp
+    unit = re.search(r"\(([a-zA-Z³]+)\)\s*$", key)
+    if unit and re.fullmatch(r"[\d.,]+", value):
+        value = f"{value} {unit.group(1).upper() if unit.group(1) == 'l' else unit.group(1)}"
+    return re.sub(r"\b(\d) l\b", r"\1 L", value)
+
+
+def _hero_label(key: str) -> str:
+    label = re.sub(r"\s*\([^)]*\)", "", key).strip().upper()
+    return HERO_LABELS.get(label, label)
+
+
+def build_hero_machines(db: list) -> list[dict]:
+    by_slug = {}
+    for cat_entry in db:
+        for model in cat_entry["models"]:
+            by_slug[get_model_slug(model["path"])] = model
+    machines = []
+    for slug, title, display, cat_label in HERO_MACHINES:
+        model = by_slug[slug]
+        cat_slug = get_cat_slug(model["path"])
+        data = parse_content_md((BASE_DIR / model["path"] / "content.md").read_text(encoding="utf-8"))
+        specs = [
+            (_hero_label(k), _hero_value(v, k))
+            for k, v in data["summary_specs"].items()
+            if v and "CERTIFICA" not in k.upper()
+        ]
+        if len(specs) < 3:
+            motor = next((g for g in data["tech_groups"] if g["group"].upper() == "MOTOR"), {"items": []})
+            for item in motor["items"]:
+                if re.match(r"(cilindrada|deslocamento)", item["key"], re.I):
+                    specs.append((_hero_label(item["key"]), _hero_value(item["value"], item["key"])))
+                    break
+        if len(specs) < 3:
+            raise SystemExit(f"hero: {slug} tem menos de 3 dados na ficha")
+        machines.append({
+            "title": title, "model": display, "cat": cat_label,
+            "specs": [{"label": l, "value": v} for l, v in specs[:3]],
+            "img": f"/case-assets/hero/{slug.split('-')[0]}.webp",
+            "page": f"/case/{cat_slug}/{slug}/",
+        })
+    return machines
+
+
+def write_hero_data(db: list) -> None:
+    machines = build_hero_machines(db)
+    HERO_DATA_PATH.write_text(json.dumps(machines, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # A home da CASE é estática: o HTML inicial (antes do JS) recebe a 1ª máquina
+    home = BASE_DIR / "case" / "index.html"
+    html = home.read_text(encoding="utf-8")
+    first = machines[0]
+    fills = {"showcase-model": first["model"], "showcase-cat": first["cat"], "tech-cat-value": first["cat"]}
+    for letter, spec in zip("abc", first["specs"]):
+        fills[f"tech-spec-{letter}-label"] = spec["label"]
+        fills[f"tech-spec-{letter}-value"] = spec["value"]
+    for el_id, text in fills.items():
+        html, n = re.subn(rf'(<span id="{el_id}"[^>]*>)[^<]*(</span>)', lambda m: m.group(1) + escape(text) + m.group(2), html)
+        if n != 1:
+            raise SystemExit(f"hero: id {el_id} não encontrado em case/index.html")
+    html = re.sub(r'(id="(?:tech-full-link|showcase-link)"[^>]*?href=")[^"]*(")', lambda m: m.group(1) + first["page"] + m.group(2), html)
+    home.write_text(html, encoding="utf-8")
+    print(f"  ✓ data/hero-machines.json ({len(machines)} máquinas) e HTML inicial do hero")
+
+
 def main():
     print("=== GERANDO PÁGINAS FRONTEND ===\n")
 
@@ -2278,6 +2369,7 @@ def main():
 
     # 4. Sitemap e robots.txt
     print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
+    write_hero_data(db)
     generate_sitemap(sitemap_paths)
 
     print(f"\n=== {total_pages} páginas geradas em /case/ ===")
