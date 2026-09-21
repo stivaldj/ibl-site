@@ -100,23 +100,6 @@ body {
   color: var(--accent-tint65);
 }
 
-/* Hero spinning circle */
-/* Glow layer: opacity transitions smoothly (CSS interpolates opacity natively) */
-.hero-circle-glow {
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-.group:hover .hero-circle-glow {
-  opacity: 1;
-}
-/* Base text: color transitions on hover */
-.hero-circle-text {
-  transition: fill 1.2s ease;
-}
-.group:hover .hero-circle-text {
-  fill: var(--color-case-yellow);
-}
-
 /* Hero "Super" — inflates and turns orange on hover */
 .text-outline-hero {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
@@ -493,8 +476,20 @@ body {
   pointer-events: none;
 }
 
+/* Passo 5: o anel de texto giratório saiu. A máquina cobria metade das
+   letras e o giro disputava atenção com ela. Fica um halo parado: um círculo
+   fino e um brilho suave que dão chão à máquina sem pedir leitura. */
+.showcase-ring::before {
+  content: "";
+  width: min(78%, 460px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--accent-a45);
+  background: radial-gradient(circle, var(--accent-a14) 0%, var(--accent-a0) 68%);
+}
+
 .group:hover .showcase-ring {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .showcase-machine-stage {
