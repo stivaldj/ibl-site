@@ -155,3 +155,6 @@
 - Regra preventiva: antes de calibrar posição por item, normalizar os insumos (mesmo canvas, mesma linha de base). Se sobrar mais de um número por item, a normalização está incompleta.
 - Padrão observado: limite de layout escrito em porcentagem fixa (right: 33%) não acompanha o elemento vizinho, que tem largura em px e escala própria.
 - Regra preventiva: amarrar o limite à medida real do vizinho via variáveis CSS, e validar colisão por medição de retângulos em várias larguras, não só por captura de tela.
+
+- Toda mudança visual é medida também em 390 px antes de dizer que está pronta; validar só no desktop deixou o cabeçalho cortado passar em 157 páginas.
+- `right`/`bottom` em elemento `position: relative` desloca em vez de ancorar: posição de flutuante vai no wrapper `fixed`.

@@ -179,7 +179,7 @@ HEADER_HTML = f"""\
           </div>
           <button type="button" data-theme-toggle class="w-10 h-10 flex items-center justify-center border border-case-border text-gray-400 hover:text-case-yellow hover:border-case-yellow transition-colors" aria-label="Alternar tema"><i class="ph-bold ph-sun text-lg"></i></button>
           <a href="{HOME_CONTACT_URL}" class="bg-white text-black hover:bg-case-yellow hover:text-black transition-colors px-6 py-2.5 font-bold uppercase text-xs tracking-widest border border-white">
-            Solicitar Orçamento
+            <span class="header-cta-prefix">Solicitar </span>Orçamento
           </a>
         </div>
       </div>
@@ -251,7 +251,7 @@ FOOTER_HTML = f"""\
         </div>
       </div>
     </footer>
-    <div class="fixed bottom-8 right-8 z-50">
+    <div class="generated-floating-chat-wrap fixed bottom-8 right-8 z-50">
       <a href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
         <i class="generated-floating-chat__icon ph-fill ph-chats-circle text-3xl text-black group-hover:scale-110 transition-transform"></i>
         <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-black rounded-full animate-pulse"></span>

@@ -371,3 +371,14 @@ próprio) compensadas por 96 números manuais no main.js.
 - [ ] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
 - [ ] 7. CSS do hero num bloco único; corrigir id duplicado hero-rotating-badge-wrap
 - Pendência de conteúdo: SV300B é a única voltada para a direita; o portal não tem estúdio dela.
+
+## Mobile — correções (auditoria em 390 px)
+
+- [x] 1. Cabeçalho cabe na tela em todas as páginas (selo oculto, menu só ícone, CTA "Orçamento", alvos de 44 px)
+- [x] 2. Chat flutuante: só ícone no celular; corrigido `right/bottom` aplicado em elemento `relative` (ficava deslocado 2rem)
+- [ ] 3. Hero da CASE: máquina antes dos botões, seletor em faixa horizontal (passo 6 do hero)
+- [ ] 4. Ficha de produto: título sem quebra no meio da palavra, foto logo abaixo do título, breadcrumb em uma linha
+- [ ] 5. Categoria Dynapac: duas colunas compactas, etiquetas legíveis (hoje 36 telas)
+- [ ] 6. Alvos de toque < 40 px em filiais e contato
+
+Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termina em 364 px; smoke e lead gates passaram.
