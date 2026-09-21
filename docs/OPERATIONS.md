@@ -86,6 +86,18 @@ prefers it. Field photos (dirt, sky, jobsite) are detected and left untouched:
 there the background is the content. Both this and the Dynapac cut share
 `scripts/recorte_fundo.py` and need Python 3.11 with `rembg`.
 
+### 3b. Normalize the home hero machines
+
+```bash
+npm run hero:normalizar
+```
+
+`scripts/hero-normalizar.py` writes `public/case-assets/hero/{slug}.webp`: same
+canvas, same ground line, centered. The only per-machine knob is `largura`, the
+share of the stage the machine takes, which keeps the sense of size between a
+skid steer and a 22 t excavator. `main.js` therefore needs no per-machine
+offsets. Studio sources that are not cut yet live in `fotos/hero-src/`.
+
 ### 4. Refresh curated transparent derivatives
 
 ```bash

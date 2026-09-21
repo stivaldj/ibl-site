@@ -14,6 +14,7 @@
     "assets:nobg:check": "python3 remove_bg_batch.py --dry-run --sync",
     "assets:nobg:sync": "python3 remove_bg_batch.py --sync",
     "case:recortar": "python3.11 scripts/case-recortar.py",
+    "hero:normalizar": "python3.11 scripts/hero-normalizar.py",
     "scrape:specs": "python3 scrape_specs.py --strict",
     "dynapac:scrape": "python3 scripts/dynapac-scrape-nacional.py",
     "dynapac:fotos": "python3 scripts/dynapac-download-fotos.py",

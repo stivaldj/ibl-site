@@ -355,3 +355,16 @@ Aplicado nesta rodada (as 5 máquinas de baixa resolução do site):
 - [x] 885B: versão em alta (9009 px) aplicada.
 - [x] 845B: ângulo de três quartos em alta (8697 px) aplicado.
 - [ ] Próximas rodadas: 2ª e 3ª foto por modelo (galeria) e folhetos técnicos em PDF.
+
+## Hero da home CASE — refação em 7 passos (2026-09-21)
+Auditoria: o estranhamento vinha das imagens (SVG do Canva com enquadramento
+próprio) compensadas por 96 números manuais no main.js.
+- [x] 1. Imagens normalizadas (mesmo palco, mesma linha de chão, porte relativo);
+      580N e W20G trocadas por estúdio oficial (CCE-IMG-28032 e 28489); 96 números removidos
+- [ ] 2. Palco com limites: CX220C e 885B ainda encostam no parágrafo e passam sob a ficha
+- [ ] 3. Nome do modelo uma vez só; ficha com 3 dados + "Ver ficha completa" para o modelo
+- [ ] 4. Dados do hero gerados do banco das fichas (hoje divergem do HTML inicial)
+- [ ] 5. Anel giratório: remover ou deixar estático
+- [ ] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
+- [ ] 7. CSS do hero num bloco único; corrigir id duplicado hero-rotating-badge-wrap
+- Pendência de conteúdo: SV300B é a única voltada para a direita; o portal não tem estúdio dela.
