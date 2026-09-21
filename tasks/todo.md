@@ -376,7 +376,7 @@ próprio) compensadas por 96 números manuais no main.js.
 
 - [x] 1. Cabeçalho cabe na tela em todas as páginas (selo oculto, menu só ícone, CTA "Orçamento", alvos de 44 px)
 - [x] 2. Chat flutuante: só ícone no celular; corrigido `right/bottom` aplicado em elemento `relative` (ficava deslocado 2rem)
-- [ ] 3. Hero da CASE: máquina antes dos botões, seletor em faixa horizontal (passo 6 do hero)
+- [x] 3. Hero da CASE: máquina na primeira tela (topo em ~340 px, antes 886), seletor em faixa horizontal que acompanha a linha ativa, botões lado a lado terminando em 711 px
 - [ ] 4. Ficha de produto: título sem quebra no meio da palavra, foto logo abaixo do título, breadcrumb em uma linha
 - [ ] 5. Categoria Dynapac: duas colunas compactas, etiquetas legíveis (hoje 36 telas)
 - [ ] 6. Alvos de toque < 40 px em filiais e contato

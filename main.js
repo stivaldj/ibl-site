@@ -1846,6 +1846,16 @@ function switchShowcase(idx, options = {}) {
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {
     btn.classList.toggle('is-active', i === idx)
   })
+  // No celular o seletor é uma faixa horizontal: mantém a linha ativa à vista
+  // rolando só a faixa (scrollIntoView rolaria a página inteira).
+  const strip = document.getElementById('cat-selector')
+  const activeBtn = strip?.querySelector('.cat-btn.is-active')
+  if (strip && activeBtn && strip.scrollWidth > strip.clientWidth) {
+    strip.scrollTo({
+      left: activeBtn.offsetLeft - (strip.clientWidth - activeBtn.offsetWidth) / 2,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+    })
+  }
   if (track) {
     trackEvent('showcase_model_change', {
       page_path: window.location.pathname,

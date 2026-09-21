@@ -1923,3 +1923,97 @@ html[data-theme="light"] {
     display: none;
   }
 }
+
+/* ================================================================
+ *  Hero da CASE no celular: a máquina entra na primeira tela.
+ *  Ordem: logo, título, máquina, faixa de linhas, botões, parágrafo.
+ *  A coluna de texto vira `display: contents` para intercalar com o palco.
+ * ================================================================ */
+@media (max-width: 767px) {
+  .entry-hero-shell > .container > .grid {
+    gap: 0.875rem;
+  }
+
+  .entry-hero-shell .lg\:col-span-5 {
+    display: contents;
+  }
+
+  .entry-hero-shell .lg\:col-span-5 > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .entry-hero-shell .lg\:col-span-5 > :nth-child(1) { order: 1; justify-self: start; }
+  .entry-hero-shell .lg\:col-span-5 > h1 { order: 2; }
+  .entry-hero-shell .lg\:col-span-7 { order: 3; height: clamp(260px, 74vw, 330px); }
+
+  /* A legenda do modelo fica numa faixa própria, abaixo da máquina */
+  .entry-hero-shell .showcase-machine-stage { bottom: 3.75rem; }
+  .entry-hero-shell .lg\:col-span-5 > :nth-child(4) { order: 4; }
+  .entry-hero-shell .entry-hero-actions { order: 5; }
+  .entry-hero-shell .lg\:col-span-5 > p { order: 6; font-size: 0.9375rem; }
+
+  .entry-hero-shell .lg\:col-span-5 > :nth-child(1) img {
+    height: 1.5rem;
+  }
+
+  .entry-hero-shell h1 > span:nth-child(1),
+  .entry-hero-shell h1 > span:nth-child(3) {
+    font-size: 2.5rem;
+  }
+
+  .entry-hero-shell h1 > .hero-super-title {
+    font-size: 3rem;
+  }
+
+  /* Faixa de linhas: uma fileira que rola para o lado, sangrando até a borda */
+  .entry-hero-shell .lg\:col-span-5 > :nth-child(4) {
+    padding-top: 0;
+    border-top: 0;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .entry-hero-shell .lg\:col-span-5 > :nth-child(4) > span {
+    display: none;
+  }
+
+  .entry-hero-shell .entry-cat-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-inline: -1.5rem;
+    padding: 2px 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .entry-hero-shell .entry-cat-selector::-webkit-scrollbar {
+    display: none;
+  }
+
+  .entry-hero-shell .entry-cat-selector .cat-btn {
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 6px 14px;
+    white-space: nowrap;
+    line-height: 1.35;
+    scroll-snap-align: center;
+  }
+
+  .entry-hero-shell .entry-hero-actions {
+    padding-top: 0;
+    gap: 0.5rem;
+  }
+
+  .entry-hero-shell .entry-hero-actions > a {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    gap: 0.5rem;
+  }
+}
