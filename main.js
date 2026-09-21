@@ -1715,14 +1715,14 @@ function setStyleVariables(target, variables) {
 }
 
 const showcaseMachines = [
-  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/hero/580n.webp',                  href: '/case/retroescavadeiras/' },
-  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/hero/cx220c.webp',                        href: '/case/escavadeiras-hidraulicas/' },
-  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '70 A', img: '/case-assets/hero/w20g.webp',                          href: '/case/pas-carregadeiras/' },
-  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',        s4l: 'DESLOCAMENTO', s4v: '3,2 L',          s5l: 'VAZÃO BOMBA', s5v: '110 l/min',    s6l: 'PRESSÃO ALÍVIO', s6v: '360 bar', img: '/case-assets/hero/sv300b.webp',          href: '/case/minicarregadeiras/' },
-  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',               s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'MARCHAS',    s5v: '6F / 3R',      s6l: 'FLUXO HIDR.', s6v: '186 l/min', img: '/case-assets/hero/885b.webp',                          href: '/case/motoniveladoras/' },
-  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',              s4l: 'DESLOCAMENTO', s4v: '1,65 L',         s5l: 'VEL. GIRO',  s5v: '11 rpm',       s6l: 'TANQUE COMB.', s6v: '45 L', img: '/case-assets/hero/cx22d.webp',                         href: '/case/miniescavadeiras/' },
-  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',                s4l: 'PESO ROLO LISO', s4v: '11.380 kg',     s5l: 'EIXOS',       s5v: '3.003 mm',     s6l: 'LARGURA', s6v: '2.324 mm', img: '/case-assets/hero/1107ex.webp',           href: '/case/rolo-compactador/' },
-  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TRANSMISSÃO', s5v: 'Hidrostática', s6l: 'TANQUE', s6v: '405 L', img: '/case-assets/hero/2050m.webp',                         href: '/case/tratores-de-esteiras/' },
+  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',  img: '/case-assets/hero/580n.webp',                  href: '/case/retroescavadeiras/', page: '/case/retroescavadeiras/580n/' },
+  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',  img: '/case-assets/hero/cx220c.webp',                        href: '/case/escavadeiras-hidraulicas/', page: '/case/escavadeiras-hidraulicas/cx220c-s2/' },
+  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',  img: '/case-assets/hero/w20g.webp',                          href: '/case/pas-carregadeiras/', page: '/case/pas-carregadeiras/w20g/' },
+  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',  img: '/case-assets/hero/sv300b.webp',          href: '/case/minicarregadeiras/', page: '/case/minicarregadeiras/sv300b/' },
+  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',  img: '/case-assets/hero/885b.webp',                          href: '/case/motoniveladoras/', page: '/case/motoniveladoras/885b-series-2/' },
+  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',  img: '/case-assets/hero/cx22d.webp',                         href: '/case/miniescavadeiras/', page: '/case/miniescavadeiras/cx22d/' },
+  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',  img: '/case-assets/hero/1107ex.webp',           href: '/case/rolo-compactador/', page: '/case/rolo-compactador/1107ex/' },
+  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',  img: '/case-assets/hero/2050m.webp',                         href: '/case/tratores-de-esteiras/', page: '/case/tratores-de-esteiras/2050m/' },
 ]
 
 let showcaseImageTimer = null
@@ -1824,12 +1824,10 @@ function switchShowcase(idx, options = {}) {
 
   const m = showcaseMachines[idx] || showcaseMachines[0]
   applyShowcaseState(m, { animate })
-  setText('showcase-title', m.title)
   setText('showcase-model', m.model)
   setText('showcase-cat', m.cat)
   const showcaseLink = document.getElementById('showcase-link')
-  if (showcaseLink) showcaseLink.href = m.href
-  setText('tech-model-value', m.model)
+  if (showcaseLink) showcaseLink.href = m.page
   setText('tech-cat-value', m.cat)
   setText('tech-spec-a-label', m.s1l)
   setText('tech-spec-a-value', m.s1v)
@@ -1837,12 +1835,8 @@ function switchShowcase(idx, options = {}) {
   setText('tech-spec-b-value', m.s2v)
   setText('tech-spec-c-label', m.s3l)
   setText('tech-spec-c-value', m.s3v)
-  setText('tech-spec-d-label', m.s4l)
-  setText('tech-spec-d-value', m.s4v)
-  setText('tech-spec-e-label', m.s5l)
-  setText('tech-spec-e-value', m.s5v)
-  setText('tech-spec-f-label', m.s6l)
-  setText('tech-spec-f-value', m.s6v)
+  const fullLink = document.getElementById('tech-full-link')
+  if (fullLink) fullLink.href = m.page
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {
     btn.classList.toggle('is-active', i === idx)
   })

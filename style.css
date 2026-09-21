@@ -2209,3 +2209,49 @@ html[data-theme="light"] {
     min-height: 44px;
   }
 }
+
+/* ================================================================
+ *  Hero — passo 3: ficha enxuta (3 dados + link para a ficha completa).
+ *  Mais estreita que a antiga de 6 linhas; como o limite direito do
+ *  palco é calculado a partir dela, a máquina ganha a largura de volta.
+ * ================================================================ */
+.hero-tech-card {
+  width: var(--hero-card-max-width);
+}
+
+.hero-tech-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  min-height: 44px;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.hero-tech-link:hover {
+  color: var(--color-case-yellow);
+}
+
+.hero-tech-link i {
+  transition: transform var(--ds-motion-fast) var(--ds-motion-glide);
+}
+
+.hero-tech-link:hover i {
+  transform: translateX(3px);
+}
+
+[data-theme="light"] .hero-tech-link {
+  color: #111111;
+}
+
+@media (min-width: 1024px) {
+  .entry-hero-shell .showcase-stage {
+    --hero-card-max-width: 216px;
+  }
+}

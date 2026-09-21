@@ -365,7 +365,7 @@ próprio) compensadas por 96 números manuais no main.js.
       8 máquinas em 1440, 1200 e 1024 px: zero colisão com texto, botões e ficha.
       Custo: a maior máquina caiu de ~640 para 520 px em 1440. O passo 3 devolve
       essa largura ao enxugar a ficha.
-- [ ] 3. Nome do modelo uma vez só; ficha com 3 dados + "Ver ficha completa" para o modelo
+- [x] 3. Nome do modelo uma vez só (saíram o título fantasma e a linha da ficha); ficha com 3 dados + "Ver ficha completa" para a página do modelo; ficha 272 → 216 px, palco 520 → 586 px em 1440; valores iniciais do HTML iguais aos do JS (7.540 kg)
 - [ ] 4. Dados do hero gerados do banco das fichas (hoje divergem do HTML inicial)
 - [ ] 5. Anel giratório: remover ou deixar estático
 - [ ] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
