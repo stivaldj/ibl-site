@@ -225,13 +225,13 @@ FOOTER_HTML = f"""\
               <li><a href="/filiais/" class="hover:underline">Nossas Filiais</a></li>
               <li><a href="/contato/" class="hover:underline">Contato</a></li>
               <li><a href="/consorcio/" class="hover:underline">Consórcio CASE</a></li>
-              <li><a href="/#tecnologia" class="hover:underline">Tecnologia CASE</a></li>
+              <li><a href="/case/#tecnologia" class="hover:underline">Tecnologia CASE</a></li>
             </ul>
           </div>
           <div>
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Suporte</div>
             <ul class="space-y-2 font-medium text-sm">
-              <li><a href="/#posvenda" class="hover:underline">Pós-venda</a></li>
+              <li><a href="/case/#posvenda" class="hover:underline">Pós-venda</a></li>
               <li><a href="{HOME_CONTACT_URL}" class="hover:underline">Solicitar suporte</a></li>
               <li><a href="{build_whatsapp_url('Olá, preciso de suporte comercial da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="hover:underline">Falar com especialista</a></li>
             </ul>
@@ -1876,7 +1876,7 @@ def render_dynapac_unidades_section() -> str:
 
 
 def render_dynapac_cta_section(model_name: str) -> str:
-    wa = build_whatsapp_url(f"Olá, tenho interesse no equipamento Dynapac {model_name}. Atendo pela região Norte.")
+    wa = build_whatsapp_url(f"Olá, tenho interesse no equipamento {model_name}.")
     return f"""
     <section class="py-20 bg-case-panel border-t border-case-border">
       <div class="container mx-auto px-6 text-center">
@@ -2022,7 +2022,7 @@ def generate_dynapac_model_page(cat: dict, sub: dict, model: dict) -> str:
       <div class="container mx-auto px-6 text-center">
         <h2 class="font-display font-black text-3xl md:text-5xl uppercase mb-6">Solicitar Orçamento</h2>
         <p class="text-gray-400 max-w-xl mx-auto mb-8">Fale com a equipe IBL da sua região para condições, disponibilidade e prazo de entrega.</p>
-        <a href="{build_whatsapp_url(f'Olá, tenho interesse no equipamento Dynapac {nome}.')}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
+        <a href="{build_whatsapp_url(f'Olá, tenho interesse no equipamento {nome}.')}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
       </div>
     </section>
     {render_dynapac_unidades_section()}"""
