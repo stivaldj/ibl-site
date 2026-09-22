@@ -30,8 +30,12 @@ SAIDA = REPO / "public" / "case-assets" / "hero"
 ASSETS = REPO / "public" / "case-assets"
 
 PALCO = (1600, 1000)   # canvas comum a todas as máquinas
-CHAO = 930             # linha de chão (y) onde toda máquina apoia
+CHAO = 930             # chão de uma máquina de altura máxima
 ALTURA_MAX = 860       # teto: lança de escavadeira não pode estourar o palco
+# Máquina baixa (minicarregadeira) apoiada no mesmo chão ficava no fundo do halo.
+# Cada máquina sobe metade da folga até o teto: todas ficam centradas na
+# mesma altura do palco, e a maior continua encostada no chão.
+ELEVACAO = 0.5
 
 # slug -> (fonte, largura). `largura` é o único ajuste por máquina.
 MAQUINAS = {
@@ -63,7 +67,8 @@ def normalizar(img: Image.Image, largura: float) -> Image.Image:
     novo = (max(1, round(img.width * escala)), max(1, round(img.height * escala)))
     img = img.resize(novo, Image.LANCZOS)
     palco = Image.new("RGBA", PALCO, (0, 0, 0, 0))
-    palco.alpha_composite(img, ((PALCO[0] - img.width) // 2, CHAO - img.height))
+    folga = ALTURA_MAX - img.height
+    palco.alpha_composite(img, ((PALCO[0] - img.width) // 2, CHAO - img.height - round(folga * ELEVACAO)))
     return palco
 
 
