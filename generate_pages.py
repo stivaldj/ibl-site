@@ -1358,7 +1358,7 @@ def generate_institutional_pages() -> int:
               <a href="tel:{escape(matriz['telefone_e164'], quote=True)}" class="flex items-center gap-3 text-gray-300 hover:text-case-yellow transition-colors"><i class="ph-bold ph-phone text-2xl text-case-yellow"></i> Matriz: {escape(matriz['telefone'])}</a>
             </div>
             <a href="/#captacao-lead" class="mt-8 block text-center px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Solicitar orçamento</a>
-            <p class="text-xs text-gray-500 mt-4 leading-relaxed">Resposta comercial em até 1 dia útil. Dados tratados conforme nossa <a href="/privacidade/" class="underline hover:text-case-yellow">Política de Privacidade</a>.</p>
+            <p class="text-xs text-gray-500 mt-4 leading-relaxed">WhatsApp aberto 24h, todos os dias. Dados tratados conforme nossa <a href="/privacidade/" class="underline hover:text-case-yellow">Política de Privacidade</a>.</p>
           </div>
         </div>
         <div class="lg:col-span-7">
@@ -1379,7 +1379,7 @@ def generate_institutional_pages() -> int:
         page_name="Contato",
         description=(
             "Fale com a IBL Máquinas: WhatsApp comercial, e-mail e telefones das 8 unidades "
-            "em MS, MT, AC, AM, RO e RR. Resposta em até 1 dia útil."
+            "em MS, MT, AC, AM, RO e RR. WhatsApp aberto 24h."
         ),
         canonical_path="/contato/",
         eyebrow="Fale Conosco",
