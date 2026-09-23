@@ -73,7 +73,10 @@ Alerta de novo lead no WhatsApp (65 99980-8288):
 
 - `https://iblmaquinas.com.br/` carrega com cadeado (SSL)
 - `http://` e `https://www.` redirecionam 301 para `https://` sem www
-- `/produtos/retroescavadeiras/580n/` carrega com imagens
+- `/case/retroescavadeiras/580n/` carrega com imagens
+- Endereços do site antigo redirecionam: `/produtos/580n/` → `/case/retroescavadeiras/580n/`,
+  `/sobre-nos/` → `/sobre/`, `/tipo/escavadeiras/` → `/case/escavadeiras-hidraulicas/`
+  (mapa completo no `public/.htaccess`; os 43 endereços do sitemap antigo foram testados)
 - Formulário de lead: enviar teste → abre WhatsApp com mensagem preenchida
 - `/qualquer-coisa-inexistente` → página 404 customizada
 - `/sitemap.xml` e `/robots.txt` acessíveis

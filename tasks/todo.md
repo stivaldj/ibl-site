@@ -33,10 +33,10 @@
 - [ ] Validação visual do hero comprimido no browser (abrir homepage local)
 
 ### Pendências de ambiente (fora do repo)
-- [ ] Confirmar WhatsApp Business oficial → atualizar VITE_WHATSAPP_NUMBER + regenerar
-- [ ] Expor endpoint de leads do ibl-ai-os + secret VITE_LEAD_WEBHOOK_URL
-- [ ] Criar GA4 + var VITE_GA4_ID
-- [ ] Setup Cloudflare Pages + secrets GitHub + DNS (docs/DEPLOY.md)
+- [x] Confirmar WhatsApp Business oficial → 5565999808288 (atendimento nacional da rede)
+- [x] Endpoint de leads: /api/lead.php → Bitrix24 (token validado em 2026-09-23, leitura sem criar lead)
+- [x] GA4 criado; VITE_GA4_ID no .env
+- [~] Substituído: hospedagem em cPanel (docs/DEPLOY-CPANEL.md); Cloudflare virou só CI de verificação
 - [ ] Push da branch + PR (gh indisponível na sandbox): `git push -u origin feature/v1.2-production-golive`
 
 ## Correções rápidas (2026-02-26)
@@ -382,3 +382,15 @@ próprio) compensadas por 96 números manuais no main.js.
 - [x] 6. Alvos de toque: filiais 17 → 0, contato 13 → 0, home CASE 23 → 7 (restam zoom e créditos do mapa e botões internos do chat)
 
 Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termina em 364 px; smoke e lead gates passaram.
+
+## Go-live — o que falta (2026-09-23)
+
+- [x] Redirecionamentos do WordPress antigo: 43/43 endereços do sitemap antigo testados num Apache local com o .htaccess de produção (34 × 301 para página equivalente, 4 × 410 para páginas-lixo, 1 × home)
+- [x] Pacote de deploy gera com api/lead-config.php (Bitrix) e .htaccess
+- [ ] Push da branch + PR para main
+- [ ] VOCÊ: backup do WordPress no cPanel (arquivos + banco) antes de extrair
+- [ ] VOCÊ: extrair o zip em public_html, AutoSSL, testes pós-deploy (docs/DEPLOY-CPANEL.md)
+- [ ] VOCÊ: teste real do /api/lead.php em produção (cria 1 lead de teste no Bitrix)
+- [ ] VOCÊ: automação Bitrix "novo lead → aviso" (LEAD_ALERT_EMAIL está vazio: hoje ninguém é avisado)
+- [ ] Decidir o chat flutuante até o agente entrar: hoje responde com 4 frases fixas fingindo conversa
+- [ ] Pós-go-live: Search Console + sitemap, Lighthouse mobile baseline
