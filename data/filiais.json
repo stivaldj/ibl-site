@@ -1,0 +1,154 @@
+{
+  "empresa": {
+    "nome_fantasia": "IBL Máquinas",
+    "razao_social": "Racine Comércio de Máquinas Ltda",
+    "cnpj": "28.265.622/0001-60",
+    "email": "contato@iblmaquinas.com.br",
+    "site": "https://iblmaquinas.com.br",
+    "fundacao": "1992",
+    "marcas": [
+      "CASE Construction",
+      "Dynapac"
+    ],
+    "instagram": "https://www.instagram.com/iblmaquinas/",
+    "whatsapp_comercial": "5565999808288",
+    "whatsapp_confirmado": true,
+    "_nota_fontes": "Endereços/coordenadas: seção #unidades do index.html (curadoria mais recente). Telefones: www.iblmaquinas.com.br/sobre-nos (site WP). Divergências de endereço (Rio Branco, Ariquemes) seguiram a curadoria do repo — confirmar com a IBL.",
+    "_nota_whatsapp": "Atendimento nacional da rede: todos os leads caem neste WhatsApp. Confirmado pela IBL. Mantido em sincronia com VITE_WHATSAPP_NUMBER."
+  },
+  "filiais": [
+    {
+      "id": "campo-grande",
+      "uf": "MS",
+      "estado": "Mato Grosso do Sul",
+      "cidade": "Campo Grande",
+      "matriz": true,
+      "endereco": "Rua Carlos Henrique Spengler, 928 — Pólo Empresarial Norte",
+      "cep": "79018-800",
+      "telefone": "(67) 3358-4100",
+      "telefone_e164": "+556733584100",
+      "lat": -20.388311981404,
+      "lng": -54.548588010738,
+      "marcas": [
+        "CASE Construction"
+      ]
+    },
+    {
+      "id": "varzea-grande",
+      "uf": "MT",
+      "estado": "Mato Grosso",
+      "cidade": "Várzea Grande",
+      "matriz": false,
+      "endereco": "Av. Júlio Domingos de Campos, 4922 (Lot D Industrial) — Mapim",
+      "cep": "78142-360",
+      "telefone": "(65) 3688-2121",
+      "telefone_e164": "+556536882121",
+      "lat": -15.6317305,
+      "lng": -56.1681188,
+      "marcas": [
+        "CASE Construction"
+      ]
+    },
+    {
+      "id": "sinop",
+      "uf": "MT",
+      "estado": "Mato Grosso",
+      "cidade": "Sinop",
+      "matriz": false,
+      "endereco": "Rua João Pedro Moreira de Carvalho, 5894 — Residencial Vila Rica",
+      "cep": "78551-370",
+      "telefone": "(65) 99980-8288",
+      "telefone_e164": "+5565999808288",
+      "lat": -11.824489991099,
+      "lng": -55.485269965364,
+      "marcas": [
+        "CASE Construction"
+      ],
+      "_nota_telefone": "Unidade atendida pelo atendimento nacional da rede (WhatsApp comercial), confirmado pela IBL em 2026-09-18."
+    },
+    {
+      "id": "agua-boa",
+      "uf": "MT",
+      "estado": "Mato Grosso",
+      "cidade": "Água Boa",
+      "matriz": false,
+      "endereco": "Rua Vinte e Dois, 487 — Quadra 52 Lote 07, Setor Industrial",
+      "cep": "78635-000",
+      "telefone": "(66) 3468-4348",
+      "telefone_e164": "+556634684348",
+      "lat": -14.05311499911,
+      "lng": -52.148773023928,
+      "marcas": [
+        "CASE Construction"
+      ]
+    },
+    {
+      "id": "rio-branco",
+      "uf": "AC",
+      "estado": "Acre",
+      "cidade": "Rio Branco",
+      "matriz": false,
+      "endereco": "Rodovia AC 40, 3395 — Vila Acre",
+      "cep": "69909-730",
+      "telefone": "(68) 3221-0527",
+      "telefone_e164": "+556832210527",
+      "lat": -10.057436829874,
+      "lng": -67.770744799631,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
+    },
+    {
+      "id": "manaus",
+      "uf": "AM",
+      "estado": "Amazonas",
+      "cidade": "Manaus",
+      "matriz": false,
+      "endereco": "Av. Max Teixeira, 3159, 1º Andar Térreo — Cidade Nova",
+      "cep": "69090-002",
+      "telefone": "(92) 3581-3668",
+      "telefone_e164": "+559235813668",
+      "lat": -3.03558900628,
+      "lng": -59.999088020995,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
+    },
+    {
+      "id": "ariquemes",
+      "uf": "RO",
+      "estado": "Rondônia",
+      "cidade": "Ariquemes",
+      "matriz": false,
+      "endereco": "BR-364, km 521, nº 8030",
+      "cep": "76870-192",
+      "telefone": "(69) 3535-2022",
+      "telefone_e164": "+556935352022",
+      "lat": -9.91619183746,
+      "lng": -63.05557756561,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
+    },
+    {
+      "id": "boa-vista",
+      "uf": "RR",
+      "estado": "Roraima",
+      "cidade": "Boa Vista",
+      "matriz": false,
+      "endereco": "Av. Surumu, 2258 — Mecejana",
+      "cep": "69304-555",
+      "telefone": "(95) 3624-6827",
+      "telefone_e164": "+559536246827",
+      "lat": 2.815853923167,
+      "lng": -60.690047229806,
+      "marcas": [
+        "CASE Construction",
+        "Dynapac"
+      ]
+    }
+  ]
+}

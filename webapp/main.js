@@ -564,7 +564,7 @@ function setupLeadForm() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse em ${payload.interesse}.${sourceSuffix}`
     )
-    const whatsappUrl = `https://wa.me/5567999999999?text=${message}`
+    const whatsappUrl = `https://wa.me/556733584100?text=${message}`
 
     applyLeadSubmitFeedback(feedback, submitResult)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
@@ -782,7 +782,7 @@ function setupProductCatalogTools() {
       comparePanel.classList.add('hidden')
       compareList.innerHTML = ''
       if (compareContact) {
-        compareContact.href = 'https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.'
+        compareContact.href = 'https://wa.me/556733584100?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.'
       }
       return
     }
@@ -829,7 +829,7 @@ function setupProductCatalogTools() {
         return model?.name
       }).filter(Boolean)
       const whatsappText = encodeURIComponent(`Olá, quero comparar os modelos: ${selectedModels.join(', ')}.`)
-      compareContact.href = `https://wa.me/5567999999999?text=${whatsappText}`
+      compareContact.href = `https://wa.me/556733584100?text=${whatsappText}`
     }
   }
 
@@ -1108,7 +1108,7 @@ function setupProductPageEnhancements() {
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Solicitar orçamento</button>
-            <a data-track="product_lead_whatsapp" href="https://wa.me/5567999999999?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
+            <a data-track="product_lead_whatsapp" href="https://wa.me/556733584100?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
               Falar no WhatsApp
             </a>
           </div>
@@ -1164,7 +1164,7 @@ function setupProductPageEnhancements() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse no modelo ${payload.modelo} para ${payload.uso}.${sourceSuffix}`
     )
-    window.open(`https://wa.me/5567999999999?text=${message}`, '_blank', 'noopener,noreferrer')
+    window.open(`https://wa.me/556733584100?text=${message}`, '_blank', 'noopener,noreferrer')
     applyLeadSubmitFeedback(productFeedback, submitResult)
     if (shouldResetLeadForm(submitResult)) {
       productForm.reset()
@@ -1585,7 +1585,7 @@ function setupChatWidget() {
       appendMessage('agent', reply)
       if (value.toLowerCase().includes('whatsapp') || value.toLowerCase().includes('zap')) {
         const text = encodeURIComponent(`Olá, vim do chat do site IBL e quero falar com um consultor. Minha mensagem: "${value}"`)
-        window.open(`https://wa.me/5567999999999?text=${text}`, '_blank', 'noopener,noreferrer')
+        window.open(`https://wa.me/556733584100?text=${text}`, '_blank', 'noopener,noreferrer')
       }
     }, 650)
   })
@@ -2871,8 +2871,8 @@ function setupLayoutEditor() {
 
 // === Machine Showcase ===
 const showcaseMachines = [
-  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/fotos-processed/580n-series2.svg',                  href: '/produtos/retroescavadeiras/', translate: 'translateX(-150px)' },
-  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/fotos-processed/cx220c.svg',                        href: '/produtos/escavadeiras-hidraulicas/', pos: 'center 22%', translate: 'translateX(-150px)' },
+  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/fotos-processed/580n-series2.svg',                  href: '/produtos/retroescavadeiras/' },
+  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/fotos-processed/cx220c.svg',                        href: '/produtos/escavadeiras-hidraulicas/', pos: 'center 22%' },
   { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '70 A', img: '/case-assets/fotos-processed/w20g.svg',                          href: '/produtos/pas-carregadeiras/' },
   { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',        s4l: 'DESLOCAMENTO', s4v: '3,2 L',          s5l: 'VAZÃO BOMBA', s5v: '110 l/min',    s6l: 'PRESSÃO ALÍVIO', s6v: '360 bar', img: '/case-assets/minicarregadeiras/sv300b/sv300b-nobg.png',          href: '/produtos/minicarregadeiras/' },
   { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',               s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'MARCHAS',    s5v: '6F / 3R',      s6l: 'FLUXO HIDR.', s6v: '186 l/min', img: '/case-assets/fotos-processed/885b.svg',                          href: '/produtos/motoniveladoras/' },

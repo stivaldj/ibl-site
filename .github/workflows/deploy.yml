@@ -1,0 +1,44 @@
+name: CI — Build e Verificação
+
+# Deploy é feito manualmente no cPanel (ver docs/DEPLOY-CPANEL.md).
+# Este workflow apenas garante que todo push/PR gera um dist/ válido.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          python3 -m pip install --upgrade pillow
+
+      - name: Generate pages + build + verify
+        run: npm run rebuild:site
+        env:
+          VITE_GA4_ID: ${{ vars.VITE_GA4_ID }}
+          VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
+          VITE_LEAD_WEBHOOK_URL: ${{ secrets.VITE_LEAD_WEBHOOK_URL }}
+          VITE_LEAD_SLA_HOURS: ${{ vars.VITE_LEAD_SLA_HOURS }}

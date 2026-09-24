@@ -1,4 +1,9 @@
 import './style.css'
+import heroMachines from './data/hero-machines.json'
+
+// Atendimento nacional da rede (E.164 sem "+"): todos os leads caem neste WhatsApp.
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '5565999808288'
+const WHATSAPP_BASE_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 
 const ANALYTICS_MILESTONES = [25, 50, 75, 90]
 const ATTRIBUTION_STORAGE_KEY = 'ibl_attribution_v1'
@@ -30,9 +35,97 @@ function initAnalytics() {
       window.dataLayer.push(arguments)
     }
 
+    window.gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    })
     window.gtag('js', new Date())
     window.gtag('config', measurementId)
   }
+}
+
+// === Consentimento de cookies (LGPD) ===
+// O Google Analytics só carrega depois de "Aceitar". A escolha fica no
+// navegador; a política de privacidade tem o botão para rever.
+const CONSENT_KEY = 'ibl-consent-analytics'
+
+function readConsent() {
+  try {
+    return window.localStorage.getItem(CONSENT_KEY)
+  } catch {
+    return null
+  }
+}
+
+function saveConsent(value) {
+  try {
+    window.localStorage.setItem(CONSENT_KEY, value)
+  } catch {
+    // navegação privada sem storage: vale só para esta página
+  }
+}
+
+function clearAnalyticsCookies() {
+  const domains = ['', `; domain=${window.location.hostname}`, `; domain=.${window.location.hostname.replace(/^www\./, '')}`]
+  document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((name) => name.startsWith('_ga')).forEach((name) => {
+    domains.forEach((domain) => {
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domain}`
+    })
+  })
+}
+
+function applyConsent(value) {
+  if (value === 'granted') {
+    initAnalytics()
+    return
+  }
+  if (typeof window.gtag === 'function') {
+    window.gtag('consent', 'update', { analytics_storage: 'denied' })
+  }
+  clearAnalyticsCookies()
+}
+
+function showConsentBanner() {
+  if (document.getElementById('consent-banner')) return
+  const banner = document.createElement('div')
+  banner.id = 'consent-banner'
+  banner.className = 'consent-banner'
+  banner.setAttribute('role', 'dialog')
+  banner.setAttribute('aria-live', 'polite')
+  banner.setAttribute('aria-label', 'Aviso de cookies')
+  banner.innerHTML = `
+    <p class="consent-banner__text">
+      Usamos cookies do Google Analytics para entender como o site é usado. Nada de publicidade.
+      <a href="/privacidade/" class="consent-banner__link">Política de privacidade</a>
+    </p>
+    <div class="consent-banner__actions">
+      <button type="button" class="consent-banner__btn" data-consent="denied">Recusar</button>
+      <button type="button" class="consent-banner__btn consent-banner__btn--accept" data-consent="granted">Aceitar</button>
+    </div>
+  `
+  banner.addEventListener('click', (event) => {
+    const button = event.target instanceof Element ? event.target.closest('[data-consent]') : null
+    if (!button) return
+    const value = button.getAttribute('data-consent')
+    saveConsent(value)
+    applyConsent(value)
+    banner.remove()
+  })
+  document.body.appendChild(banner)
+}
+
+function setupConsent() {
+  const stored = readConsent()
+  if (stored === 'granted' || stored === 'denied') {
+    applyConsent(stored)
+  } else {
+    showConsentBanner()
+  }
+  document.querySelectorAll('[data-cookie-preferences]').forEach((button) => {
+    button.addEventListener('click', () => showConsentBanner())
+  })
 }
 
 function trackEvent(eventName, params = {}) {
@@ -71,9 +164,35 @@ function getAttribution() {
   }
 }
 
+// Anti-spam (conferido em /api/lead.php): campo-isca invisível e o tempo
+// desde que a página abriu — pessoa real não envia em menos de 2 s.
+function ensureLeadHoneypot(form) {
+  if (!(form instanceof HTMLFormElement) || form.querySelector('[name="website"]')) return
+  const trap = document.createElement('div')
+  trap.className = 'lead-hp'
+  trap.setAttribute('aria-hidden', 'true')
+  trap.innerHTML = '<label>Site <input type="text" name="website" tabindex="-1" autocomplete="off"></label>'
+  form.appendChild(trap)
+}
+
+function readLeadHoneypot() {
+  return [...document.querySelectorAll('input[name="website"]')].map((input) => input.value).join('').trim()
+}
+
+// WhatsApp com DDD: 10 ou 11 dígitos; com 55 na frente, 12 ou 13
+function isValidLeadPhone(value) {
+  const digits = String(value || '').replace(/\D/g, '')
+  return digits.length >= 10 && digits.length <= 13
+}
+
+const LEAD_PHONE_MESSAGE = 'Informe um WhatsApp válido com DDD.'
+
 function buildLeadWebhookPayload(leadPayload) {
   return {
     ...leadPayload,
+    website: readLeadHoneypot(),
+    form_elapsed_ms: Math.round(performance.now()),
+    marca: document.body?.dataset?.brand === 'dynapac' ? 'Dynapac' : 'CASE Construction',
     page_path: window.location.pathname,
     captured_at: new Date().toISOString(),
     attribution: getAttribution()
@@ -117,6 +236,16 @@ function applyLeadSubmitFeedback(target, submitResult) {
   if (!(target instanceof HTMLElement)) return
   target.dataset.submitState = submitResult.status
   target.textContent = getLeadSubmitFeedbackMessage(submitResult)
+  playFeedbackPop(target)
+}
+
+/** Reinicia a animação de entrada do retorno do formulário.
+ *  Sem o reflow, uma segunda mensagem seguida não reanima. */
+function playFeedbackPop(target) {
+  if (!(target instanceof HTMLElement)) return
+  target.classList.remove('feedback-pop')
+  void target.offsetWidth
+  target.classList.add('feedback-pop')
 }
 
 function shouldResetLeadForm(submitResult) {
@@ -516,6 +645,7 @@ function setupLeadForm() {
   const form = document.getElementById('lead-form')
   if (!form) return
 
+  ensureLeadHoneypot(form)
   const feedback = document.getElementById('lead-feedback')
   const nome = form.querySelector('[name="nome"]')
   const telefone = form.querySelector('[name="telefone"]')
@@ -532,7 +662,19 @@ function setupLeadForm() {
     }
 
     if (!payload.nome || !payload.telefone || !payload.interesse) {
-      if (feedback) feedback.textContent = 'Preencha os campos obrigatórios.'
+      if (feedback) {
+        feedback.textContent = 'Preencha os campos obrigatórios.'
+        playFeedbackPop(feedback)
+      }
+      return
+    }
+
+    if (!isValidLeadPhone(payload.telefone)) {
+      if (feedback) {
+        feedback.textContent = LEAD_PHONE_MESSAGE
+        playFeedbackPop(feedback)
+      }
+      telefone?.focus()
       return
     }
 
@@ -564,7 +706,7 @@ function setupLeadForm() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse em ${payload.interesse}.${sourceSuffix}`
     )
-    const whatsappUrl = `https://wa.me/5567999999999?text=${message}`
+    const whatsappUrl = `${WHATSAPP_BASE_URL}?text=${message}`
 
     applyLeadSubmitFeedback(feedback, submitResult)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
@@ -587,17 +729,17 @@ function setupProductCatalogTools() {
   const compareContact = document.getElementById('compare-contact')
 
   const lineMeta = {
-    '/produtos/escavadeiras-hidraulicas/': {
+    '/case/escavadeiras-hidraulicas/': {
       key: 'escavadeiras-hidraulicas',
       name: 'Escavadeiras Hidráulicas',
-      models: 9,
+      models: 5,
       applications: ['construcao', 'locacao'],
       compareModels: [
         { name: 'CX220C', power: '147 hp', weight: '22.149 kg', destaque: 'Caçamba: 1,2 m³' },
         { name: 'CX350C', power: '268 hp', weight: '35.700 kg', destaque: 'Caçamba: 2,1 m³' }
       ]
     },
-    '/produtos/minicarregadeiras/': {
+    '/case/minicarregadeiras/': {
       key: 'minicarregadeiras',
       name: 'Minicarregadeiras',
       models: 6,
@@ -607,7 +749,7 @@ function setupProductCatalogTools() {
         { name: 'SR175B', power: '67 hp', weight: '2.930 kg', destaque: 'Carga operacional: 790 kg' }
       ]
     },
-    '/produtos/miniescavadeiras/': {
+    '/case/miniescavadeiras/': {
       key: 'miniescavadeiras',
       name: 'Miniescavadeiras',
       models: 2,
@@ -617,7 +759,7 @@ function setupProductCatalogTools() {
         { name: 'CX35D', power: '24.8 hp', weight: '3.500 kg', destaque: 'Profundidade: 3,2 m' }
       ]
     },
-    '/produtos/motoniveladoras/': {
+    '/case/motoniveladoras/': {
       key: 'motoniveladoras',
       name: 'Motoniveladoras',
       models: 3,
@@ -627,7 +769,7 @@ function setupProductCatalogTools() {
         { name: '845B', power: '174 hp', weight: '15.600 kg', destaque: 'Lâmina: 3,7 m' }
       ]
     },
-    '/produtos/pas-carregadeiras/': {
+    '/case/pas-carregadeiras/': {
       key: 'pas-carregadeiras',
       name: 'Pás-Carregadeiras',
       models: 4,
@@ -637,7 +779,7 @@ function setupProductCatalogTools() {
         { name: '821E', power: '204 hp', weight: '17.500 kg', destaque: 'Caçamba: até 3,4 m³' }
       ]
     },
-    '/produtos/retroescavadeiras/': {
+    '/case/retroescavadeiras/': {
       key: 'retroescavadeiras',
       name: 'Retroescavadeiras',
       models: 2,
@@ -647,7 +789,7 @@ function setupProductCatalogTools() {
         { name: '575SV', power: '85 hp', weight: '7.200 kg', destaque: 'Profundidade: 4,1 m' }
       ]
     },
-    '/produtos/rolo-compactador/': {
+    '/case/rolo-compactador/': {
       key: 'rolo-compactador',
       name: 'Rolo Compactador',
       models: 1,
@@ -656,7 +798,7 @@ function setupProductCatalogTools() {
         { name: '1107EX', power: '110 hp', weight: '13.200 kg', destaque: 'Tambor: 2,13 m' }
       ]
     },
-    '/produtos/tratores-de-esteiras/': {
+    '/case/tratores-de-esteiras/': {
       key: 'tratores-de-esteiras',
       name: 'Tratores de Esteiras',
       models: 5,
@@ -782,7 +924,7 @@ function setupProductCatalogTools() {
       comparePanel.classList.add('hidden')
       compareList.innerHTML = ''
       if (compareContact) {
-        compareContact.href = 'https://wa.me/5567999999999?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.'
+        compareContact.href = `${WHATSAPP_BASE_URL}?text=Ol%C3%A1%2C%20quero%20comparar%20linhas%20de%20m%C3%A1quinas%20CASE.`
       }
       return
     }
@@ -829,7 +971,7 @@ function setupProductCatalogTools() {
         return model?.name
       }).filter(Boolean)
       const whatsappText = encodeURIComponent(`Olá, quero comparar os modelos: ${selectedModels.join(', ')}.`)
-      compareContact.href = `https://wa.me/5567999999999?text=${whatsappText}`
+      compareContact.href = `${WHATSAPP_BASE_URL}?text=${whatsappText}`
     }
   }
 
@@ -907,7 +1049,9 @@ function setupProductCatalogTools() {
 
 function setupProductPageEnhancements() {
   const parts = window.location.pathname.split('/').filter(Boolean)
-  if (parts[0] !== 'produtos' || parts.length !== 3) return
+  const brandRoots = ['case', 'dynapac']
+  if (!brandRoots.includes(parts[0]) || parts.length !== 3) return
+  if (parts[0] === 'case' && parts[1] === 'catalogo') return
 
   const [, catSlug] = parts
   const main = document.querySelector('main')
@@ -1012,10 +1156,8 @@ function setupProductPageEnhancements() {
     ['Como recebo proposta comercial?', 'Envie o formulário com seu cenário e retornamos com recomendação técnica e condições comerciais.']
   ]
 
-  const firstCtaSection = [...main.querySelectorAll('section')].find((section) => (
-    section.textContent.includes('Solicitar Orçamento') &&
-    section.textContent.includes('Falar com Consultor')
-  ))
+  // Marcador fixo no gerador: procurar pelo texto do botão quebrava a cada ajuste de copy
+  const firstCtaSection = main.querySelector('section[data-product-cta]')
   if (!firstCtaSection) return
 
   if (!document.getElementById('product-fit-section')) {
@@ -1099,26 +1241,29 @@ function setupProductPageEnhancements() {
             </div>
             <div>
               <label class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2" for="product-lead-whatsapp">WhatsApp</label>
-              <input class="input-field" id="product-lead-whatsapp" name="telefone" required placeholder="(00) 00000-0000">
+              <input class="input-field" id="product-lead-whatsapp" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(00) 00000-0000">
             </div>
           </div>
           <div>
             <label class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2" for="product-lead-uso">Aplicação principal</label>
             <input class="input-field" id="product-lead-uso" name="uso" required placeholder="Ex.: terraplenagem pesada, locação, obras urbanas">
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Solicitar orçamento</button>
-            <a data-track="product_lead_whatsapp" href="https://wa.me/5567999999999?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
-              Falar no WhatsApp
-            </a>
+          <label class="flex items-start gap-3 pt-1 text-xs text-gray-400 leading-relaxed cursor-pointer">
+            <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[var(--color-case-yellow)]">
+            <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
+          </label>
+          <div class="pt-2">
+            <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Receber proposta no WhatsApp</button>
           </div>
           <p id="product-lead-feedback" role="status" aria-live="polite" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
+          ${document.body?.dataset?.brand === 'dynapac' ? '' : '<a data-track="product_consorcio_cta" href="/consorcio/" class="block text-center text-xs font-mono uppercase tracking-widest text-case-yellow hover:underline pt-1">Prefere comprar sem juros? Conheça o Consórcio CASE →</a>'}
         </form>
       </div>
     </div>
   `
 
   const productForm = document.getElementById('product-lead-form')
+  ensureLeadHoneypot(productForm)
   const productFeedback = document.getElementById('product-lead-feedback')
   productForm?.addEventListener('submit', async (event) => {
     event.preventDefault()
@@ -1127,7 +1272,19 @@ function setupProductPageEnhancements() {
     const payload = Object.fromEntries(formData.entries())
 
     if (!payload.nome || !payload.telefone || !payload.uso) {
-      if (productFeedback) productFeedback.textContent = 'Preencha os campos obrigatórios.'
+      if (productFeedback) {
+        productFeedback.textContent = 'Preencha os campos obrigatórios.'
+        playFeedbackPop(productFeedback)
+      }
+      return
+    }
+
+    if (!isValidLeadPhone(payload.telefone)) {
+      if (productFeedback) {
+        productFeedback.textContent = LEAD_PHONE_MESSAGE
+        playFeedbackPop(productFeedback)
+      }
+      productForm.querySelector('[name="telefone"]')?.focus()
       return
     }
 
@@ -1164,7 +1321,7 @@ function setupProductPageEnhancements() {
     const message = encodeURIComponent(
       `Olá, sou ${payload.nome}. Meu WhatsApp é ${payload.telefone}. Tenho interesse no modelo ${payload.modelo} para ${payload.uso}.${sourceSuffix}`
     )
-    window.open(`https://wa.me/5567999999999?text=${message}`, '_blank', 'noopener,noreferrer')
+    window.open(`${WHATSAPP_BASE_URL}?text=${message}`, '_blank', 'noopener,noreferrer')
     applyLeadSubmitFeedback(productFeedback, submitResult)
     if (shouldResetLeadForm(submitResult)) {
       productForm.reset()
@@ -1177,8 +1334,8 @@ function setupProductPageEnhancements() {
     sticky.className = 'product-sticky-cta'
     sticky.innerHTML = `
       <div class="product-sticky-inner">
-        <span class="product-sticky-label">Interessado em ${modelName}? Fale com especialista agora.</span>
-        <a class="btn btn-primary" href="#produto-contato">Solicitar proposta</a>
+        <span class="product-sticky-label">Interessado em ${modelName}? Fale com um consultor agora.</span>
+        <a class="btn btn-primary" data-track="product_sticky_whatsapp" href="${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`)}" target="_blank" rel="noopener noreferrer"><i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i> Falar no WhatsApp</a>
       </div>
     `
     document.body.appendChild(sticky)
@@ -1269,8 +1426,8 @@ function getBreadcrumbItems(url) {
 function setupSeoEnhancements() {
   const { origin, pathname } = window.location
   const url = `${origin}${pathname}`
-  const isGeneratedRoute = pathname === '/produtos/' || pathname.startsWith('/produtos/')
-  const isProductPage = pathname.split('/').filter(Boolean).length === 3 && pathname.startsWith('/produtos/')
+  const isGeneratedRoute = pathname === '/case/' || pathname.startsWith('/case/')
+  const isProductPage = pathname.split('/').filter(Boolean).length === 3 && pathname.startsWith('/case/')
   const pageTitle = document.querySelector('title')?.textContent || 'IBL Máquinas'
   const h1 = document.querySelector('h1')?.textContent?.trim() || ''
   const firstDescription = document.querySelector('main p')?.textContent?.trim() || ''
@@ -1361,52 +1518,17 @@ function setupUnitsMap() {
   const unitItems = [...document.querySelectorAll('.unit-item')]
   if (!mapEl || unitItems.length === 0) return
 
-  mapEl.innerHTML = `
-    <div class="unit-map-shell">
-      <span class="unit-map-shell__eyebrow">Cobertura IBL</span>
-      <h3 id="unit-map-title" class="unit-map-shell__title"></h3>
-      <p id="unit-map-subtitle" class="unit-map-shell__subtitle"></p>
-      <p id="unit-map-address" class="unit-map-shell__address"></p>
-      <div id="unit-map-states" class="unit-map-shell__states"></div>
-      <div class="unit-map-shell__stats">
-        <div class="unit-map-shell__stat">
-          <span class="unit-map-shell__stat-label">Estados</span>
-          <strong class="unit-map-shell__stat-value">6</strong>
-        </div>
-        <div class="unit-map-shell__stat">
-          <span class="unit-map-shell__stat-label">Lojas</span>
-          <strong class="unit-map-shell__stat-value">8</strong>
-        </div>
-      </div>
-      <a id="unit-map-link" class="unit-map-shell__link" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
-    </div>
-  `
-
-  const titleEl = document.getElementById('unit-map-title')
-  const subtitleEl = document.getElementById('unit-map-subtitle')
-  const addressEl = document.getElementById('unit-map-address')
-  const linkEl = document.getElementById('unit-map-link')
-  const statesEl = document.getElementById('unit-map-states')
-
-  const states = [...new Set(unitItems.map((item) => item.querySelector('p')?.textContent?.trim()).filter(Boolean))]
-  if (statesEl) {
-    statesEl.innerHTML = states
-      .map((state) => `<span class="unit-map-shell__state-pill">${state}</span>`)
-      .join('')
-  }
+  const LEAFLET_BASE = '/vendor/leaflet'
 
   function getUnitMeta(item) {
     const unitId = item.getAttribute('data-unit-id')
     const lat = Number(item.getAttribute('data-lat'))
     const lng = Number(item.getAttribute('data-lng'))
     const address = item.getAttribute('data-address') || ''
-    const title = item.querySelector('h4')?.textContent?.trim() || 'Unidade'
-    const subtitle = item.querySelector('p')?.textContent?.trim() || ''
-    const mapsUrl = Number.isNaN(lat) || Number.isNaN(lng)
-      ? ''
-      : `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-
-    return { unitId, address, title, subtitle, mapsUrl }
+    const title = item.querySelector('h3, h4')?.textContent?.trim() || 'Unidade'
+    const hasCoords = !Number.isNaN(lat) && !Number.isNaN(lng)
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`IBL Máquinas - ${address}`)}`
+    return { unitId, lat, lng, address, title, hasCoords, mapsUrl }
   }
 
   function setActive(unitId) {
@@ -1417,230 +1539,142 @@ function setupUnitsMap() {
     })
   }
 
-  function updateSummary(item) {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
-
-    if (titleEl) titleEl.textContent = meta.title
-    if (subtitleEl) subtitleEl.textContent = meta.subtitle
-    if (addressEl) addressEl.textContent = meta.address
-    if (linkEl) linkEl.href = meta.mapsUrl
-  }
-
-  function activateUnit(item) {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
-
-    setActive(meta.unitId)
-    updateSummary(item)
-    trackEvent('unit_map_focus', {
-      page_path: window.location.pathname,
-      unit_id: meta.unitId
-    })
-  }
-
-  unitItems.forEach((item) => {
-    const meta = getUnitMeta(item)
-    if (!meta.unitId) return
-
-    item.tabIndex = 0
-    item.setAttribute('role', 'button')
-    item.setAttribute('aria-label', `Selecionar unidade ${meta.title}`)
-    item.setAttribute('aria-controls', 'unit-map')
-    item.setAttribute('aria-pressed', 'false')
-    item.addEventListener('click', () => activateUnit(item))
-    item.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return
-      event.preventDefault()
-      activateUnit(item)
-    })
-  })
-
-  const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
-  if (defaultItem) activateUnit(defaultItem)
-}
-
-function setupChatWidget() {
-  const widget = document.getElementById('chat-widget')
-  const trigger = document.getElementById('chat-widget-trigger')
-  const panel = document.getElementById('chat-widget-panel')
-  const messages = document.getElementById('chat-widget-messages')
-  const form = document.getElementById('chat-widget-form')
-  const input = document.getElementById('chat-widget-input')
-
-  if (
-    !(widget instanceof HTMLElement) ||
-    !(trigger instanceof HTMLButtonElement) ||
-    !(panel instanceof HTMLElement) ||
-    !(messages instanceof HTMLElement) ||
-    !(form instanceof HTMLFormElement) ||
-    !(input instanceof HTMLInputElement)
-  ) {
-    return
-  }
-
-  const hasProductStickyCta = !!document.querySelector('.product-sticky-cta')
-  widget.classList.add(hasProductStickyCta ? 'chat-widget--offset' : 'chat-widget--docked')
-
-  let open = false
-  let replyCursor = 0
-  const agentReplies = [
-    'Perfeito. Qual estado e cidade da sua operação?',
-    'Entendi. Você precisa de máquina nova, seminova ou locação?',
-    'Posso te indicar o modelo ideal e já acelerar a proposta.',
-    'Se quiser, já te chamo no WhatsApp para fechar mais rápido.'
-  ]
-
-  function setOpen(nextOpen) {
-    open = nextOpen
-    widget.classList.toggle('is-open', open)
-    trigger.setAttribute('aria-expanded', String(open))
-    if (open) {
-      window.setTimeout(() => input.focus(), 120)
-    }
-  }
-
-  function nowTime() {
-    return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-  }
-
-  function appendMessage(author, text) {
-    const isAgent = author === 'agent'
-    const row = document.createElement('div')
-    row.className = `chat-msg-row ${isAgent ? 'chat-msg-row-agent' : 'chat-msg-row-user'}`
-
-    const avatar = document.createElement('div')
-    avatar.className = 'chat-avatar'
-    avatar.textContent = isAgent ? 'IBL' : 'VC'
-
-    const stack = document.createElement('div')
-    stack.className = 'chat-msg-stack'
-
-    const bubble = document.createElement('div')
-    bubble.className = `chat-msg-bubble ${isAgent ? 'chat-msg-bubble-agent' : 'chat-msg-bubble-user'}`
-    bubble.textContent = text
-
-    const time = document.createElement('div')
-    time.className = 'chat-msg-time'
-    time.textContent = nowTime()
-
-    stack.appendChild(bubble)
-    stack.appendChild(time)
-
-    if (isAgent) {
-      row.appendChild(avatar)
-      row.appendChild(stack)
-    } else {
-      row.appendChild(stack)
-      row.appendChild(avatar)
-    }
-
-    messages.appendChild(row)
-    messages.scrollTop = messages.scrollHeight
-  }
-
-  function getAgentReply(userText) {
-    const value = userText.toLowerCase()
-    if (value.includes('preço') || value.includes('preco') || value.includes('orçamento') || value.includes('orcamento')) {
-      return 'Consigo sim. Me passa nome e telefone que já envio uma proposta inicial.'
-    }
-    if (value.includes('whatsapp') || value.includes('zap')) {
-      return 'Perfeito. Vou te redirecionar para o WhatsApp da equipe IBL agora.'
-    }
-    const reply = agentReplies[replyCursor % agentReplies.length]
-    replyCursor += 1
-    return reply
-  }
-
-  trigger.addEventListener('click', (event) => {
-    event.stopPropagation()
-    setOpen(!open)
-  })
-
-  document.addEventListener('click', (event) => {
-    if (!open) return
-    const target = event.target
-    if (!(target instanceof Node)) return
-    if (widget.contains(target)) return
-    setOpen(false)
-  })
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && open) {
-      setOpen(false)
-      trigger.focus()
-    }
-  })
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const value = input.value.trim()
-    if (!value) return
-
-    appendMessage('user', value)
-    input.value = ''
-
-    const reply = getAgentReply(value)
-    window.setTimeout(() => {
-      appendMessage('agent', reply)
-      if (value.toLowerCase().includes('whatsapp') || value.toLowerCase().includes('zap')) {
-        const text = encodeURIComponent(`Olá, vim do chat do site IBL e quero falar com um consultor. Minha mensagem: "${value}"`)
-        window.open(`https://wa.me/5567999999999?text=${text}`, '_blank', 'noopener,noreferrer')
+  function ensureLeaflet() {
+    return new Promise((resolve, reject) => {
+      if (window.L) {
+        resolve(window.L)
+        return
       }
-    }, 650)
-  })
-
-  panel.querySelectorAll('a').forEach((anchor) => {
-    anchor.addEventListener('click', () => {
-      setOpen(false)
+      if (!document.querySelector('link[data-leaflet]')) {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = `${LEAFLET_BASE}/leaflet.css`
+        link.setAttribute('data-leaflet', '')
+        document.head.appendChild(link)
+      }
+      const script = document.createElement('script')
+      script.src = `${LEAFLET_BASE}/leaflet.js`
+      script.onload = () => resolve(window.L)
+      script.onerror = () => reject(new Error('leaflet_load_failed'))
+      document.head.appendChild(script)
     })
-  })
+  }
+
+  function renderFallback() {
+    mapEl.innerHTML = `
+      <div class="unit-map-fallback">
+        <span class="font-mono text-xs uppercase tracking-widest text-case-yellow">Cobertura IBL</span>
+        <p class="text-gray-300 text-sm leading-relaxed">8 lojas em 6 estados do Norte e Centro-Oeste. Selecione uma unidade ao lado para ver endereço e telefone.</p>
+      </div>
+    `
+  }
+
+  function wireItems(activateUnit) {
+    unitItems.forEach((item) => {
+      const meta = getUnitMeta(item)
+      if (!meta.unitId) return
+      item.tabIndex = 0
+      item.setAttribute('role', 'button')
+      item.setAttribute('aria-controls', 'unit-map')
+      item.setAttribute('aria-pressed', 'false')
+      item.addEventListener('click', () => activateUnit(item))
+      item.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        activateUnit(item)
+      })
+
+      const infoBlock = item.querySelector('h3, h4')?.parentElement
+      if (infoBlock && !infoBlock.querySelector('.unit-maps-link')) {
+        const mapsLink = document.createElement('a')
+        mapsLink.href = meta.mapsUrl
+        mapsLink.target = '_blank'
+        mapsLink.rel = 'noopener noreferrer'
+        mapsLink.className = 'unit-maps-link'
+        mapsLink.setAttribute('data-track', 'unit_maps_link')
+        mapsLink.setAttribute('aria-label', `Abrir ${meta.title} no Google Maps`)
+        mapsLink.textContent = 'Google Maps ↗'
+        mapsLink.addEventListener('click', (event) => event.stopPropagation())
+        infoBlock.appendChild(mapsLink)
+      }
+    })
+  }
+
+  ensureLeaflet()
+    .then((L) => {
+      mapEl.innerHTML = ''
+      const map = L.map(mapEl, { scrollWheelZoom: false, attributionControl: true })
+      const tileUrlForTheme = () => document.documentElement.dataset.theme === 'light'
+        ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+      const tiles = L.tileLayer(tileUrlForTheme(), {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 18
+      }).addTo(map)
+      window.addEventListener('ibl:theme-change', () => tiles.setUrl(tileUrlForTheme()))
+
+      const markers = new Map()
+      const bounds = []
+      unitItems.forEach((item) => {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId || !meta.hasCoords) return
+        const icon = L.divIcon({
+          className: 'unit-marker',
+          html: '<span class="unit-marker__dot"></span>',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8]
+        })
+        const marker = L.marker([meta.lat, meta.lng], { icon, title: meta.title }).addTo(map)
+        marker.bindPopup(`<strong>${meta.title}</strong><br>${meta.address}<br><a class="unit-popup-link" href="${meta.mapsUrl}" target="_blank" rel="noopener noreferrer">Abrir no Google Maps →</a>`)
+        marker.on('click', () => setActive(meta.unitId))
+        markers.set(meta.unitId, marker)
+        bounds.push([meta.lat, meta.lng])
+      })
+      if (bounds.length) map.fitBounds(bounds, { padding: [36, 36] })
+
+      function activateUnit(item) {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId) return
+        setActive(meta.unitId)
+        const marker = markers.get(meta.unitId)
+        if (marker) {
+          map.flyTo(marker.getLatLng(), 11, { duration: 1.0 })
+          marker.openPopup()
+        }
+        trackEvent('unit_map_focus', {
+          page_path: window.location.pathname,
+          unit_id: meta.unitId
+        })
+      }
+
+      wireItems(activateUnit)
+
+      const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
+      if (defaultItem) setActive(getUnitMeta(defaultItem).unitId)
+    })
+    .catch(() => {
+      renderFallback()
+      wireItems((item) => {
+        const meta = getUnitMeta(item)
+        if (!meta.unitId) return
+        setActive(meta.unitId)
+        trackEvent('unit_map_focus', {
+          page_path: window.location.pathname,
+          unit_id: meta.unitId
+        })
+      })
+    })
 }
+
 
 // === Machine Showcase ===
-const HERO_STAGE_DEFAULTS = {
-  scale: 1,
-  translateX: 0,
-  translateY: 0,
-  objectPosition: 'center 50%',
-  badgeScale: 1,
-  badgeTranslateX: 0,
-  badgeTranslateY: 0,
-  titleTranslateX: 0,
-  titleTranslateY: 0,
-  metaAlign: 'right',
-  techCardMode: 'right'
-}
-
-function formatPx(value) {
-  return `${value}px`
-}
-
-function normalizeHeroStage(stage = {}) {
-  return {
-    ...HERO_STAGE_DEFAULTS,
-    ...stage
-  }
-}
-
-function setStyleVariables(target, variables) {
-  if (!(target instanceof HTMLElement)) return
-
-  Object.entries(variables).forEach(([name, value]) => {
-    target.style.setProperty(name, String(value))
-  })
-}
-
-const showcaseMachines = [
-  { title: '580N',   model: '580N Series 2',  cat: 'Retroescavadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '96 hp',         s2l: 'PESO OPERACIONAL',  s2v: '7.540 kg',   s3l: 'MOTOR',      s3v: 'CNH S8000',                 s4l: 'CILINDRADA', s4v: '3,9 L',            s5l: 'PNEU DIANT.', s5v: '12,5x18',      s6l: 'TANQUE', s6v: '163 L', img: '/case-assets/fotos-processed/580n-series2.svg',                  href: '/produtos/retroescavadeiras/', stage: { scale: 1.03, translateX: 0, translateY: 4, objectPosition: 'center 51%', badgeScale: 1, badgeTranslateX: 0, badgeTranslateY: 0, titleTranslateX: -6, titleTranslateY: -4, metaAlign: 'right', techCardMode: 'right' } },
-  { title: 'CX220C', model: 'CX220C Série 2', cat: 'Escavadeiras Hidráulicas', s1l: 'POTÊNCIA LÍQUIDA', s1v: '147,8 hp',    s2l: 'PESO OPERACIONAL',  s2v: '22.149 kg',  s3l: 'MOTOR',      s3v: 'FPT NEF6',                  s4l: 'CILINDRADA', s4v: '6.728 cc',         s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '90 A', img: '/case-assets/fotos-processed/cx220c.svg',                        href: '/produtos/escavadeiras-hidraulicas/', stage: { scale: 1, translateX: -10, translateY: 6, objectPosition: 'center 45%', badgeScale: 1, badgeTranslateX: 14, badgeTranslateY: -2, titleTranslateX: 18, titleTranslateY: -10, metaAlign: 'right', techCardMode: 'right' } },
-  { title: 'W20G',   model: 'W20G',           cat: 'Pás Carregadeiras',  s1l: 'CARGA TOMBAMENTO', s1v: '6.108 kg',    s2l: 'VOLUME CAÇAMBA',    s2v: '1,7 a 5 m³', s3l: 'MOTOR',      s3v: 'FPT F4GE9684T',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TENSÃO',     s5v: '24 V',         s6l: 'ALTERNADOR', s6v: '70 A', img: '/case-assets/fotos-processed/w20g.svg',                          href: '/produtos/pas-carregadeiras/', stage: { scale: 1.04, translateX: 6, translateY: 4, objectPosition: 'center 51%', badgeScale: 0.98, badgeTranslateX: -10, badgeTranslateY: 4, titleTranslateX: -18, titleTranslateY: 2, metaAlign: 'left', techCardMode: 'left' } },
-  { title: 'SV300B', model: 'SV300B',         cat: 'Minicarregadeiras',  s1l: 'POTÊNCIA BRUTA', s1v: '90 hp',         s2l: 'PESO OPERACIONAL',  s2v: '3.765 kg',   s3l: 'TORQUE MÁX.', s3v: '340 Nm (1.400 rpm)',        s4l: 'DESLOCAMENTO', s4v: '3,2 L',          s5l: 'VAZÃO BOMBA', s5v: '110 l/min',    s6l: 'PRESSÃO ALÍVIO', s6v: '360 bar', img: '/case-assets/minicarregadeiras/sv300b/sv300b-nobg.png',          href: '/produtos/minicarregadeiras/', stage: { scale: 1.06, translateX: 4, translateY: 6, objectPosition: 'center 53%', badgeScale: 1.01, badgeTranslateX: 8, badgeTranslateY: 6, titleTranslateX: -22, titleTranslateY: -6, metaAlign: 'right', techCardMode: 'right' } },
-  { title: '885B',   model: '885B Series 2',  cat: 'Motoniveladoras',    s1l: 'POTÊNCIA BRUTA', s1v: '220/234 hp',    s2l: 'PESO OPERACIONAL',  s2v: '18.120 kg',  s3l: 'TORQUE MÁX.', s3v: '864/924 Nm',               s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'MARCHAS',    s5v: '6F / 3R',      s6l: 'FLUXO HIDR.', s6v: '186 l/min', img: '/case-assets/fotos-processed/885b.svg',                          href: '/produtos/motoniveladoras/', stage: { scale: 0.98, translateX: 10, translateY: 4, objectPosition: 'center 47%', badgeScale: 1, badgeTranslateX: -4, badgeTranslateY: -2, titleTranslateX: -20, titleTranslateY: 0, metaAlign: 'left', techCardMode: 'left' } },
-  { title: 'CX22D',  model: 'CX22D',          cat: 'Miniescavadeiras',   s1l: 'POTÊNCIA BRUTA', s1v: '20,9 hp',       s2l: 'PESO OPERACIONAL',  s2v: '2.190 kg',   s3l: 'MOTOR',      s3v: 'Kubota D1703',              s4l: 'DESLOCAMENTO', s4v: '1,65 L',         s5l: 'VEL. GIRO',  s5v: '11 rpm',       s6l: 'TANQUE COMB.', s6v: '45 L', img: '/case-assets/fotos-processed/cx22d.svg',                         href: '/produtos/miniescavadeiras/', stage: { scale: 1.09, translateX: -4, translateY: 2, objectPosition: 'center 48%', badgeScale: 0.99, badgeTranslateX: 12, badgeTranslateY: 2, titleTranslateX: 16, titleTranslateY: -8, metaAlign: 'right', techCardMode: 'right' } },
-  { title: '1107EX', model: '1107EX',         cat: 'Rolo Compactador',   s1l: 'POTÊNCIA BRUTA', s1v: '110 hp',        s2l: 'TORQUE MÁXIMO',     s2v: '430 Nm',     s3l: 'PESO PATA',  s3v: '13.200 kg',                s4l: 'PESO ROLO LISO', s4v: '11.380 kg',     s5l: 'EIXOS',       s5v: '3.003 mm',     s6l: 'LARGURA', s6v: '2.324 mm', img: '/case-assets/rolo-compactador/1107ex/1107ex-nobg.png',           href: '/produtos/rolo-compactador/', stage: { scale: 1, translateX: 2, translateY: 8, objectPosition: 'center 55%', badgeScale: 1.01, badgeTranslateX: 6, badgeTranslateY: -4, titleTranslateX: -24, titleTranslateY: 4, metaAlign: 'left', techCardMode: 'left' } },
-  { title: '2050M',  model: '2050M',          cat: 'Tratores Esteiras',  s1l: 'POTÊNCIA BRUTA', s1v: '232 hp',         s2l: 'PESO OPERACIONAL',  s2v: '20.599 kg',  s3l: 'MOTOR',      s3v: 'FPT F4HE96848',             s4l: 'CILINDRADA', s4v: '6,7 L',            s5l: 'TRANSMISSÃO', s5v: 'Hidrostática', s6l: 'TANQUE', s6v: '405 L', img: '/case-assets/fotos-processed/2050m.svg',                         href: '/produtos/tratores-de-esteiras/', stage: { scale: 1.03, translateX: -6, translateY: 4, objectPosition: 'center 50%', badgeScale: 1, badgeTranslateX: 6, badgeTranslateY: 4, titleTranslateX: 20, titleTranslateY: -4, metaAlign: 'right', techCardMode: 'right' } },
-]
+// As imagens do hero saem de scripts/hero-normalizar.py: mesmo canvas, mesma
+// linha de chão e porte relativo já embutidos. Trocar de máquina é só trocar
+// a imagem e os textos — não há ajuste de posição por modelo.
+// Gerado por generate_pages.py a partir das fichas (data/hero-machines.json).
+// Não editar à mão: mude a ficha ou a lista HERO_MACHINES do gerador.
+const showcaseMachines = heroMachines
 
 let showcaseImageTimer = null
 let showcaseStateRevision = 0
@@ -1654,53 +1688,7 @@ function scheduleHeroReady() {
 }
 
 function applyShowcaseState(m, { animate = true } = {}) {
-  const stage = normalizeHeroStage(m.stage)
-  const shell = document.querySelector('.entry-hero-shell')
   const img = document.getElementById('showcase-machine')
-  const badge = document.getElementById('hero-rotating-badge-wrap')
-  const title = document.getElementById('showcase-title')
-  const techCard = document.getElementById('hero-tech-card')
-  const meta = document.getElementById('hero-model-meta')
-
-  setStyleVariables(shell, {
-    '--hero-machine-scale': stage.scale,
-    '--hero-machine-x': formatPx(stage.translateX),
-    '--hero-machine-y': formatPx(stage.translateY),
-    '--hero-machine-object-position': stage.objectPosition,
-    '--hero-badge-scale': stage.badgeScale,
-    '--hero-badge-x': formatPx(stage.badgeTranslateX),
-    '--hero-badge-y': formatPx(stage.badgeTranslateY),
-    '--hero-title-x': formatPx(stage.titleTranslateX),
-    '--hero-title-y': formatPx(stage.titleTranslateY),
-    '--hero-meta-align': stage.metaAlign,
-    '--hero-tech-card-mode': stage.techCardMode
-  })
-
-  setStyleVariables(img, {
-    '--hero-machine-scale': stage.scale,
-    '--hero-machine-x': formatPx(stage.translateX),
-    '--hero-machine-y': formatPx(stage.translateY),
-    '--hero-machine-object-position': stage.objectPosition
-  })
-
-  setStyleVariables(badge, {
-    '--hero-badge-scale': stage.badgeScale,
-    '--hero-badge-x': formatPx(stage.badgeTranslateX),
-    '--hero-badge-y': formatPx(stage.badgeTranslateY)
-  })
-
-  setStyleVariables(title, {
-    '--hero-title-x': formatPx(stage.titleTranslateX),
-    '--hero-title-y': formatPx(stage.titleTranslateY)
-  })
-
-  setStyleVariables(techCard, {
-    '--hero-tech-card-mode': stage.techCardMode
-  })
-
-  setStyleVariables(meta, {
-    '--hero-meta-align': stage.metaAlign
-  })
 
   showcaseStateRevision += 1
   const revision = showcaseStateRevision
@@ -1739,27 +1727,32 @@ function switchShowcase(idx, options = {}) {
 
   const m = showcaseMachines[idx] || showcaseMachines[0]
   applyShowcaseState(m, { animate })
-  setText('showcase-title', m.title)
   setText('showcase-model', m.model)
   setText('showcase-cat', m.cat)
-  document.getElementById('showcase-link').href = m.href
-  setText('tech-model-value', m.model)
+  const showcaseLink = document.getElementById('showcase-link')
+  if (showcaseLink) showcaseLink.href = m.page
   setText('tech-cat-value', m.cat)
-  setText('tech-spec-a-label', m.s1l)
-  setText('tech-spec-a-value', m.s1v)
-  setText('tech-spec-b-label', m.s2l)
-  setText('tech-spec-b-value', m.s2v)
-  setText('tech-spec-c-label', m.s3l)
-  setText('tech-spec-c-value', m.s3v)
-  setText('tech-spec-d-label', m.s4l)
-  setText('tech-spec-d-value', m.s4v)
-  setText('tech-spec-e-label', m.s5l)
-  setText('tech-spec-e-value', m.s5v)
-  setText('tech-spec-f-label', m.s6l)
-  setText('tech-spec-f-value', m.s6v)
+  ;['a', 'b', 'c'].forEach((slot, i) => {
+    setText(`tech-spec-${slot}-label`, m.specs[i]?.label || '')
+    setText(`tech-spec-${slot}-value`, m.specs[i]?.value || '')
+  })
+  const fullLink = document.getElementById('tech-full-link')
+  if (fullLink) fullLink.href = m.page
+  const heroWhatsapp = document.getElementById('hero-whatsapp')
+  if (heroWhatsapp) heroWhatsapp.href = `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse na ${m.model}.`)}`
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {
     btn.classList.toggle('is-active', i === idx)
   })
+  // No celular o seletor é uma faixa horizontal: mantém a linha ativa à vista
+  // rolando só a faixa (scrollIntoView rolaria a página inteira).
+  const strip = document.getElementById('cat-selector')
+  const activeBtn = strip?.querySelector('.cat-btn.is-active')
+  if (strip && activeBtn && strip.scrollWidth > strip.clientWidth) {
+    strip.scrollTo({
+      left: activeBtn.offsetLeft - (strip.clientWidth - activeBtn.offsetWidth) / 2,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+    })
+  }
   if (track) {
     trackEvent('showcase_model_change', {
       page_path: window.location.pathname,
@@ -1777,7 +1770,7 @@ switchShowcase(0, { animate: false, track: false })
 scheduleHeroReady()
 
 initAttribution()
-initAnalytics()
+setupConsent()
 trackEvent('page_view_custom', { page_path: window.location.pathname })
 setupScrollDepthTracking()
 setupClickTracking()
@@ -1787,4 +1780,146 @@ setupProductPageEnhancements()
 setupSeoEnhancements()
 setupLeadOpsMonitor()
 setupUnitsMap()
-setupChatWidget()
+
+// ─── Tema claro/escuro (dark é o padrão) ─────────────────────────────────────
+function initThemeToggle() {
+  const applyIcon = () => {
+    const isLight = document.documentElement.dataset.theme === 'light'
+    document.querySelectorAll('[data-theme-toggle] i').forEach((icon) => {
+      icon.className = isLight ? 'ph-bold ph-moon text-lg' : 'ph-bold ph-sun text-lg'
+    })
+    document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+      btn.setAttribute('aria-label', isLight ? 'Ativar modo escuro' : 'Ativar modo claro')
+      btn.title = isLight ? 'Modo escuro' : 'Modo claro'
+    })
+  }
+  applyIcon()
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'
+      document.documentElement.dataset.theme = next
+      try { localStorage.setItem('ibl_theme', next) } catch (e) {}
+      window.dispatchEvent(new CustomEvent('ibl:theme-change', { detail: { theme: next } }))
+      applyIcon()
+      trackEvent('theme_toggle', { theme: next, page_path: window.location.pathname })
+    })
+  })
+}
+
+/** Usuário pediu menos movimento no sistema operacional. */
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
+}
+
+/** Números que sobem, passam levemente do alvo e assentam.
+ *  Marcação: <span data-count-to="108">108</span>. */
+function setupCountUp() {
+  const elements = [...document.querySelectorAll('[data-count-to]')]
+  if (!elements.length) return
+
+  const format = new Intl.NumberFormat('pt-BR')
+  // Desaceleração sem ultrapassar o alvo: um catálogo não pode exibir uma
+  // quantidade falsa, nem por um quadro. O peso vem do pulo de escala no fim.
+  const settle = (t) => 1 - Math.pow(1 - t, 3)
+
+  const run = (el) => {
+    const target = Number(el.dataset.countTo)
+    if (!Number.isFinite(target)) return
+    if (prefersReducedMotion() || typeof requestAnimationFrame !== 'function') {
+      el.textContent = format.format(target)
+      return
+    }
+    const duration = 900
+    const started = performance.now()
+    const step = (now) => {
+      const t = Math.min(1, (now - started) / duration)
+      const value = t >= 1 ? target : Math.round(target * settle(t))
+      el.textContent = format.format(value)
+      if (t < 1) {
+        requestAnimationFrame(step)
+        return
+      }
+      el.classList.add('count-settled')
+    }
+    requestAnimationFrame(step)
+  }
+
+  if (typeof IntersectionObserver !== 'function') {
+    elements.forEach(run)
+    return
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+      observer.unobserve(entry.target)
+      run(entry.target)
+    })
+  }, { threshold: 0.6 })
+  elements.forEach((el) => observer.observe(el))
+}
+
+/** Traço que desliza até o item da navegação sob o cursor e
+ *  volta para a seção atual ao sair. */
+function setupNavGlide() {
+  const nav = document.querySelector('header nav[aria-label="Navegação principal"]')
+  if (!nav) return
+  const links = [...nav.querySelectorAll('a[href]')]
+  if (!links.length) return
+
+  nav.style.position = 'relative'
+  const pill = document.createElement('span')
+  pill.className = 'nav-glide'
+  pill.setAttribute('aria-hidden', 'true')
+  nav.appendChild(pill)
+
+  const path = window.location.pathname
+  const current = links.find((link) => {
+    const target = link.getAttribute('href') || ''
+    return target.length > 1 && target.startsWith('/') && path.startsWith(target)
+  }) || null
+
+  const moveTo = (el, animate) => {
+    if (!el) {
+      pill.style.opacity = '0'
+      return
+    }
+    const navBox = nav.getBoundingClientRect()
+    const box = el.getBoundingClientRect()
+    if (!box.width) return
+    pill.style.transition = animate && !prefersReducedMotion()
+      ? 'transform 320ms var(--ds-motion-glide), width 320ms var(--ds-motion-glide), opacity 160ms ease'
+      : 'none'
+    pill.style.width = `${box.width}px`
+    pill.style.transform = `translateX(${box.left - navBox.left}px)`
+    pill.style.opacity = '1'
+  }
+
+  moveTo(current, false)
+  links.forEach((link) => {
+    link.addEventListener('mouseenter', () => moveTo(link, true))
+    link.addEventListener('focus', () => moveTo(link, true))
+  })
+  nav.addEventListener('mouseleave', () => moveTo(current, true))
+  window.addEventListener('resize', () => moveTo(current, false))
+}
+
+/** Resposta tátil no clique das ações que geram negócio.
+ *  Marca por função (WhatsApp, orçamento, envio, CTA rastreada) porque as
+ *  páginas geradas usam classes utilitárias, sem um seletor comum de botão. */
+function setupPressFeedback() {
+  const seletores = [
+    '.btn',
+    '.footer-cta',
+    '[data-track]',
+    'button[type="submit"]',
+    'a[href^="https://wa.me/"]',
+    'a[href*="#captacao-lead"]',
+    'a[href*="#consorcio-lead"]'
+  ].join(',')
+  document.querySelectorAll(seletores).forEach((el) => el.classList.add('press-target'))
+}
+
+setupPressFeedback()
+setupCountUp()
+setupNavGlide()
+initThemeToggle()

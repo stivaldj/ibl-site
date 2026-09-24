@@ -1,0 +1,1686 @@
+{
+  "marca": "Dynapac",
+  "fonte": "dynapac.com/br-pt (catálogo nacional; apenas modelos ativos)",
+  "coletado_em": "2026-09-16",
+  "categorias": [
+    {
+      "nome": "Compactação",
+      "slug": "compactacao",
+      "subcategorias": [
+        {
+          "nome": "Rolos de Um Cilindro para Solos",
+          "slug": "rolos-de-um-cilindro-para-solos",
+          "modelos": [
+            {
+              "modelo": "CA1300D",
+              "nome_completo": "Dynapac CA1300D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA1300D com peso operacional de 4.950 kg e largura de trabalho de 1.370 mm. Destaques: EcoMode, Stage IV / TIER 4f, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "4.950 kg",
+                "Largura de trabalho": "1.370 mm",
+                "Diâmetro do cilindro": "1.000 mm",
+                "Potência": "55 kW (75 hp) @ 2.200 rpm",
+                "Carga estática linear": "13 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac%20CA1300D%20front%20left%20side%2001.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca1300d",
+              "slug": "ca1300d"
+            },
+            {
+              "modelo": "CA1400D",
+              "nome_completo": "Dynapac CA1400D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA1400D com peso operacional de 6.650 kg e largura de trabalho de 1676 mm. Destaques: EcoMode, Stage IV / TIER 4f, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "6.650 kg",
+                "Largura de trabalho": "1676 mm",
+                "Diâmetro do cilindro": "1219 mm",
+                "Potência": "55 kW (75 hp) @ 2.200 rpm",
+                "Carga estática linear": "20,0 kg/cm",
+                "Largura de compactação": "1.676 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac%20CA1400D%20front%20left%20side%2001.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca1400d",
+              "slug": "ca1400d"
+            },
+            {
+              "modelo": "CA15AD Rhino",
+              "nome_completo": "Dynapac CA15AD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA15AD Rhino com peso operacional de 6.200 kg e largura de trabalho de 1.680 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Peso operacional": "6.200 kg",
+                "Largura de trabalho": "1.680 mm",
+                "Diâmetro do cilindro": "1.220 mm",
+                "Potência": "55 kW (75 hp)@ 2.200 rpm",
+                "Carga estática linear": "20 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/CA15AD_left_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca15ad-rhino",
+              "slug": "ca15ad-rhino"
+            },
+            {
+              "modelo": "CA15D Rhino",
+              "nome_completo": "Dynapac CA15D Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA15D Rhino com largura de trabalho de 1680 mm.",
+              "specs": {
+                "Largura de trabalho": "1680 mm",
+                "Diâmetro do cilindro": "1220 mm",
+                "Potência": "55 kW (75 hp)@ 2.200 rpm",
+                "Carga estática linear": "20 kg/cm",
+                "Largura de compactação": "1.680 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA15D_front01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca15d",
+              "slug": "ca15d-rhino"
+            },
+            {
+              "modelo": "CA15PD Rhino",
+              "nome_completo": "Dynapac CA15PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA15PD Rhino com largura de trabalho de 1680 mm.",
+              "specs": {
+                "Largura de trabalho": "1680 mm",
+                "Diâmetro do cilindro": "1210 mm",
+                "Potência": "55 kW (75 hp) @ 2.200 rpm",
+                "Carga estática linear": "20 kg/cm",
+                "Largura de compactação": "1.680 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA15PD_front01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca15pd",
+              "slug": "ca15pd-rhino"
+            },
+            {
+              "modelo": "CA2500D",
+              "nome_completo": "Dynapac CA2500D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA2500D com peso operacional de 10.100 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "10.100 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "89 kW (120 hp) @ 2.200 rpm",
+                "Carga estática linear": "26 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA2500D_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca2500d25",
+              "slug": "ca2500d"
+            },
+            {
+              "modelo": "CA25D Rhino",
+              "nome_completo": "Dynapac CA25D Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA25D Rhino com peso operacional de 10.400 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "10.400 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "100 kW (134 hp) @ 2200 rpm",
+                "Carga estática linear": "26 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Listing%20images/ca25d_rhino.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca25d",
+              "slug": "ca25d-rhino"
+            },
+            {
+              "modelo": "CA25PD Rhino",
+              "nome_completo": "Dynapac CA25PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA25PD Rhino com peso operacional de 10.600 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "10.600 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.694 mm",
+                "Potência": "100 kW (150 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca25pd-rhino2",
+              "slug": "ca25pd-rhino"
+            },
+            {
+              "modelo": "CA305 Rhino",
+              "nome_completo": "Dynapac CA305 Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA305 Rhino com peso operacional de 11.200 kg e largura de trabalho de 2.130 mm.",
+              "specs": {
+                "Peso operacional": "11.200 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "105 hp",
+                "Carga estática linear": "31 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Dynapac_CA305.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca305",
+              "slug": "ca305-rhino"
+            },
+            {
+              "modelo": "CA30D Rhino",
+              "nome_completo": "Dynapac CA30D Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA30D Rhino com peso operacional de 11.200 kg e largura de trabalho de 2130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "11.200 kg",
+                "Largura de trabalho": "2130 mm",
+                "Diâmetro do cilindro": "1500 mm",
+                "Potência": "100 kW (134 hp) @ 2200 rpm",
+                "Carga estática linear": "30 kg/cm",
+                "Largura de compactação": "2.130 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Listing%20images/ca25d_rhino.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca30d",
+              "slug": "ca30d-rhino"
+            },
+            {
+              "modelo": "CA30PD Rhino",
+              "nome_completo": "Dynapac CA30PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA30PD Rhino com peso operacional de 11.400 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "11.400 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.694 mm",
+                "Potência": "100 kW (134 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca30pd",
+              "slug": "ca30pd-rhino"
+            },
+            {
+              "modelo": "CA3500D HC",
+              "nome_completo": "Dynapac CA3500D HC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA3500D HC com peso operacional de 12.000 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "12.000 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.520 mm",
+                "Potência": "100 kW (135 hp) @ 2.200 rpm",
+                "Carga estática linear": "36 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA3500D-HC_front_side02.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca3500d-hc",
+              "slug": "ca3500d-hc"
+            },
+            {
+              "modelo": "CA3500PD",
+              "nome_completo": "Dynapac CA3500PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA3500PD com peso operacional de 11.900 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "11.900 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "100 kW (135 hp) @ 2.200 rpm",
+                "Carga estática linear": "36 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA3500PD_side02.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca3500pd",
+              "slug": "ca3500pd"
+            },
+            {
+              "modelo": "CA3500PD HC",
+              "nome_completo": "Dynapac CA3500PD HC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA3500PD HC com peso operacional de 12.000 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "12.000 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "100 kW (135 hp) @ 2.200 rpm",
+                "Carga estática linear": "37 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA3500PD-HC_side02.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca3500pd-hc",
+              "slug": "ca3500pd-hc"
+            },
+            {
+              "modelo": "CA35D Rhino",
+              "nome_completo": "Dynapac CA35D Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA35D Rhino com peso operacional de 12.200 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "12.200 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.510 mm",
+                "Potência": "100 kW (134 hp) @ 2200 rpm",
+                "Carga estática linear": "35 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca35d",
+              "slug": "ca35d-rhino"
+            },
+            {
+              "modelo": "CA35PD Rhino",
+              "nome_completo": "Dynapac CA35PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA35PD Rhino com peso operacional de 12.600 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "12.600 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.694 mm",
+                "Potência": "100 kW (150 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA25PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca35pd",
+              "slug": "ca35pd-rhino"
+            },
+            {
+              "modelo": "CA3600D",
+              "nome_completo": "Dynapac CA3600D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA3600D com peso operacional de 12.300 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode.",
+              "specs": {
+                "Peso operacional": "12.300 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.520 mm",
+                "Potência": "128 kW (174 hp) @ 2.200 rpm",
+                "Carga estática linear": "36 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA3600D_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca3600d",
+              "slug": "ca3600d"
+            },
+            {
+              "modelo": "CA3600PD",
+              "nome_completo": "Dynapac CA3600PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA3600PD com peso operacional de 12.300 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode.",
+              "specs": {
+                "Peso operacional": "12.300 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "128 kW (174 hp) @ 2.200 rpm",
+                "Carga estática linear": "36 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA3600PD_rear_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca3600pd",
+              "slug": "ca3600pd"
+            },
+            {
+              "modelo": "CA4000D",
+              "nome_completo": "Dynapac CA4000D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA4000D com peso operacional de 13.100 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "13.100 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.520 mm",
+                "Potência": "119 kW (160 hp) @ 2.200 rpm",
+                "Carga estática linear": "41 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA4000D_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca4000d",
+              "slug": "ca4000d"
+            },
+            {
+              "modelo": "CA4000PD",
+              "nome_completo": "Dynapac CA4000PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA4000PD com peso operacional de 13.100 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "13.100 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "119 kW (160 hp) @ 2.200 rpm",
+                "Carga estática linear": "41 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA4000PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca4000pd",
+              "slug": "ca4000pd"
+            },
+            {
+              "modelo": "CA4000PD SEISMIC",
+              "nome_completo": "Dynapac CA4000PD SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA4000PD SEISMIC com peso operacional de 13.300 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "13.300 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.500 mm",
+                "Potência": "119 kW (160 hp) @ 2.200 rpm",
+                "Carga estática linear": "41 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA4000PD_SEISMIC_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca4000pd-seismic",
+              "slug": "ca4000pd-seismic"
+            },
+            {
+              "modelo": "CA4600D",
+              "nome_completo": "Dynapac CA4600D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA4600D com peso operacional de 13.500 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "13.500 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.520 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "41 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA4600D_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca4600d",
+              "slug": "ca4600d"
+            },
+            {
+              "modelo": "CA5000D",
+              "nome_completo": "Dynapac CA5000D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA5000D com peso operacional de 16.000 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "16.000 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.536 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "50 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA5000D_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca5000d",
+              "slug": "ca5000d"
+            },
+            {
+              "modelo": "CA5000PD",
+              "nome_completo": "Dynapac CA5000PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA5000PD com peso operacional de 16.300 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "16.300 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.518 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "51 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA5000PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca5000pd",
+              "slug": "ca5000pd"
+            },
+            {
+              "modelo": "CA5500PD",
+              "nome_completo": "Dynapac CA5500PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA5500PD com peso operacional de 18.000 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "18.000 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.536 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "55 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA5500PD_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca5500pd",
+              "slug": "ca5500pd"
+            },
+            {
+              "modelo": "CA5500PD SEISMIC",
+              "nome_completo": "Dynapac CA5500PD SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA5500PD SEISMIC com peso operacional de 18.000 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Excêntricos de Eficiência.",
+              "specs": {
+                "Peso operacional": "18.000 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.536 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "55 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA5500PD_SEISMIC_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca5500pd-seismic",
+              "slug": "ca5500pd-seismic"
+            },
+            {
+              "modelo": "CA55D Rhino",
+              "nome_completo": "Dynapac CA55D Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA55D Rhino com peso operacional de 18.160 kg e largura de trabalho de 2.130 mm.",
+              "specs": {
+                "Peso operacional": "18.160 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.573 mm",
+                "Potência": "153 kW (205 hp) @ 2200 rpm",
+                "Carga estática linear": "56,8 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA55D_1920x1080.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca55d-rhino",
+              "slug": "ca55d-rhino"
+            },
+            {
+              "modelo": "CA55PD Rhino",
+              "nome_completo": "Dynapac CA55PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA55PD Rhino com peso operacional de 17.980 kg e largura de trabalho de 2.130 mm.",
+              "specs": {
+                "Peso operacional": "17.980 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.573 mm",
+                "Potência": "153 kW (205 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA55PD_1920x1080.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca55pd",
+              "slug": "ca55pd-rhino"
+            },
+            {
+              "modelo": "CA6000D",
+              "nome_completo": "Dynapac CA6000D",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6000D com peso operacional de 19.500 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "19.500 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.546 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "60 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6000D_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6000d",
+              "slug": "ca6000d"
+            },
+            {
+              "modelo": "CA6000D SEISMIC",
+              "nome_completo": "Dynapac CA6000D SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6000D SEISMIC com peso operacional de 19.500 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "19.500 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.546 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "60 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6000D_SEISMIC_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6000d-seismic",
+              "slug": "ca6000d-seismic"
+            },
+            {
+              "modelo": "CA6000PD",
+              "nome_completo": "Dynapac CA6000PD",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6000PD com peso operacional de 19.100 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "19.100 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.518 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "60 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6000PD_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6000pd",
+              "slug": "ca6000pd"
+            },
+            {
+              "modelo": "CA6000PD SEISMIC",
+              "nome_completo": "Dynapac CA6000PD SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6000PD SEISMIC com peso operacional de 19.300 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "19.300 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.518 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "60 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6000PD_SEISMIC_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6000pd-seismic",
+              "slug": "ca6000pd-seismic"
+            },
+            {
+              "modelo": "CA6500D SEISMIC",
+              "nome_completo": "Dynapac CA6500D SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6500D SEISMIC com peso operacional de 20.900 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "20.900 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.546 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "65 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6500D_SEISMIC_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6500d-seismic",
+              "slug": "ca6500d-seismic"
+            },
+            {
+              "modelo": "CA6500PD SEISMIC",
+              "nome_completo": "Dynapac CA6500PD SEISMIC",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA6500PD SEISMIC com peso operacional de 20.800 kg e largura de trabalho de 2.130 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Peso operacional": "20.800 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.518 mm",
+                "Potência": "149 kW (200 hp) @ 2.200 rpm",
+                "Carga estática linear": "65 kg/cm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA6500PD_SEISMIC_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca6500pd-seismic",
+              "slug": "ca6500pd-seismic"
+            },
+            {
+              "modelo": "CA65PD Rhino",
+              "nome_completo": "Dynapac CA65PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA65PD Rhino com peso operacional de 19.980 kg e largura de trabalho de 2.130 mm.",
+              "specs": {
+                "Peso operacional": "19.980 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.600 mm",
+                "Potência": "153 kW (205 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA65PD_Cab.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca65pd",
+              "slug": "ca65pd-rhino"
+            },
+            {
+              "modelo": "CA70PD Rhino",
+              "nome_completo": "Dynapac CA70PD Rhino",
+              "descricao": "Rolo compactador de um cilindro para solos Dynapac CA70PD Rhino com peso operacional de 21.980 kg e largura de trabalho de 2.130 mm.",
+              "specs": {
+                "Peso operacional": "21.980 kg",
+                "Largura de trabalho": "2.130 mm",
+                "Diâmetro do cilindro": "1.573 mm",
+                "Potência": "153 kW (205 hp) @ 2200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CA/Full/FAYAT/Dynapac_CA70PD_Cab.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ca70pd",
+              "slug": "ca70pd-rhino"
+            }
+          ]
+        },
+        {
+          "nome": "Rolos Tandem para Asfalto e Solos",
+          "slug": "rolos-tandem",
+          "modelos": [
+            {
+              "modelo": "CC1000",
+              "nome_completo": "Dynapac CC1000",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1000 com peso operacional de 1.685 kg e largura de trabalho de 1.000 mm.",
+              "specs": {
+                "Peso operacional": "1.685 kg",
+                "Largura de trabalho": "1.000 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "18 kW (24 hp) @ 2.800 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1000_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc10001",
+              "slug": "cc1000"
+            },
+            {
+              "modelo": "CC1000 e",
+              "nome_completo": "Dynapac CC1000 e",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1000 e com peso operacional de 1.775 kg e largura de trabalho de 1.000 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Peso operacional": "1.775 kg",
+                "Largura de trabalho": "1.000 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "11 kW"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_C1000e_Studio.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1000-e",
+              "slug": "cc1000-e"
+            },
+            {
+              "modelo": "CC1100 VI",
+              "nome_completo": "Dynapac CC1100 VI",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1100 VI com peso operacional de 2.400 kg e largura de trabalho de 1.070 mm.",
+              "specs": {
+                "Peso operacional": "2.400 kg",
+                "Largura de trabalho": "1.070 mm",
+                "Diâmetro do cilindro": "700 mm",
+                "Potência": "26 kW (35 hp) @ 2800 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1200VI_front%20side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1100-vi",
+              "slug": "cc1100-vi"
+            },
+            {
+              "modelo": "CC1200 VI",
+              "nome_completo": "Dynapac CC1200 VI",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1200 VI com peso operacional de 2.600 kg e largura de trabalho de 1200 mm.",
+              "specs": {
+                "Peso operacional": "2.600 kg",
+                "Largura de trabalho": "1200 mm",
+                "Diâmetro do cilindro": "702 mm",
+                "Potência": "26 kW (35 hp) @ 2800 rpm",
+                "Largura de compactação": "1.200 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1200VI_front%20side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1200-vi",
+              "slug": "cc1200-vi"
+            },
+            {
+              "modelo": "CC1250",
+              "nome_completo": "Dynapac CC1250",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1250 com peso operacional de 3.000 kg e largura de trabalho de 1.200 mm.",
+              "specs": {
+                "Peso operacional": "3.000 kg",
+                "Largura de trabalho": "1.200 mm",
+                "Diâmetro do cilindro": "682 mm",
+                "Potência": "26.1 kW (35 hp) @ 2.800 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1250_front%20side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc12501",
+              "slug": "cc1250"
+            },
+            {
+              "modelo": "CC1300 VI",
+              "nome_completo": "Dynapac CC1300 VI",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1300 VI com peso operacional de 3.900 kg e largura de trabalho de 1.300 mm.",
+              "specs": {
+                "Peso operacional": "3.900 kg",
+                "Largura de trabalho": "1.300 mm",
+                "Diâmetro do cilindro": "880 mm",
+                "Potência": "35 kW (48 hp) @ 2700 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/CC1300CVI/Dynapac_CC1300C_VI.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1300-vi",
+              "slug": "cc1300-vi"
+            },
+            {
+              "modelo": "CC1400 VI",
+              "nome_completo": "Dynapac CC1400 VI",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC1400 VI com peso operacional de 5.130 kg e largura de trabalho de 1380 mm.",
+              "specs": {
+                "Peso operacional": "5.130 kg",
+                "Largura de trabalho": "1380 mm",
+                "Diâmetro do cilindro": "882 mm",
+                "Potência": "35 kW (48 hp) @ 2700 rpm",
+                "Largura de compactação": "1.380 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/CC1400%20VI_ISO%20Left%20Side%20View%20(002).jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1400-vi",
+              "slug": "cc1400-vi"
+            },
+            {
+              "modelo": "CC2200",
+              "nome_completo": "Dynapac CC2200",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC2200 com peso operacional de 7.600 kg e largura de trabalho de 1500 mm.",
+              "specs": {
+                "Peso operacional": "7.600 kg",
+                "Largura de trabalho": "1500 mm",
+                "Diâmetro do cilindro": "1.150 mm",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm",
+                "Carga estática linear": "25.3/25.3 kg/cm",
+                "Força centrífuga": "72 kN/38 kN",
+                "Largura de compactação": "1.500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC2200_front_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc2200-1",
+              "slug": "cc2200"
+            },
+            {
+              "modelo": "CC2200 VI",
+              "nome_completo": "Dynapac CC2200 VI",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC2200 VI com peso operacional de 8.000 kg e largura de trabalho de 1500 mm.",
+              "specs": {
+                "Peso operacional": "8.000 kg",
+                "Largura de trabalho": "1500 mm",
+                "Diâmetro do cilindro": "1120 mm",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm",
+                "Força centrífuga": "75 kN/40 kN",
+                "Largura de compactação": "1.500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/CC2200%20Cabin%20With%20Background.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc2200-vi",
+              "slug": "cc2200-vi"
+            },
+            {
+              "modelo": "CC4200",
+              "nome_completo": "Dynapac CC4200",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC4200 com peso operacional de 9.900 kg e largura de trabalho de 1.730 mm. Destaques: Dyn@Link, EcoMode.",
+              "specs": {
+                "Peso operacional": "9.900 kg",
+                "Largura de trabalho": "1.730 mm",
+                "Diâmetro do cilindro": "1.300 mm",
+                "Potência": "82 kW (110 hp) @ 2.200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC4200_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc4200",
+              "slug": "cc4200"
+            },
+            {
+              "modelo": "CC800",
+              "nome_completo": "Dynapac CC800",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC800 com peso operacional de 1.665 kg e largura de trabalho de 800 mm.",
+              "specs": {
+                "Peso operacional": "1.665 kg",
+                "Largura de trabalho": "800 mm",
+                "Diâmetro do cilindro": "588 mm",
+                "Potência": "18 kW (24 hp) @ 2.800 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC800_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc800-1",
+              "slug": "cc800"
+            },
+            {
+              "modelo": "CC900",
+              "nome_completo": "Dynapac CC900",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC900 com peso operacional de 1.600 kg e largura de trabalho de 900 mm.",
+              "specs": {
+                "Peso operacional": "1.600 kg",
+                "Largura de trabalho": "900 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "18 kW (24 hp) @ 2.800 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC900_front_side02.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc9001",
+              "slug": "cc900"
+            },
+            {
+              "modelo": "CC900 e",
+              "nome_completo": "Dynapac CC900 e",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC900 e com peso operacional de 1.690 kg e largura de trabalho de 900 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Peso operacional": "1.690 kg",
+                "Largura de trabalho": "900 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "11 kW"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_C900e_Studio.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc900-e",
+              "slug": "cc900-e"
+            },
+            {
+              "modelo": "CC900G",
+              "nome_completo": "Dynapac CC900G",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC900G com peso operacional de 1.250 kg e largura de trabalho de 900 mm.",
+              "specs": {
+                "Peso operacional": "1.250 kg",
+                "Largura de trabalho": "900 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "14,2 kW (19 hp) @ 3.000 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC900_rear_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc900g",
+              "slug": "cc900g"
+            },
+            {
+              "modelo": "CC950",
+              "nome_completo": "Dynapac CC950",
+              "descricao": "Rolo compactador tandem para asfalto e solos Dynapac CC950 com peso operacional de 1.350 kg e largura de trabalho de 900 mm.",
+              "specs": {
+                "Peso operacional": "1.350 kg",
+                "Largura de trabalho": "900 mm",
+                "Diâmetro do cilindro": "584 mm",
+                "Potência": "14.9 kW (20.3 hp) @ 3.600 rpm."
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC950_rear_side01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc950-1",
+              "slug": "cc950"
+            }
+          ]
+        },
+        {
+          "nome": "Rolos Combinados",
+          "slug": "rolos-combinados",
+          "modelos": [
+            {
+              "modelo": "CC1100C VI",
+              "nome_completo": "Dynapac CC1100C VI",
+              "descricao": "Rolo compactador combinado Dynapac CC1100C VI com peso operacional de 2.250 kg e largura de trabalho de 1.070 mm.",
+              "specs": {
+                "Peso operacional": "2.250 kg",
+                "Diâmetro do cilindro": "680 mm",
+                "Potência": "26 kW (35,0 hp) @ 2.800 rpm",
+                "Carga estática linear": "10,9 kg/cm",
+                "Largura de compactação": "1.070 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Walkaround_CC1300/Dynapac_CC1100CVI_side01_proto_1024_683_75.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1100cvi",
+              "slug": "cc1100c-vi"
+            },
+            {
+              "modelo": "CC1200C VI",
+              "nome_completo": "Dynapac CC1200C VI",
+              "descricao": "Rolo compactador combinado Dynapac CC1200C VI com peso operacional de 2.315 kg e largura de trabalho de 1.200 mm.",
+              "specs": {
+                "Peso operacional": "2.315 kg",
+                "Diâmetro do cilindro": "702 mm",
+                "Potência": "26 kW (35.0 hp) @ 2.800 rpm",
+                "Carga estática linear": "10.3 kg/cm",
+                "Largura de compactação": "1.200 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1200CVI_side01_proto.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1200c-vi",
+              "slug": "cc1200c-vi"
+            },
+            {
+              "modelo": "CC1300C VI",
+              "nome_completo": "Dynapac CC1300C VI",
+              "descricao": "Rolo compactador combinado Dynapac CC1300C VI com peso operacional de 3.700 kg e largura de trabalho de 1.300 mm.",
+              "specs": {
+                "Peso operacional": "3.700 kg",
+                "Diâmetro do cilindro": "880 mm",
+                "Potência": "36.5 kW (48 hp) @ 2700 rpm",
+                "Carga estática linear": "14,3 kg/cm",
+                "Largura de compactação": "1.300 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Walkaround_CC1300/Dynapac_CC1300C_VI_P4_right_side%20v2.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1300c-vi",
+              "slug": "cc1300c-vi"
+            },
+            {
+              "modelo": "CC1400C VI",
+              "nome_completo": "Dynapac CC1400C VI",
+              "descricao": "Rolo compactador combinado Dynapac CC1400C VI com peso operacional de 3.900 kg e largura de trabalho de 1.380 mm.",
+              "specs": {
+                "Peso operacional": "3.900 kg",
+                "Diâmetro do cilindro": "882 mm",
+                "Potência": "35 kW (48,0 hp) @ 2.700 rpm",
+                "Carga estática linear": "15,1 kg/cm",
+                "Largura de compactação": "1.380 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC1400C_VI_P4_right_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc1400c-vi",
+              "slug": "cc1400c-vi"
+            },
+            {
+              "modelo": "CC2200C",
+              "nome_completo": "Dynapac CC2200C",
+              "descricao": "Rolo compactador combinado Dynapac CC2200C com peso operacional de 7.400 kg e largura de trabalho de 1.500 mm.",
+              "specs": {
+                "Peso operacional": "7.400 kg",
+                "Diâmetro do cilindro": "1.150 mm",
+                "Potência": "55 kW (740 hp) @ 2.200 rpm",
+                "Força centrífuga": "72/38 kN",
+                "Largura de compactação": "1.500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC2200C_front_side02_CAB.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc2200c",
+              "slug": "cc2200c"
+            },
+            {
+              "modelo": "CC3200C",
+              "nome_completo": "Dynapac CC3200C",
+              "descricao": "Rolo compactador combinado Dynapac CC3200C com peso operacional de 8.500 kg e largura de trabalho de 1.730 mm.",
+              "specs": {
+                "Peso operacional": "8.500 kg",
+                "Diâmetro do cilindro": "1.150 mm",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm",
+                "Força centrífuga": "77/43 kN",
+                "Carga estática linear": "23,6 kg/cm",
+                "Largura de compactação": "1.730 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC3200C_front_side02_CAB.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc3200c",
+              "slug": "cc3200c"
+            },
+            {
+              "modelo": "CC3300C",
+              "nome_completo": "Dynapac CC3300C",
+              "descricao": "Rolo compactador combinado Dynapac CC3300C com peso operacional de 8.900 kg e largura de trabalho de 1.730 mm.",
+              "specs": {
+                "Peso operacional": "8.900 kg",
+                "Diâmetro do cilindro": "1.150 mm",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm",
+                "Força centrífuga": "79 kN/55 kN",
+                "Carga estática linear": "25,0 kg/cm",
+                "Largura de compactação": "1.730 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CC/Full/FAYAT/Dynapac_CC3300C_front_side02_CAB.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc3300c1",
+              "slug": "cc3300c"
+            },
+            {
+              "modelo": "CC4200C VI",
+              "nome_completo": "Dynapac CC4200C VI",
+              "descricao": "Rolo compactador combinado Dynapac CC4200C VI com peso operacional de 9.400 kg e largura de trabalho de 1.680 mm.",
+              "specs": {
+                "Peso operacional": "9.400 kg",
+                "Diâmetro do cilindro": "1.300 mm",
+                "Potência": "100 kW (135 hp) @ 2.200 rpm",
+                "Força centrífuga": "113 kN/69 kN",
+                "Carga estática linear": "29.80 kg/cm",
+                "Largura de compactação": "1.680 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/CC4200CVI/BR_22122025_Dynapac_CC4200CVI_right_side_ROPS.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cc4200c-vi",
+              "slug": "cc4200c-vi"
+            }
+          ]
+        },
+        {
+          "nome": "Compactadores de Pneus",
+          "slug": "compactadores-de-pneus",
+          "modelos": [
+            {
+              "modelo": "CP1200",
+              "nome_completo": "Dynapac CP1200",
+              "descricao": "Compactador de pneus Dynapac CP1200 com peso operacional de 5.580 kg.",
+              "specs": {
+                "Peso operacional": "5.580 kg",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Coming%20Soon/CP1200W%20Kubota.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/cp1200-kubota",
+              "slug": "cp1200"
+            },
+            {
+              "modelo": "CP1200W",
+              "nome_completo": "Dynapac CP1200W",
+              "descricao": "Compactador de pneus Dynapac CP1200W com peso operacional de 5.580 kg.",
+              "specs": {
+                "Peso operacional": "5.580 kg",
+                "Potência": "55 kW (74 hp) @ 2.200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Coming%20Soon/CP1200W%20Kubota.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cp1200w",
+              "slug": "cp1200w"
+            },
+            {
+              "modelo": "CP28",
+              "nome_completo": "Dynapac CP28",
+              "descricao": "Compactador de pneus Dynapac CP28 com peso operacional de 9.600 kg.",
+              "specs": {
+                "Peso operacional": "9.600 kg",
+                "Potência": "101 kW (134 hp) @ 2.200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/CP28/CP28%20datasheet.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cp28",
+              "slug": "cp28"
+            },
+            {
+              "modelo": "CP280",
+              "nome_completo": "Dynapac CP280",
+              "descricao": "Compactador de pneus Dynapac CP280 com peso operacional de 10.800 kg e largura de trabalho de 2.250 mm.",
+              "specs": {
+                "Peso operacional": "10.800 kg",
+                "Largura de trabalho": "2.250 mm",
+                "Potência": "97 kW (130 hp) @ 2.500 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CP/Listing%20images/CP280.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-cp280",
+              "slug": "cp280"
+            }
+          ]
+        },
+        {
+          "nome": "Compactadores Tamping",
+          "slug": "compactadores-tamping",
+          "modelos": [
+            {
+              "modelo": "CT3000",
+              "nome_completo": "Dynapac CT3000",
+              "descricao": "Compactador tamping Dynapac CT3000 com peso operacional de 22.550 kg e largura de trabalho de 3.080 mm.",
+              "specs": {
+                "Peso operacional": "22.550 kg",
+                "Largura de trabalho": "3.080 mm",
+                "Potência": "194 kW (260 hp) @ 2.200 rpm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Rollers/CT/Full/FAYAT/Dynapac_CT3000_side_front_01.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/compaction/dynapac-ct30001",
+              "slug": "ct3000"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Pavimentação",
+      "slug": "pavimentacao",
+      "subcategorias": [
+        {
+          "nome": "Pavimentadoras Rodoviárias",
+          "slug": "pavimentadoras-rodoviarias",
+          "modelos": [
+            {
+              "modelo": "F2500CS",
+              "nome_completo": "Dynapac F2500CS",
+              "descricao": "Pavimentadora rodoviária Dynapac F2500CS com largura de pavimentação de 9 m. Destaques: Dyn@Link.",
+              "specs": {
+                "Potência": "129 kW a 2.200 rpm, com controle contínuo de rotação.",
+                "Largura máx. de pavimentação": "9 m",
+                "Espes. Máx. Camada": "310 mm",
+                "Capac. Teór. de Descarga": "750"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/F2500CS-BR/Dynapac_F2500CS_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f2500cs1",
+              "slug": "f2500cs"
+            },
+            {
+              "modelo": "F2500WS",
+              "nome_completo": "Dynapac F2500WS",
+              "descricao": "Pavimentadora rodoviária Dynapac F2500WS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Potência": "129 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "6,70 m",
+                "Espes. Máx. Camada": "300 mm",
+                "Capac. Teór. de Descarga": "650"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/Dynapac_F2500WS_front_side1.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f2500ws",
+              "slug": "f2500ws"
+            },
+            {
+              "modelo": "F2530CS",
+              "nome_completo": "Dynapac F2530CS",
+              "descricao": "Pavimentadora rodoviária Dynapac F2530CS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Potência": "142 kW (193 Hp) @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "10 m",
+                "Espes. Máx. Camada": "500 mm",
+                "Capac. Teór. de Descarga": "800"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/F2530CS.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f2530cs",
+              "slug": "f2530cs"
+            },
+            {
+              "modelo": "F2550CS",
+              "nome_completo": "Dynapac F2550CS",
+              "descricao": "Pavimentadora rodoviária Dynapac F2550CS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Potência": "164 kW (223 Hp) @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "12,5 m",
+                "Espes. Máx. Camada": "500 mm",
+                "Capac. Teór. de Descarga": "900"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/F2550CS.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f2550cs",
+              "slug": "f2550cs"
+            },
+            {
+              "modelo": "SD25 70C",
+              "nome_completo": "Dynapac SD25 70C",
+              "descricao": "Pavimentadora rodoviária Dynapac SD25 70C com largura de pavimentação de 2.550 mm.",
+              "specs": {
+                "Potência": "129 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "9 m",
+                "Espes. Máx. Camada": "310 mm",
+                "Capac. Teór. de Descarga": "700 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/dynapac/category/Pavers/Highway%20/SD2570C%20(1).png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd25-70c",
+              "slug": "sd25-70c"
+            },
+            {
+              "modelo": "SD2500C",
+              "nome_completo": "Dynapac SD2500C",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2500C com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "129 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "9 m",
+                "Espes. Máx. Camada": "310 mm",
+                "Capac. Teór. de Descarga": "700 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2500C_carousel_images/Paver_FrontSide_ScreedOut.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500c",
+              "slug": "sd2500c"
+            },
+            {
+              "modelo": "SD2500CS",
+              "nome_completo": "Dynapac SD2500CS",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2500CS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link, EcoMode, Stage IV / TIER 4f.",
+              "specs": {
+                "Potência": "142 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "10 m",
+                "Espes. Máx. Camada": "310 mm",
+                "Capac. Teór. de Descarga": "800"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2500CS.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500cs",
+              "slug": "sd2500cs"
+            },
+            {
+              "modelo": "SD2500CS PROTAC",
+              "nome_completo": "Dynapac SD2500CS PROTAC",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2500CS PROTAC com largura de pavimentação de 2.550 mm.",
+              "specs": {
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "9,7 m",
+                "Espes. Máx. Camada": "310 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/SD2500CS%20PROTAC%20side%20angle%20view.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500cs-protac",
+              "slug": "sd2500cs-protac"
+            },
+            {
+              "modelo": "SD2500WS",
+              "nome_completo": "Dynapac SD2500WS",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2500WS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "145 kW",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "9 m",
+                "Espes. Máx. Camada": "300 mm",
+                "Capac. Teór. de Descarga": "750"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/2500WS.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2500ws",
+              "slug": "sd2500ws"
+            },
+            {
+              "modelo": "SD2530CS",
+              "nome_completo": "Dynapac SD2530CS",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2530CS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link.",
+              "specs": {
+                "Potência": "142 kW (193 Hp) @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "10 m",
+                "Espes. Máx. Camada": "360 mm",
+                "Capac. Teór. de Descarga": "800"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_SD2550CS_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2530cs1",
+              "slug": "sd2530cs"
+            },
+            {
+              "modelo": "SD2550C",
+              "nome_completo": "Dynapac SD2550C",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2550C com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "164 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "12 m",
+                "Espes. Máx. Camada": "360 mm",
+                "Capac. Teór. de Descarga": "900"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2550C.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2550c",
+              "slug": "sd2550c"
+            },
+            {
+              "modelo": "SD2550CS",
+              "nome_completo": "Dynapac SD2550CS",
+              "descricao": "Pavimentadora rodoviária Dynapac SD2550CS com largura de pavimentação de 2.550 mm. Destaques: Dyn@Link, EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "194 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "2.550 mm",
+                "Largura máx. de pavimentação": "14 m",
+                "Espes. Máx. Camada": "360 mm",
+                "Capac. Teór. de Descarga": "1.100 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/SD2550CS.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd2550cs",
+              "slug": "sd2550cs"
+            }
+          ]
+        },
+        {
+          "nome": "Pavimentadoras Urbanas",
+          "slug": "pavimentadoras-urbanas",
+          "modelos": [
+            {
+              "modelo": "F1800C",
+              "nome_completo": "Dynapac F1800C",
+              "descricao": "Pavimentadora urbana Dynapac F1800C com largura de pavimentação de 1.75 mm.",
+              "specs": {
+                "Potência": "55.4 kW / 54 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "1.75 mm",
+                "Largura máx. de pavimentação": "4.70 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "350 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_F1800C_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1800c1",
+              "slug": "f1800c"
+            },
+            {
+              "modelo": "F1800W",
+              "nome_completo": "Dynapac F1800W",
+              "descricao": "Pavimentadora urbana Dynapac F1800W com largura de pavimentação de 1,75 m.",
+              "specs": {
+                "Potência": "55.4 kW /54 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "1,75 m",
+                "Largura máx. de pavimentação": "4,70 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "350 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/Dynapac_SD1800W_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1800w1",
+              "slug": "f1800w"
+            },
+            {
+              "modelo": "SD1800C",
+              "nome_completo": "Dynapac SD1800C",
+              "descricao": "Pavimentadora urbana Dynapac SD1800C com largura de pavimentação de 1,75 m.",
+              "specs": {
+                "Potência": "55.4 kW /54 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "1,75 m",
+                "Largura máx. de pavimentação": "4,70 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "350 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_CityPaver_SD1800C.0007%20-%20Copy.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd1800c",
+              "slug": "sd1800c"
+            },
+            {
+              "modelo": "SD1800W",
+              "nome_completo": "Dynapac SD1800W",
+              "descricao": "Pavimentadora urbana Dynapac SD1800W com largura de pavimentação de 1,75 m.",
+              "specs": {
+                "Potência": "55.4 kW /54 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "1,75 m",
+                "Largura máx. de pavimentação": "4,70 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "350 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/Dynapac_SD1800W_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd1800w",
+              "slug": "sd1800w"
+            },
+            {
+              "modelo": "SD1800W e",
+              "nome_completo": "Dynapac SD1800W e",
+              "descricao": "Pavimentadora urbana Dynapac SD1800W e com largura de pavimentação de 1.750 mm.",
+              "specs": {
+                "Largura básica de pavimentação": "1.750 mm",
+                "Largura máx. de pavimentação": "4,70 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "350 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Full/FAYAT/SD1800We/SD1800We.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-sd1800w-e",
+              "slug": "sd1800w-e"
+            }
+          ]
+        },
+        {
+          "nome": "Pavimentadoras Compactas",
+          "slug": "pavimentadoras-compactas",
+          "modelos": [
+            {
+              "modelo": "F1250CS",
+              "nome_completo": "Dynapac F1250CS",
+              "descricao": "Pavimentadora compacta Dynapac F1250CS com largura de pavimentação de 1.20 m. Destaques: EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "55.4 kW (75 hp) @ 2200 rpm",
+                "Largura básica de pavimentação": "1.20 m",
+                "Largura máx. de pavimentação": "3.50 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "300 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_F1250CS_left_view.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1250cs",
+              "slug": "f1250cs"
+            },
+            {
+              "modelo": "F1250CS PLUS",
+              "nome_completo": "Dynapac F1250CS PLUS",
+              "descricao": "Pavimentadora compacta Dynapac F1250CS PLUS com largura de pavimentação de 1,20 m. Destaques: EcoMode, Stage V / TIER 4f.",
+              "specs": {
+                "Potência": "55.4 kW @ 2200 rpm",
+                "Largura básica de pavimentação": "1,20 m",
+                "Largura máx. de pavimentação": "3,50 m",
+                "Espes. Máx. Camada": "200 mm",
+                "Capac. Teór. de Descarga": "300 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Highway/F12500CS.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f1250cs-plus",
+              "slug": "f1250cs-plus"
+            }
+          ]
+        },
+        {
+          "nome": "Pavimentadoras Comerciais",
+          "slug": "pavimentadoras-comerciais",
+          "modelos": [
+            {
+              "modelo": "D17C",
+              "nome_completo": "Dynapac D17C",
+              "descricao": "Pavimentadora comercial Dynapac D17C com largura de pavimentação de 5,50 m.",
+              "specs": {
+                "Potência": "120 hp @ 2200 rpm",
+                "Largura máx. de pavimentação": "5,50 m",
+                "Capac. Teór. de Descarga": "550 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Commercial%20Pavers/New%20Folder/D17C/D17C.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-fc1700c",
+              "slug": "d17c"
+            },
+            {
+              "modelo": "FC1300C II",
+              "nome_completo": "Dynapac FC1300C II",
+              "descricao": "Pavimentadora comercial Dynapac FC1300C II com largura de pavimentação de 2,6 m.",
+              "specs": {
+                "Potência": "24 hp @ 2300 rpm",
+                "Largura básica de pavimentação": "2,6 m",
+                "Largura máx. de pavimentação": "4,0 m",
+                "Capac. Teór. de Descarga": "180 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_FC1300_left_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-fc1300c-ii",
+              "slug": "fc1300c-ii"
+            },
+            {
+              "modelo": "FC1400C",
+              "nome_completo": "Dynapac FC1400C",
+              "descricao": "Pavimentadora comercial Dynapac FC1400C com largura de pavimentação de 2,60 m.",
+              "specs": {
+                "Largura básica de pavimentação": "2,60 m",
+                "Largura máx. de pavimentação": "4,30 m",
+                "Capac. Teór. de Descarga": "450 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Tracked/Full/FAYAT/Dynapac_FC1400_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-fc1400c",
+              "slug": "fc1400c"
+            }
+          ]
+        },
+        {
+          "nome": "Mini Pavimentadoras",
+          "slug": "mini-pavimentadoras",
+          "modelos": [
+            {
+              "modelo": "F80W",
+              "nome_completo": "Dynapac F80W",
+              "descricao": "Mini pavimentadora Dynapac F80W com largura de pavimentação de 800 mm.",
+              "specs": {
+                "Potência": "7.6 kW",
+                "Largura básica de pavimentação": "800 mm",
+                "Largura máx. de pavimentação": "1,65 m",
+                "Espes. Máx. Camada": "100 mm",
+                "Capac. Teór. de Descarga": "35 t/h"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Pavers/Wheeled/Front%20left%20iso.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/paving/dynapac-f80w",
+              "slug": "f80w"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Equipamentos Leves",
+      "slug": "equipamentos-leves",
+      "subcategorias": [
+        {
+          "nome": "Placas Vibratórias",
+          "slug": "placas-vibratorias",
+          "modelos": [
+            {
+              "modelo": "DFP10D",
+              "nome_completo": "Dynapac DFP10D",
+              "descricao": "Placa vibratória compactadora Dynapac DFP10D com peso operacional de 104 kg e largura de trabalho de 450 mm.",
+              "specs": {
+                "Peso operacional": "104 kg",
+                "Potência": "3.1 kW @ 3000 rpm",
+                "Força de compactação": "18 kN",
+                "Largura de compactação": "450 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP10D_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp10d",
+              "slug": "dfp10d"
+            },
+            {
+              "modelo": "DFP11",
+              "nome_completo": "Dynapac DFP11",
+              "descricao": "Placa vibratória compactadora Dynapac DFP11 com peso operacional de 108 kg e largura de trabalho de 500 mm.",
+              "specs": {
+                "Peso operacional": "108 kg",
+                "Potência": "3.6 kW at 3600 rpm",
+                "Força de compactação": "25 kN",
+                "Largura de compactação": "500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP11_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp11",
+              "slug": "dfp11"
+            },
+            {
+              "modelo": "DFP12D",
+              "nome_completo": "Dynapac DFP12D",
+              "descricao": "Placa vibratória compactadora Dynapac DFP12D com peso operacional de 122 kg e largura de trabalho de 500 mm.",
+              "specs": {
+                "Peso operacional": "122 kg",
+                "Potência": "3.1 kW @ 3000 rpm",
+                "Largura de compactação": "500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP12D_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp12d",
+              "slug": "dfp12d"
+            },
+            {
+              "modelo": "DFP6",
+              "nome_completo": "Dynapac DFP6",
+              "descricao": "Placa vibratória compactadora Dynapac DFP6 com peso operacional de 65 kg e largura de trabalho de 350 mm.",
+              "specs": {
+                "Peso operacional": "65 kg",
+                "Potência": "2.6 kW at 3600 rpm",
+                "Força de compactação": "10,00 kN",
+                "Largura de compactação": "350 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP6_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp6",
+              "slug": "dfp6"
+            },
+            {
+              "modelo": "DFP7",
+              "nome_completo": "Dynapac DFP7",
+              "descricao": "Placa vibratória compactadora Dynapac DFP7 com peso operacional de 72 kg e largura de trabalho de 400 mm.",
+              "specs": {
+                "Peso operacional": "72 kg",
+                "Potência": "2.6 kW @ 3600 rpm",
+                "Força de compactação": "12 kN",
+                "Largura de compactação": "400 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP7_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp7",
+              "slug": "dfp7"
+            },
+            {
+              "modelo": "DFP7AX",
+              "nome_completo": "Dynapac DFP7AX",
+              "descricao": "Placa vibratória compactadora Dynapac DFP7AX com peso operacional de 82 kg e largura de trabalho de 500 mm.",
+              "specs": {
+                "Peso operacional": "82 kg",
+                "Potência": "2.6 kW at 3600 rpm",
+                "Largura de compactação": "500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Dynapac_DFP7AX_front_side.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp7ax",
+              "slug": "dfp7ax"
+            },
+            {
+              "modelo": "DFP8X",
+              "nome_completo": "Dynapac DFP8X",
+              "descricao": "Placa vibratória compactadora Dynapac DFP8X com peso operacional de 96 kg e largura de trabalho de 430 mm.",
+              "specs": {
+                "Peso operacional": "96 kg",
+                "Potência": "3,6 kW @ 3600 rpm",
+                "Força de compactação": "15 kN",
+                "Largura de compactação": "430 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DFP8X/DFP8X%20(3).png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp8x",
+              "slug": "dfp8x"
+            },
+            {
+              "modelo": "DFP9X",
+              "nome_completo": "Dynapac DFP9X",
+              "descricao": "Placa vibratória compactadora Dynapac DFP9X com peso operacional de 99 kg e largura de trabalho de 500 mm.",
+              "specs": {
+                "Peso operacional": "99 kg",
+                "Potência": "3,6 kW @ 3600 rpm",
+                "Força de compactação": "19 kN",
+                "Largura de compactação": "500 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DFP9X/DFP9X%20(3).png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dfp9x",
+              "slug": "dfp9x"
+            }
+          ]
+        },
+        {
+          "nome": "Placas Reversíveis",
+          "slug": "placas-reversiveis",
+          "modelos": [
+            {
+              "modelo": "DRP15D",
+              "nome_completo": "Dynapac DRP15D",
+              "descricao": "Placa vibratória reversível Dynapac DRP15D com peso operacional de 150 kg e largura de trabalho de 400 mm.",
+              "specs": {
+                "Peso operacional": "150 kg",
+                "Potência": "3.1 kW @ 3000 rpm",
+                "Força de compactação": "25 kN",
+                "Largura de compactação": "400 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/Reversible/DRP15D.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp15d",
+              "slug": "drp15d"
+            },
+            {
+              "modelo": "DRP20",
+              "nome_completo": "Dynapac DRP20",
+              "descricao": "Placa vibratória reversível Dynapac DRP20 com peso operacional de 205 kg e largura de trabalho de 600 mm.",
+              "specs": {
+                "Peso operacional": "205 kg",
+                "Potência": "3.6 kW @ 3600 rpm",
+                "Força de compactação": "35 kN",
+                "Largura de compactação": "600 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP20%20NEW.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp20",
+              "slug": "drp20"
+            },
+            {
+              "modelo": "DRP25D",
+              "nome_completo": "Dynapac DRP25D",
+              "descricao": "Placa vibratória reversível Dynapac DRP25D com peso operacional de 280 kg e largura de trabalho de 600 mm.",
+              "specs": {
+                "Peso operacional": "280 kg",
+                "Potência": "3.1 kW @ 3000 rpm",
+                "Força de compactação": "40 kN",
+                "Largura de compactação": "600 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP25D_8WOB.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp25d",
+              "slug": "drp25d"
+            },
+            {
+              "modelo": "DRP40DX",
+              "nome_completo": "Dynapac DRP40DX",
+              "descricao": "Placa vibratória reversível Dynapac DRP40DX com peso operacional de 405 kg e largura de trabalho de 550 mm.",
+              "specs": {
+                "Peso operacional": "405 kg",
+                "Potência": "6.7 kW @ 3000 rpm",
+                "Força de compactação": "50 kN",
+                "Largura de compactação": "550 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP40DX_WOB.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp40dx",
+              "slug": "drp40dx"
+            },
+            {
+              "modelo": "DRP45DX",
+              "nome_completo": "Dynapac DRP45DX",
+              "descricao": "Placa vibratória reversível Dynapac DRP45DX com peso operacional de 460 kg e largura de trabalho de 650 mm.",
+              "specs": {
+                "Peso operacional": "460 kg",
+                "Força de compactação": "60 kN",
+                "Largura de compactação": "650 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP45DX_WOB.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp45dx",
+              "slug": "drp45dx"
+            },
+            {
+              "modelo": "DRP60D",
+              "nome_completo": "Dynapac DRP60D",
+              "descricao": "Placa vibratória reversível Dynapac DRP60D com peso operacional de 570 kg e largura de trabalho de 700 mm.",
+              "specs": {
+                "Peso operacional": "570 kg",
+                "Potência": "9.3 kW @ 2700 rpm",
+                "Força de compactação": "70 kN",
+                "Largura de compactação": "700 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP60D_WOB.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp60d",
+              "slug": "drp60d"
+            },
+            {
+              "modelo": "DRP70D",
+              "nome_completo": "Dynapac DRP70D",
+              "descricao": "Placa vibratória reversível Dynapac DRP70D com peso operacional de 700 kg e largura de trabalho de 800 mm.",
+              "specs": {
+                "Peso operacional": "700 kg",
+                "Potência": "10.3 kW @ 2600 rpm",
+                "Força de compactação": "100 kN",
+                "Largura de compactação": "800 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DRP70D_WOB.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-drp70d",
+              "slug": "drp70d"
+            }
+          ]
+        },
+        {
+          "nome": "Soquetes Compactadores",
+          "slug": "soquetes",
+          "modelos": [
+            {
+              "modelo": "DR6X",
+              "nome_completo": "Dynapac DR6X",
+              "descricao": "Soquete compactador Dynapac DR6X com peso operacional de 58 kg e largura de trabalho de 230 mm.",
+              "specs": {
+                "Peso operacional": "58 kg",
+                "Potência": "2,8 kW",
+                "Força de compactação": "15 kN",
+                "Largura de compactação": "230 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/8front.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dr6x",
+              "slug": "dr6x"
+            },
+            {
+              "modelo": "DR6X e",
+              "nome_completo": "Dynapac DR6X e",
+              "descricao": "Soquete compactador Dynapac DR6X e com peso operacional de 71 kg e largura de trabalho de 230 mm.",
+              "specs": {
+                "Peso operacional": "71 kg",
+                "Força de compactação": "15 kN",
+                "Largura de compactação": "230 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DR6X%20e/8-fp.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dr6x-e",
+              "slug": "dr6x-e"
+            },
+            {
+              "modelo": "DR7X",
+              "nome_completo": "Dynapac DR7X",
+              "descricao": "Soquete compactador Dynapac DR7X com peso operacional de 68 kg e largura de trabalho de 280 mm.",
+              "specs": {
+                "Peso operacional": "68 kg",
+                "Força de compactação": "17 kN",
+                "Largura de compactação": "280 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/DR7X.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dr7x",
+              "slug": "dr7x"
+            }
+          ]
+        },
+        {
+          "nome": "Compactadores de Valeta",
+          "slug": "compactadores-de-valeta",
+          "modelos": [
+            {
+              "modelo": "D.ONE",
+              "nome_completo": "Dynapac D.ONE",
+              "descricao": "Compactador de valeta Dynapac D.ONE com peso operacional de 1.480 kg e largura de trabalho de 850 mm.",
+              "specs": {
+                "Peso operacional": "1.480 kg",
+                "Largura de trabalho": "850 mm",
+                "Diâmetro do cilindro": "520 mm",
+                "Potência": "12.80 kW @ 2600 rpm",
+                "Força de compactação": "72 kN"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/D.one/D.one_1.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-d.one",
+              "slug": "d-one"
+            }
+          ]
+        },
+        {
+          "nome": "Rolos Duplex",
+          "slug": "rolos-duplex",
+          "modelos": [
+            {
+              "modelo": "DTR75D",
+              "nome_completo": "Dynapac DTR75D",
+              "descricao": "Rolo compactador duplex Dynapac DTR75D com peso operacional de 740 kg e largura de trabalho de 650 mm.",
+              "specs": {
+                "Peso operacional": "740 kg",
+                "Largura de trabalho": "650 mm",
+                "Diâmetro do cilindro": "400 mm",
+                "Potência": "6,3 kW @ 3000 rpm",
+                "Força de compactação": "25 kN"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Light%20Equipment/Full/FAYAT/DTR75D%20with%20shadow.png",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-dtr75d-kohler",
+              "slug": "dtr75d"
+            }
+          ]
+        },
+        {
+          "nome": "Espalhadoras",
+          "slug": "espalhadoras",
+          "modelos": [
+            {
+              "modelo": "S100",
+              "nome_completo": "Dynapac S100",
+              "descricao": "Espalhadora de agregados Dynapac S100 com peso operacional de 500 kg e largura de trabalho de 1000 mm.",
+              "specs": {
+                "Peso operacional": "500 kg",
+                "Largura de trabalho": "1000 mm",
+                "Potência": "3,2 kW",
+                "Largura de compactação": "1.000 mm"
+              },
+              "imagem_url": "https://pdf.dynapac.com/user_files/images/Products/Mix%20Spreader/Full/Dynapac_S100.jpg",
+              "pagina_url": "https://dynapac.com/br-pt/products/light-equipment/dynapac-s100",
+              "slug": "s100"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

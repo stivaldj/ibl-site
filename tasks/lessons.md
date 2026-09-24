@@ -87,3 +87,78 @@
 - Regra preventiva: para SVG com animação de rotação, nunca usar `getBoundingClientRect()` como fonte de verdade de `width/height`; persistir tamanho estável via `style/computed/default`.
 - Correção recebida: redimensionar o título `580N` fazia o bloco fugir para cima/esquerda.
 - Regra preventiva: para overlays tipográficos do hero (`#showcase-title` e `#hero-model-meta`), persistir em modo estável (`fixed`) no modo editor.
+
+## 2026-06-10 — v1.2 Production Go-Live
+- Descoberta: o placeholder de WhatsApp (5567999999999) estava replicado em 6 arquivos-fonte e 45 páginas geradas; o DDD 67 era coincidentemente correto (matriz é Campo Grande/MS), mas o número era fake.
+- Regra preventiva: dados de contato/empresa nunca hardcoded em múltiplos pontos — fonte única (env var + data/filiais.json) e o gerador propaga.
+- Descoberta: os "SVGs" de 4–7MB do hero eram PNGs 4059px embutidos em base64; recomprimir o raster interno para WebP preserva referência e máscara (30MB → 2MB).
+- Regra preventiva: ao otimizar SVG com raster embutido, manter mesmas dimensões entre máscara (L) e imagem (RGB) e verificar programaticamente.
+- Descoberta: node_modules do repo é darwin-arm64; builds em ambiente Linux exigem cópia isolada com npm install próprio (nunca rodar npm install dentro do repo montado em outro OS).
+- Regra preventiva: a seção #unidades da home tem endereços mais atuais que o site WordPress público; em divergência de dados institucionais, tratar o repo como curadoria e flaggar para confirmação humana.
+
+## 2026-06-10 — Correção: ficha técnica sobre a máquina (hero home)
+- Correção recebida: a tabela de specs cobria a imagem da máquina no hero da home ao trocar de categoria.
+- Causa raiz: a home usa `webapp/main.js` (não `main.js`); o switchShowcase aplicava `translateX(-150px)` órfão nos modelos 580N/CX220C.
+- Regra preventiva: o hero da homepage vive em `webapp/` — validar mudanças de hero SEMPRE no entry real (conferir o `<script src>` do index.html antes de editar).
+- Regra preventiva: validar o hero interagindo (trocar todas as 8 categorias), não só no load inicial — estados pós-interação podem ter offsets próprios.
+- Regra preventiva: screenshots de preview devem cobrir mais de um tamanho de viewport antes de declarar "visual OK".
+- Correção recebida (2ª iteração): remover o translate órfão não bastou — máquina (~680px de pixels reais) + ficha (240px) não cabiam na coluna de ~690px; sobreposição era geométrica.
+- Regra preventiva: para overlap de elementos visuais, medir os pixels reais (canvas alpha-scan) antes de propor fix; interseção de bounding box não conta a história toda.
+- Regra preventiva: verificação visual do hero agora é automatizável: scripts Playwright + pixel-scan por modelo/viewport (ver verify-hero.mjs na sessão; considerar incorporar ao launch gate).
+
+## 2026-06-11 — Página /consorcio/ expôs crash pré-existente
+- Descoberta: `switchShowcase` acessava `#showcase-link.href` sem guarda; em páginas sem hero (produtos/*, consorcio) o TypeError matava TODO o JS subsequente — formulários de produto estavam mortos em produção silenciosamente.
+- Regra preventiva: uncaught exceptions não aparecem como console.error em harness Playwright — capturar SEMPRE o evento `pageerror` nos checks.
+- Regra preventiva: todo acesso a elemento de seção específica em script compartilhado entre páginas precisa de guard (if el).
+
+## 2026-09-16 — Revisão geral + espelhamento Dynapac
+- Padrão observado: exclusão de itens do catálogo feita só no gerador (`EXCLUDED_MODEL_SLUGS`) deixa páginas e imagens órfãs em disco, e o Vite empacota qualquer `index.html` que encontrar.
+- Regra preventiva: toda regra de exclusão em gerador de páginas precisa vir acompanhada de poda do output (ver `prune_dynapac_orfaos`). Gerar não é o mesmo que sincronizar.
+- Padrão observado: duas árvores de rotas para o mesmo conteúdo (`produtos/` e `case/`) sobreviveram a uma migração porque só o gerador e o Vite foram atualizados.
+- Regra preventiva: ao migrar rotas, varrer `href`, `tailwind.config.js`, scripts de verificação e docstrings — e remover a árvore antiga no mesmo commit do redirect.
+- Padrão observado: truncagem aplicada em dois pontos da pipeline (no chamador e em `render_head`) produz reticências no meio da frase.
+- Regra preventiva: quem monta a string calcula o orçamento de caracteres uma vez (ver `build_meta_description`); nunca truncar duas vezes.
+- Padrão observado: `.env` com segredo de webhook fora do `.gitignore`, a um `git add -A` de vazar.
+- Regra preventiva: antes de qualquer `git add -A` em repo alheio, conferir `git check-ignore` para `.env*` e artefatos locais; usar stage seletivo quando houver dúvida.
+- Padrão observado: dados de fornecedor misturam convenções (mesmo número como "2,130 mm" e "2.130 mm" na mesma ficha) e servem imagens de dois CDNs com links mortos.
+- Regra preventiva: em scraper de catálogo, normalizar valores antes de deduplicar e emitir lista de URLs candidatas em vez de uma única — deixar o downloader tentar em ordem.
+- Correção recebida: não inventar dado de negócio não verificável (telefone de Sinop com DDD de outro estado). Sinalizar no próprio dado e reportar, em vez de "corrigir" adivinhando.
+
+## 2026-09-20 — Movimento com peso
+- Padrão observado: curva easeOutBack em contador numérico ultrapassa ~10% do alvo. Num catálogo isso exibe uma quantidade falsa ("119 equipamentos") antes de assentar.
+- Regra preventiva: número que representa dado real nunca ultrapassa o alvo. Use desaceleração monotônica e tire o "peso" de um pulo de escala no elemento.
+- Padrão observado: efeito preso a `.btn` cobria 4 de 157 páginas, porque as páginas geradas usam classes utilitárias.
+- Regra preventiva: antes de aplicar um efeito, medir a cobertura real do seletor no `dist/`. Quando não houver classe comum, marcar por função (WhatsApp, âncora de lead, submit, `data-track`).
+- Padrão observado: o painel do navegador estrangula `requestAnimationFrame`, então medir animação por amostragem lá dá falso negativo.
+- Regra preventiva: validar curva de animação em Node (função pura) e usar Playwright com `emulateMedia` para checar `prefers-reduced-motion`.
+
+## 2026-09-20 — Recorte de fundo das fotos Dynapac
+- Padrão observado: recorte por preenchimento a partir dos cantos não alcança área cercada (vão da alça) nem sombra em degradê (laje de estúdio). Saiu fundo remanescente em cerca de 90 das 108 fotos.
+- Regra preventiva: para recorte de produto, usar segmentação por modelo (rembg), não preenchimento por cor. O preenchimento só serve para fundo chapado sem vãos.
+- Padrão observado: limpar "fragmentos soltos" só por área apagou a alça de uma placa vibratória, que sai do modelo como peça separada.
+- Regra preventiva: descartar fragmento exige dois critérios, tamanho E distância do corpo principal. Peça encostada ou próxima é parte da máquina.
+- Padrão observado: a escolha do modelo muda o resultado. `u2net` apaga alça fina; `isnet-general-use` perde alça branca sobre fundo branco; `birefnet-general` preservou ambas.
+- Regra preventiva: antes de rodar lote de imagens, comparar modelos nos casos mais difíceis (peça fina, peça da cor do fundo) e só então processar tudo.
+- Padrão observado: `pgrep -f "script.py"` dentro de um laço de espera casa com o próprio laço, então a espera nunca termina.
+- Regra preventiva: em espera por processo, filtrar pelo interpretador junto do caminho (`pgrep -f "python3.11 script.py"`) ou conferir por efeito no disco.
+
+## 2026-09-20 — Recorte das fotos CASE
+- Padrão observado: o problema da CASE era o oposto do da Dynapac. Não havia recorte errado; as fotos de estúdio do fabricante iam para a página sem recorte nenhum, virando caixa branca sobre o fundo escuro.
+- Regra preventiva: ao auditar imagem, comparar o que a página publica com o fundo real da página, não só o arquivo. O defeito aparece na composição, não no arquivo isolado.
+- Padrão observado: nem toda foto deve ser recortada. As 13 fotos de obra perderiam o sentido sem o fundo.
+- Regra preventiva: recorte automático precisa de um teste de "foto de estúdio" (bordas claras e uniformes) antes de rodar, e o resultado da classificação precisa ser conferido a olho.
+- Padrão observado: rodar o mesmo script em segundo plano e em primeiro plano ao mesmo tempo gerou leitura de arquivo pela metade.
+- Regra preventiva: garantir processo único antes de relançar um lote; conferir com `pgrep -x` no interpretador, não com o caminho do script.
+
+## 2026-09-21 — Hero da home CASE
+- Padrão observado: muitas iterações visuais sem convergir costumam indicar que o defeito está na entrada (imagens com enquadramento próprio), não no CSS. Ajuste manual por item em pixels é o sintoma.
+- Regra preventiva: antes de calibrar posição por item, normalizar os insumos (mesmo canvas, mesma linha de base). Se sobrar mais de um número por item, a normalização está incompleta.
+- Padrão observado: limite de layout escrito em porcentagem fixa (right: 33%) não acompanha o elemento vizinho, que tem largura em px e escala própria.
+- Regra preventiva: amarrar o limite à medida real do vizinho via variáveis CSS, e validar colisão por medição de retângulos em várias larguras, não só por captura de tela.
+
+- Toda mudança visual é medida também em 390 px antes de dizer que está pronta; validar só no desktop deixou o cabeçalho cortado passar em 157 páginas.
+- `right`/`bottom` em elemento `position: relative` desloca em vez de ancorar: posição de flutuante vai no wrapper `fixed`.
+- `overflow-x: hidden` em html/body transforma o body em caixa de rolagem e mata `position: sticky`; usar `overflow-x: clip` (com hidden de fallback).
+- Para intercalar foto entre blocos de uma coluna de texto no celular: `display: contents` na coluna + `order` nos filhos, zerando as margens do `space-y`.
+- JS que acha um bloco pelo texto visível ("Solicitar Orçamento" + "Falar com Consultor") quebra na primeira revisão de copy. Gancho de JS é atributo (`data-*`) posto no gerador, nunca texto.
+- Testar endpoint PHP com servidor local de verdade (php -S + mock do serviço externo) antes de subir: o `HTTP_HOST` com porta barrava todo lead legítimo e só apareceu no teste.

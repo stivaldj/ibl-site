@@ -1,5 +1,44 @@
 # Plano de Transformação UX/UI — IBL Máquinas (Meta: padrão projeto US$20k)
 
+## v1.2 — Production Go-Live (2026-06-10)
+> Ref: tasks/AUDITORIA_PRODUCAO.md | Branch: feature/v1.2-production-golive
+> Decisões: hosting Cloudflare Pages; webhook configurável (endpoint real pendente); dados reais extraídos de www.iblmaquinas.com.br
+
+### Fase 1 — Dados reais e configs
+- [x] Dados reais coletados (8 filiais, CNPJ 28.265.622/0001-60, razão social Racine Comércio de Máquinas Ltda, e-mail contato@iblmaquinas.com.br)
+- [x] `data/filiais.json` como fonte única (endereços curados do repo + telefones do site WP)
+- [x] WhatsApp centralizado (VITE_WHATSAPP_NUMBER; fallback matriz 556733584100 — CONFIRMAR número WhatsApp Business oficial)
+- [x] Substituído wa.me/5567999999999 em main.js, mobile/main.js, index.html, mobile/index.html, webapp/main.js, generate_pages.py
+- [x] Title/OG profissional (removido "Industrial Edition")
+
+### Fase 2 — SEO técnico e deploy
+- [x] sitemap.xml (46 rotas) + robots.txt gerados pelo generate_pages.py
+- [x] 404.html com identidade visual
+- [x] GitHub Actions → Cloudflare Pages (generate → build → verify → deploy)
+- [x] docs/DEPLOY.md com passos de DNS/secrets/cutover
+
+### Fase 3 — Institucional + LGPD
+- [x] /sobre/, /filiais/, /contato/, /privacidade/ (geradas pelo generate_pages.py, shell compartilhado, JSON-LD)
+- [x] Consentimento LGPD obrigatório nos 3 formulários de lead
+- [x] Links institucionais nos footers (estático + gerado) + CNPJ no rodapé (home já tinha seção #unidades)
+
+### Fase 4 — Performance
+- [x] SVGs do hero: PNG embutido → WebP q82 @2400px (30MB → ~2MB); máscaras alinhadas e verificadas
+- [x] JPGs >400KB recomprimidos (rolo 8,4MB → 165KB); dist total 63MB → 23MB
+- [x] phosphor-icons pinado @2.1.1
+
+### Verificação
+- [x] rebuild:site + verify:dist passando (build Linux em cópia isolada); 9 rotas-chave HTTP 200; sem número fake no dist; consentimento presente
+- [ ] Launch gates Playwright (smoke + lead) — rodar na máquina local antes do merge: `npm run launch:gate:smoke` / `launch:gate:lead`
+- [ ] Validação visual do hero comprimido no browser (abrir homepage local)
+
+### Pendências de ambiente (fora do repo)
+- [x] Confirmar WhatsApp Business oficial → 5565999808288 (atendimento nacional da rede)
+- [x] Endpoint de leads: /api/lead.php → Bitrix24 (token validado em 2026-09-23, leitura sem criar lead)
+- [x] GA4 criado; VITE_GA4_ID no .env
+- [~] Substituído: hospedagem em cPanel (docs/DEPLOY-CPANEL.md); Cloudflare virou só CI de verificação
+- [ ] Push da branch + PR (gh indisponível na sandbox): `git push -u origin feature/v1.2-production-golive`
+
 ## Correções rápidas (2026-02-26)
 - [x] Corrigir sobreposição do widget de chat no mobile sem quebrar UX do chat.
 - [x] Eliminar erro de `favicon.ico` 404.
@@ -240,3 +279,128 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 - Resize do editor não usa mais teto da viewport, removendo travamento de crescimento da máquina.
 - Clique simples em elementos editáveis não dispara mais persistência/materialização (evita crescimento indevido no GIF).
 - Blocos de título/modelo do hero foram fixados em modo de persistência estável no editor para impedir fuga de posição.
+
+## v1.3 — Production Go-Live (2026-07-29)
+> Plano ativo: tasks/PLANO_GOLIVE_v1.3.md | Auditoria: tasks/AUDITORIA_PRE_DEPLOY_2026-07-29.md
+> Decisões: cPanel; webhook ibl-ai-os antes do go-live; GA4 conta 334862278 (falta Measurement ID); remover /mobile/; escopo completo
+
+### Execução v1.3 (2026-07-29) — Fases 1–3 + 5 concluídas por Claude
+- [x] /mobile/ removido do build (vite, verify-dist, gates, robots)
+- [x] Favicon real (.ico multi-size + apple-touch-icon) e OG image 1200×630
+- [x] Unsplash → foto local WebP; TELEMETRIA/status "Aberto"/chat com copy honesto (telefones reais por unidade)
+- [x] sameAs Instagram; nota Dynapac na página Sobre
+- [x] 28 imagens pesadas → WebP (−85%); phosphor + leaflet self-host (zero unpkg/unsplash no dist)
+- [x] public/.htaccess (HTTPS, 404, cache, gzip); CI verify-only; package:deploy (injeta lead-config, poda originais)
+- [x] WhatsApp Business confirmado: 5565999808288 (env + fallbacks + filiais.json)
+- [x] Leads → Bitrix24 via /api/lead.php no cPanel (token via .env, fora do git) + fallback WhatsApp
+- [x] GA4 reutilizado: G-P3EYZ24YQZ (fluxo IBL MAQUINAS, histórico preservado) — baked no bundle
+- [x] Gates: verify-dist ✓, smoke 4 rotas ✓, lead success E failure ✓ (E2E com PHP + mock Bitrix)
+- [x] Pacote: ibl-site-deploy-20260729.zip (8,2 MB, 224 arquivos, .htaccess + api/lead-config.php)
+- [ ] VOCÊ: backup do WordPress → extrair zip no public_html → AutoSSL → testes (docs/DEPLOY-CPANEL.md)
+- [ ] VOCÊ: automação Bitrix "novo lead → notificação/WhatsApp" + Search Console pós-go-live
+
+## Revisão geral pré-go-live + espelhamento Dynapac nacional (2026-09-16)
+> Fonte nacional Dynapac = dynapac.com/br-pt (a aba "Produtos" esconde o que está "Interrompido").
+> Fluxo: `npm run dynapac:sync` (documentado em docs/OPERATIONS.md §4).
+
+### Correções gerais — CONCLUÍDO (commit fe53002)
+- [x] Remover árvore morta `produtos/` e corrigir `404.html` para `/case/`
+- [x] Remover páginas órfãs dos 4 modelos CASE excluídos (CX370C-ME, CX490C, CX500C, CX800B)
+- [x] 7 imagens quebradas resolvidas ao regerar as páginas
+- [x] Meta description Dynapac: fim da truncagem dupla (`build_meta_description`)
+- [x] Títulos por marca: páginas Dynapac não terminam mais em "CASE Construction"
+- [x] Copy CASE nas páginas Dynapac corrigida na regeração
+- [x] Total do catálogo CASE passa a aplicar a exclusão (32 → 28, bate com a home)
+- [x] WhatsApp: fallbacks sincronizados com o número confirmado do `.env`
+- [x] `tailwind.config.js` apontando para `case/` e `dynapac/`
+- [x] 404 com meta description; "Official Dealer" → "Concessionária Autorizada"; breadcrumb "Home" → "Início"
+- [x] SEGURANÇA: `.env` (BITRIX_WEBHOOK_URL) não estava no `.gitignore` — corrigido + `.env.example`
+
+### Dynapac — CONCLUÍDO (commit 9ddd70f)
+- [x] Scraper do catálogo nacional (`scripts/dynapac-scrape-nacional.py`)
+- [x] 36 → 108 modelos; saem CA250D, CP274, F1200CS e CM2500 (descontinuados no Brasil)
+- [x] Mesas/screeds (18) fora do espelho, conforme escopo aprovado
+- [x] 108/108 fotos oficiais baixadas (2 CDNs + fallback de URL)
+- [x] Specs normalizadas para o padrão brasileiro e rótulos traduzidos
+- [x] `prune_dynapac_orfaos`: modelo que sai do catálogo some do build
+
+### Verificação
+- [x] `npm run rebuild:site` ✓ · `launch-gate-smoke` ✓ (7 rotas)
+- [x] `dist/`: 0 links quebrados, 0 imagens quebradas, sitemap 156/156
+- [x] Revisão visual no navegador (home, categoria, ficha de modelo)
+
+### Pendente com a IBL (não dá para resolver no código)
+- [x] Telefone de Sinop/MT → (65) 99980-8288, atendimento nacional da rede (IBL, 2026-09-18).
+      Todo lead de WhatsApp do site cai neste número; verificado com a variável de CI vazia.
+- [x] `fotos-dynapac/` fora do git (decisão do José, 2026-09-18). Originais re-baixáveis;
+      o gerador reusa o WebP versionado quando o original falta (CI/clone limpo).
+
+## Fotos oficiais CASE — rodada 1 (2026-09-20)
+Fonte: CASE Brand (casebrand.com), acervo oficial CNH. Mapeados 839 arquivos nas
+11 linhas; 24 dos 28 modelos têm foto de estúdio disponível.
+
+Aplicado nesta rodada (as 5 máquinas de baixa resolução do site):
+| Modelo | Antes | Depois | Origem |
+|---|---|---|---|
+| 1150L | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11491 |
+| 2050M | 460 px | 7360 px (reduzida a 2400) | CCE-IMG-11499 |
+| 845B  | 1114 px | 8697 px (reduzida a 2400) | CCE-IMG-26411 |
+| 885B  | 1114 px | 9009 px (reduzida a 2400) | CCE-IMG-26501 |
+| SR175B | 1024 px | mantida a atual (ver nota) | — |
+
+- [x] SR175B: NÃO trocada de propósito. A foto de estúdio do portal (CCE-IMG-13186,
+      5895 px) é da geração anterior, a SR175 sem "B". A foto atual do site, embora
+      de obra e com 1024 px, mostra a SR175B correta. Trocar seria anunciar outro
+      modelo. Se a IBL quiser estúdio nessa máquina, é preciso foto da série B.
+- [x] 885B: versão em alta (9009 px) aplicada.
+- [x] 845B: ângulo de três quartos em alta (8697 px) aplicado.
+- [ ] Próximas rodadas: 2ª e 3ª foto por modelo (galeria) e folhetos técnicos em PDF.
+
+## Hero da home CASE — refação em 7 passos (2026-09-21)
+Auditoria: o estranhamento vinha das imagens (SVG do Canva com enquadramento
+próprio) compensadas por 96 números manuais no main.js.
+- [x] 1. Imagens normalizadas (mesmo palco, mesma linha de chão, porte relativo);
+      580N e W20G trocadas por estúdio oficial (CCE-IMG-28032 e 28489); 96 números removidos
+- [x] 2. Palco com limites: vai do vão da grade até a borda real da ficha. Medido nas
+      8 máquinas em 1440, 1200 e 1024 px: zero colisão com texto, botões e ficha.
+      Custo: a maior máquina caiu de ~640 para 520 px em 1440. O passo 3 devolve
+      essa largura ao enxugar a ficha.
+- [x] 3. Nome do modelo uma vez só (saíram o título fantasma e a linha da ficha); ficha com 3 dados + "Ver ficha completa" para a página do modelo; ficha 272 → 216 px, palco 520 → 586 px em 1440; valores iniciais do HTML iguais aos do JS (7.540 kg)
+- [x] 4. Dados do hero gerados das fichas: `generate_pages.py` escreve `data/hero-machines.json` (lista HERO_MACHINES) e preenche o HTML inicial de case/index.html; main.js só importa o JSON
+- [x] 5. Anel de texto giratório removido; ficou um halo parado (círculo fino + brilho) atrás da máquina
+- [x] 6. Celular: máquina antes dos botões; seletor em faixa horizontal
+- [x] 7. Limpeza do hero: id duplicado corrigido; saiu do JS todo o ajuste de posição por máquina (HERO_STAGE_DEFAULTS, normalizeHeroStage, setStyleVariables) e do CSS as regras do título fantasma e do anel. Não juntei o CSS restante num bloco único: reordenar regras muda a cascata e o ganho é só de leitura.
+- Pendência de conteúdo: SV300B é a única voltada para a direita; o portal não tem estúdio dela.
+
+## Mobile — correções (auditoria em 390 px)
+
+- [x] 1. Cabeçalho cabe na tela em todas as páginas (selo oculto, menu só ícone, CTA "Orçamento", alvos de 44 px)
+- [x] 2. Chat flutuante: só ícone no celular; corrigido `right/bottom` aplicado em elemento `relative` (ficava deslocado 2rem)
+- [x] 3. Hero da CASE: máquina na primeira tela (topo em ~340 px, antes 886), seletor em faixa horizontal que acompanha a linha ativa, botões lado a lado terminando em 711 px
+- [x] 4. Ficha de produto (CASE e Dynapac): foto logo abaixo do título (topo em ~405 px, antes 1378), título sem quebra no meio da palavra (150 páginas medidas a 360 px), trilha em uma linha
+- [x] 5. Categoria Dynapac: cards em fileira no celular (36 → 17 telas), etiquetas em 11 px, atalhos por linha fixos no topo; `overflow-x: hidden` global trocado por `clip` (quebrava todo `sticky`); 156 páginas sem rolagem lateral
+- [x] 6. Alvos de toque: filiais 17 → 0, contato 13 → 0, home CASE 23 → 7 (restam zoom e créditos do mapa e botões internos do chat)
+
+Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termina em 364 px; smoke e lead gates passaram.
+
+## Go-live — o que falta (2026-09-23)
+
+- [x] Redirecionamentos do WordPress antigo: 43/43 endereços do sitemap antigo testados num Apache local com o .htaccess de produção (34 × 301 para página equivalente, 4 × 410 para páginas-lixo, 1 × home)
+- [x] Pacote de deploy gera com api/lead-config.php (Bitrix) e .htaccess
+- [ ] Push da branch + PR para main
+- [ ] VOCÊ: backup do WordPress no cPanel (arquivos + banco) antes de extrair
+- [ ] VOCÊ: extrair o zip em public_html, AutoSSL, testes pós-deploy (docs/DEPLOY-CPANEL.md)
+- [ ] VOCÊ: teste real do /api/lead.php em produção (cria 1 lead de teste no Bitrix)
+- [ ] VOCÊ: automação Bitrix "novo lead → aviso" (LEAD_ALERT_EMAIL está vazio: hoje ninguém é avisado)
+- [ ] Decidir o chat flutuante até o agente entrar: hoje responde com 4 frases fixas fingindo conversa
+- [ ] Pós-go-live: Search Console + sitemap, Lighthouse mobile baseline
+
+## Checklist de produção — lacunas da lista externa (2026-09-24)
+
+- [x] 1. Aviso de cookies: GA4 só carrega depois de "Aceitar"; escolha guardada; reabrir pela política de privacidade; política atualizada
+- [x] 2. Anti-spam no lead.php: origem do próprio site, campo-isca, tempo mínimo de preenchimento, limite por IP (resposta falsa de sucesso para robô)
+- [x] 3. Telefone validado (10 a 13 dígitos) no navegador e no servidor; campos `type="tel"`
+- [x] 4. Contraste (cinza pequeno 3,6–3,9 → ≥4,5; decorativos com aria-hidden), carrossel escondido sem foco, cards de unidade com nome acessível correto, HSTS, títulos ≤ 65
+- [x] 5. Chamada principal única = WhatsApp: cabeçalho, hero da CASE, fichas e barra fixa; chat falso vira atalho direto; "Ver catálogo" como secundário
+
+Verificação (2026-09-24): lead.php testado num PHP local com Bitrix falso — 4 envios legítimos chegaram, origem externa/sem origem barrados (403), campo-isca e envio rápido descartados com "ok" falso, telefone inválido 422, 6º envio em 10 min 429. Aviso de cookies: sem escolha e após recusar não há GA; após aceitar o gtag carrega; reabre pela política. Lighthouse mobile: acessibilidade, boas práticas e SEO 100 em home, CASE, ficha CASE, ficha Dynapac, categoria Dynapac e filiais. 801 links de WhatsApp, 0 links quebrados; gates smoke e lead passando.

@@ -73,7 +73,39 @@ npm run assets:photos:sync
 
 Use `python3 process_fotos.py --sync --force` when you need a full rebuild regardless of timestamps.
 
-### 3. Refresh curated transparent derivatives
+### 3. Cut the background of CASE studio photos
+
+```bash
+npm run case:recortar
+```
+
+The manufacturer's studio photos come on a white background and, on the dark
+page, render as a white box around the machine. `scripts/case-recortar.py`
+writes a `{name}-nobg.webp` next to each studio photo and `generate_pages.py`
+prefers it. Field photos (dirt, sky, jobsite) are detected and left untouched:
+there the background is the content. Both this and the Dynapac cut share
+`scripts/recorte_fundo.py` and need Python 3.11 with `rembg`.
+
+### 3b. Normalize the home hero machines
+
+```bash
+npm run hero:normalizar
+```
+
+`scripts/hero-normalizar.py` writes `public/case-assets/hero/{slug}.webp`: same
+canvas, same ground line, centered. The only per-machine knob is `largura`, the
+share of the stage the machine takes, which keeps the sense of size between a
+skid steer and a 22 t excavator. `main.js` therefore needs no per-machine
+offsets. Studio sources that are not cut yet live in `fotos/hero-src/`.
+
+The hero specs are not typed by hand either. `generate_pages.py` reads the
+`HERO_MACHINES` list (one model per selector button, same order as
+`case/index.html`), takes three specs from each model's `content.md`, writes
+`data/hero-machines.json` (imported by `main.js`) and fills the first machine
+into the static hero HTML. To change a machine or a number, edit the list or the
+spec sheet and run `npm run rebuild:site`.
+
+### 4. Refresh curated transparent derivatives
 
 ```bash
 npm run assets:nobg:sync
@@ -81,7 +113,53 @@ npm run assets:nobg:sync
 
 Use `python3 remove_bg_batch.py --sync --force` when you need a full rebuild regardless of timestamps.
 
-### 4. Rebuild the launch artifact
+### 5. Refresh the Dynapac catalog (national site)
+
+The Dynapac catalog mirrors the Brazilian site, `dynapac.com/br-pt`. Its
+"Produtos" tab hides everything flagged `data-discontinued="true"`
+("Interrompido"), so only active models are mirrored. Mesas/screeds are
+intentionally excluded: they are paver attachments, not catalog machines.
+
+```bash
+npm run dynapac:sync
+```
+
+Equivalent raw commands:
+
+```bash
+python3 scripts/dynapac-scrape-nacional.py
+python3 scripts/dynapac-download-fotos.py
+npm run rebuild:site
+```
+
+Notes:
+
+- The scraper caches every fetched page under `.tmp/dynapac-br/`. Re-run it with
+  `--offline` to rebuild `data/dynapac-db.json` from that cache without touching
+  the network. Delete the cache to force a real refresh.
+- The photo downloader is idempotent: it skips models that already have a file
+  under `fotos-dynapac/`. Use `--force` to re-fetch everything.
+- `fotos-dynapac/` is NOT versioned (gitignored). Originals are large (~136 MB)
+  and re-downloadable. What ships and is versioned is the WebP under
+  `public/dynapac-assets/`. Without the originals (fresh clone, CI), the
+  generator reuses those WebP files, so the build output is identical. Run
+  `npm run dynapac:fotos` only when a photo must be reprocessed.
+- Each model carries fallback image URLs. Dynapac serves photos from two CDNs
+  (`pdf.dynapac.com` and `pim.dynapac.com`) and several `/Full/` gallery links
+  are dead, so the downloader tries the candidates in order.
+- Background removal runs in `scripts/dynapac-recortar.py`, with `rembg` under
+  Python 3.11 (`npm run dynapac:recortar`). It replaces the old corner flood
+  fill, which could not reach enclosed areas (the gap inside a plate compactor's
+  handle) nor soft studio shadows (the light slab under the machine). The script
+  also drops loose fragments far from the machine, such as campaign badges.
+  Model choice matters: `birefnet-general` is the default because `u2net` erases
+  thin handles and `isnet-general-use` loses the white handle of the DRP60D
+  against the white studio background.
+- `generate_pages.py` prunes `dynapac/**` pages and `public/dynapac-assets/**`
+  images for models that left the catalog. A model discontinued upstream
+  disappears from the build on the next rebuild.
+
+### 6. Rebuild the launch artifact
 
 ```bash
 npm run rebuild:site

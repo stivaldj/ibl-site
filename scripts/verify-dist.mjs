@@ -4,10 +4,11 @@ import { join } from 'node:path'
 const root = process.cwd()
 const requiredPaths = [
   'dist/index.html',
-  'dist/mobile/index.html',
-  'dist/produtos/index.html',
-  'dist/produtos/retroescavadeiras/index.html',
-  'dist/produtos/retroescavadeiras/580n/index.html',
+  'dist/case/index.html',
+  'dist/case/catalogo/index.html',
+  'dist/case/retroescavadeiras/580n/index.html',
+  'dist/dynapac/index.html',
+  'dist/dynapac/compactacao/ca25d-rhino/index.html',
 ]
 
 const missing = requiredPaths.filter((relativePath) => !existsSync(join(root, relativePath)))
@@ -22,10 +23,11 @@ if (missing.length > 0) {
 
 const representativeHtml = [
   'dist/index.html',
-  'dist/mobile/index.html',
-  'dist/produtos/index.html',
-  'dist/produtos/retroescavadeiras/index.html',
-  'dist/produtos/retroescavadeiras/580n/index.html',
+  'dist/case/index.html',
+  'dist/case/catalogo/index.html',
+  'dist/case/retroescavadeiras/580n/index.html',
+  'dist/dynapac/index.html',
+  'dist/dynapac/compactacao/ca25d-rhino/index.html',
 ]
 
 for (const relativePath of representativeHtml) {

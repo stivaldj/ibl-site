@@ -1,0 +1,170 @@
+[
+  {
+    "title": "580N",
+    "model": "580N Series 2",
+    "cat": "Retroescavadeiras",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "96 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "7.540 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "3,9 L"
+      }
+    ],
+    "img": "/case-assets/hero/580n.webp",
+    "page": "/case/retroescavadeiras/580n/"
+  },
+  {
+    "title": "CX220C",
+    "model": "CX220C Série 2",
+    "cat": "Escavadeiras Hidráulicas",
+    "specs": [
+      {
+        "label": "POTÊNCIA LÍQUIDA",
+        "value": "147,8 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "22.149 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "6.728 cc"
+      }
+    ],
+    "img": "/case-assets/hero/cx220c.webp",
+    "page": "/case/escavadeiras-hidraulicas/cx220c-s2/"
+  },
+  {
+    "title": "W20G",
+    "model": "W20G",
+    "cat": "Pás Carregadeiras",
+    "specs": [
+      {
+        "label": "CARGA TOMBAMENTO",
+        "value": "6.108 kg"
+      },
+      {
+        "label": "VOLUME CAÇAMBA",
+        "value": "1,7 a 5 m³"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "6,7 L"
+      }
+    ],
+    "img": "/case-assets/hero/w20g.webp",
+    "page": "/case/pas-carregadeiras/w20g/"
+  },
+  {
+    "title": "SV300B",
+    "model": "SV300B",
+    "cat": "Minicarregadeiras",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "90 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "3.765 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "3,2 L"
+      }
+    ],
+    "img": "/case-assets/hero/sv300b.webp",
+    "page": "/case/minicarregadeiras/sv300b/"
+  },
+  {
+    "title": "885B",
+    "model": "885B Series 2",
+    "cat": "Motoniveladoras",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "220/234 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "18.120 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "6,7 L"
+      }
+    ],
+    "img": "/case-assets/hero/885b.webp",
+    "page": "/case/motoniveladoras/885b-series-2/"
+  },
+  {
+    "title": "CX22D",
+    "model": "CX22D",
+    "cat": "Miniescavadeiras",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "20,9 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "2.190 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "1,65 L"
+      }
+    ],
+    "img": "/case-assets/hero/cx22d.webp",
+    "page": "/case/miniescavadeiras/cx22d/"
+  },
+  {
+    "title": "1107EX",
+    "model": "1107EX",
+    "cat": "Rolo Compactador",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "110 hp"
+      },
+      {
+        "label": "TORQUE MÁXIMO",
+        "value": "430 Nm"
+      },
+      {
+        "label": "PESO PATA",
+        "value": "13.200 kg"
+      }
+    ],
+    "img": "/case-assets/hero/1107ex.webp",
+    "page": "/case/rolo-compactador/1107ex/"
+  },
+  {
+    "title": "2050M",
+    "model": "2050M",
+    "cat": "Tratores Esteiras",
+    "specs": [
+      {
+        "label": "POTÊNCIA BRUTA",
+        "value": "232 hp"
+      },
+      {
+        "label": "PESO OPERACIONAL",
+        "value": "20.599 kg"
+      },
+      {
+        "label": "CILINDRADA",
+        "value": "6,7 L"
+      }
+    ],
+    "img": "/case-assets/hero/2050m.webp",
+    "page": "/case/tratores-de-esteiras/2050m/"
+  }
+]
