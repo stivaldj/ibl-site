@@ -401,4 +401,6 @@ Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termi
 - [x] 2. Anti-spam no lead.php: origem do próprio site, campo-isca, tempo mínimo de preenchimento, limite por IP (resposta falsa de sucesso para robô)
 - [x] 3. Telefone validado (10 a 13 dígitos) no navegador e no servidor; campos `type="tel"`
 - [x] 4. Contraste (cinza pequeno 3,6–3,9 → ≥4,5; decorativos com aria-hidden), carrossel escondido sem foco, cards de unidade com nome acessível correto, HSTS, títulos ≤ 65
-- [ ] 5. Chamada principal única = WhatsApp: cabeçalho, hero da CASE, fichas e barra fixa; chat falso vira atalho direto; "Ver catálogo" como secundário
+- [x] 5. Chamada principal única = WhatsApp: cabeçalho, hero da CASE, fichas e barra fixa; chat falso vira atalho direto; "Ver catálogo" como secundário
+
+Verificação (2026-09-24): lead.php testado num PHP local com Bitrix falso — 4 envios legítimos chegaram, origem externa/sem origem barrados (403), campo-isca e envio rápido descartados com "ok" falso, telefone inválido 422, 6º envio em 10 min 429. Aviso de cookies: sem escolha e após recusar não há GA; após aceitar o gtag carrega; reabre pela política. Lighthouse mobile: acessibilidade, boas práticas e SEO 100 em home, CASE, ficha CASE, ficha Dynapac, categoria Dynapac e filiais. 801 links de WhatsApp, 0 links quebrados; gates smoke e lead passando.

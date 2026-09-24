@@ -160,3 +160,5 @@
 - `right`/`bottom` em elemento `position: relative` desloca em vez de ancorar: posição de flutuante vai no wrapper `fixed`.
 - `overflow-x: hidden` em html/body transforma o body em caixa de rolagem e mata `position: sticky`; usar `overflow-x: clip` (com hidden de fallback).
 - Para intercalar foto entre blocos de uma coluna de texto no celular: `display: contents` na coluna + `order` nos filhos, zerando as margens do `space-y`.
+- JS que acha um bloco pelo texto visível ("Solicitar Orçamento" + "Falar com Consultor") quebra na primeira revisão de copy. Gancho de JS é atributo (`data-*`) posto no gerador, nunca texto.
+- Testar endpoint PHP com servidor local de verdade (php -S + mock do serviço externo) antes de subir: o `HTTP_HOST` com porta barrava todo lead legítimo e só apareceu no teste.

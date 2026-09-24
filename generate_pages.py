@@ -178,9 +178,7 @@ HEADER_HTML = f"""\
             8 LOJAS · 6 ESTADOS
           </div>
           <button type="button" data-theme-toggle class="w-10 h-10 flex items-center justify-center border border-case-border text-gray-400 hover:text-case-yellow hover:border-case-yellow transition-colors" aria-label="Alternar tema"><i class="ph-bold ph-sun text-lg"></i></button>
-          <a href="{HOME_CONTACT_URL}" class="bg-white text-black hover:bg-case-yellow hover:text-black transition-colors px-6 py-2.5 font-bold uppercase text-xs tracking-widest border border-white">
-            <span class="header-cta-prefix">Solicitar </span>Orçamento
-          </a>
+          <a data-track="header_whatsapp" href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" class="header-cta-whatsapp inline-flex items-center gap-2 bg-case-yellow text-black hover:bg-white transition-colors px-5 py-2.5 font-bold uppercase text-xs tracking-widest border border-case-yellow"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i><span class="header-cta-prefix">Falar no </span>WhatsApp</a>
         </div>
       </div>
     </header>"""
@@ -196,7 +194,7 @@ FOOTER_HTML = f"""\
           <div class="flex flex-col justify-end items-start lg:items-end">
             <p class="font-bold text-lg mb-6 max-w-sm lg:text-right">Especifique sua próxima máquina com apoio comercial, cobertura regional e resposta rápida da IBL.</p>
             <div class="generated-footer-actions flex gap-4">
-              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Whatsapp</a>
+              <a href="{build_whatsapp_url('Olá, quero falar com um especialista da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">WhatsApp</a>
               <a href="{HOME_CONTACT_URL}" class="px-8 py-3 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors">Formulário</a>
             </div>
           </div>
@@ -252,8 +250,8 @@ FOOTER_HTML = f"""\
       </div>
     </footer>
     <div class="generated-floating-chat-wrap fixed bottom-8 right-8 z-50">
-      <a href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
-        <i class="generated-floating-chat__icon ph-fill ph-chats-circle text-3xl text-black group-hover:scale-110 transition-transform"></i>
+      <a data-track="floating_whatsapp" href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
+        <i class="generated-floating-chat__icon ph-fill ph-whatsapp-logo text-3xl text-black group-hover:scale-110 transition-transform"></i>
         <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-black rounded-full animate-pulse"></span>
       </a>
     </div>"""
@@ -750,8 +748,8 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
               {summary_pills}
             </div>
             <div class="generated-hero-actions flex gap-4 pt-4">
-              <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-3 text-sm">
-                Solicitar Orçamento <i class="ph-bold ph-arrow-right"></i>
+              <a data-track="product_hero_whatsapp" href="{build_whatsapp_url(f'Olá, tenho interesse no modelo {title}.')}" target="_blank" rel="noopener noreferrer" class="bg-case-yellow text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-3 text-sm">
+                <i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp
               </a>
               <a href="/case/{cat_slug}/" class="border border-case-border text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition-colors text-sm">
                 ← Ver Categoria
@@ -775,18 +773,13 @@ def generate_product_page(model: dict, category: str, cat_slug: str) -> str:
     {specs_section}
 
     <!-- CTA Final -->
-    <section class="py-20 bg-case-gray border-t border-case-border">
+    <section data-product-cta class="py-20 bg-case-gray border-t border-case-border">
       <div class="container mx-auto px-6 text-center">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-4">/// IBL Máquinas</span>
         <h2 class="font-display font-black text-4xl md:text-5xl uppercase mb-6">{build_product_cta_heading(title)}</h2>
         <p class="text-gray-400 mb-10 max-w-xl mx-auto">Nossa equipe especializada está pronta para apresentar uma proposta personalizada para sua operação.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="{HOME_CONTACT_URL}" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors">
-            Solicitar Orçamento
-          </a>
-          <a href="{build_whatsapp_url(f'Olá, tenho interesse no modelo {title}.')}" target="_blank" rel="noopener noreferrer" class="border border-case-border text-white px-10 py-4 font-bold uppercase tracking-widest hover:border-case-yellow transition-colors">
-            Falar com Consultor
-          </a>
+          <a data-track="product_final_whatsapp" href="{build_whatsapp_url(f'Olá, tenho interesse no modelo {title}.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp</a>
         </div>
       </div>
     </section>
@@ -963,8 +956,8 @@ def generate_category_page(cat_entry: dict) -> str:
           <h2 class="font-display font-black text-3xl uppercase">Não encontrou o que precisa?</h2>
           <p class="text-gray-400 mt-2">Nossa equipe pode te ajudar a encontrar o equipamento ideal.</p>
         </div>
-        <a href="{build_whatsapp_url(f'Olá, preciso de ajuda para escolher um equipamento da linha {category}.')}" target="_blank" rel="noopener noreferrer" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex-shrink-0">
-          Falar com Consultor
+        <a href="{build_whatsapp_url(f'Olá, preciso de ajuda para escolher um equipamento da linha {category}.')}" target="_blank" rel="noopener noreferrer" class="bg-case-yellow text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex-shrink-0 inline-flex items-center gap-3">
+          <i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp
         </a>
       </div>
     </section>
@@ -1362,7 +1355,7 @@ def generate_institutional_pages() -> int:
               <a href="mailto:{escape(empresa['email'], quote=True)}" class="flex items-center gap-3 text-gray-300 hover:text-case-yellow transition-colors"><i class="ph-bold ph-envelope text-2xl text-case-yellow"></i> {escape(empresa['email'])}</a>
               <a href="tel:{escape(matriz['telefone_e164'], quote=True)}" class="flex items-center gap-3 text-gray-300 hover:text-case-yellow transition-colors"><i class="ph-bold ph-phone text-2xl text-case-yellow"></i> Matriz: {escape(matriz['telefone'])}</a>
             </div>
-            <a href="/#captacao-lead" class="mt-8 block text-center px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Solicitar orçamento</a>
+            <a data-track="contato_whatsapp" href="{build_whatsapp_url('Olá, vim do site da IBL Máquinas e quero falar com um consultor.')}" target="_blank" rel="noopener noreferrer" class="mt-8 flex items-center justify-center gap-3 px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp</a>
             <p class="text-xs text-gray-500 mt-4 leading-relaxed">WhatsApp aberto 24h, todos os dias. Dados tratados conforme nossa <a href="/privacidade/" class="underline hover:text-case-yellow">Política de Privacidade</a>.</p>
           </div>
         </div>
@@ -1667,9 +1660,8 @@ def generate_consorcio_page() -> str:
               <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[var(--color-case-yellow)]" />
               <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
             </label>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <button data-track="consorcio_lead_submit" type="submit" class="btn btn-primary w-full">Quero simular</button>
-              <a data-track="consorcio_lead_whatsapp" href="{build_whatsapp_url('Olá, quero simular o Consórcio CASE.')}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">WhatsApp direto</a>
+            <div class="pt-2">
+              <button data-track="consorcio_lead_submit" type="submit" class="btn btn-primary w-full">Simular pelo WhatsApp</button>
             </div>
             <p id="lead-feedback" role="status" aria-live="polite" class="text-xs font-mono text-gray-500 uppercase tracking-widest"></p>
           </form>
@@ -1884,11 +1876,11 @@ def render_dynapac_unidades_section() -> str:
 def render_dynapac_cta_section(model_name: str) -> str:
     wa = build_whatsapp_url(f"Olá, tenho interesse no equipamento {model_name}.")
     return f"""
-    <section class="py-20 bg-case-panel border-t border-case-border">
+    <section data-product-cta class="py-20 bg-case-panel border-t border-case-border">
       <div class="container mx-auto px-6 text-center">
         <h2 class="font-display font-black text-3xl md:text-5xl uppercase mb-6">Solicitar Orçamento</h2>
         <p class="text-gray-400 max-w-xl mx-auto mb-8">Fale com a equipe IBL da sua região para condições comerciais, disponibilidade e prazo de entrega do {escape(model_name)}.</p>
-        <a href="{wa}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
+        <a href="{wa}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp</a>
       </div>
     </section>"""
 
@@ -2024,11 +2016,11 @@ def generate_dynapac_model_page(cat: dict, sub: dict, model: dict) -> str:
         <p class="text-xs text-gray-600 font-mono mt-4 uppercase tracking-wide">Especificações de referência do fabricante. Confirme a configuração exata com a equipe comercial IBL.</p>
       </div>
     </section>
-    <section class="py-20 bg-case-panel border-t border-case-border">
+    <section data-product-cta class="py-20 bg-case-panel border-t border-case-border">
       <div class="container mx-auto px-6 text-center">
         <h2 class="font-display font-black text-3xl md:text-5xl uppercase mb-6">Solicitar Orçamento</h2>
         <p class="text-gray-400 max-w-xl mx-auto mb-8">Fale com a equipe IBL da sua região para condições, disponibilidade e prazo de entrega.</p>
-        <a href="{build_whatsapp_url(f'Olá, tenho interesse no equipamento {nome}.')}" target="_blank" rel="noopener noreferrer" class="inline-block px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Falar com Consultor</a>
+        <a href="{build_whatsapp_url(f'Olá, tenho interesse no equipamento {nome}.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-10 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp</a>
       </div>
     </section>
     {render_dynapac_unidades_section()}"""
@@ -2098,8 +2090,8 @@ def generate_dynapac_home(db: dict) -> str:
         <h1 class="font-display font-black text-6xl md:text-8xl uppercase leading-[0.9]">DYNAPAC<br /><span class="text-case-yellow">COMPACTAÇÃO &amp;<br />PAVIMENTAÇÃO</span></h1>
         <p class="text-gray-400 max-w-2xl mt-8 text-lg">Equipamentos Dynapac para compactação de solos e asfalto, pavimentação e obras urbanas — com vendas, peças originais e assistência técnica da IBL no Acre, Amazonas, Rondônia e Roraima.</p>
         <div class="flex flex-wrap gap-4 mt-10">
-          <a href="#linhas" class="px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors">Ver Linhas</a>
-          <a href="{build_whatsapp_url('Olá, quero falar sobre equipamentos Dynapac com a IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-white/30 font-bold uppercase tracking-widest hover:border-case-yellow hover:text-case-yellow transition-colors">Falar com Consultor</a>
+          <a data-track="dynapac_hero_whatsapp" href="{build_whatsapp_url('Olá, quero falar sobre equipamentos Dynapac com a IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 bg-case-yellow text-black font-bold uppercase tracking-widest hover:bg-white transition-colors"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp</a>
+          <a href="#linhas" class="px-8 py-4 border border-white/30 font-bold uppercase tracking-widest hover:border-case-yellow hover:text-case-yellow transition-colors">Ver linhas</a>
         </div>
       </div>
     </section>

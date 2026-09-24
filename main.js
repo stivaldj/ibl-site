@@ -1156,10 +1156,8 @@ function setupProductPageEnhancements() {
     ['Como recebo proposta comercial?', 'Envie o formulário com seu cenário e retornamos com recomendação técnica e condições comerciais.']
   ]
 
-  const firstCtaSection = [...main.querySelectorAll('section')].find((section) => (
-    section.textContent.includes('Solicitar Orçamento') &&
-    section.textContent.includes('Falar com Consultor')
-  ))
+  // Marcador fixo no gerador: procurar pelo texto do botão quebrava a cada ajuste de copy
+  const firstCtaSection = main.querySelector('section[data-product-cta]')
   if (!firstCtaSection) return
 
   if (!document.getElementById('product-fit-section')) {
@@ -1254,11 +1252,8 @@ function setupProductPageEnhancements() {
             <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[var(--color-case-yellow)]">
             <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
           </label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Solicitar orçamento</button>
-            <a data-track="product_lead_whatsapp" href="${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`) }" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
-              Falar no WhatsApp
-            </a>
+          <div class="pt-2">
+            <button data-track="product_lead_submit" type="submit" class="btn btn-primary w-full">Receber proposta no WhatsApp</button>
           </div>
           <p id="product-lead-feedback" role="status" aria-live="polite" class="text-xs font-mono uppercase tracking-widest text-gray-500"></p>
           ${document.body?.dataset?.brand === 'dynapac' ? '' : '<a data-track="product_consorcio_cta" href="/consorcio/" class="block text-center text-xs font-mono uppercase tracking-widest text-case-yellow hover:underline pt-1">Prefere comprar sem juros? Conheça o Consórcio CASE →</a>'}
@@ -1339,8 +1334,8 @@ function setupProductPageEnhancements() {
     sticky.className = 'product-sticky-cta'
     sticky.innerHTML = `
       <div class="product-sticky-inner">
-        <span class="product-sticky-label">Interessado em ${modelName}? Fale com especialista agora.</span>
-        <a class="btn btn-primary" href="#produto-contato">Solicitar proposta</a>
+        <span class="product-sticky-label">Interessado em ${modelName}? Fale com um consultor agora.</span>
+        <a class="btn btn-primary" data-track="product_sticky_whatsapp" href="${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse no modelo ${modelName}.`)}" target="_blank" rel="noopener noreferrer"><i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i> Falar no WhatsApp</a>
       </div>
     `
     document.body.appendChild(sticky)
@@ -1672,142 +1667,6 @@ function setupUnitsMap() {
     })
 }
 
-function setupChatWidget() {
-  const widget = document.getElementById('chat-widget')
-  const trigger = document.getElementById('chat-widget-trigger')
-  const panel = document.getElementById('chat-widget-panel')
-  const messages = document.getElementById('chat-widget-messages')
-  const form = document.getElementById('chat-widget-form')
-  const input = document.getElementById('chat-widget-input')
-
-  if (
-    !(widget instanceof HTMLElement) ||
-    !(trigger instanceof HTMLButtonElement) ||
-    !(panel instanceof HTMLElement) ||
-    !(messages instanceof HTMLElement) ||
-    !(form instanceof HTMLFormElement) ||
-    !(input instanceof HTMLInputElement)
-  ) {
-    return
-  }
-
-  const hasProductStickyCta = !!document.querySelector('.product-sticky-cta')
-  widget.classList.add(hasProductStickyCta ? 'chat-widget--offset' : 'chat-widget--docked')
-
-  let open = false
-  let replyCursor = 0
-  const agentReplies = [
-    'Perfeito. Qual estado e cidade da sua operação?',
-    'Entendi. Você precisa de máquina nova, seminova ou locação?',
-    'Posso te indicar o modelo ideal e já acelerar a proposta.',
-    'Se quiser, já te chamo no WhatsApp para fechar mais rápido.'
-  ]
-
-  function setOpen(nextOpen) {
-    open = nextOpen
-    widget.classList.toggle('is-open', open)
-    trigger.setAttribute('aria-expanded', String(open))
-    if (open) {
-      window.setTimeout(() => input.focus(), 120)
-    }
-  }
-
-  function nowTime() {
-    return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-  }
-
-  function appendMessage(author, text) {
-    const isAgent = author === 'agent'
-    const row = document.createElement('div')
-    row.className = `chat-msg-row ${isAgent ? 'chat-msg-row-agent' : 'chat-msg-row-user'}`
-
-    const avatar = document.createElement('div')
-    avatar.className = 'chat-avatar'
-    avatar.textContent = isAgent ? 'IBL' : 'VC'
-
-    const stack = document.createElement('div')
-    stack.className = 'chat-msg-stack'
-
-    const bubble = document.createElement('div')
-    bubble.className = `chat-msg-bubble ${isAgent ? 'chat-msg-bubble-agent' : 'chat-msg-bubble-user'}`
-    bubble.textContent = text
-
-    const time = document.createElement('div')
-    time.className = 'chat-msg-time'
-    time.textContent = nowTime()
-
-    stack.appendChild(bubble)
-    stack.appendChild(time)
-
-    if (isAgent) {
-      row.appendChild(avatar)
-      row.appendChild(stack)
-    } else {
-      row.appendChild(stack)
-      row.appendChild(avatar)
-    }
-
-    messages.appendChild(row)
-    messages.scrollTop = messages.scrollHeight
-  }
-
-  function getAgentReply(userText) {
-    const value = userText.toLowerCase()
-    if (value.includes('preço') || value.includes('preco') || value.includes('orçamento') || value.includes('orcamento')) {
-      return 'Consigo sim. Me passa nome e telefone que já envio uma proposta inicial.'
-    }
-    if (value.includes('whatsapp') || value.includes('zap')) {
-      return 'Perfeito. Vou te redirecionar para o WhatsApp da equipe IBL agora.'
-    }
-    const reply = agentReplies[replyCursor % agentReplies.length]
-    replyCursor += 1
-    return reply
-  }
-
-  trigger.addEventListener('click', (event) => {
-    event.stopPropagation()
-    setOpen(!open)
-  })
-
-  document.addEventListener('click', (event) => {
-    if (!open) return
-    const target = event.target
-    if (!(target instanceof Node)) return
-    if (widget.contains(target)) return
-    setOpen(false)
-  })
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && open) {
-      setOpen(false)
-      trigger.focus()
-    }
-  })
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const value = input.value.trim()
-    if (!value) return
-
-    appendMessage('user', value)
-    input.value = ''
-
-    const reply = getAgentReply(value)
-    window.setTimeout(() => {
-      appendMessage('agent', reply)
-      if (value.toLowerCase().includes('whatsapp') || value.toLowerCase().includes('zap')) {
-        const text = encodeURIComponent(`Olá, vim do chat do site IBL e quero falar com um consultor. Minha mensagem: "${value}"`)
-        window.open(`${WHATSAPP_BASE_URL}?text=${text}`, '_blank', 'noopener,noreferrer')
-      }
-    }, 650)
-  })
-
-  panel.querySelectorAll('a').forEach((anchor) => {
-    anchor.addEventListener('click', () => {
-      setOpen(false)
-    })
-  })
-}
 
 // === Machine Showcase ===
 // As imagens do hero saem de scripts/hero-normalizar.py: mesmo canvas, mesma
@@ -1879,6 +1738,8 @@ function switchShowcase(idx, options = {}) {
   })
   const fullLink = document.getElementById('tech-full-link')
   if (fullLink) fullLink.href = m.page
+  const heroWhatsapp = document.getElementById('hero-whatsapp')
+  if (heroWhatsapp) heroWhatsapp.href = `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(`Olá, tenho interesse na ${m.model}.`)}`
   document.querySelectorAll('.cat-btn').forEach((btn, i) => {
     btn.classList.toggle('is-active', i === idx)
   })
@@ -1919,7 +1780,6 @@ setupProductPageEnhancements()
 setupSeoEnhancements()
 setupLeadOpsMonitor()
 setupUnitsMap()
-setupChatWidget()
 
 // ─── Tema claro/escuro (dark é o padrão) ─────────────────────────────────────
 function initThemeToggle() {

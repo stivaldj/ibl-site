@@ -98,9 +98,7 @@
             8 LOJAS · 6 ESTADOS
           </div>
           <button type="button" data-theme-toggle class="w-10 h-10 flex items-center justify-center border border-case-border text-gray-400 hover:text-case-yellow hover:border-case-yellow transition-colors" aria-label="Alternar tema"><i class="ph-bold ph-sun text-lg"></i></button>
-          <a data-track="header_solicitar_orcamento" href="#captacao-lead" class="btn btn-secondary entry-header-cta px-6 py-2.5 font-bold uppercase text-xs tracking-widest">
-            <span class="header-cta-prefix">Solicitar </span>Orçamento
-          </a>
+          <a data-track="header_whatsapp" href="https://wa.me/5565999808288?text=Ol%C3%A1%2C%20vim%20do%20site%20da%20IBL%20M%C3%A1quinas%20e%20quero%20falar%20com%20um%20consultor." target="_blank" rel="noopener noreferrer" class="header-cta-whatsapp inline-flex items-center gap-2 bg-case-yellow text-black hover:bg-white transition-colors px-5 py-2.5 font-bold uppercase text-xs tracking-widest border border-case-yellow"><i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i><span class="header-cta-prefix">Falar no </span>WhatsApp</a>
         </div>
       </div>
     </header>
@@ -141,11 +139,11 @@
                 </div>
               </div>
               <div class="entry-hero-actions flex items-center gap-4 pt-2">
-                <a data-track="hero_ver_catalogo" href="/case/catalogo/" class="btn btn-primary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
-                  Ver Catálogo <i class="ph-bold ph-arrow-right"></i>
+                <a id="hero-whatsapp" data-track="hero_whatsapp" href="https://wa.me/5565999808288?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20580N%20Series%202." target="_blank" rel="noopener noreferrer" class="btn btn-primary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
+                  <i class="ph-fill ph-whatsapp-logo text-lg" aria-hidden="true"></i> Falar no WhatsApp
                 </a>
-                <a data-track="hero_falar_especialista" href="#captacao-lead" class="btn btn-secondary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
-                  <i class="ph-fill ph-phone-call text-xl"></i> Falar com Especialista
+                <a data-track="hero_ver_catalogo" href="/case/catalogo/" class="btn btn-secondary px-8 py-4 font-bold uppercase tracking-widest flex items-center gap-3">
+                  Ver catálogo <i class="ph-bold ph-arrow-right"></i>
                 </a>
               </div>
             </div>
@@ -283,11 +281,8 @@
                   <input type="checkbox" name="consentimento" required class="mt-0.5 accent-[var(--color-case-yellow)]" />
                   <span>Autorizo o uso dos meus dados para contato comercial, conforme a <a href="/privacidade/" class="underline hover:text-case-yellow" target="_blank">Política de Privacidade</a>.</span>
                 </label>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <button data-track="lead_form_enviar" type="submit" class="btn btn-primary w-full">Quero proposta</button>
-                  <a data-track="lead_whatsapp_direto" href="https://wa.me/5565999808288?text=Ol%C3%A1%2C%20quero%20uma%20consultoria%20de%20m%C3%A1quinas%20CASE." target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full">
-                    WhatsApp Direto
-                  </a>
+                <div class="pt-2">
+                  <button data-track="lead_form_enviar" type="submit" class="btn btn-primary w-full">Receber proposta no WhatsApp</button>
                 </div>
                 <p id="lead-feedback" role="status" aria-live="polite" class="text-xs font-mono text-gray-500 uppercase tracking-widest"></p>
               </form>
@@ -729,73 +724,11 @@
       </div>
     </footer>
 
-    <div id="chat-widget" class="chat-widget fixed bottom-[96px] md:bottom-[108px] right-6 md:right-8 z-50">
-      <div id="chat-widget-panel" class="chat-widget-panel rounded-2xl border border-white/15 bg-[#09090B] shadow-2xl">
-        <div class="border-b border-white/10 p-4 flex items-center justify-between gap-2">
-          <div>
-            <p class="font-display font-black text-lg leading-none">Consultor IBL</p>
-            <p class="font-mono text-[11px] uppercase tracking-widest text-case-yellow mt-2">Resposta rápida via WhatsApp</p>
-          </div>
-          <a
-            data-track="chat_widget_whatsapp"
-            href="https://wa.me/5565999808288?text=Ol%C3%A1%2C%20quero%20falar%20com%20um%20especialista%20IBL."
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
-            aria-label="Abrir WhatsApp"
-          >
-            <i class="ph-fill ph-whatsapp-logo text-lg text-case-yellow"></i>
-          </a>
-        </div>
-        <div id="chat-widget-messages" class="chat-widget-messages p-3">
-          <div class="chat-msg-row chat-msg-row-agent">
-            <div class="chat-avatar">IBL</div>
-            <div class="chat-msg-stack">
-              <div class="chat-msg-bubble chat-msg-bubble-agent">
-                Olá! Sou consultor da IBL Máquinas. Me diga qual máquina você precisa.
-              </div>
-              <div class="chat-msg-time">Agora</div>
-            </div>
-          </div>
-        </div>
-        <div class="p-3 border-t border-white/10">
-          <form id="chat-widget-form" class="flex items-center gap-2">
-            <input
-              id="chat-widget-input"
-              type="text"
-              maxlength="220"
-              placeholder="Digite sua mensagem..."
-              aria-label="Mensagem para consultor IBL"
-              class="flex-1 h-10 rounded-lg border border-white/15 bg-white/5 px-3 text-sm placeholder:text-gray-500 focus:outline-none focus:border-case-yellow"
-            />
-            <button
-              type="submit"
-              data-track="chat_widget_send"
-              class="w-10 h-10 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
-              aria-label="Enviar mensagem"
-            >
-              <i class="ph-bold ph-paper-plane-tilt text-base text-case-yellow"></i>
-            </button>
-          </form>
-        </div>
-      </div>
-      <button
-        id="chat-widget-trigger"
-        type="button"
-        data-track="floating_support_chat"
-        aria-label="Abrir chat"
-        aria-expanded="false"
-        aria-controls="chat-widget-panel"
-        class="chat-widget-trigger-bar group relative rounded-full border border-white/20 bg-black/85 backdrop-blur-md shadow-2xl pl-4 pr-2 py-2 flex items-center gap-3 hover:border-case-yellow transition-all duration-300"
-      >
-        <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
-        <span class="font-mono text-[11px] uppercase tracking-widest text-white/90 whitespace-nowrap">
-          Falar com consultor agora
-        </span>
-        <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-case-yellow text-black group-hover:bg-white transition-colors">
-          <i class="ph-fill ph-chats-circle text-xl"></i>
-        </span>
-      </button>
+    <div class="generated-floating-chat-wrap fixed bottom-8 right-8 z-50">
+      <a data-track="floating_whatsapp" href="https://wa.me/5565999808288?text=Ol%C3%A1%2C%20vim%20do%20site%20da%20IBL%20M%C3%A1quinas%20e%20quero%20falar%20com%20um%20consultor." target="_blank" rel="noopener noreferrer" aria-label="Falar com um consultor no WhatsApp" class="generated-floating-chat group relative w-16 h-16 bg-case-yellow hover:bg-white transition-all duration-300 flex items-center justify-center border-2 border-black shadow-2xl">
+        <i class="generated-floating-chat__icon ph-fill ph-whatsapp-logo text-3xl text-black group-hover:scale-110 transition-transform"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-black rounded-full animate-pulse" aria-hidden="true"></span>
+      </a>
     </div>
   </body>
 </html>
