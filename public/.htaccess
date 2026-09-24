@@ -67,4 +67,7 @@ Options -Indexes
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set X-Frame-Options "SAMEORIGIN"
+  # HSTS: depois da 1ª visita com cadeado, o navegador nunca mais tenta http://.
+  # Só é enviado em resposta HTTPS. Sem includeSubDomains: webmail/cpanel ficam de fora.
+  Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
 </IfModule>

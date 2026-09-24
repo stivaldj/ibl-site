@@ -2296,3 +2296,55 @@ html[data-theme="light"] {
     width: auto;
   }
 }
+
+/* ================================================================
+ *  Contraste AA no tema escuro: cinza-500 de texto pequeno ia a 3,6:1
+ *  nos painéis (#1a1a1a). #848c9a dá 5,1:1 e ainda fica abaixo do
+ *  cinza-400, preservando a hierarquia. O tema claro tem regra própria.
+ *  "Frota" vazado no título: contorno mais firme (o preenchimento
+ *  translúcido sozinho media 1,5:1).
+ * ================================================================ */
+:root:not([data-theme="light"]) .text-gray-500 {
+  color: #848c9a;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* Número de marca-d'água (01, 02, 03): ornamento de CSS, não texto */
+.watermark-num::before {
+  content: attr(data-num);
+}
+
+/* Dynapac: o vermelho da marca (#E30613) em texto pequeno sobre fundo escuro
+   fica em 3,8:1. Texto usa um vermelho um tom acima (5,1:1 nos painéis);
+   fundos, bordas e botões continuam no vermelho oficial. */
+:root:not([data-theme="light"]) [data-brand="dynapac"] .text-case-yellow {
+  color: #F2545C;
+}
+
+/* Dynapac: rodapé em vermelho mais fundo com texto branco
+   (preto sobre #E30613 dava 4,3:1; branco sobre #B00510 passa de 6:1) */
+[data-brand="dynapac"] footer.bg-case-yellow {
+  background-color: #B00510;
+  color: #ffffff;
+}
+
+[data-brand="dynapac"] footer.bg-case-yellow .text-black {
+  color: #ffffff;
+}
+
+[data-brand="dynapac"] footer.bg-case-yellow .border-black {
+  border-color: #ffffff;
+}
+
+[data-brand="dynapac"] footer.bg-case-yellow .border-black\/10 {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-brand="dynapac"] footer.bg-case-yellow a.border-black:hover {
+  background-color: #ffffff;
+  color: #B00510;
+}

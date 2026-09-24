@@ -1580,7 +1580,6 @@ function setupUnitsMap() {
       if (!meta.unitId) return
       item.tabIndex = 0
       item.setAttribute('role', 'button')
-      item.setAttribute('aria-label', `Selecionar unidade ${meta.title}`)
       item.setAttribute('aria-controls', 'unit-map')
       item.setAttribute('aria-pressed', 'false')
       item.addEventListener('click', () => activateUnit(item))

@@ -242,10 +242,10 @@ FOOTER_HTML = f"""\
               <li><a href="https://www.instagram.com/iblmaquinas/" target="_blank" rel="noopener noreferrer" class="hover:underline">Instagram</a></li>
               <li><a href="/privacidade/" class="hover:underline">Política de Privacidade</a></li>
             </ul>
-            <p class="font-mono text-[11px] uppercase tracking-widest mt-3 opacity-70">Atendimento ativo via WhatsApp e formulário.</p>
+            <p class="font-mono text-[11px] uppercase tracking-widest mt-3 opacity-80">Atendimento ativo via WhatsApp e formulário.</p>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between items-center gap-2 pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-60">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-2 pt-8 border-t border-black/10 text-xs font-mono font-bold uppercase tracking-widest opacity-80">
           <p>© 2026 IBL Máquinas — Racine Comércio de Máquinas Ltda · CNPJ 28.265.622/0001-60</p>
           <p>CASE Construction &amp; Dynapac — Concessionária Autorizada</p>
         </div>
@@ -482,8 +482,13 @@ def make_absolute_url(path: str) -> str:
     return f"{SITE_URL}{path}"
 
 
+TITLE_MAX = 65  # o Google corta títulos mais longos que isso na busca
+
+
 def build_page_title(page_name: str, brand: str = SITE_BRAND) -> str:
-    return f"{page_name} | {SITE_NAME} - {brand}"
+    full = f"{page_name} | {SITE_NAME} - {brand}"
+    # Nome de modelo longo: a marca sai antes do nome da máquina ser cortado
+    return full if len(full) <= TITLE_MAX else f"{page_name} | {SITE_NAME}"
 
 
 def render_json_ld(schema_objects: list[dict]) -> str:
@@ -1855,7 +1860,7 @@ def render_dynapac_breadcrumb(items: list[tuple[str, str]]) -> str:
 
 def render_dynapac_coverage_strip() -> str:
     return f"""
-    <div class="bg-case-yellow text-black py-3">
+    <div class="bg-case-yellow text-white py-3">
       <div class="container mx-auto px-6 flex flex-wrap items-center gap-x-6 gap-y-1">
         <span class="font-mono text-xs font-bold uppercase tracking-widest">/// Cobertura Dynapac</span>
         <span class="text-sm font-bold uppercase">Acre · Amazonas · Rondônia · Roraima</span>
