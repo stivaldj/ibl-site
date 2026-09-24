@@ -35,9 +35,97 @@ function initAnalytics() {
       window.dataLayer.push(arguments)
     }
 
+    window.gtag('consent', 'default', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    })
     window.gtag('js', new Date())
     window.gtag('config', measurementId)
   }
+}
+
+// === Consentimento de cookies (LGPD) ===
+// O Google Analytics só carrega depois de "Aceitar". A escolha fica no
+// navegador; a política de privacidade tem o botão para rever.
+const CONSENT_KEY = 'ibl-consent-analytics'
+
+function readConsent() {
+  try {
+    return window.localStorage.getItem(CONSENT_KEY)
+  } catch {
+    return null
+  }
+}
+
+function saveConsent(value) {
+  try {
+    window.localStorage.setItem(CONSENT_KEY, value)
+  } catch {
+    // navegação privada sem storage: vale só para esta página
+  }
+}
+
+function clearAnalyticsCookies() {
+  const domains = ['', `; domain=${window.location.hostname}`, `; domain=.${window.location.hostname.replace(/^www\./, '')}`]
+  document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((name) => name.startsWith('_ga')).forEach((name) => {
+    domains.forEach((domain) => {
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domain}`
+    })
+  })
+}
+
+function applyConsent(value) {
+  if (value === 'granted') {
+    initAnalytics()
+    return
+  }
+  if (typeof window.gtag === 'function') {
+    window.gtag('consent', 'update', { analytics_storage: 'denied' })
+  }
+  clearAnalyticsCookies()
+}
+
+function showConsentBanner() {
+  if (document.getElementById('consent-banner')) return
+  const banner = document.createElement('div')
+  banner.id = 'consent-banner'
+  banner.className = 'consent-banner'
+  banner.setAttribute('role', 'dialog')
+  banner.setAttribute('aria-live', 'polite')
+  banner.setAttribute('aria-label', 'Aviso de cookies')
+  banner.innerHTML = `
+    <p class="consent-banner__text">
+      Usamos cookies do Google Analytics para entender como o site é usado. Nada de publicidade.
+      <a href="/privacidade/" class="consent-banner__link">Política de privacidade</a>
+    </p>
+    <div class="consent-banner__actions">
+      <button type="button" class="consent-banner__btn" data-consent="denied">Recusar</button>
+      <button type="button" class="consent-banner__btn consent-banner__btn--accept" data-consent="granted">Aceitar</button>
+    </div>
+  `
+  banner.addEventListener('click', (event) => {
+    const button = event.target instanceof Element ? event.target.closest('[data-consent]') : null
+    if (!button) return
+    const value = button.getAttribute('data-consent')
+    saveConsent(value)
+    applyConsent(value)
+    banner.remove()
+  })
+  document.body.appendChild(banner)
+}
+
+function setupConsent() {
+  const stored = readConsent()
+  if (stored === 'granted' || stored === 'denied') {
+    applyConsent(stored)
+  } else {
+    showConsentBanner()
+  }
+  document.querySelectorAll('[data-cookie-preferences]').forEach((button) => {
+    button.addEventListener('click', () => showConsentBanner())
+  })
 }
 
 function trackEvent(eventName, params = {}) {
@@ -76,9 +164,34 @@ function getAttribution() {
   }
 }
 
+// Anti-spam (conferido em /api/lead.php): campo-isca invisível e o tempo
+// desde que a página abriu — pessoa real não envia em menos de 2 s.
+function ensureLeadHoneypot(form) {
+  if (!(form instanceof HTMLFormElement) || form.querySelector('[name="website"]')) return
+  const trap = document.createElement('div')
+  trap.className = 'lead-hp'
+  trap.setAttribute('aria-hidden', 'true')
+  trap.innerHTML = '<label>Site <input type="text" name="website" tabindex="-1" autocomplete="off"></label>'
+  form.appendChild(trap)
+}
+
+function readLeadHoneypot() {
+  return [...document.querySelectorAll('input[name="website"]')].map((input) => input.value).join('').trim()
+}
+
+// WhatsApp com DDD: 10 ou 11 dígitos; com 55 na frente, 12 ou 13
+function isValidLeadPhone(value) {
+  const digits = String(value || '').replace(/\D/g, '')
+  return digits.length >= 10 && digits.length <= 13
+}
+
+const LEAD_PHONE_MESSAGE = 'Informe um WhatsApp válido com DDD.'
+
 function buildLeadWebhookPayload(leadPayload) {
   return {
     ...leadPayload,
+    website: readLeadHoneypot(),
+    form_elapsed_ms: Math.round(performance.now()),
     marca: document.body?.dataset?.brand === 'dynapac' ? 'Dynapac' : 'CASE Construction',
     page_path: window.location.pathname,
     captured_at: new Date().toISOString(),
@@ -532,6 +645,7 @@ function setupLeadForm() {
   const form = document.getElementById('lead-form')
   if (!form) return
 
+  ensureLeadHoneypot(form)
   const feedback = document.getElementById('lead-feedback')
   const nome = form.querySelector('[name="nome"]')
   const telefone = form.querySelector('[name="telefone"]')
@@ -552,6 +666,15 @@ function setupLeadForm() {
         feedback.textContent = 'Preencha os campos obrigatórios.'
         playFeedbackPop(feedback)
       }
+      return
+    }
+
+    if (!isValidLeadPhone(payload.telefone)) {
+      if (feedback) {
+        feedback.textContent = LEAD_PHONE_MESSAGE
+        playFeedbackPop(feedback)
+      }
+      telefone?.focus()
       return
     }
 
@@ -1120,7 +1243,7 @@ function setupProductPageEnhancements() {
             </div>
             <div>
               <label class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2" for="product-lead-whatsapp">WhatsApp</label>
-              <input class="input-field" id="product-lead-whatsapp" name="telefone" required placeholder="(00) 00000-0000">
+              <input class="input-field" id="product-lead-whatsapp" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(00) 00000-0000">
             </div>
           </div>
           <div>
@@ -1145,6 +1268,7 @@ function setupProductPageEnhancements() {
   `
 
   const productForm = document.getElementById('product-lead-form')
+  ensureLeadHoneypot(productForm)
   const productFeedback = document.getElementById('product-lead-feedback')
   productForm?.addEventListener('submit', async (event) => {
     event.preventDefault()
@@ -1157,6 +1281,15 @@ function setupProductPageEnhancements() {
         productFeedback.textContent = 'Preencha os campos obrigatórios.'
         playFeedbackPop(productFeedback)
       }
+      return
+    }
+
+    if (!isValidLeadPhone(payload.telefone)) {
+      if (productFeedback) {
+        productFeedback.textContent = LEAD_PHONE_MESSAGE
+        playFeedbackPop(productFeedback)
+      }
+      productForm.querySelector('[name="telefone"]')?.focus()
       return
     }
 
@@ -1777,7 +1910,7 @@ switchShowcase(0, { animate: false, track: false })
 scheduleHeroReady()
 
 initAttribution()
-initAnalytics()
+setupConsent()
 trackEvent('page_view_custom', { page_path: window.location.pathname })
 setupScrollDepthTracking()
 setupClickTracking()

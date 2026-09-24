@@ -1431,7 +1431,8 @@ def generate_institutional_pages() -> int:
 
         <div>
           <h2 class="font-display font-black text-2xl uppercase text-white mb-4">7. Cookies e analytics</h2>
-          <p>Utilizamos o Google Analytics 4 para entender o uso do site (páginas vistas, origem do acesso e eventos de interação). Você pode bloquear cookies nas configurações do seu navegador sem prejuízo à navegação.</p>
+          <p>Com a sua autorização, usamos o Google Analytics 4 para entender o uso do site (páginas vistas, origem do acesso e eventos de interação). Ele só é carregado depois que você clica em "Aceitar" no aviso de cookies; se recusar, nenhum cookie de medição é gravado e o site funciona do mesmo jeito. Não usamos cookies de publicidade.</p>
+          <p class="mt-4">A escolha fica salva no seu navegador e pode ser mudada a qualquer momento: <button type="button" data-cookie-preferences class="text-case-yellow underline hover:no-underline">rever preferências de cookies</button>.</p>
         </div>
 
         <div>
@@ -1641,7 +1642,7 @@ def generate_consorcio_page() -> str:
             </div>
             <div>
               <label for="lead-telefone" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">WhatsApp</label>
-              <input id="lead-telefone" name="telefone" required class="input-field" placeholder="(00) 00000-0000" />
+              <input id="lead-telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required class="input-field" placeholder="(00) 00000-0000" />
             </div>
             <div>
               <label for="lead-interesse" class="block text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Linha de interesse</label>

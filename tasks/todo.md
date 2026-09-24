@@ -394,3 +394,11 @@ Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termi
 - [ ] VOCÊ: automação Bitrix "novo lead → aviso" (LEAD_ALERT_EMAIL está vazio: hoje ninguém é avisado)
 - [ ] Decidir o chat flutuante até o agente entrar: hoje responde com 4 frases fixas fingindo conversa
 - [ ] Pós-go-live: Search Console + sitemap, Lighthouse mobile baseline
+
+## Checklist de produção — lacunas da lista externa (2026-09-24)
+
+- [x] 1. Aviso de cookies: GA4 só carrega depois de "Aceitar"; escolha guardada; reabrir pela política de privacidade; política atualizada
+- [x] 2. Anti-spam no lead.php: origem do próprio site, campo-isca, tempo mínimo de preenchimento, limite por IP (resposta falsa de sucesso para robô)
+- [x] 3. Telefone validado (10 a 13 dígitos) no navegador e no servidor; campos `type="tel"`
+- [ ] 4. Contraste (cinza pequeno 3,6–3,9 → ≥4,5; decorativos com aria-hidden), carrossel escondido sem foco, cards de unidade com nome acessível correto, HSTS, títulos ≤ 65
+- [ ] 5. Chamada principal única = WhatsApp: cabeçalho, hero da CASE, fichas e barra fixa; chat falso vira atalho direto; "Ver catálogo" como secundário

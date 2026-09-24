@@ -2208,3 +2208,91 @@ html[data-theme="light"] {
     --hero-card-max-width: 216px;
   }
 }
+
+/* Campo-isca anti-spam: fora da tela e fora do leitor de tela */
+.lead-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ================================================================
+ *  Aviso de cookies (LGPD): Aceitar e Recusar com o mesmo peso
+ * ================================================================ */
+.consent-banner {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  width: min(420px, calc(100vw - 2rem));
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--ds-border-subtle, rgba(255, 255, 255, 0.14));
+  border-radius: var(--ds-radius-md, 12px);
+  background: rgba(10, 10, 10, 0.97);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  color: #e5e7eb;
+}
+
+.consent-banner__text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.consent-banner__link {
+  color: var(--color-case-yellow);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.consent-banner__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+}
+
+.consent-banner__btn {
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Mesmo formato e tamanho nos dois botões: a ANPD pede escolha sem empurrão */
+.consent-banner__btn:hover {
+  border-color: var(--color-case-yellow);
+  color: var(--color-case-yellow);
+}
+
+.consent-banner__btn:focus-visible {
+  outline: 2px solid var(--color-case-yellow);
+  outline-offset: 2px;
+}
+
+[data-theme="light"] .consent-banner {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #111827;
+}
+
+[data-theme="light"] .consent-banner__btn {
+  border-color: rgba(0, 0, 0, 0.3);
+  color: #111827;
+}
+
+@media (max-width: 767px) {
+  .consent-banner {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: auto;
+  }
+}

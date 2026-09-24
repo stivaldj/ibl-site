@@ -30,6 +30,52 @@ if (!is_array($data)) {
     exit;
 }
 
+// ─── Anti-spam ────────────────────────────────────────────────────────────
+// Robô recebe um "ok" falso: assim não descobre qual filtro o barrou.
+function ibl_resposta_falsa(string $motivo): void {
+    error_log('[ibl-lead] descartado: ' . $motivo);
+    echo json_encode(['ok' => true, 'lead_id' => null]);
+    exit;
+}
+
+// 1. Só aceita envio vindo de uma página do próprio site
+// HTTP_HOST pode trazer a porta (":443"); a origem é comparada só pelo domínio
+$hostSite = strtolower(preg_replace('/^www\./', '', (string)parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST)));
+$origem   = (string)($_SERVER['HTTP_ORIGIN'] ?? ($_SERVER['HTTP_REFERER'] ?? ''));
+$hostOrig = strtolower(preg_replace('/^www\./', '', (string)parse_url($origem, PHP_URL_HOST)));
+if ($hostSite === '' || $hostOrig !== $hostSite) {
+    http_response_code(403);
+    echo json_encode(['ok' => false, 'error' => 'forbidden_origin']);
+    exit;
+}
+
+// 2. Campo-isca: invisível para pessoas, robôs de formulário preenchem
+if (trim((string)($data['website'] ?? '')) !== '') {
+    ibl_resposta_falsa('campo-isca preenchido');
+}
+
+// 3. Ninguém preenche nome, WhatsApp e interesse em menos de 2 segundos
+if ((int)($data['form_elapsed_ms'] ?? 0) < 2000) {
+    ibl_resposta_falsa('envio rápido demais');
+}
+
+// 4. No máximo 5 envios por IP a cada 10 minutos
+$dirLimite = sys_get_temp_dir() . '/ibl-lead-limite';
+if (!is_dir($dirLimite)) @mkdir($dirLimite, 0700, true);
+$arqLimite = $dirLimite . '/' . sha1((string)($_SERVER['REMOTE_ADDR'] ?? '')) . '.json';
+$agora = time();
+$envios = array_values(array_filter(
+    (array)json_decode((string)@file_get_contents($arqLimite), true),
+    fn($t) => is_int($t) && $t > $agora - 600
+));
+if (count($envios) >= 5) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'error' => 'rate_limited']);
+    exit;
+}
+$envios[] = $agora;
+@file_put_contents($arqLimite, json_encode($envios), LOCK_EX);
+
 $nome      = trim((string)($data['nome'] ?? ''));
 $telefone  = trim((string)($data['telefone'] ?? ($data['whatsapp'] ?? '')));
 $interesse = trim((string)($data['interesse'] ?? ($data['uso'] ?? '')));
@@ -39,7 +85,8 @@ $modelo    = trim((string)($data['modelo'] ?? ''));
 $marca     = trim((string)($data['marca'] ?? ''));
 $attr      = is_array($data['attribution'] ?? null) ? $data['attribution'] : [];
 
-if ($nome === '' || $telefone === '' || mb_strlen($nome) > 120 || mb_strlen($telefone) > 40) {
+$digitos = preg_replace('/\D/', '', $telefone);
+if ($nome === '' || mb_strlen($nome) > 120 || strlen($digitos) < 10 || strlen($digitos) > 13) {
     http_response_code(422);
     echo json_encode(['ok' => false, 'error' => 'invalid_fields']);
     exit;
