@@ -289,7 +289,7 @@ Elevar o frontend atual de landing visual para uma plataforma comercial premium,
 - [x] Favicon real (.ico multi-size + apple-touch-icon) e OG image 1200×630
 - [x] Unsplash → foto local WebP; TELEMETRIA/status "Aberto"/chat com copy honesto (telefones reais por unidade)
 - [x] sameAs Instagram; nota Dynapac na página Sobre
-- [x] 28 imagens pesadas → WebP (−85%); phosphor + leaflet self-host (zero unpkg/unsplash no dist)
+- [x] 28 imagens pesadas → WebP (−85%); phosphor self-host (zero unpkg/unsplash no dist); leaflet removido em 2026-10-16 (mapa virou SVG gerado)
 - [x] public/.htaccess (HTTPS, 404, cache, gzip); CI verify-only; package:deploy (injeta lead-config, poda originais)
 - [x] WhatsApp Business confirmado: 5565999808288 (env + fallbacks + filiais.json)
 - [x] Leads → Bitrix24 via /api/lead.php no cPanel (token via .env, fora do git) + fallback WhatsApp

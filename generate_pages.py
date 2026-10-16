@@ -2287,6 +2287,67 @@ def write_hero_data(db: list) -> None:
     print(f"  ✓ data/hero-machines.json ({len(machines)} máquinas) e HTML inicial do hero")
 
 
+# ─── Mapa das unidades: SVG gerado, sem serviço de mapas ─────────────────────
+# Os tiles gratuitos da CARTO passaram a exigir chave e vinham com marca-d'água.
+# O mapa agora é um desenho dos estados (data/brasil-estados.json, IBGE via
+# click_that_hood, simplificado) com as unidades de data/filiais.json em cima.
+ESTADOS_PATH = BASE_DIR / "data" / "brasil-estados.json"
+MAPA_ESCALA = 25.0
+MAPA_LON0, MAPA_LAT0 = -74.2, 5.6          # canto superior esquerdo do Brasil
+MAPA_COS = 0.9659                           # cos(15°): compensa a largura dos graus de longitude
+
+
+def _mapa_xy(lon: float, lat: float) -> tuple[float, float]:
+    return ((lon - MAPA_LON0) * MAPA_COS * MAPA_ESCALA, (MAPA_LAT0 - lat) * MAPA_ESCALA)
+
+
+def render_unit_map_svg() -> str:
+    estados = json.loads(ESTADOS_PATH.read_text(encoding="utf-8"))
+    dados = load_filiais()
+    filiais = dados["filiais"]
+    cobertos = {f["uf"] for f in filiais}
+    paths = []
+    for uf, aneis in estados.items():
+        d = " ".join(
+            "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in (_mapa_xy(lon, lat) for lon, lat in anel)) + "Z"
+            for anel in aneis
+        )
+        cls = "mapa-uf mapa-uf--coberto" if uf in cobertos else "mapa-uf"
+        paths.append(f'<path class="{cls}" d="{d}"><title>{escape(uf)}</title></path>')
+    pins = []
+    for f in filiais:
+        x, y = _mapa_xy(f["lng"], f["lat"])
+        nome = f"{f['uf']} - {f['cidade']}"
+        pins.append(
+            f'<g class="unit-pin" data-unit-id="{escape(f["id"], quote=True)}" tabindex="0" role="button" '
+            f'aria-label="{escape(nome, quote=True)}" transform="translate({x:.1f},{y:.1f})">'
+            f'<circle class="unit-pin__halo" r="22"/><circle class="unit-pin__dot" r="9"/>'
+            f'<text class="unit-pin__label" y="-20" text-anchor="middle">{escape(f["cidade"])}</text></g>'
+        )
+    xs, ys = zip(*[_mapa_xy(lon, lat) for aneis in estados.values() for anel in aneis for lon, lat in anel])
+    pad = 24
+    vb = f"{min(xs) - pad:.0f} {min(ys) - pad:.0f} {max(xs) - min(xs) + 2 * pad:.0f} {max(ys) - min(ys) + 2 * pad:.0f}"
+    return (
+        f'<svg class="unit-map-svg" viewBox="{vb}" preserveAspectRatio="xMidYMid meet" '
+        f'role="img" aria-label="Mapa do Brasil com as {len(filiais)} unidades da IBL Máquinas">'
+        f'<g class="mapa-estados">{"".join(paths)}</g><g class="mapa-pins">{"".join(pins)}</g></svg>'
+    )
+
+
+def write_unit_map() -> None:
+    home = BASE_DIR / "case" / "index.html"
+    html = home.read_text(encoding="utf-8")
+    html, n = re.subn(
+        r'(<div id="unit-map" class="absolute inset-0">).*?(</div>)',
+        lambda m: m.group(1) + render_unit_map_svg() + m.group(2),
+        html, count=1, flags=re.S,
+    )
+    if n != 1:
+        raise SystemExit("mapa: <div id=\"unit-map\"> não encontrado em case/index.html")
+    home.write_text(html, encoding="utf-8")
+    print("  ✓ mapa das unidades (SVG) em case/index.html")
+
+
 def main():
     print("=== GERANDO PÁGINAS FRONTEND ===\n")
 
@@ -2368,6 +2429,7 @@ def main():
     # 4. Sitemap e robots.txt
     print("\n[SEO] Gerando sitemap.xml e robots.txt ...")
     write_hero_data(db)
+    write_unit_map()
     generate_sitemap(sitemap_paths)
 
     print(f"\n=== {total_pages} páginas geradas em /case/ ===")

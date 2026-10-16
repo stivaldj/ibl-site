@@ -162,3 +162,4 @@
 - Para intercalar foto entre blocos de uma coluna de texto no celular: `display: contents` na coluna + `order` nos filhos, zerando as margens do `space-y`.
 - JS que acha um bloco pelo texto visível ("Solicitar Orçamento" + "Falar com Consultor") quebra na primeira revisão de copy. Gancho de JS é atributo (`data-*`) posto no gerador, nunca texto.
 - Testar endpoint PHP com servidor local de verdade (php -S + mock do serviço externo) antes de subir: o `HTTP_HOST` com porta barrava todo lead legítimo e só apareceu no teste.
+- Validar visualmente o que depende de serviço externo (mapa, fontes, embeds) no site publicado, não só na pré-visualização: os tiles da CARTO passaram a exigir chave e o mapa foi ao ar com marca-d'água "API KEY REQUIRED". Preferir recurso gerado e servido pelo próprio site quando o serviço gratuito pode mudar de regra.

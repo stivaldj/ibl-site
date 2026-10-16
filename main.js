@@ -1518,8 +1518,6 @@ function setupUnitsMap() {
   const unitItems = [...document.querySelectorAll('.unit-item')]
   if (!mapEl || unitItems.length === 0) return
 
-  const LEAFLET_BASE = '/vendor/leaflet'
-
   function getUnitMeta(item) {
     const unitId = item.getAttribute('data-unit-id')
     const lat = Number(item.getAttribute('data-lat'))
@@ -1537,36 +1535,6 @@ function setupUnitsMap() {
       item.classList.toggle('is-active', isActive)
       item.setAttribute('aria-pressed', isActive ? 'true' : 'false')
     })
-  }
-
-  function ensureLeaflet() {
-    return new Promise((resolve, reject) => {
-      if (window.L) {
-        resolve(window.L)
-        return
-      }
-      if (!document.querySelector('link[data-leaflet]')) {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = `${LEAFLET_BASE}/leaflet.css`
-        link.setAttribute('data-leaflet', '')
-        document.head.appendChild(link)
-      }
-      const script = document.createElement('script')
-      script.src = `${LEAFLET_BASE}/leaflet.js`
-      script.onload = () => resolve(window.L)
-      script.onerror = () => reject(new Error('leaflet_load_failed'))
-      document.head.appendChild(script)
-    })
-  }
-
-  function renderFallback() {
-    mapEl.innerHTML = `
-      <div class="unit-map-fallback">
-        <span class="font-mono text-xs uppercase tracking-widest text-case-yellow">Cobertura IBL</span>
-        <p class="text-gray-300 text-sm leading-relaxed">8 lojas em 6 estados do Norte e Centro-Oeste. Selecione uma unidade ao lado para ver endereço e telefone.</p>
-      </div>
-    `
   }
 
   function wireItems(activateUnit) {
@@ -1600,71 +1568,50 @@ function setupUnitsMap() {
     })
   }
 
-  ensureLeaflet()
-    .then((L) => {
-      mapEl.innerHTML = ''
-      const map = L.map(mapEl, { scrollWheelZoom: false, attributionControl: true })
-      const tileUrlForTheme = () => document.documentElement.dataset.theme === 'light'
-        ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-      const tiles = L.tileLayer(tileUrlForTheme(), {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 18
-      }).addTo(map)
-      window.addEventListener('ibl:theme-change', () => tiles.setUrl(tileUrlForTheme()))
+  // Mapa SVG gerado pelo generate_pages.py (sem serviço externo): os pinos já
+  // estão no HTML com data-unit-id; aqui só a seleção e o clique no pino.
+  const pins = new Map(
+    [...mapEl.querySelectorAll('.unit-pin')].map((pin) => [pin.getAttribute('data-unit-id'), pin])
+  )
 
-      const markers = new Map()
-      const bounds = []
-      unitItems.forEach((item) => {
-        const meta = getUnitMeta(item)
-        if (!meta.unitId || !meta.hasCoords) return
-        const icon = L.divIcon({
-          className: 'unit-marker',
-          html: '<span class="unit-marker__dot"></span>',
-          iconSize: [16, 16],
-          iconAnchor: [8, 8]
-        })
-        const marker = L.marker([meta.lat, meta.lng], { icon, title: meta.title }).addTo(map)
-        marker.bindPopup(`<strong>${meta.title}</strong><br>${meta.address}<br><a class="unit-popup-link" href="${meta.mapsUrl}" target="_blank" rel="noopener noreferrer">Abrir no Google Maps →</a>`)
-        marker.on('click', () => setActive(meta.unitId))
-        markers.set(meta.unitId, marker)
-        bounds.push([meta.lat, meta.lng])
-      })
-      if (bounds.length) map.fitBounds(bounds, { padding: [36, 36] })
+  function setActivePin(unitId) {
+    pins.forEach((pin, id) => pin.classList.toggle('is-active', id === unitId))
+  }
 
-      function activateUnit(item) {
-        const meta = getUnitMeta(item)
-        if (!meta.unitId) return
-        setActive(meta.unitId)
-        const marker = markers.get(meta.unitId)
-        if (marker) {
-          map.flyTo(marker.getLatLng(), 11, { duration: 1.0 })
-          marker.openPopup()
-        }
-        trackEvent('unit_map_focus', {
-          page_path: window.location.pathname,
-          unit_id: meta.unitId
-        })
-      }
-
-      wireItems(activateUnit)
-
-      const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
-      if (defaultItem) setActive(getUnitMeta(defaultItem).unitId)
+  function activateUnit(item) {
+    const meta = getUnitMeta(item)
+    if (!meta.unitId) return
+    setActive(meta.unitId)
+    setActivePin(meta.unitId)
+    trackEvent('unit_map_focus', {
+      page_path: window.location.pathname,
+      unit_id: meta.unitId
     })
-    .catch(() => {
-      renderFallback()
-      wireItems((item) => {
-        const meta = getUnitMeta(item)
-        if (!meta.unitId) return
-        setActive(meta.unitId)
-        trackEvent('unit_map_focus', {
-          page_path: window.location.pathname,
-          unit_id: meta.unitId
-        })
-      })
+  }
+
+  wireItems(activateUnit)
+
+  pins.forEach((pin, unitId) => {
+    const item = unitItems.find((candidate) => candidate.getAttribute('data-unit-id') === unitId)
+    if (!item) return
+    const activate = () => {
+      activateUnit(item)
+      item.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+    }
+    pin.addEventListener('click', activate)
+    pin.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return
+      event.preventDefault()
+      activate()
     })
+  })
+
+  const defaultItem = unitItems.find((item) => item.getAttribute('data-unit-id') === 'campo-grande') || unitItems[0]
+  if (defaultItem) {
+    const meta = getUnitMeta(defaultItem)
+    setActive(meta.unitId)
+    setActivePin(meta.unitId)
+  }
 }
 
 
