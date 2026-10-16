@@ -1889,6 +1889,34 @@ def _spec_label(key: str) -> str:
     return key.replace("_", " ").capitalize().replace("Forca", "Força").replace("Potencia", "Potência").replace("pavimentacao", "pavimentação").replace("percussao", "percussão")
 
 
+# Ordem fixa das duas especificações do card: o site da Dynapac lista cada
+# modelo numa ordem própria e irmãos da mesma linha ficavam com dados
+# diferentes (DR6X mostrava Potência; DR6X e e DR7X, Força de compactação).
+CARD_SPEC_PRIORIDADE = (
+    "Peso operacional",
+    "Força de compactação",
+    "Largura de trabalho",
+    "Largura de compactação",
+    "Largura básica de pavimentação",
+    "Carga estática linear",
+    "Diâmetro do cilindro",
+    "Potência",
+)
+
+
+def card_specs(specs: dict, n: int = 2) -> list[tuple[str, str]]:
+    ordem = [k for k in CARD_SPEC_PRIORIDADE if specs.get(k)] + [k for k in specs if k not in CARD_SPEC_PRIORIDADE and specs[k]]
+    escolhidas: list[tuple[str, str]] = []
+    for k in ordem:
+        # duas larguras no mesmo card não comparam nada: "Largura…" conta como uma só
+        if k.startswith("Largura") and any(e.startswith("Largura") for e, _ in escolhidas):
+            continue
+        escolhidas.append((k, specs[k]))
+        if len(escolhidas) == n:
+            break
+    return escolhidas
+
+
 def render_dynapac_model_card(cat_slug: str, model: dict) -> str:
     img = model.get("_img") or ""
     img_html = (
@@ -1898,7 +1926,7 @@ def render_dynapac_model_card(cat_slug: str, model: dict) -> str:
     )
     pills = "".join(
         f'<span class="dynapac-model-card__pill font-mono text-[10px] uppercase tracking-wide text-gray-400 border border-case-border px-2 py-1">{escape(_spec_label(k))}: {escape(str(v))}</span>'
-        for k, v in list(model.get("specs", {}).items())[:2] if v
+        for k, v in card_specs(model.get("specs", {}))
     )
     return f"""
           <a href="/dynapac/{cat_slug}/{model['slug']}/" class="dynapac-model-card group block industrial-border bg-case-panel border border-case-border hover:border-case-yellow transition-colors">
