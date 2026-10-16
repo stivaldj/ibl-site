@@ -1197,24 +1197,26 @@ footer ul button {
   stroke: var(--accent-a45);
 }
 
+/* Sem transform nos círculos: em SVG o transform-origin "center" é o centro
+   do mapa, e o scale deslocava o halo e o pino ativo ~40 px da unidade. */
 .unit-pin {
   cursor: pointer;
   outline: none;
 }
 
 .unit-pin__halo {
-  fill: var(--accent-a20);
+  fill: none;
+  stroke: var(--color-case-yellow);
+  stroke-width: 2;
   opacity: 0;
-  transform-origin: center;
-  transition: opacity var(--ds-motion-base) ease, transform var(--ds-motion-base) var(--ds-motion-glide);
+  transition: opacity var(--ds-motion-base) ease;
 }
 
 .unit-pin__dot {
   fill: var(--color-case-yellow);
   stroke: #050505;
   stroke-width: 2.5;
-  transform-origin: center;
-  transition: transform var(--ds-motion-base) var(--ds-motion-spring);
+  transition: stroke var(--ds-motion-fast) ease;
 }
 
 .unit-pin__label {
@@ -1236,24 +1238,17 @@ footer ul button {
 .unit-pin:hover .unit-pin__dot,
 .unit-pin:focus-visible .unit-pin__dot,
 .unit-pin.is-active .unit-pin__dot {
-  transform: scale(1.35);
+  stroke: #ffffff;
 }
 
 .unit-pin.is-active .unit-pin__halo {
-  opacity: 1;
-  transform: scale(1);
-  animation: unit-pin-pulse 2.4s ease-in-out infinite;
+  opacity: 0.9;
 }
 
 .unit-pin:hover .unit-pin__label,
 .unit-pin:focus-visible .unit-pin__label,
 .unit-pin.is-active .unit-pin__label {
   opacity: 1;
-}
-
-@keyframes unit-pin-pulse {
-  0%, 100% { transform: scale(0.85); opacity: 0.9; }
-  50% { transform: scale(1.25); opacity: 0.35; }
 }
 
 .unit-item.is-active {

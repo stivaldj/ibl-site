@@ -404,3 +404,8 @@ Verificação 1–2: 11 páginas medidas a 390 px, conteúdo do cabeçalho termi
 - [x] 5. Chamada principal única = WhatsApp: cabeçalho, hero da CASE, fichas e barra fixa; chat falso vira atalho direto; "Ver catálogo" como secundário
 
 Verificação (2026-09-24): lead.php testado num PHP local com Bitrix falso — 4 envios legítimos chegaram, origem externa/sem origem barrados (403), campo-isca e envio rápido descartados com "ok" falso, telefone inválido 422, 6º envio em 10 min 429. Aviso de cookies: sem escolha e após recusar não há GA; após aceitar o gtag carrega; reabre pela política. Lighthouse mobile: acessibilidade, boas práticas e SEO 100 em home, CASE, ficha CASE, ficha Dynapac, categoria Dynapac e filiais. 801 links de WhatsApp, 0 links quebrados; gates smoke e lead passando.
+
+## Pós-venda (2026-10-16)
+
+- [x] "Consultar estoque", "Agendar visita" e "Saiba mais" do pós-venda levavam ao formulário de compra de máquina / ao catálogo; agora vão ao WhatsApp com mensagem própria (peças, serviço, treinamento). "Solicitar suporte" do rodapé idem, em todas as páginas.
+- [ ] Peças: trocar "Pedir peças pelo WhatsApp" pelo link do e-commerce de peças quando o José passar (prometido para a semana de 2026-10-19). Ponto único: card "Peças Genuínas" em case/index.html (`data-track="posvenda_pecas_whatsapp"`).

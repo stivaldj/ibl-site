@@ -230,7 +230,7 @@ FOOTER_HTML = f"""\
             <div class="font-bold uppercase tracking-widest border-b border-black pb-2 mb-4 text-sm">Suporte</div>
             <ul class="space-y-2 font-medium text-sm">
               <li><a href="/case/#posvenda" class="hover:underline">Pós-venda</a></li>
-              <li><a href="{HOME_CONTACT_URL}" class="hover:underline">Solicitar suporte</a></li>
+              <li><a href="{build_whatsapp_url('Olá, preciso de suporte técnico para minha máquina.')}" target="_blank" rel="noopener noreferrer" class="hover:underline">Solicitar suporte</a></li>
               <li><a href="{build_whatsapp_url('Olá, preciso de suporte comercial da IBL Máquinas.')}" target="_blank" rel="noopener noreferrer" class="hover:underline">Falar com especialista</a></li>
             </ul>
           </div>
@@ -2349,7 +2349,7 @@ def render_unit_map_svg() -> str:
         pins.append(
             f'<g class="unit-pin" data-unit-id="{escape(f["id"], quote=True)}" tabindex="0" role="button" '
             f'aria-label="{escape(nome, quote=True)}" transform="translate({x:.1f},{y:.1f})">'
-            f'<circle class="unit-pin__halo" r="22"/><circle class="unit-pin__dot" r="9"/>'
+            f'<circle class="unit-pin__halo" r="17"/><circle class="unit-pin__dot" r="9"/>'
             f'<text class="unit-pin__label" y="-20" text-anchor="middle">{escape(f["cidade"])}</text></g>'
         )
     xs, ys = zip(*[_mapa_xy(lon, lat) for aneis in estados.values() for anel in aneis for lon, lat in anel])
