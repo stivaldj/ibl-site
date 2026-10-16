@@ -2232,3 +2232,30 @@ html[data-theme="light"] {
 [data-brand="dynapac"] .generated-floating-chat:hover .text-black {
   color: #000000;
 }
+
+/* ================================================================
+ *  Celular: nenhum título maior que a tela. Os utilitários text-5xl..8xl
+ *  viram 6vw (≈23 px em 390), que é o que cabe para a palavra mais
+ *  longa do site (RETROESCAVADEIRAS) sem quebrar no meio. Títulos já
+ *  pequenos (text-2xl) ficam como estão. O hero da CASE dimensiona os
+ *  spans, não o h1, e não é afetado.
+ * ================================================================ */
+@media (max-width: 767px) {
+  h1[class*="text-3xl"], h1[class*="text-4xl"], h1[class*="text-5xl"], h1[class*="text-6xl"], h1[class*="text-7xl"], h1[class*="text-8xl"],
+  h2[class*="text-3xl"], h2[class*="text-4xl"], h2[class*="text-5xl"], h2[class*="text-6xl"], h2[class*="text-7xl"], h2[class*="text-8xl"] {
+    font-size: clamp(1.375rem, 6vw, 2.5rem);
+    line-height: 1.08;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Celular: no "Quero proposta para …" o nome do modelo vai para a própria
+   linha, um pouco menor — RETROESCAVADEIRAS não cabia na caixa com recuo */
+@media (max-width: 767px) {
+  .product-contact-model {
+    display: block;
+    font-size: 0.88em;
+    color: var(--color-case-yellow);
+  }
+}

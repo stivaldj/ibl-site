@@ -163,3 +163,4 @@
 - JS que acha um bloco pelo texto visível ("Solicitar Orçamento" + "Falar com Consultor") quebra na primeira revisão de copy. Gancho de JS é atributo (`data-*`) posto no gerador, nunca texto.
 - Testar endpoint PHP com servidor local de verdade (php -S + mock do serviço externo) antes de subir: o `HTTP_HOST` com porta barrava todo lead legítimo e só apareceu no teste.
 - Validar visualmente o que depende de serviço externo (mapa, fontes, embeds) no site publicado, não só na pré-visualização: os tiles da CARTO passaram a exigir chave e o mapa foi ao ar com marca-d'água "API KEY REQUIRED". Preferir recurso gerado e servido pelo próprio site quando o serviço gratuito pode mudar de regra.
+- Varrer todos os h1/h2 das 156 páginas a 390 px (borda direita > 390 ou palavra em mais de uma linha) antes de dizer que o celular está ok: a auditoria por amostra deixou passar 48 títulos cortados.

@@ -1229,7 +1229,7 @@ function setupProductPageEnhancements() {
     <div class="container mx-auto px-6">
       <div class="product-contact-wrap">
         <span class="font-mono text-case-yellow text-sm tracking-widest uppercase block mb-3">/// Solicitação Rápida</span>
-        <h2 class="font-display font-black text-3xl md:text-4xl uppercase mb-3">Quero proposta para ${modelName}</h2>
+        <h2 class="font-display font-black text-3xl md:text-4xl uppercase mb-3">Quero proposta para <span class="product-contact-model">${modelName}</span></h2>
         <p class="text-gray-400 mb-6">Preencha os dados e nossa equipe retorna com recomendação comercial e disponibilidade para sua região.</p>
         <form id="product-lead-form" class="space-y-4">
           <input type="hidden" name="modelo" value="${modelName}">
