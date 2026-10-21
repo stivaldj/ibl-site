@@ -409,3 +409,12 @@ Verificação (2026-09-24): lead.php testado num PHP local com Bitrix falso — 
 
 - [x] "Consultar estoque", "Agendar visita" e "Saiba mais" do pós-venda levavam ao formulário de compra de máquina / ao catálogo; agora vão ao WhatsApp com mensagem própria (peças, serviço, treinamento). "Solicitar suporte" do rodapé idem, em todas as páginas.
 - [ ] Peças: trocar "Pedir peças pelo WhatsApp" pelo link do e-commerce de peças quando o José passar (prometido para a semana de 2026-10-19). Ponto único: card "Peças Genuínas" em case/index.html (`data-track="posvenda_pecas_whatsapp"`).
+
+## Go-live feito (2026-10-21)
+
+- [x] Produção publicada em iblmaquinas.com.br (mesmo servidor do teste, sem troca de DNS). Conferido: SSL + HSTS, www/http → https sem www, bundles iguais ao build, 156/156 rotas, 43 endereços antigos redirecionando, lead.php recusando origem externa, mapa SVG, aviso de cookies, zero erros de console.
+- [ ] VOCÊ: apagar os restos do WordPress em public_html (wp-admin, wp-includes, wp-content, wp-*.php, xmlrpc.php, readme.html). Hoje /wp-login.php ainda abre a tela de login do WP antigo. O .htaccess do pacote 20261021 já responde 410 para esses caminhos (rede de segurança), mas apagar é o definitivo.
+- [ ] VOCÊ: trocar as senhas dos FTPs de teste e produção (ficaram escritas na conversa)
+- [ ] VOCÊ: lead de teste real (curl em docs/DEPLOY-CPANEL.md) e automação "novo lead → aviso" no Bitrix
+- [ ] Search Console: verificar propriedade e enviar https://iblmaquinas.com.br/sitemap.xml
+- [ ] Peças: link do e-commerce quando chegar (card "Peças Genuínas")
