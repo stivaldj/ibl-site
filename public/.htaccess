@@ -28,6 +28,10 @@
   RewriteRule ^produtos/?(.*)$ /case/catalogo/ [L,R=301]
   # Páginas-lixo do WordPress: removidas de propósito (410 tira do índice mais rápido que 404)
   RewriteRule ^(20[0-9]{2}/|category/|author/|elementor-hf/) - [G]
+  # Restos do WordPress antigo: nunca servir (apagar os arquivos no cPanel é o
+  # definitivo; isto é a rede de segurança caso algum sobre)
+  RewriteRule ^(wp-admin|wp-includes|wp-content|wp-json)(/|$) - [G]
+  RewriteRule ^(wp-[a-z-]+\.php|xmlrpc\.php|readme\.html|license\.txt)$ - [G]
 </IfModule>
 
 # --- Migração de rotas (v2 multi-marca) ---
