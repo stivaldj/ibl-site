@@ -33,6 +33,8 @@
 # --- Migração de rotas (v2 multi-marca) ---
 
 # --- Página de erro ---
+# Site estático primeiro: se sobrar index.php do WordPress antigo, ele não ganha
+DirectoryIndex index.html index.php
 ErrorDocument 404 /404.html
 
 # --- Compressão ---

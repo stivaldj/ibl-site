@@ -258,6 +258,31 @@ td .chip { white-space: nowrap; }
 footer .wrap { padding-block: 36px 48px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; align-items: center; }
 footer p { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
+/* ---------- NF de devolução ---------- */
+.nf-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+@media (max-width: 900px) { .nf-wrap { grid-template-columns: 1fr; } }
+.rules { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); background: var(--panel); counter-reset: r; }
+.rules li { counter-increment: r; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 14px 18px; font-size: 0.93rem; color: var(--fg-2); }
+.rules li + li { border-top: 1px solid var(--line); }
+.rules li::before { content: counter(r, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--accent-text); padding-top: 2px; }
+.rules b { color: var(--fg); font-weight: 600; }
+.rules code, .tool code, .warnbox code { font-family: var(--font-mono); font-size: 0.85em; color: var(--fg); background: var(--elev); padding: 1px 5px; border: 1px solid var(--line); overflow-wrap: anywhere; }
+.tool .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tool .row3 { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr) minmax(0, 1.2fr); gap: 12px; }
+@media (max-width: 520px) { .tool .row2, .tool .row3 { grid-template-columns: 1fr; } }
+.tool input[type="text"] {
+  width: 100%; font-family: var(--font-mono); font-size: 16px; padding: 12px 14px;
+  background: var(--panel); color: var(--fg); border: 1px solid var(--line-strong); border-radius: 0;
+}
+.tool input[type="text"]:focus { border-color: var(--accent); outline: none; }
+.outbox { display: grid; gap: 8px; }
+.outbox .val { font-family: var(--font-mono); font-size: 0.95rem; background: var(--panel); border: 1px dashed var(--line-strong); padding: 12px 14px; overflow-wrap: anywhere; user-select: all; }
+.outbox .val.big-val { font-size: 1.5rem; font-weight: 700; color: var(--accent-text); letter-spacing: 0.04em; }
+.copy { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; background: none; border: 1px solid var(--line-strong); color: var(--fg-2); padding: 7px 12px; cursor: pointer; width: fit-content; }
+.copy:hover { border-color: var(--accent); color: var(--accent-text); }
+.warnbox { border: 1px solid var(--warn); padding: 16px 18px; display: grid; gap: 6px; font-size: 0.92rem; color: var(--fg-2); margin-top: 24px; }
+.warnbox strong { color: var(--warn); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 </style>
@@ -271,6 +296,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
       <a href="#prazos">Prazos</a>
       <a href="#causais">Causais</a>
       <a href="#fluxo">Fluxo</a>
+      <a href="#nf">NF devolução</a>
       <a href="#rejeicao">Rejeição</a>
       <a href="#checklist">Checklist</a>
       <a href="#pendencias">Pendências</a>
@@ -319,7 +345,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
         <div>
           <div class="big">120<small>DIAS</small></div>
           <div class="nlabel">Problema oculto</div>
-          <div class="ntext">Só para pedido em modalidade estoque. Em BDA, máquina parada e emergência a conferência é na hora do recebimento.</div>
+          <div class="ntext">Exceção, não regra: vale só para pedido de estoque e só para defeito que não aparece na conferência. A regra é conferir tudo na chegada.</div>
         </div>
       </div>
 
@@ -377,6 +403,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
           <ul class="need">
             <li>Abrir chamado no PHD é obrigatório, para a engenharia validar a substituição</li>
             <li>Descrever a diferença: furação maior, menor ou ausente, medida, aplicação</li>
+            <li>Fotos e vídeo das duas peças lado a lado, mostrando a diferença e por que não serve</li>
             <li>Número do chamado PHD nas notas da ADEP</li>
           </ul>
         </article>
@@ -386,6 +413,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
           <ul class="need">
             <li>Antes de faturar: no CSPS a linha atendida por substituição fica amarela. Confira ali</li>
             <li>Se não deu para pegar antes, abrir com o causal 17 e os dois valores</li>
+            <li>Evidência: print da linha do CSPS e a NF da CNH com o valor cobrado</li>
           </ul>
         </article>
         <article class="causal" data-k="19">
@@ -409,6 +437,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
           <p>O PHD indicou a peça, ela chegou e não confere com o que foi indicado.</p>
           <ul class="need">
             <li>Reabrir o chamado no PHD explicando onde está a diferença</li>
+            <li>Fotos e vídeo da peça recebida mostrando a diferença e por que não serve</li>
             <li>Número do chamado PHD nas notas da ADEP</li>
           </ul>
         </article>
@@ -418,6 +447,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
           <ul class="need">
             <li>Print ou e-mail da indicação feita pelo DPS</li>
             <li>O que foi indicado e por que não serviu</li>
+            <li>Fotos e vídeo da peça recebida mostrando a diferença</li>
           </ul>
         </article>
         <article class="causal" data-k="26">
@@ -451,8 +481,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
       </div>
       <ol class="flow">
         <li>
-          <div><h3>Conferir no recebimento</h3><span class="when">No ato</span></div>
-          <p>Pedido emergencial (BDA, máquina parada, emergência) se confere na hora e qualquer problema vai para a CNH na hora. A janela de <strong>120 dias para problema oculto</strong> só vale para pedido de estoque.</p>
+          <div><h3>Conferir tudo na chegada</h3><span class="when">No ato do recebimento</span></div>
+          <p><strong>Toda mercadoria é conferida na chegada</strong>, com atenção a vidros e itens frágeis. Avaria ou divergência: <strong>registrar no CT-e e no canhoto da NF antes de assinar</strong> e fotografar ali mesmo. Em BDA, máquina parada e emergência, acionar a CNH na hora. Os 120 dias de problema oculto são exceção: só pedido de estoque e só defeito que não dava para ver na conferência.</p>
         </li>
         <li>
           <div><h3>Abrir a ADEP no CSPS</h3><span class="when">Até 30 d.u. do faturamento</span></div>
@@ -472,7 +502,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
         </li>
         <li>
           <div><h3>Emitir a NF e entregar à transportadora</h3><span class="when">Regra provisória abaixo</span></div>
-          <p>É a etapa com mais dúvida na rede. A CNH ainda vai responder; até lá seguimos a regra da IBL descrita a seguir.</p>
+          <p>O <strong>momento</strong> de emitir ainda depende de resposta da CNH; até lá vale a regra da IBL abaixo. O <strong>conteúdo</strong> da NF já está definido no Comunicado 030/2025: veja <a href="#nf">NF de devolução</a>.</p>
         </li>
       </ol>
 
@@ -495,7 +525,77 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     </div>
   </section>
 
-  <section class="band" id="rejeicao">
+  <section class="band" id="nf">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">/// Comunicado CNH 030/2025 · TAGs do XML</span>
+        <h2>NF de devolução sem recusa</h2>
+        <p>A CNH registra e paga as NFs de devolução de forma automática. Nota fora do padrão é recusada pelo sistema, sem ninguém olhar. Abaixo, as regras do comunicado e um montador que gera o que vai em cada campo.</p>
+      </div>
+      <div class="nf-wrap">
+        <ol class="rules">
+          <li><span><b>Uma NF por reclamação</b>, com todos os PNs e as quantidades exatamente como aprovados. Nenhuma peça além do aprovado.</span></li>
+          <li><span><b>Valores e impostos espelham a NF de venda da CNH</b>, proporcionais se a devolução for parcial.</span></li>
+          <li><span><b>Não informar pedido de compra.</b> As tags <code>&lt;xPed&gt;</code> e <code>&lt;nItemPed&gt;</code> ficam vazias.</span></li>
+          <li><span><b>Chave da NF de origem da CNH</b> na tag <code>&lt;refNFe&gt;</code>.</span></li>
+          <li><span><b>Código CNH em cada item:</b> <code>&lt;cProd&gt;</code> com o código, e <code>&lt;xProd&gt;</code> começando pelo código, um espaço e a descrição.</span></li>
+          <li><span><b>Campo "Reclamação" do Sances</b> (vira <code>&lt;xTexto&gt;</code>): o <b>Claim ID</b> do CSPS, <b>só números</b>. Se o Claim ID estiver em branco, o número da reclamação. Sem barra, ano, letra ou espaço.</span></li>
+          <li><span><b>Dados adicionais</b> (<code>&lt;infCpl&gt;</code>): Claim ID, número da ADEP e a NF de origem da CNH (número, série e data de emissão).</span></li>
+          <li><span><b>Depois de autorizada na SEFAZ</b>, mandar só o arquivo XML para <code>receb_cnhi@nfendd.com.br</code>. Esse endereço não aceita PDF, imagem nem zip.</span></li>
+        </ol>
+
+        <div class="tool" aria-label="Montador dos campos da NF">
+          <span class="nlabel">Montador dos campos da NF</span>
+          <div class="row2">
+            <div>
+              <label for="nfClaim">Claim ID (CSPS)</label>
+              <input type="text" id="nfClaim" inputmode="numeric" autocomplete="off">
+            </div>
+            <div>
+              <label for="nfRecl">Nº da reclamação / ADEP</label>
+              <input type="text" id="nfRecl" inputmode="numeric" autocomplete="off">
+            </div>
+          </div>
+          <div class="row3">
+            <div>
+              <label for="nfNum">NF CNH · número</label>
+              <input type="text" id="nfNum" inputmode="numeric" autocomplete="off">
+            </div>
+            <div>
+              <label for="nfSerie">Série</label>
+              <input type="text" id="nfSerie" inputmode="numeric" autocomplete="off">
+            </div>
+            <div>
+              <label for="nfData">Emissão</label>
+              <input type="date" id="nfData">
+            </div>
+          </div>
+          <div class="result" aria-live="polite">
+            <div class="outbox">
+              <span class="nlabel">Campo "Reclamação" no Sances</span>
+              <span class="val big-val" id="nfOutRecl">—</span>
+              <span class="chip" id="nfChip">—</span>
+              <span class="sub" id="nfSub"></span>
+              <button type="button" class="copy" data-copy="nfOutRecl">Copiar número</button>
+            </div>
+            <div class="outbox">
+              <span class="nlabel">Dados adicionais da NF</span>
+              <span class="val" id="nfOutInf">—</span>
+              <button type="button" class="copy" data-copy="nfOutInf">Copiar texto</button>
+            </div>
+          </div>
+          <p class="fine">Claim ID e reclamação preenchidos com o exemplo do próprio comunicado (Claim ID 35834, reclamação 633167). Troque pelos números da sua ADEP.</p>
+        </div>
+      </div>
+
+      <div class="warnbox" role="note">
+        <strong>Não confundir com garantia</strong>
+        <span>Na garantia, o mesmo campo do Sances recebe o documento de liquidação com o ano, como <code>0710104244/2026</code>. Esse formato é só da garantia. Na ADEP vai o Claim ID só com números. O campo é novo no Sances: na primeira ADEP, confira o XML antes de enviar à CNH.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band panel" id="rejeicao">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">/// Por que a CNH rejeita</span>
@@ -513,7 +613,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     </div>
   </section>
 
-  <section class="band panel" id="checklist">
+  <section class="band" id="checklist">
     <div class="wrap check-wrap">
       <div>
         <span class="eyebrow">/// Antes de clicar em enviar</span>
@@ -521,16 +621,17 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
         <p class="lead" style="margin-top:16px">Passe por esta lista a cada ADEP. As marcações ficam salvas só neste navegador.</p>
         <div class="meter">
           <div class="bar"><div class="fill" id="fill"></div></div>
-          <span class="count" id="count">0 de 8 conferidos</span>
+          <span class="count" id="count">0 de 9 conferidos</span>
         </div>
         <button type="button" class="reset" id="reset">Limpar para a próxima ADEP</button>
       </div>
       <ul class="checks" id="checks">
+        <li><label><input type="checkbox" id="c0"><span>Mercadoria conferida na chegada<small>Avaria ou divergência registrada no CT-e e no canhoto da NF</small></span></label></li>
         <li><label><input type="checkbox" id="c1"><span>Está dentro dos 30 d.u. do faturamento<small>No causal 35, do faturamento da peça em BO</small></span></label></li>
         <li><label><input type="checkbox" id="c2"><span>Causal escolhido confere com o que aconteceu</span></label></li>
         <li><label><input type="checkbox" id="c3"><span>A nota explica o caso sozinha<small>Pedido, recebido, diferença, medidas, com quem foi tratado</small></span></label></li>
         <li><label><input type="checkbox" id="c4"><span>Número do PHD ou do boletim nas notas, quando houver</span></label></li>
-        <li><label><input type="checkbox" id="c5"><span>Fotos e documentos anexados no CSPS</span></label></li>
+        <li><label><input type="checkbox" id="c5"><span>Fotos, vídeos e documentos anexados no CSPS<small>Mostrando a diferença e o motivo de a peça não servir</small></span></label></li>
         <li><label><input type="checkbox" id="c6"><span>Mesmas evidências enviadas pelo canal da área (DPS ou Qualidade)</span></label></li>
         <li><label><input type="checkbox" id="c7"><span>Número da ADEP escrito na mensagem, não só no print</span></label></li>
         <li><label><input type="checkbox" id="c8"><span>Tratativa com comercial CNH anexada, se houve</span></label></li>
@@ -538,7 +639,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     </div>
   </section>
 
-  <section class="band" id="pendencias">
+  <section class="band panel" id="pendencias">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">/// Ainda sem resposta da CNH</span>
@@ -554,6 +655,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
             <tr><td>Status "ADEP em trânsito" não muda</td><td>NF emitida sem recusa e o CSPS não atualiza. CNH vai verificar falha no sistema.</td><td>Raízes Máquinas</td><td><span class="chip warn">Aguardando CNH</span></td></tr>
             <tr><td>NFs vencidas paradas na transportadora</td><td>Casos travados aguardando a recusa eletrônica para voltar ao estoque e reabrir a ADEP.</td><td>Technico (Salvador)</td><td><span class="chip warn">Aguardando CNH</span></td></tr>
             <tr><td>Anexos que somem no CSPS</td><td>Explicação dada: limite de tamanho de arquivo. Enquanto isso, enviar também por WhatsApp/e-mail da área.</td><td>IBL (Ervenson)</td><td><span class="chip ok">Respondido</span></td></tr>
+            <tr><td>Campo "Reclamação" do Sances na ADEP</td><td>Campo novo, já validado na garantia. Na ADEP segue o comunicado: Claim ID só com números. Conferir o XML da primeira ADEP antes de enviar.</td><td>IBL (Controladoria)</td><td><span class="chip warn">Validar na 1ª ADEP</span></td></tr>
             <tr><td>Reunião só com Transportes</td><td>A pessoa de transporte não conseguiu entrar. CNH vai marcar outra rodada.</td><td>CNH</td><td><span class="chip warn">A agendar</span></td></tr>
           </tbody>
         </table>
@@ -561,7 +663,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     </div>
   </section>
 
-  <section class="band panel" id="canais">
+  <section class="band" id="canais">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">/// Para onde mandar</span>
@@ -581,7 +683,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 <footer class="band">
   <div class="wrap">
     <p>IBL Máquinas · Coordenação de Peças</p>
-    <p>Fonte: reunião CNH × rede sobre ADEP, 14.10.2026</p>
+    <p>Versão 2 · 19.10.2026 · Fontes: reunião CNH × rede (14.10.2026) e Comunicado CNH 030/2025</p>
   </div>
 </footer>
 
@@ -650,7 +752,52 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
   });
 
   // ---------- checklist ----------
-  var KEY = 'ibl-adep-checklist-v1';
+  // ---------- montador da NF de devolução ----------
+  function digits(v) { return (v || '').replace(/\D+/g, ''); }
+  var nfIds = ['nfClaim', 'nfRecl', 'nfNum', 'nfSerie', 'nfData'];
+  var nf = {}; nfIds.forEach(function (id) { nf[id] = document.getElementById(id); });
+  if (!nf.nfClaim.value) nf.nfClaim.value = '35834';
+  if (!nf.nfRecl.value) nf.nfRecl.value = '633167';
+  function renderNF() {
+    var rawClaim = nf.nfClaim.value.trim(), rawRecl = nf.nfRecl.value.trim();
+    var okClaim = /^\d*$/.test(rawClaim), okRecl = /^\d*$/.test(rawRecl);
+    var claim = okClaim ? rawClaim : '', recl = okRecl ? rawRecl : '';
+    var usado = rawClaim ? claim : recl;
+    var origem = rawClaim ? 'Claim ID' : 'número da reclamação';
+    var out = document.getElementById('nfOutRecl'), chip = document.getElementById('nfChip'), sub = document.getElementById('nfSub');
+    if (!okClaim || (!rawClaim && !okRecl)) {
+      out.textContent = '—'; chip.className = 'chip bad'; chip.textContent = 'Número inválido';
+      sub.textContent = 'Tem caractere que não é número (barra, ano, letra ou espaço). Copie do CSPS só o Claim ID, como 35834. O formato número/ano é da garantia, não da ADEP.';
+    } else if (!usado) {
+      out.textContent = '—'; chip.className = 'chip bad'; chip.textContent = 'Falta o número';
+      sub.textContent = 'Informe o Claim ID. Se ele estiver em branco no CSPS, use o número da reclamação.';
+    } else {
+      out.textContent = usado; chip.className = 'chip ok'; chip.textContent = 'Só números · ok';
+      sub.textContent = 'Usando o ' + origem + '.';
+    }
+    var p = [];
+    if (claim) p.push('CLAIM ID ' + claim);
+    if (recl) p.push('ADEP ' + recl);
+    var num = digits(nf.nfNum.value), serie = digits(nf.nfSerie.value), d = parse(nf.nfData.value);
+    p.push('NF ORIGEM CNH ' + (num || '[numero]') + ' SERIE ' + (serie || '[serie]') + ' EMISSAO ' + (d ? d.toLocaleDateString('pt-BR') : '[data]'));
+    document.getElementById('nfOutInf').textContent = p.join(' - ');
+  }
+  nfIds.forEach(function (id) { nf[id].addEventListener('input', renderNF); });
+  renderNF();
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.copy), txt = el.textContent, label = btn.textContent;
+      function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = label; }, 1600); }
+      function fallback() {
+        try { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selecionado · Ctrl+C'); } catch (e) {}
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function () { done('Copiado'); }, fallback);
+      } else { fallback(); }
+    });
+  });
+
+  var KEY = 'ibl-adep-checklist-v2';
   var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input'));
   var saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
