@@ -1525,7 +1525,11 @@ function setupUnitsMap() {
     const address = item.getAttribute('data-address') || ''
     const title = item.querySelector('h3, h4')?.textContent?.trim() || 'Unidade'
     const hasCoords = !Number.isNaN(lat) && !Number.isNaN(lng)
-    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`IBL Máquinas - ${address}`)}`
+    // Perfil da filial no Google Maps (data-maps-url, gerado de data/filiais.json);
+    // a busca pelo endereço fica só como reserva.
+    const mapsUrl =
+      item.getAttribute('data-maps-url') ||
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`IBL Máquinas - ${address}`)}`
     return { unitId, lat, lng, address, title, hasCoords, mapsUrl }
   }
 

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = process.cwd()
@@ -54,4 +54,32 @@ for (const relativePath of representativeHtml) {
   }
 }
 
-console.log('verify-dist: representative packaged routes and built assets are present')
+// Mapa das filiais: todo link do Google Maps abre o perfil da filial (query_place_id),
+// nunca uma coordenada solta (T116).
+function htmlFiles(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) return htmlFiles(path)
+    return entry.name.endsWith('.html') ? [path] : []
+  })
+}
+
+let mapsLinks = 0
+const badMapsLinks = []
+for (const file of htmlFiles(join(root, 'dist'))) {
+  const html = readFileSync(file, 'utf8')
+  for (const [, url] of html.matchAll(/"(https:\/\/www\.google\.com\/maps[^"]*)"/g)) {
+    mapsLinks += 1
+    if (!/[?&](amp;)?query_place_id=ChIJ[\w-]+/.test(url) || /query=-?\d+(\.\d+)?,-?\d+/.test(url)) {
+      badMapsLinks.push(`${file.slice(root.length + 1)}: ${url}`)
+    }
+  }
+}
+
+if (badMapsLinks.length > 0) {
+  console.error('Google Maps links without the branch profile (query_place_id):')
+  for (const line of badMapsLinks.slice(0, 20)) console.error(`- ${line}`)
+  process.exit(1)
+}
+
+console.log(`verify-dist: representative packaged routes and built assets are present; ${mapsLinks} Google Maps links open the branch profile`)

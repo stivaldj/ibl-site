@@ -1128,6 +1128,25 @@ def load_filiais() -> dict:
     return json.loads(FILIAIS_PATH.read_text(encoding="utf-8"))
 
 
+def maps_profile_url(filial: dict) -> str:
+    """Link do perfil da filial no Google Maps (nome, fotos, avaliações), não da coordenada.
+
+    Formato documentado da Maps URL API: query = nome do lugar, query_place_id = Place ID.
+    Sem Place ID a geração para: link para coordenada solta não volta mais ao site.
+    """
+    place_id = (filial.get("google_place_id") or "").strip()
+    nome = (filial.get("google_nome") or "").strip()
+    if not place_id or not nome:
+        raise SystemExit(
+            f"filiais.json: filial {filial.get('id')} sem google_place_id/google_nome "
+            "(copiar de ibl-marketing/gerador/lojas_google.json)"
+        )
+    return (
+        "https://www.google.com/maps/search/?api=1"
+        f"&query={quote(nome, safe='')}&query_place_id={quote(place_id, safe='')}"
+    )
+
+
 def render_institutional_page(
     page_name: str,
     description: str,
@@ -1182,7 +1201,7 @@ def render_filial_card(filial: dict, index: int) -> str:
         for m in filial.get("marcas", ["CASE Construction"])
     )
     tel_link = filial["telefone_e164"]
-    maps_url = f"https://www.google.com/maps/search/?api=1&query={filial['lat']},{filial['lng']}"
+    maps_url = maps_profile_url(filial)
     return f"""
           <div class="industrial-border bg-case-panel border border-case-border p-8 flex flex-col gap-4 hover:border-case-yellow transition-colors">
             <div class="flex items-start justify-between">
@@ -2372,8 +2391,21 @@ def write_unit_map() -> None:
     )
     if n != 1:
         raise SystemExit("mapa: <div id=\"unit-map\"> não encontrado em case/index.html")
+    # Lista de unidades da home: o link "Google Maps" que o main.js cria em cada
+    # unidade lê data-maps-url (perfil da filial no Google, de data/filiais.json).
+    for f in load_filiais()["filiais"]:
+        url = escape(maps_profile_url(f), quote=True)
+        html, n = re.subn(
+            r'(<div class="unit-item[^"]*" data-unit-id="' + re.escape(f["id"]) + r'")((?: data-[a-z-]+="[^"]*")*)>',
+            lambda m: m.group(1)
+            + re.sub(r' data-maps-url="[^"]*"', "", m.group(2))
+            + f' data-maps-url="{url}">',
+            html, count=1,
+        )
+        if n != 1:
+            raise SystemExit(f"mapa: unidade {f['id']} não encontrada na lista de case/index.html")
     home.write_text(html, encoding="utf-8")
-    print("  ✓ mapa das unidades (SVG) em case/index.html")
+    print("  ✓ mapa das unidades (SVG) e links do Google Maps em case/index.html")
 
 
 def main():
