@@ -1,9 +1,22 @@
 #!/usr/bin/env python3
 """Limpeza staging pos-v3.6: remove recortes -nobg substituidos por -card. Log: .tmp/ftp-cleanup36.log"""
 import ftplib, os
-HOST = "ftp.iblmaquinas.com.br"
-USER = "siteadmin@teste.iblmaquinas.com.br"
-PASS = "CCLABPHB7C07"
+def _ftp_credencial():
+    """Lê FTP_HOST, FTP_USER e FTP_PASS do ambiente ou de .env.ftp.local na raiz do repo (fora do git). Nunca escreva a senha no código."""
+    cred = {}
+    arq = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env.ftp.local')
+    if os.path.exists(arq):
+        for linha in open(arq, encoding='utf-8'):
+            if '=' in linha and not linha.lstrip().startswith('#'):
+                k, v = linha.strip().split('=', 1); cred[k.strip()] = v.strip()
+    cred.update({k: os.environ[k] for k in ('FTP_HOST', 'FTP_USER', 'FTP_PASS') if os.environ.get(k)})
+    falta = [k for k in ('FTP_HOST', 'FTP_USER', 'FTP_PASS') if not cred.get(k)]
+    if falta:
+        raise SystemExit('Falta ' + ', '.join(falta) + ': defina no ambiente ou em .env.ftp.local (fora do git).')
+    return cred['FTP_HOST'], cred['FTP_USER'], cred['FTP_PASS']
+
+
+HOST, USER, PASS = _ftp_credencial()
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG = os.path.join(REPO, ".tmp", "ftp-cleanup36.log")
 os.makedirs(os.path.dirname(LOG), exist_ok=True)
